@@ -5,6 +5,13 @@
 
 This repository contains my personal dotfiles for configuring various tools and applications. Feel free to explore and use any configurations that might be helpful for your setup.
 
+## Disclaimer! I do not offer any support
+
+Use at your own risk. I suggest cherry-picking sections of the code for your own use case What you do on your computer is something for which I cannot and will not be held accountable. If you really want to use my setup as-is, in addition to [Installation](https://github.com/HirschBerge/Public-dots#installation)
+Please consider the following:
+
+Running the `./setup.sh` script will change all occurances 
+
 ## Overview
 
 | Category                  | Software/Theme/Distro                                                                                             |
@@ -25,13 +32,17 @@ This repository contains my personal dotfiles for configuring various tools and 
 | Shell                     | [Zsh](https://www.zsh.org/)                                                                                      |
 | Fonts                     | [Termina Test](https://www.cufonfonts.com/font/termina-test), [Jetbrains Nerdfonts Mono](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/JetBrainsMono.zip), [Fira Code](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/FiraCode.zip), [Iosevka Nerd Font](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Iosevka.zip) |
 | Linux ISO Torrents        | [rtorrent](https://github.com/rakshasa/rtorrent)                                                                |
+| `Find` replacement        | [fd](https://github.com/sharkdp/fd) `nix-env -iA nixos.fd` for use in the Installation section                  |
+| `grep` replacement        | [rg](https://github.com/BurntSushi/ripgrep) `nix-env -iA nixos.ripgrep` if needed before installation           |
+
 ## Getting Started
 
 ### Prerequisites
-
+ 
 - Generic NixOS installation.
 - Generate a Config (for your hardware config) with `nixos-generate-config`
 - Continued below
+- `fd` to be installed (see above)
 
 ### Installation
 
