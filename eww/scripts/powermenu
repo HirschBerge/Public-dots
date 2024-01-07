@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+bash $HOME/.config/rofi/powermenu/type-5/powermenu.sh

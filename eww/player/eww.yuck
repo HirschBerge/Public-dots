@@ -1,0 +1,26 @@
+(defpoll music_url :interval "1s" "sh ~/.config/hypr/scripts/songart.sh echo")
+(defpoll song :interval "1s" "playerctl metadata --format '{{title}}'")
+(defpoll song_artist :interval "1s" "playerctl metadata --format '{{artist}}'")
+(defpoll song_status :interval "1s" "sh ~/.config/hypr/scripts/status-player")
+
+(defwidget music []
+        (box :class "msc_box" :orientation "v" :space-evenly "false" :vexpand "false" :hexpand "false"
+                (box :orientation "v" :class "msc_bg" :style "background-image: url('${music_url}');" :spacing 5 :space-evenly "false" :vexpand "false" :hexpand "false"
+                        (box :orientation "h" :spacing 28 :halign "center" :space-evenly "false" :vexpand "false" :hexpand "false"
+                                (button :class "song_btn_prev" :onclick "playerctl previous" "")
+                                (button :class "song_btn_play" :onclick "playerctl play-pause" song_status)
+                                (button :class "song_btn_next" :onclick "playerctl next" "")
+                        )
+                )
+                (label :halign "start" :class "song" :wrap "false" :limit-width 25 :text song)
+                (label :halign "start" :class "song_artist" :wrap "true" :limit-width 15 :text song_artist)
+        )
+)
+
+(defwindow song :stacking "fg"
+        :monitor 0
+        :geometry (geometry :x "41%"
+                            :y "1%"
+                            :width "340px"
+                            :height "250px")
+  (music))

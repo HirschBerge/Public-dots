@@ -1,0 +1,65 @@
+*{
+	all: unset;
+}
+
+.msc_box {
+	padding: 15px;
+	background-color: rgba($color: gray, $alpha: 0.4);
+
+	border-radius: 16px ;
+	min-width: 340px;
+	min-height: 250px;
+    animation-name: flyin-top;
+    animation-duration: 350ms;
+    animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
+  }
+
+  @keyframes flyin-top {
+    from {
+      margin-top: -500px;
+    }
+    
+    to {
+      margin-top: 0px;
+    }
+    }
+
+.msc_bg {
+	background-color: #ffffff;
+	background-size: cover;	
+	background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: inset 0 0 0 2000px rgba(29, 25, 61, 0.3);
+	min-height: 280px;
+	border-radius: 16px;
+}
+
+.song_btn_prev, .song_btn_next, .song_btn_play {
+  font-size: 30px;
+  font-weight: normal;
+  color: #ffffff;
+  margin-top: 130px;
+	padding: 5px;
+}
+
+.song, .song_artist{
+	font-size: 18px;
+	font-weight : bold;
+}
+
+.song {
+  color: #ffffff;
+	margin-top : 10px;
+}
+.song_artist {
+  color: #ffffff;
+}
+
+
+
+.bar-menu {
+	padding: 15px;
+	background-color: rgba($color: #000000, $alpha: 0.4);
+	background-image: url('textures/acrylic.png');
+	border-radius: 16px;
+}

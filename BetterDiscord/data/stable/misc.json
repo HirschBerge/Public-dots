@@ -1,0 +1,15 @@
+{
+    "version": "1.9.7",
+    "addonlistControls": {
+        "plugin": {
+            "sort": "isEnabled",
+            "ascending": false,
+            "view": "grid"
+        }
+    },
+    "drawerStates": {
+        "settings": {
+            "developer": true
+        }
+    }
+}

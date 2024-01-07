@@ -1,0 +1,39 @@
+#!/bin/sh
+
+STATUS=$(dunstctl is-paused)
+
+toggle() {
+
+if [ $STATUS == "false" ]; then
+    dunstctl set-paused true
+    eww -c ~/.config/eww/fast-control-menu update dnd-color="#734bd8"
+else
+    dunstctl set-paused false
+    notify-send --urgency=normal "Не беспокоить" "Функция не беспокоить отключена!"
+    eww -c ~/.config/eww/fast-control-menu update dnd-color="rgba(255,255,255,0.15)"
+fi
+}
+
+icon() {
+    if [ $STATUS == "false" ]; then
+        echo ""
+    else
+        echo "󰽥"
+    fi
+}
+
+status() {
+    if [ $STATUS == "false" ]; then
+        echo "Off"
+    else
+        echo "On"
+    fi
+}
+
+if [[ $1 == "--toggle" ]]; then
+    toggle
+elif [[ $1 == "--icon" ]]; then
+    icon
+elif [[ $1 == "--status" ]]; then
+    status
+fi
