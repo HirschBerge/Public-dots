@@ -1,5 +1,4 @@
-#!/bin/sh
-
+#!/usr/bin/env bash
 NoColor="\033[0m"
 Red='\033[0;31m'          # Red
 Black='\033[0;30m'        # Black
@@ -142,5 +141,3 @@ second_main() {
 
 first_main
 second_main
-
-# kak:filetype=sh

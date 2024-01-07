@@ -1,0 +1,35 @@
+#!/bin/sh
+
+name=$(echo `iwgetid | sed 's/"/ /g' | awk '{print $3}'`)
+device=wlp7s0
+
+symbol() {
+    if [[ "$name" != "" ]]; then
+        QUALITY=`iwconfig $device | grep Link | sed 's/[=\/]/ /g' | awk '{print $3}'`
+        MAX_QUALITY=`iwconfig $device | grep Link | sed 's/[=\/]/ /g' | awk '{print $4}'`
+        qual=$(echo $((QUALITY*100/MAX_QUALITY)))
+
+        if [[ "$qual" -gt "90" ]]; then
+            echo "󰤨"
+            elif [[ "$qual" -gt "50" ]]; then
+            echo "󰤥"
+            elif [[ "$qual" -gt "25" ]]; then
+            echo "󰤢"
+        else
+            echo "󰤯"
+        fi
+    else
+        echo "󰤮"
+    fi
+}
+
+name() {
+    if [[ "$name" != "" ]]; then
+        echo $name
+    else
+        echo "Off"
+    fi
+}
+
+[ "$1" = "icon" ] && symbol && exit
+[ "$1" = "name" ] && name && exit

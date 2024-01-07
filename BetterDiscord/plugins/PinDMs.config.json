@@ -1,0 +1,107 @@
+{
+	"all": {
+		"general": {
+			"pinIcon": true,
+			"unreadAmount": true,
+			"channelAmount": true
+		},
+		"pinned": {
+			"215327353423921159": {
+				"channelList": {
+					"1873134854852650": {
+						"id": "1873134854852650",
+						"name": "DnD",
+						"dms": [
+							"609227216475258881",
+							"753458337395376198",
+							"754881836622020659",
+							"750077454726725732"
+						],
+						"pos": 0,
+						"collapsed": false,
+						"color": [
+							173,
+							20,
+							87,
+							1
+						]
+					},
+					"1430461981163371": {
+						"id": "1430461981163371",
+						"name": "IRL Friends",
+						"dms": [
+							"804792468448084038",
+							"669365743208366090",
+							"766136697150242836",
+							"918316909986983937",
+							"750094357838823485",
+							"832689238914367489"
+						],
+						"pos": 1,
+						"collapsed": false,
+						"color": [
+							241,
+							196,
+							15,
+							1
+						]
+					},
+					"6669531735650127": {
+						"id": "6669531735650127",
+						"name": "Best Friends",
+						"dms": [
+							"792963339491344434",
+							"763817159724892220",
+							"825130679812751440"
+						],
+						"pos": 2,
+						"collapsed": true,
+						"color": [
+							134,
+							30,
+							233,
+							1
+						]
+					},
+					"8928104835345421": {
+						"id": "8928104835345421",
+						"name": "❤👑Girlfriend❤",
+						"dms": [
+							"752006850337046529"
+						],
+						"pos": 3,
+						"collapsed": false,
+						"color": [
+							173,
+							20,
+							87,
+							1
+						]
+					}
+				}
+			}
+		},
+		"preCategories": {
+			"blocked": {
+				"enabled": false,
+				"collapsed": false
+			},
+			"bots": {
+				"enabled": true,
+				"collapsed": true
+			},
+			"friends": {
+				"enabled": false,
+				"collapsed": false
+			},
+			"groups": {
+				"enabled": true,
+				"collapsed": false
+			}
+		},
+		"recentOrder": {
+			"channelList": false,
+			"guildList": false
+		}
+	}
+}

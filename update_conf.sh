@@ -26,3 +26,4 @@ done
 printf "${BGreen}[+] ${BYellow}Sanitizing username...${NoColor}\n"
 fd . "$dots" -tf -H -X sed -i "s/$USER/USER_NAME/g"
 fd . "$dots" -tf -H -X sed -i "s/${USER^}/USER_NAME/g"
+
