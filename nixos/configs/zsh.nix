@@ -204,10 +204,6 @@
             ka="killall";
             l="lazygit";
             move_ani="cd \"$(fd -td . /mnt/NAS/Anime |fzf)\"";
-            la="clear && eza --no-quotes --group-directories-first -la --icons=always";
-            ll="clear && eza --no-quotes --group-directories-first -l --icons=always";
-            ls="clear && eza --no-quotes  --icons";
-            lsa="ls -lah";
             lsblk="clear && lsblk";
             m="cd ~/Music && eza --no-quotes -a";
             magit="nvim -c MagitOnly";

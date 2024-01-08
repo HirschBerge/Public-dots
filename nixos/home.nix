@@ -22,6 +22,7 @@ in
     ./configs/kitty.nix 
     ./configs/starship.nix 
     ./configs/wlogout.nix
+    # ./configs/nixvim.nix
     ];
 	# imports = [./configs/zsh.nix ./configs/i3.nix ./configs/kitty.nix ./configs/sxhkd.nix ./configs/polybar.nix ./configs/starship.nix ]; #X Orgd
 	home.username = "USER_NAME";
@@ -132,8 +133,8 @@ in
 		wineWowPackages.full
         yuzu-mainline
 	];
-	gtk = {
-		enable = true;
+  gtk = {
+	enable = true;
 		# theme.package = pkgs.sweet;
 		# theme.name = "Sweet-Dark";
     theme = {
@@ -146,19 +147,23 @@ in
       };
     };
     iconTheme = {
-    	name = "candy-icons";
-    	package = themes.candy-icons;
-    	};
-		cursorTheme = {
-			package = pkgs.catppuccin-cursors.mochaMauve;
-			name = "Catppuccin-Mocha-Mauve-Cursors";
-		};
-	};
-
-	xdg.configFile."Kvantum/kvantum.kvconfig".text = ''
+      name = "candy-icons";
+      package = themes.candy-icons;
+    };
+	cursorTheme = {
+	  package = pkgs.catppuccin-cursors.mochaMauve;
+	  name = "Catppuccin-Mocha-Mauve-Cursors";
+      size = 40;
+      };
+    font = {
+      name = "TerminaTest-Demi";
+      size = 12;
+    };
+  };
+  xdg.configFile."Kvantum/kvantum.kvconfig".text = ''
 		[General]
 		theme=Sweet-Dark
-	'';
+  '';
   home.sessionVariables = {
     # QT_STYLE_OVERRIDE = "kvantum";
     GTK_USE_PORTAL = 1;
@@ -168,12 +173,24 @@ in
 	programs.git = {
 		enable = true;
 		userName = "HirschBerge";
-		userEmail = "hskirkwo@geneva.edu";
+		userEmail = "THIS_IS_AN_EMAIL";
 	};
 	programs.fzf = {
 		enable = true;
 		enableZshIntegration = true;
 	};
+    programs.eza = {
+      enable = true;
+      enableAliases = true;
+      git = true;
+      icons = true;
+      extraOptions = [
+      "--group-directories-first"
+      "--header"
+      "-o"
+      "--no-permissions"
+      ];
+    };
 	# programs.chromium = {
 	# 	enable = true;
 	# 	extensions = [

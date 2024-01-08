@@ -45,7 +45,7 @@
       cp -aR "$src/" "$out/share/icons/candy-icons"
     '';
   };
-  fancy-dark = stdenv.mkDerivation rec {
+  fancy-dark = stdenv.mkDerivation rec { # Broken, but also just not worth ever using.
     pname = "fancy-dark-icons";
     version = "";
     src = fetchFromGitHub {
