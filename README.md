@@ -4,7 +4,7 @@
 # My Dotfiles
 
 ## Flakes
-I have decided to move to flakes finally. Please see the [flakes](/github/Public-dots/tree/flakes) branch. I will be merging that into main eventually.. Please be on the lookout!
+I have decided to move to flakes finally. Please see the [flakes](../../tree/flakes) branch. I will be merging that into main eventually.. Please be on the lookout!
 
 This repository contains my personal dotfiles for configuring various tools and applications. Feel free to explore and use any configurations that might be helpful for your setup.
 
