@@ -241,6 +241,7 @@
             r="ranger";
             rd="rmdir";
             reboot="reboot";
+            rebuild="nix flake update; home-manager --flake ~/my-dotfiles#hirschy@yoitsu switch -b backup && sleep 1; sudo nixos-rebuild switch --flake ~/my-dotfiles#yoitsu"
             ref="shortcuts >/dev/null; source ~/.config/shortcutrc";
             removeurl="find /mnt/NAS/Anime -type f -name \"*url*\" -exec rm -f {} \; -print";
             renames="~/.scripts/rename";

@@ -54,7 +54,19 @@ Clone this repository and run the setup script.
 ```bash
 git clone https://github.com/HirschBerge/Public-dots.git
 cd Public-dots
+git switch flakes
 chmod +x setup.sh
-# It will ask you a few questions. Please Select the nixos-unstable branch.
+# It will ask you a few questions. 
 ./setup.sh
 ```
+
+To "rebuild" you can run the following
+
+```bash
+nix flake update
+home-manager --flake /path/to/repo#$USER@your_hostname switch -b backup
+sleep 1
+sudo nixos-rebuild switch --flake /path/to/repo#your_hostname
+```
+
+Note: `rebuild` is a zsh alias to this, as a oneliner
