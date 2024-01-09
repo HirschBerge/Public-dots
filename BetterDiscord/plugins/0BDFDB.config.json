@@ -1,7 +1,7 @@
 {
 	"all": {
 		"changeLogs": {
-			"BDFDB": "3.5.8",
+			"BDFDB": "3.5.9",
 			"BetterFriendList": "1.5.5",
 			"BetterSearchPage": "1.2.4",
 			"CharCounter": "1.6.2",
@@ -27,7 +27,7 @@
 			"shareData": true
 		},
 		"hashes": {
-			"0BDFDB.data.json": "4ea1ccd6a3446153cfb389980665a35cc0ef1a3a",
+			"0BDFDB.data.json": "3e036123d2bd75d2710811a734275fa43f95c8bd",
 			"0BDFDB.raw.css": "8c083e2a87a82aded5f3b2e27fb8b2f816b5f74a"
 		}
 	}

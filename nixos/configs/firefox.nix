@@ -1,9 +1,9 @@
-{pkgs, lib, ... }:
+{ inputs, pkgs, system, username, config, ... }:
 {
   programs.firefox = {
     enable = true;
-    profiles.USER_NAME = {
-      name = "USER_NAME";
+    profiles.${username} = {
+      name = "${username}";
       settings = {
         CaptivePortal = false;
         DisableFirefoxStudies = true;
@@ -17,15 +17,14 @@
       };
       isDefault = true;
       extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-        darkreader
         lastpass-password-manager
         ublock-origin
         sponsorblock
         enhancer-for-youtube
         return-youtube-dislikes
-        nighttab
         behind-the-overlay-revival
         betterttv
+        nighttab
       ];
       search = {
         engines = {

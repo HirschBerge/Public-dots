@@ -8,9 +8,16 @@
 #  ██║ ╚████║██║██╔╝ ██╗╚██████╔╝███████║
 #  ╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝
 #                                        
-{ config,lib, pkgs, ... }:
+{ inputs,
+  outputs,
+  config,
+  lib,
+  pkgs,
+  hostname,
+  username,
+  stateVersion,
+  ... }:
 let
-  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
   themes = pkgs.callPackage  ./configs/themes.nix {};
 
   # For outputting list of packages.
@@ -23,7 +30,6 @@ in
   imports =
     [ # Include the results of the hardware scan.
         ./hardware-configuration.nix
-        <home-manager/nixos>
         ./8bitdo.nix
         ./wayland.nix
         ./configs/gaming.nix 
@@ -56,15 +62,60 @@ in
   #   description = "...";
   #   # serviceConfig.PassEnvironment = "DISPLAY";
   #   script = ''
-  #     /run/wrappers/bin/sudo /home/USER_NAME/.local/bin/xremap --watch /home/USER_NAME/my-dotfiles/xremap_config.yml
+  #     /run/wrappers/bin/sudo /home/${username}/.local/bin/xremap --watch /home/${username}/my-dotfiles/xremap_config.yml
   #   '';
   #   wantedBy = [ "multi-user.target" ]; # starts after login
   # };
-  nixpkgs.config.packageOverrides = pkgs: {
-    nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
-      inherit pkgs;
-    };
-  };
+  # nixpkgs.config.packageOverrides = pkgs: {
+  #   nur = import (builtins.fetchTarball { 
+  #     url = "https://github.com/nix-community/NUR/archive/master.tar.gz";
+  #     sha256 = "0i9fbyshnbwvdh49zxl195rngkpgah3y1wamknqbk85xrxw5h6rq";
+  #     }) {
+  #     inherit pkgs;
+  #   };
+  # };
+  programs.firefox.policies = ''
+    {"policies": {
+    "ExtensionSettings": {
+      "*": {
+        "blocked_install_message": "Custom error message.",
+        "install_sources": ["https://yourwebsite.com/*"],
+        "installation_mode": "blocked",
+        "allowed_types": ["extension"]
+      },
+      "THIS_IS_AN_EMAIL": {
+        "installation_mode": "force_installed",
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi"
+      },
+      "THIS_IS_AN_EMAIL": {
+        "installation_mode": "force_installed",
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/darkreader/latest.xpi"
+      },
+      "THIS_IS_AN_EMAIL": {
+        "installation_mode": "force_installed",
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/lastpass-password-manager/latest.xpi"
+      },
+      "THIS_IS_AN_EMAIL": {
+        "installation_mode": "force_installed",
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/sponsorblock/latest.xpi"
+      },
+      "THIS_IS_AN_EMAIL": {
+        "installation_mode": "force_installed",
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/youtube-enhancer-vc/latest.xpi"
+      },
+      "THIS_IS_AN_EMAIL": {
+        "installation_mode": "force_installed",
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/nighttab/latest.xpi"
+      },
+      "THIS_IS_AN_EMAIL": {
+        "installation_mode": "force_installed",
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/betterttv/latest.xpi"
+      },
+    }
+  }
+}
+    '';
+
   security.sudo = {
     enable = true;
     extraRules = [{
@@ -98,14 +149,14 @@ in
           options = [ "NOPASSWD" ];
         }
       #   {
-      #     command = "/home/USER_NAME/.local/bin/xremap";
+      #     command = "/home/${username}/.local/bin/xremap";
       #     options = [ "NOPASSWD" ];
       #   }
       ];
       groups = [ "wheel" ];
     }];
   };
-  networking.hostName = "hyprtest"; # Define your hostname.
+  networking.hostName = "${hostname}"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -169,17 +220,12 @@ in
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    users.USER_NAME = import ./home.nix;
-  };
   programs.zsh.enable = true;
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.USER_NAME = {
+  users.users.${username} = {
     shell = pkgs.zsh;
     isNormalUser = true;
-    description = "USER_NAME";
+    description = "${username}";
     extraGroups = [ "networkmanager" "wheel" "keyd" ];
     packages = with pkgs; [
       firefox
@@ -189,7 +235,7 @@ in
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-
+  # nixpkgs.allowUnfreePredicate = _: true;
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   nixpkgs.overlays = [
@@ -273,8 +319,8 @@ in
   services.cron = {
     enable = true;
     systemCronJobs = [
-      "* * * * *         USER_NAME    date >> /home/USER_NAME/.cache/test.log"
-      "*/30 * * * *      USER_NAME    /home/USER_NAME/.scripts/.venv/bin/python3 /home/USER_NAME/.scripts/manga_update.py"
+      "* * * * *         ${username}    date >> /home/${username}/.cache/test.log"
+      "*/30 * * * *      ${username}    /home/${username}/.scripts/.venv/bin/python3 /home/${username}/.scripts/manga_update.py"
     ];
   };
   # List services that you want to enable:
@@ -294,6 +340,6 @@ in
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.05"; # Did you read the comment?
+  system.stateVersion = stateVersion; # Did you read the comment?
   # environment.etc."current-packages".text = formatted;
 }

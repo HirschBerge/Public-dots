@@ -10,8 +10,9 @@ do
     fixed=$(basename "$i")
     if [ "$fixed" == "nixos" ]
     then
-      printf "${BGreen}[+] ${BYellow}Copying ${BPurple}/etc/$fixed ${BYellow}to ${BCyan}$dots/$fixed${NoColor}\n"
-      rsync -rah --progress -i /etc/nixos/* $dots/nixos/ >/dev/null
+      printf "${BGreen}[+] ${BYellow}Copying ${BPurple}${HOME}/my-dotfiles/$fixed ${BYellow}to ${BCyan}$dots/$fixed${NoColor}\n"
+      rsync -rah --progress -i $HOME/my-dotfiles/nixos/* $dots/nixos/ >/dev/null 
+      rsync -rah --progress -i $HOME/my-dotfiles/flake* $dots/ >/dev/null 
     elif
       [ "$fixed" == "mozilla" ]
     then
