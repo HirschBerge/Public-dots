@@ -1,4 +1,3 @@
-{config, pkgs, ...}:
 #  ██╗  ██╗ ██████╗ ███╗   ███╗███████╗    ███╗   ███╗ █████╗ ███╗   ██╗ █████╗  ██████╗ ███████╗██████╗ 
 #  ██║  ██║██╔═══██╗████╗ ████║██╔════╝    ████╗ ████║██╔══██╗████╗  ██║██╔══██╗██╔════╝ ██╔════╝██╔══██╗
 #  ███████║██║   ██║██╔████╔██║█████╗      ██╔████╔██║███████║██╔██╗ ██║███████║██║  ███╗█████╗  ██████╔╝
@@ -6,15 +5,26 @@
 #  ██║  ██║╚██████╔╝██║ ╚═╝ ██║███████╗    ██║ ╚═╝ ██║██║  ██║██║ ╚████║██║  ██║╚██████╔╝███████╗██║  ██║
 #  ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝    ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝
 #                                                                                                              
+{
+  inputs,
+  lib,
+  config,
+  pkgs,
+  username,
+  hostname,
+  stateVersion,
+  ...
+}: 
 let 
-    nixpkgs.url = "nixpkgs/nixos-unstable";
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # nixpkgs.url = "nixpkgs/nixos-unstable";
+    # home-manager = {
+    #   url = "github:nix-community/home-manager";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
   	themes = pkgs.callPackage  ./configs/themes.nix {};
 in
 {
+  # You can import other home-manager modules here
 	imports = [ 
     ./configs/firefox.nix
     ./configs/zsh.nix 
@@ -24,10 +34,23 @@ in
     ./configs/wlogout.nix
     # ./configs/nixvim.nix
     ];
+  nixpkgs = {
+    # You can add overlays here
+  #   overlays = [
+  #
+  #   ];
+    # Configure your nixpkgs instance
+    config = {
+      # Disable if you don't want unfree packages
+      allowUnfree = true;
+      # Workaround for https://github.com/nix-community/home-manager/issues/2942
+      # allowUnfreePredicate = _: true;
+      };
+  };
 	# imports = [./configs/zsh.nix ./configs/i3.nix ./configs/kitty.nix ./configs/sxhkd.nix ./configs/polybar.nix ./configs/starship.nix ]; #X Orgd
-	home.username = "USER_NAME";
-	home.homeDirectory = "/home/USER_NAME";
-	home.stateVersion = "23.05";
+	home.username = "${username}";
+	home.homeDirectory = "/home/${username}";
+	home.stateVersion = stateVersion;
 	programs.home-manager.enable = true;
 	home.packages = with pkgs; [
 #   ██████╗██╗     ██╗    ████████╗ ██████╗  ██████╗ ██╗     ███████╗
@@ -133,6 +156,10 @@ in
 		wineWowPackages.full
         yuzu-mainline
 	];
+  # Enable home-manager and git
+
+  # Nicely reload system units when changing configs
+  systemd.user.startServices = "sd-switch";
   gtk = {
 	enable = true;
 		# theme.package = pkgs.sweet;
@@ -146,6 +173,7 @@ in
         variant = "mocha";
       };
     };
+
     iconTheme = {
       name = "candy-icons";
       package = themes.candy-icons;
@@ -160,6 +188,9 @@ in
       size = 12;
     };
   };
+    nixpkgs.config.permittedInsecurePackages = [
+    "electron-25.9.0"
+  ];
   xdg.configFile."Kvantum/kvantum.kvconfig".text = ''
 		[General]
 		theme=Sweet-Dark
@@ -170,27 +201,27 @@ in
 		eEDITOR = "nvim";    
   };
 
-	programs.git = {
-		enable = true;
-		userName = "HirschBerge";
-		userEmail = "THIS_IS_AN_EMAIL";
-	};
-	programs.fzf = {
-		enable = true;
-		enableZshIntegration = true;
-	};
-    programs.eza = {
-      enable = true;
-      enableAliases = true;
-      git = true;
-      icons = true;
-      extraOptions = [
-      "--group-directories-first"
-      "--header"
-      "-o"
-      "--no-permissions"
-      ];
-    };
+  programs.git = {
+	  enable = true;
+	  userName = "HirschBerge";
+	  userEmail = "THIS_IS_AN_EMAIL";
+  };
+  programs.fzf = {
+	  enable = true;
+	  enableZshIntegration = true;
+  };
+  programs.eza = {
+    enable = true;
+    enableAliases = true;
+    git = true;
+    icons = true;
+    extraOptions = [
+    "--group-directories-first"
+    "--header"
+    "-o"
+    "--no-permissions"
+    ];
+  };
 	# programs.chromium = {
 	# 	enable = true;
 	# 	extensions = [
