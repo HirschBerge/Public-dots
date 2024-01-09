@@ -170,27 +170,27 @@ in
 		eEDITOR = "nvim";    
   };
 
-	programs.git = {
-		enable = true;
-		userName = "HirschBerge";
-		userEmail = "THIS_IS_AN_EMAIL";
-	};
-	programs.fzf = {
-		enable = true;
-		enableZshIntegration = true;
-	};
-    programs.eza = {
-      enable = true;
-      enableAliases = true;
-      git = true;
-      icons = true;
-      extraOptions = [
-      "--group-directories-first"
-      "--header"
-      "-o"
-      "--no-permissions"
-      ];
-    };
+  programs.git = {
+	  enable = true;
+	  userName = "HirschBerge";
+	  userEmail = "THIS_IS_AN_EMAIL";
+  };
+  programs.fzf = {
+	  enable = true;
+	  enableZshIntegration = true;
+  };
+  programs.eza = {
+    enable = true;
+    enableAliases = true;
+    git = true;
+    icons = true;
+    extraOptions = [
+    "--group-directories-first"
+    "--header"
+    "-o"
+    "--no-permissions"
+    ];
+  };
 	# programs.chromium = {
 	# 	enable = true;
 	# 	extensions = [
