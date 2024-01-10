@@ -1,0 +1,3 @@
+{"timestamp":755222,"category":"fog.validation","name":"validate_early_event"}
+{"timestamp":755530,"category":"webcompatreporting","name":"reason_dropdown","extra":{"setting":"disabled"}}
+{"timestamp":787887,"category":"addons_manager","name":"manage","extra":{"addon_type":"other","method":"uninstall","source":"gmp-plugin","addon_id":"gmp-gmpopenh264"}}

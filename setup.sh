@@ -25,8 +25,8 @@ TARGET="$HOME/.config/"
 sleep 1
 printf "${Green}[+] ${Blue}Copying program config files to ${Yellow}~/.config${NoColor}\n"
 rsync -rahi  --exclude ".git/" --exclude "nixos/" --exclude "bin" --exclude "setup.sh" $PWD/ $TARGET >/dev/null
-printf "${Green}[+] ${Blue}Copying NixOS files to ${Purple}/etc/nixos${NoColor}\n"
-sleep 1
+# printf "${Green}[+] ${Blue}Copying NixOS files to ${Purple}/etc/nixos${NoColor}\n"
+# sleep 1
 #TARGET="/etc/nixos/"
 #sudo rsync -rahi ./nixos/ $TARGET >/dev/null
 
@@ -38,28 +38,28 @@ results+="$(find ~/.local/share -type d -name 'ELDEN RING')"
 # Search for "ELDEN RING" in /mnt and append the results
 results+="$(find /mnt/storage/ -type d -name 'ELDEN RING')"
 rsync ./er-patcher "$results/"
-while true; do
-    printf "${Green}[+]${Blue} Please choose upstream:\n${Green}NixOS Stable: 1${NoColor} \n${Yellow}NixOS Unstable:2${NoColor}"
-    read user_input
-    if [ "$user_input" == "1" ]; then
-        echo "Applying NixOS Stable"
-        printf "${Green}[+] ${Blue}Allow Home-Manager${NoColor}\n"
-        sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-23.05.tar.gz home-manager
-        sudo nix-channel --update
-        # Place your code for option 1 here
-        break
-    elif [ "$user_input" == "2" ]; then
-        printf "${Green}[+] ${Blue}Enabling NixOS Unstable${NoColor}\n"
-        sudo nix-channel --add https://nixos.org/channels/nixos-unstable
-        printf "${Green}[+] ${Blue}Allow Home-Manager${NoColor}\n"
-        sudo nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-        sudo nix-channel --update
-        break
-    else
-        echo "Invalid input. Please enter 1 or 2."
-    fi
-done
-
+# while true; do
+#     printf "${Green}[+]${Blue} Please choose upstream:\n${Green}NixOS Stable: 1${NoColor} \n${Yellow}NixOS Unstable:2${NoColor}"
+#     read user_input
+#     if [ "$user_input" == "1" ]; then
+#         echo "Applying NixOS Stable"
+#         printf "${Green}[+] ${Blue}Allow Home-Manager${NoColor}\n"
+#         sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-23.05.tar.gz home-manager
+#         sudo nix-channel --update
+#         # Place your code for option 1 here
+#         break
+#     elif [ "$user_input" == "2" ]; then
+#         printf "${Green}[+] ${Blue}Enabling NixOS Unstable${NoColor}\n"
+#         sudo nix-channel --add https://nixos.org/channels/nixos-unstable
+#         printf "${Green}[+] ${Blue}Allow Home-Manager${NoColor}\n"
+#         sudo nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+#         sudo nix-channel --update
+#         break
+#     else
+#         echo "Invalid input. Please enter 1 or 2."
+#     fi
+# done
+#
 
 printf "${Green}Complete!${NoColor}\n"
 set -eu
