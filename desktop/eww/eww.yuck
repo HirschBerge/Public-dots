@@ -103,9 +103,10 @@
                     (label :class "info-icon" :text " :")
                     (label :class "info-icon" :text "󰅐 :")
                     (button :class "info-icon-2"
-                      :onclick "kitty $HOME/.scripts/rebuild.sh"
+                      :onclick "kitty ./scripts/rebuild.sh --rebuild"
+                      :onrightclick "kitty ./scripts/rebuild.sh --upgrade"
                       :timeout "999999999"
-                      :tooltip "Click to Rebuild."
+                      :tooltip "Click to Rebuild. Right click to upgrade."
                       (label :text " :")))
 
 

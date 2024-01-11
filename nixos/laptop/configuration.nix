@@ -30,93 +30,20 @@ in
   imports =
     [ # Include the results of the hardware scan.
         ./hardware-configuration.nix
-        ./8bitdo.nix
         ../common/wayland.nix
-        ./configs/gaming.nix
         ../common/configs/fonts.nix
     ];
-  systemd = {
-    user.services.polkit-gnome-authentication-agent-1 = {
-      description = "polkit-gnome-authentication-agent-1";
-      wantedBy = [ "graphical-session.target" ];
-      wants = [ "graphical-session.target" ];
-      after = [ "graphical-session.target" ];
-      serviceConfig = {
-          Type = "simple";
-          ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-          Restart = "on-failure";
-          RestartSec = 1;
-          TimeoutStopSec = 10;
-        };
-    };
-  };
-  nixpkgs.config.permittedInsecurePackages = [
-    "electron-25.9.0"
-  ];
   # Bootloader.
   boot.loader = {
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
     timeout = 1;
   };
-  # systemd.services.remaps = {
-  #   description = "...";
-  #   # serviceConfig.PassEnvironment = "DISPLAY";
-  #   script = ''
-  #     /run/wrappers/bin/sudo /home/${username}/.local/bin/xremap --watch /home/${username}/.dotfiles/xremap_config.yml
-  #   '';
-  #   wantedBy = [ "multi-user.target" ]; # starts after login
-  # };
-  # nixpkgs.config.packageOverrides = pkgs: {
-  #   nur = import (builtins.fetchTarball { 
-  #     url = "https://github.com/nix-community/NUR/archive/master.tar.gz";
-  #     sha256 = "0i9fbyshnbwvdh49zxl195rngkpgah3y1wamknqbk85xrxw5h6rq";
-  #     }) {
-  #     inherit pkgs;
-  #   };
-  # };
-  programs.firefox.policies = ''
-    {"policies": {
-    "ExtensionSettings": {
-      "*": {
-        "blocked_install_message": "Custom error message.",
-        "install_sources": ["https://yourwebsite.com/*"],
-        "installation_mode": "blocked",
-        "allowed_types": ["extension"]
-      },
-      "THIS_IS_AN_EMAIL": {
-        "installation_mode": "force_installed",
-        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi"
-      },
-      "THIS_IS_AN_EMAIL": {
-        "installation_mode": "force_installed",
-        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/darkreader/latest.xpi"
-      },
-      "THIS_IS_AN_EMAIL": {
-        "installation_mode": "force_installed",
-        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/lastpass-password-manager/latest.xpi"
-      },
-      "THIS_IS_AN_EMAIL": {
-        "installation_mode": "force_installed",
-        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/sponsorblock/latest.xpi"
-      },
-      "THIS_IS_AN_EMAIL": {
-        "installation_mode": "force_installed",
-        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/youtube-enhancer-vc/latest.xpi"
-      },
-      "THIS_IS_AN_EMAIL": {
-        "installation_mode": "force_installed",
-        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/nighttab/latest.xpi"
-      },
-      "THIS_IS_AN_EMAIL": {
-        "installation_mode": "force_installed",
-        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/betterttv/latest.xpi"
-      },
-    }
-  }
-}
-    '';
-
+  nixpkgs.config.packageOverrides = pkgs: {
+    nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
+      inherit pkgs;
+    };
+  };
   security.sudo = {
     enable = true;
     extraRules = [{
@@ -149,10 +76,6 @@ in
           command = "/run/current-system/sw/bin/nix-channel";
           options = [ "NOPASSWD" ];
         }
-      #   {
-      #     command = "/home/${username}/.local/bin/xremap";
-      #     options = [ "NOPASSWD" ];
-      #   }
       ];
       groups = [ "wheel" ];
     }];
@@ -190,10 +113,11 @@ in
 
   # Enable the GNOME Desktop Environment.
    services.xserver.displayManager.sddm = {
-      enable = true;
-      enableHidpi = true;
-      theme = "abstractguts-themes";
-    };
+    enable = true;
+    enableHidpi = true;
+    theme = "abstractguts-themes";
+   };
+
   # Configure keymap in X11
   services.xserver = {
     layout = "us";
@@ -214,13 +138,14 @@ in
     # If you want to use JACK applications, uncomment this
     #jack.enable = true;
 
-    # use the example session manager (no others are packaged yet so this is enabled by default,
+    # use the ezample session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
     #media-session.enable = true;
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
+
   programs.zsh.enable = true;
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${username} = {
@@ -236,7 +161,7 @@ in
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-  # nixpkgs.allowUnfreePredicate = _: true;
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   nixpkgs.overlays = [
@@ -247,20 +172,17 @@ in
     })
   ];
   environment.systemPackages = with pkgs; [
-      # jetbrains-mono
       kitty
       neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
       gcc
+      du-dust
       wget
       git
       home-manager
       traceroute
       python311
-      obs-studio
       python311Packages.pip
-      # chromium
       ripgrep
-      du-dust
       cmake
       lm_sensors
       ffmpeg
@@ -274,7 +196,27 @@ in
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
-  programs.mtr.enable = true;
+  # programs.mtr.enable = true;
+  # programs.gnupg.agent = {
+  #   enable = true;
+  #   enableSSHSupport = true;
+  # };
+  # Some programs need SUID wrappers, can be configured further or are
+  # started in user sessions.
+  services.keyd = {
+    enable = true;
+    keyboards = {
+      default = {
+        ids = ["*"];
+        settings = {
+          main = {
+            capslock = "overload(meta, esc)";
+          };
+        };
+      };
+    };
+  };
+  services.udev.packages = [ pkgs.yubikey-personalization ];
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
@@ -288,22 +230,7 @@ in
       '';
     };
   };
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  services.keyd = {
-    enable = true;
-    keyboards = {
-      default = {
-        ids = ["*"];
-        settings = {
-          main = {
-            capslock = "overload(meta, esc)";
-            esc = "overload(esc, capslock)";
-          };
-        };
-      };
-    };
-  }; 
+  programs.mtr.enable = true;
   services.openssh = {
     enable = true;
     settings = {
@@ -312,7 +239,6 @@ in
       PermitRootLogin = "no";    
     };
   };
-  services.pcscd.enable = true;
   # List services that you want to enable:
   services.dbus.packages = [
     pkgs.dbus.out
@@ -322,7 +248,8 @@ in
     enable = true;
     systemCronJobs = [
       "* * * * *         ${username}    date >> /home/${username}/.cache/test.log"
-      "*/30 * * * *      ${username}    /home/${username}/.scripts/.venv/bin/python3 /home/${username}/.scripts/manga_update.py"
+      # "*/30 * * * *      ${username}    /home/${username}/.scripts/.venv/bin/python3 /home/${username}/.scripts/manga_update.py"
+      "*/5 * * * *      ${username}     /home/${username}/.scripts/bat_notify.sh"
     ];
   };
   # List services that you want to enable:
@@ -342,6 +269,6 @@ in
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = stateVersion; # Did you read the comment?
-  # environment.etc."current-packages".text = formatted;
+  system.stateVersion = "23.05"; # Did you read the comment?
+
 }

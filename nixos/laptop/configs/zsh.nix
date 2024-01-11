@@ -1,10 +1,7 @@
-{ config,
-  pkgs,
-  username,
-  ...}:
+{config, pkgs, ...}:
 {
 	programs.zsh = {
-        enable = true;    
+		enable = true;
 		enableCompletion = true;
 		enableAutosuggestions = true;
 		syntaxHighlighting.enable = true;
@@ -26,13 +23,13 @@
             zstyle ':completion:*' menu select # select completions with arrow keys
             zstyle ':completion:*' group-name \'\' # group results by category
             zstyle ':completion:::::' completer _expand _complete _ignored _approximate #enable approximate matches for completion
-	    # source /home/${username}/.scripts/.venv/bin/activate
-	    #source /home/${username}/.local/bin/.venv/bin/activate
-            export PATH=$PATH:/home/${username}/.local/bin:/home/${username}/.cargo/bin:/home/${username}/.spicetify
+	    # source /home/USER_NAME/.scripts/.venv/bin/activate
+	    #source /home/USER_NAME/.local/bin/.venv/bin/activate
+            export PATH=$PATH:/home/USER_NAME/.local/bin:/home/USER_NAME/.cargo/bin:/home/USER_NAME/.spicetify
             export NIX_PAGER=cat
             export PROMPT_EOL_MARK=" "
-            [ -f "$HOME/.config/zsh/colors_and_functions.zsh" ] && source $HOME/.config/zsh/colors_and_functions.zsh
             source ${pkgs.autojump}/share/zsh/site-functions/autojump.zsh
+            [ -f "$HOME/.config/zsh/colors_and_functions.zsh" ] && source $HOME/.config/zsh/colors_and_functions.zsh
       '';
         shellAliases = {
             "-s {jpg,png,jpeg}" = "kitty +kitten icat";
@@ -46,13 +43,14 @@
             "7" = "cd -7";
             "755" = "chmod -R 755";
             "775" = "chmod -R 775";
+            "time" = "${pkgs.hyperfine}/bin/hyperfine --runs 1";
+            "benchmark" = "${pkgs.hyperfine}/bin/hyperfine";
             "777" = "chmod -R 777";
             "8" = "cd -8";
             "9" = "cd -9";
-            "time" = "${pkgs.hyperfine}/bin/hyperfine --runs 1";
-            "benchmark" = "${pkgs.hyperfine}/bin/hyperfine";
-            "htop" = "btop";
-            D = "cd ~/Downloads && eza --no-quotes -l -a";
+            "filesys" = "${pkgs.duf}/bin/duf";
+            D = "cd ~/Downloads && eza -a";
+            G = "| grep -i --color=auto";
             YT = "youtube-viewer";
             _="sudo ";
             "rust_dev" = "nix develop -c zsh";
@@ -62,11 +60,10 @@
             bd = "nvim ~/.config/directories";
             bf="nvim ~/.config/files";
             bw="nvim ~/.config/bookmarks";
-            filesys="${pkgs.duf}/bin/duf";
             c="clear";
             cat="bat --paging=never";
             ccat="highlight --out-format=ansi";
-            cf="cd ~/.config && eza --no-quotes -a";
+            cf="cd ~/.config && eza -a";
             cfa="nvim ~/.config/aliasrc";
             cfb="nvim ~/.config/i3blocks/config";
             cfd="nvim ~/.Xdefaults";
@@ -81,12 +78,12 @@
             cfz="nvim /.zshrc";
             traceroute="grc traceroute";
             cp="rsync -rah --info=progress2";
-            d="cd ~/Documents && eza --no-quotes -a";
+            d="cd ~/Documents && eza -a";
             dd="dd status=progress";
             diff="diff --color=auto";
             dload="python3 /home/$USER/downloader-cli/download.py";
             dloads="cd ~/Downloads";
-            dtop="cd ~/Desktop && eza --no-quotes --group-directories-first -l";
+            dtop="cd ~/Desktop && eza --group-directories-first -l";
             du="~/.scripts/dudu.sh";
             e="nvim";
             egrep="grep -E --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox}";
@@ -206,11 +203,10 @@
             intensemap="grc nmap --open -n -A -T4 -v";
             ka="killall";
             l="lazygit";
-            move_ani="cd \"$(fd -td . /mnt/NAS/Anime |fzf)\"";
             lsblk="clear && lsblk";
-            m="cd ~/Music && eza --no-quotes -a";
+            m="cd ~/Music && eza -a";
             magit="nvim -c MagitOnly";
-            manga="eza --no-quotes --group-directories-first -lah --icons /mnt/NAS/Manga";
+            manga="eza --group-directories-first -lah --icons=always /mnt/NAS/Manga";
             md="mkdir -p";
             mp3convert="sh ~/.scripts/mp3convert";
             mp4renm="~/.scripts/setname";
@@ -238,33 +234,33 @@
             npmst="npm start";
             npmt="npm test";
             pip="pip3";
-            pp="cd ~/Pictures && eza --no-quotes -a";
+            pp="cd ~/Pictures && eza -a";
             publicip="curl api.ipify.org";
             python="python3";
             r="ranger";
             rd="rmdir";
             reboot="reboot";
             ref="shortcuts >/dev/null; source ~/.config/shortcutrc";
-            # removeurl="find /mnt/NAS/Anime -type f -name \"*url*\" -exec rm -f {} \; -print";
+            removeurl="find /mnt/NAS/Anime -type f -name \"*url*\" -exec rm -f {} \; -print";
             renames="~/.scripts/rename";
             restartpipewire="systemctl --user restart wireplumber pipewire pipewire-pulse";
-            # rm="rm -iv";
+            rm="rm -iv";
             rmv="rsync -rahvz --info=progress2 --remove-source-files";
             rscp="rsync -rah --info=progress2 --ignore-existing";
             run-help="man";
-            sc="cd ~/.local/bin && eza --no-quotes -a";
+            sc="cd ~/.local/bin && eza -a";
             scripts="cd ~/.scripts/";
             sdn="sudo shutdown -h now";
             shutdown="umount -R /mnt/ ; sudo shutdown -h now";
             sorts="sort | uniq -c | sort -n";
             speedtest="speedtest-cli";
             ssh="kitty +kitten ssh";
-            tree="eza --no-quotes -lah --tree --icons";
+            tree="eza -lah --tree --icons=always";
             v="nvim";
             vi="vim";
             vim="nvim";
             vimdiff="nvim -d";
-            vv="cd ~/Videos && eza --no-quotes -a";
+            vv="cd ~/Videos && eza -a";
             weath="less -S ~/.local/share/weatherreport";
             web="~/.scripts/yt";
             x="exit";
@@ -284,8 +280,6 @@
                 "npm"
                 "brew"
                 "history-substring-search"
-                "git"
-                "web-search"
             ];
         };
     };

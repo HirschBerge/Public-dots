@@ -133,7 +133,7 @@
               }
               {
                 name = "Dots";
-                url = "https://github.com/HirschBerge/my-dotfiles";
+                url = "https://github.com/HirschBerge/.dotfiles";
               }
               {
                 name = "Scripts";
