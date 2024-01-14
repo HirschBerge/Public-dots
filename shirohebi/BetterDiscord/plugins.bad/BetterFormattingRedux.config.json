@@ -1,0 +1,58 @@
+{
+    "currentVersionInfo": {
+        "version": "2.3.12",
+        "hasShownChangelog": true
+    },
+    "settings": {
+        "toolbar": {
+            "bold": true,
+            "italic": true,
+            "underline": true,
+            "strikethrough": true,
+            "spoiler": true,
+            "code": true,
+            "codeblock": true,
+            "superscript": true,
+            "smallcaps": true,
+            "fullwidth": true,
+            "upsidedown": true,
+            "varied": true,
+            "leet": false,
+            "thicc": false
+        },
+        "formats": {
+            "superscript": true,
+            "smallcaps": true,
+            "fullwidth": true,
+            "upsidedown": true,
+            "varied": true,
+            "leet": false,
+            "thicc": false
+        },
+        "wrappers": {
+            "superscript": "^^",
+            "smallcaps": "%%",
+            "fullwidth": "##",
+            "upsidedown": "&&",
+            "varied": "==",
+            "leet": "++",
+            "thicc": "$$"
+        },
+        "formatting": {
+            "fullWidthMap": true,
+            "reorderUpsidedown": true,
+            "fullwidth": true
+        },
+        "plugin": {
+            "hoverOpen": true,
+            "chainFormats": true,
+            "closeOnSend": true
+        },
+        "style": {
+            "icons": true,
+            "rightSide": true,
+            "toolbarOpacity": 1,
+            "fontSize": 85
+        }
+    }
+}

@@ -1,10 +1,8 @@
-{ config, pkgs, ... }:
+{ config, pkgs,inputs, ... }:
 {
   programs.hyprland = {
     enable = true;
-    # No longer exists as it is not necessary.
-    # enableNvidiaPatches = true;
-    xwayland.enable = true;
+    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
   };
 
   environment.sessionVariables = {

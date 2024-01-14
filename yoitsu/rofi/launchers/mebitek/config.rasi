@@ -1,0 +1,4 @@
+@theme "~/.config/rofi/pick.rasi"
+configuration {
+    terminal: "/usr/bin/kitty";
+  }

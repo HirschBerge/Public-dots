@@ -1,0 +1,62 @@
+/**
+ * @name Pitou
+ * @author NFLD99
+ * @version ersion auto updates
+ * @description Thank you for choosing NFLD Inc!
+ * @source https://github.com/NFLD99/Better-Discord
+ * @website https://nfld99.com/
+ * @patreon https://nfld99.com/patreon
+ * @authorLink https://discordhub.com/profile/483413721876529174
+ * @donate https://nfld99.com/paypal
+ * @authorId 483413721876529174
+ * @invite kWRYPrq
+*/
+
+  @import url(https://nfld99.github.io/Better-Discord/Source_Code/Master_Code.css);
+@import url(https://nfld99.github.io/Better-Discord/Source_Code/Addons/Use_Animations/Yes.css);
+@import url(https://nfld99.github.io/Better-Discord/Source_Code/Addons/Use_Fonts/Yes.css);
+@import url(https://nfld99.github.io/Better-Discord/Source_Code/Addons/Use_Popup/Yes.css);
+@import url(https://nfld99.github.io/Better-Discord/Source_Code/Addons/Use_Hide/Channels/No.css);
+@import url(https://nfld99.github.io/Better-Discord/Source_Code/Addons/Use_Hide/Chat_Title_Bar/No.css);
+@import url(https://nfld99.github.io/Better-Discord/Source_Code/Addons/Use_Hide/Invites/No.css);
+@import url(https://nfld99.github.io/Better-Discord/Source_Code/Addons/Use_Hide/Members/No.css);
+@import url(https://nfld99.github.io/Better-Discord/Source_Code/Addons/Use_Hide/Windows_Bar/No.css);
+@import url(https://nfld99.github.io/Better-Discord/Source_Code/Addons/Use_Hide/Offline/Yes.css);
+@import url(https://nfld99.github.io/Better-Discord/Source_Code/Addons/Use_Hide/Popout_Footer/Yes.css);
+@import url(https://nfld99.github.io/Better-Discord/Source_Code/Addons/Use_Transparency/Yes.css);
+@import url(https://nfld99.github.io/Better-Discord/Source_Code/Addons/Use_Chat_Bubbles/No.css);
+:root{
+	--Background-Colour: #000000;
+	--Chat-Input-Background: rgba(1, 236, 255, 0);
+	--Chat-Input-Colour: #34d4fb;
+	--Secondary-Main-Colour: rgba(191, 0, 250, 0.5);
+	--Main-Colour: #9e6dc8;
+	--Notification-Colour: #ff0000;
+	--Popout-Main-Colour: #9e6dc8;
+	--Popout-Text-Shadow-Colour: rgba(0, 0, 0, 0.4);
+	--Secondary-Background-Colour: rgba(0, 0, 0, 0.3);
+	--Scroller-Colour: rgba(158, 109, 200, 0);
+	--Settings-Dock-Colour: #9e6dc8;
+	--Text-Shadow-Colour: rgba(115, 20, 118, 0.4);
+	--Timestamp-Colour: rgba(0, 236, 255, 0.5);
+	--Unread-Message-1: #d2ff00;
+	--Unread-Message-2: #e7fc00;
+	--Chat-Background: url(https://wallpaperaccess.com/full/2107885.png);
+	--Settings-Background: url(https://wallpaperaccess.com/full/2107885.png);
+	--Callout-Background: url(https://wallpaperaccess.com/full/2107885.png);
+	--Title-Background: https:/https://wallpaperaccess.com/full/2107885.pngvignette.wikia.nocookie.net/hunterxhunter/images/0/0d/116_-_Neferpitou_protects_Komugi.png/revision/latest?cb=20140212133214;
+	--Popout-Background: url(https://i.pinimg.com/236x/04/90/6b/04906b6297c670a24e9dba506e9652db--best-girl-kawaii-girl.jpg);
+	--Emote-Popout-Background: url(https://wallpaperaccess.com/full/2107885.png);
+	--Theme-Variant: "";
+	--Chat-Font-Used: /**/;
+	--load1: "Don't forget to drink water";
+	--load2: "Game all dayyy";
+	--load3: "Teabag the haters";
+	--File-Updated-2020-5-27: /**/;
+	--Guild-Columns: 1;
+	--ServerFolders-Guild-Columns: 2;
+	--Unread-Message-Speed: 1.5s;
+	--Chat-Font-Size: 15px;
+	--Chat-Avatar-Border-Radius: 4px;
+	--Background-Darkness: 0.7;
+}

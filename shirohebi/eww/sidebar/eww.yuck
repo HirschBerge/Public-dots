@@ -1,0 +1,430 @@
+;; CAL VARS
+(defpoll calendar_day :interval "10h" "date '+%d'")
+(defpoll calendar_year :interval "10h" "date '+%Y'")
+(defpoll calendar_date :interval "12h" "date '+%A, %d %B'")
+(defpoll today :interval "12h" "date '+%a, %d %B'")
+(defpoll time :interval "5s" "date '+%H:%M'")
+
+;; ENV VARS
+(defpoll wm :interval "12h" "echo $XDG_CURRENT_DESKTOP")
+(defpoll shell :interval "1h" "echo $SHELL | awk -F'/' '{print $NF}'")
+(defpoll term :interval "1h" "notify-send $(echo $TERM | awk -F'-' '{print $NF}')")
+(defpoll uptime :interval "1m" "w |grep -m 1 tty |awk '{ print $4 }'")
+;; (defpoll packages :interval "15m" "nix-store --query --requisites /run/current-system/sw |wc -l")
+(defpoll updates_poll :initial "..." :interval "10m" "bash $HOME/.config/eww/scripts/packages.sh") 
+;; MUSIC VARS
+(defpoll music-art :interval "1s" "$HOME/.config/eww/scripts/mediacontrol coverloc")
+(defpoll music-title :interval "1s" "$HOME/.config/eww/scripts/mediacontrol title")
+(defpoll music-artist :interval "1s" "$HOME/.config/eww/scripts/mediacontrol artist")
+(defpoll music-toggle :interval "1s" "$HOME/.config/eww/scripts/mediacontrol statusicon")
+(defpoll music-status :interval "1s" "$HOME/.config/eww/scripts/mediacontrol status")
+(defpoll music-position :interval "1s" "$HOME/.config/eww/scripts/mediacontrol position")
+(defpoll music-length :interval "1s" "$HOME/.config/eww/scripts/mediacontrol length")
+(defpoll music-positions :interval "1s" "$HOME/.config/eww/scripts/mediacontrol positions")
+(defpoll music-lengths :interval "1s" "$HOME/.config/eww/scripts/mediacontrol lengths")
+(defpoll music-shuffle-color :interval "1s" "$HOME/.config/eww/scripts/mediacontrol shufflecolor")
+(defpoll music-loop-icon :interval "1s" "$HOME/.config/eww/scripts/mediacontrol loopicon")
+(defpoll music-loop-color :interval "1s" "$HOME/.config/eww/scripts/mediacontrol loopcolor")
+(defvar music-rev false)
+
+(deflisten volume `bash ./scripts/audio --get-vol`)
+
+;; WEATHER VARS
+(defpoll weather_json :interval "1m" "$HOME/.config/eww/scripts/Weather.sh")
+;; (defpoll weather_temp :interval "30m" :initial "0"
+;; 	"$HOME/.config/eww/scripts/Weather.sh current_temp")
+;; (defpoll weather_desc :interval "30m"
+;; 	"$HOME/.config/eww/scripts/Weather.sh weather_desc")
+;; (defpoll weather_feels_like :interval "30m"
+;; 	"$HOME/.config/eww/scripts/Weather.sh feels_like")
+;; (defpoll weather_humidity :interval "30m"
+;; 	"$HOME/.config/eww/scripts/Weather.sh humidity")
+;; (defpoll weather_icon :interval "30m"
+;; 	"$HOME/.config/eww/scripts/Weather.sh icon")
+;; (defpoll weather_wind :interval "30m"
+;; 	"$HOME/.config/eww/scripts/Weather.sh wind")
+;; (defpoll sun_rise :interval "30m"
+;; 	"$HOME/.config/eww/scripts/Weather.sh rise")
+;; (defpoll sun_set :interval "30m"
+;; 	"$HOME/.config/eww/scripts/Weather.sh set")
+
+(defpoll memory :interval "5s"
+    "$HOME/.config/eww/scripts/memory")
+(defpoll cpu :interval "5s"
+    "$HOME/.config/eww/scripts/cpu")
+(defpoll temp :initial 30 :interval "10s" `sensors | rg temp1 | rg -o "\\d+.\\d+" | head -1`)
+
+(deflisten workspaces0 "hyprland-workspaces `hyprctl monitors -j | jq -r \".[0].name\"`")
+
+(defpoll quote :interval "24h" "$HOME/.config/eww/scripts/quotes --quote-and-quotee")
+
+(defpoll IP_ADDR :interval "1m" "ip -br a |rg UP | awk '/enp6/ {print $3 }'")
+
+(defvar idle_state "󱄅")
+
+(defpoll window :interval "0.5s" "$HOME/.config/eww/scripts/window-title.sh")
+
+;; Widgets
+
+(defwidget dash []
+    (box :class "dash" :orientation "h")
+)
+
+(defwidget idle_inhib []
+    (button :class "idle"
+      :height 26
+      :onclick "$HOME/.config/eww/scripts/idle_inhib.sh"
+      "${idle_state}")
+)
+
+(defwidget workspaces0 []
+    (box :class "workspaces-box" 
+        (box :class "workspaces" :halign "center" 
+            (eventbox :onscroll "hyprctl dispatch workspace `echo {} | sed 's/up/+/\' | sed 's/down/-/'`1"
+                (box :class "workspaces" :spacing 6
+                    (for i in workspaces0
+                    (button
+                    :onclick "hyprctl dispatch workspace ${i.id}"
+                    :class "${i.class}"
+                    "${replace(i.name, '[0-9]', '󰄯')}")
+                    )
+                )
+            )
+        )
+    )
+)
+
+(defwidget cal[]
+    (box :class "cal-container" :orientation "v" :space-evenly "false" :halign "center"
+        (box  :class "cal-box" :orientation "v" :space-evenly "false"
+            (label :class "clock" :text time)
+            (label :class "date" :text today)
+        )   
+        (box :class "cal-window" :orientation "h"
+            (calendar :class "day-names" :day calendar_day :orientation "v"
+                      :class "month-year" :year calendar_year)
+        )
+    )
+)
+
+(defwidget info []
+    (box :class "info-box-outer" :orientation "h" :space-evenly false :halign "center"
+        (box :class "info-box-top" :orientation "v" :space-evenly false
+            (box :class "info-box-inner" :orientation "h" :space-evenly false
+                (box :class "info-box-left" :orientation "v" :space-evenly false
+
+                    (label :class "info-icon" :text " :")
+                    (label :class "info-icon" :text "󰅐 :")
+                    (button :class "info-icon-2"
+                      :onclick "kitty $HOME/.scripts/rebuild.sh"
+                      :timeout "999999999"
+                      :tooltip "Click to Rebuild."
+                      (label :text " :")))
+
+
+                (box :class "info-box-right" :orientation "v" :space-evenly false
+                    (label :class "info-text" :halign "start" :text "${wm}")
+                    (label :class "info-text" :halign "start" :text "${uptime}")
+                    (label :class "info-text-2" :halign "start" :text "${updates_poll}")
+                )
+            )
+        )
+    )
+)
+
+(defwidget quote []
+	(box :class "quote-container" :orientation "v" :hexpand "false" :vexpand "true" :space-evenly "false" :width 100
+        (label :class "quote-label" :text "󱀢")
+	    (label :class "quote" :halign "center" :wrap "true" :limit-width 140 :justify "center" :text quote :xalign "0.5")
+    )
+)
+
+(defwidget window-title []
+    (box
+        (label :class "window-title"
+        :halign "center" 
+        :limit-width 16
+        :justify "center"
+        :text "${window}")
+    )
+)
+
+(defwidget player []
+	(box :class "player-art" :orientation "h" :space-evenly true 
+		(box :class "player-info" :orientation "v" :space-evenly false :style "background-image: url('${music-art}')"
+			(box :class "player-tint" :space-evenly false :orientation "v" 
+                (box :class "player-controls" :space-evenly false :spacing 6
+                (button 
+                    :class "player-shuffle" 
+                    :onclick "$HOME/.config/eww/scripts/mediacontrol --shuffle" 
+                    :style "color:${music-shuffle-color}" 
+                    ""
+                    )
+                    (button :class "player-previous" :onclick "$HOME/.config/eww/scripts/mediacontrol --previous" "")
+                    (button :class "player-toggle" :onclick "$HOME/.config/eww/scripts/mediacontrol --toggle" music-toggle)
+                    (button :class "player-next" :onclick "$HOME/.config/eww/scripts/mediacontrol --next" "")
+                    (button 
+                        :class "player-loop" 
+                        :onclick "$HOME/.config/eww/scripts/mediacontrol --loop" 
+                        :style "color:${music-loop-color}" 
+                        music-loop-icon
+                    )                
+                )
+				(box :space-evenly false :orientation "h" :spacing 10
+						(box :space-evenly false :orientation "v" 
+							(label :class "player-title" :halign "start" 
+									:text music-title 
+									:justify "center"
+                                    :wrap "true"
+									:limit-width 40)
+							(label :class "player-artist" :halign "center" 
+									:text music-artist 
+									:justify "center"
+									:limit-width 15)
+					)
+				)
+				(box :class "player-bar" :halign "center"
+					(scale :onchange "playerctl position {}"
+							:min 0 
+							:max music-lengths 
+							:value music-positions)
+				)
+				(box :class "player-position" :space-evenly false :valign "start" :halign "center"
+					(label :class "player-time":text "${music-position} / ${music-length}")	
+				)
+			)
+		)
+	)
+)
+
+(defwidget volume []
+    (box :class "metric" :orientation "h" :space-evenly "false" :halign "center"
+        (label :class "vol-label" :orientation "h" :space-evenly "false" :text "")
+        (scale :min 0
+            :max 150
+            :value volume
+            :orientation "h"
+            :tooltip "Volume: ${volume}%"
+            :onclick "$HOME/.config/eww/scripts/volume --toggle-vol"
+            :onchange "bash ./scripts/audio --set-vol {}")
+        (label :class "vol-text" :text "${volume}%")
+    )
+)
+
+(defwidget weather []
+    (box :class "weather-container" :orientation "v" :space-evenly "false" :halign "center"
+        (box :class "weather-box" :orientation "h" :space-evenly "false" :halign "center" :spacing 10
+            (label :class "weather-icon" :text {weather_json.icon != "" ? "${weather_json.icon}" : ""})
+            (label :class "weather-temp" :text "${weather_json.current_temp}°F")
+        )
+        (box :class "weather-window" :orientation "v" :space-evenly "false" :spacing 2
+            (label :class "weather-feel" :text "${weather_json.weather_desc}"
+                                        :limit-width 32
+                                        :justify "center"
+                                        :wrap "true")
+            (label :class "weather-desc" :text "Feels Like: ${weather_json.feels_like}°F")
+            (label :class "weather-desc" :halign "center" :text "󰖝 ${weather_json.wind} mph")
+            (label :class "weather-desc" :halign "center" :text "  ${weather_json.humidity} %")
+            (label :class "weather-desc" :halign "center" :text "☀ ${weather_json.rise}")
+            (label :class "weather-desc" :halign "center" :text "☾ ${weather_json.set}")
+        )
+    )
+)
+
+
+(defwidget network [] 
+	(box :class "network-label" :orientation "h" :space-evenly "false" :spacing 10 :halign "center"
+        (label :text "${IP_ADDR}")
+    )
+)
+
+(defwidget network-up [] 
+	(box :class "network" :orientation "h" :space-evenly "false" :spacing 10 :halign "center"
+        (box :orientation "h" :class "network-box" 
+            (label :text "󰧇" :class "network-up")
+        )
+        (box :orientation "h" :width 130 
+            (graph  :class "network-graph-up"
+                    :thickness 2
+                    :value {round(EWW_NET.enp6s0.NET_UP / 1024 ,1)}
+                    :time-range "2m"
+                    :min 10
+                    :max 1010
+                    :dynamic "true"
+                    :line-style "round"
+                    :tooltip "${round((EWW_NET.enp6s0.NET_UP / (1024 * 1024)), 1)}MB/s"
+            )
+	    )
+    )
+)
+(defwidget network-down [] 
+	(box :class "network" :orientation "h" :space-evenly "false" :spacing 10 :halign "center"
+        (box :orientation "h" :class "network-box" 
+            (label :text "󰦿" :width 10 :class "network-down")
+        )
+        (box :orientation "h" :width 130
+            (graph  :class "network-graph-down"
+                    :thickness 2
+                    :value {round(EWW_NET.enp6s0.NET_DOWN / 1024 ,1)}
+                    :time-range "2m"
+                    :min 10
+                    :max 1010
+                    :dynamic "true"
+                    :line-style "round"
+                    :tooltip "${round((EWW_NET.enp6s0.NET_DOWN / (1024 * 1024)), 1)}MB/s"
+            )
+	    )
+    )
+)
+
+(defwidget system []
+    (box :class "sys_win" :orientation "h" :space-evenly "true" :hexpand "false" :vexpand "false" 
+        (box :class "sys_cpu_box" :orientation "v" :space-evenly "false" :hexpand "false" :vexpand "false"
+            (circular-progress 
+                    :value cpu
+                    :class "sys_cpu"
+                    :thickness 8
+                    :tooltip "${EWW_TEMPS.ASUSEC_CPU}°C"
+                (label :text "󰻠"
+                    :class "sys_icon_cpu"
+                    :limit-width 4
+                    :show_truncated false
+                    :wrap false))
+            (label :class "cpu_perc" :valign "center" :text "${cpu}%")
+        )
+        (box :class "sys_mem_box" :orientation "v" :space-evenly "false" :hexpand "false" :vexpand "false"
+            (circular-progress 
+                    :value memory
+                    :class "sys_mem"
+                    :thickness 8
+                    :tooltip "${round((EWW_RAM.used_mem / 1024 / 1024 / 1000), 1)}GB"
+              (label :text ""
+                    :class "sys_icon_mem"
+                    :limit-width 4
+                    :show_truncated false
+                    :wrap false
+                    :angle 0.0))
+            (label :class "mem_perc" :halign "center" :text "${memory}%")
+        )
+    )
+)
+
+(defwidget apps []
+    (box :class "app-container" :orientation "v" :space-evenly "true" :hexpand "false" :vexpand "false" :halign "center"
+    (label :text "Apps" :class "app-label")
+        (box :class "app-box" :orientation "h" :space-evenly "false" :hexpand "false" :vexpand "false" :spacing 10
+            (button :class "app-firefox" 
+			    :onclick "firefox 2> /dev/null" "")
+	        (button :class "app-files" 
+			    :onclick "thunar 2> /dev/null" "")
+            (button :class "app-code"
+                :timeout "1000ms"
+			    :onclick "kitty nvim /etc/nixos/home.nix +':cd %:h' 2> /dev/null" "󰘦")
+            (button :class "app-spotify" 
+			    :onclick "$HOME/.config/eww/scripts/spot-play.sh 2> /dev/null" "")
+            (button :class "app-steam"
+                :onclick "steam 2> /dev/null" "󰓓")
+        )
+    )
+)
+
+(defwidget functions []
+    (box :class "function-container" :orientation "v" :space-evenly "true" :hexpand "false" :vexpand "false" :halign "center"
+    (label :text "Functions" :class "function-label")
+        (box :class "function-box" :orientation "h" :space-evenly "false" :hexpand "false" :vexpand "false" :spacing 10
+            (button :class "idle"
+                :onclick "firefox https://search.nixos.org/packages"
+                :onmiddleclick "firefox https://search.nixos.org/options"
+                :onrightclick "firefox https://mipmip.github.io/home-manager-option-search/"
+		    "${idle_state}")
+            (button :class "screenshot"
+                :onclick "sleep 0.1; bash $HOME/.config/hypr/scripts/screenshot --area 2> /dev/null"
+                :timeout "500ms"
+                :tooltip "Screenshot"
+            (label :text "󰹑" :class "tooltip"))
+            (button :class "wallpaper"
+                :onclick "bash $HOME/.config/hypr/scripts/wayground.sh 2> /dev/null"
+                :tooltip "Wallpaper"
+            (label :text "" :class "tooltip"))
+            (button :class "keybind"
+                :onclick "bash $HOME/.config/hypr/scripts/show_binds.sh 2> /dev/null"
+                :timeout "1000ms"
+                :tooltip "Keybindings"
+            (label :text "" :class "tooltip"))
+            (button :class "logout"
+                :onclick "wlogout 2> /dev/null"
+                :tooltip "Logout"
+            (label :text "󰍃" :class "logout")
+            )
+        )
+    )
+)
+
+
+(defwidget powermenu []
+    (box :class "powermenu" :orientation "h" :space-evenly false :halign "center" :spacing 12
+        (button :class "lock"
+                :onclick "$HOME/.config/eww/scripts/lock.sh"
+                :tooltip "Lock"
+                (label :text "" :class "lock")
+        )
+        (button :class "logout"
+                :onclick "$HOME/.config/eww/scripts/logout.sh"
+                :tooltip "Logout"
+                (label :text "󰍃" :class "logout")
+        )
+        (button :class "reboot"
+                :onclick "doas reboot"
+                :tooltip "Reboot"
+                (label :text "" :class "reboot")
+        )
+        (button :class "shutdown"
+                :onclick "doas poweroff"
+                :tooltip "Shutdown"
+                (label :text "󰐥" :class "poweroff")
+        )
+    )
+)
+
+(defwidget right []
+    (box :class "right" :orientation "v" :space-evenly "false"
+	    (functions)
+        ;; (cal)
+        (dash)
+        ;; (workspaces0)
+        (window-title)
+        ;; (dash)
+        (info)
+        (dash)
+        (apps)
+        (dash)
+        ;; (dash)
+        (player)
+        (volume)
+        (dash)
+        ;; (quote)
+        ;; (dash)
+        (network)
+        (network-up)
+        (network-down)
+        (dash)
+        (system)
+	    (dash)
+        (weather)
+    )
+)
+
+(defwindow sidebar
+    :monitor 0
+    :geometry (geometry :x "2px"
+                        :y "3px"
+                        :width "100px"
+                        :height "97%"
+                        :anchor "right center")
+    :stacking "fg"
+    :windowtype "dock"
+    :exclusive true
+        (box :class "main-container"
+        (right)
+    )
+)

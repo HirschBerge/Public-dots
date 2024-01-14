@@ -1,0 +1,11 @@
+{
+	"all": {
+		"amounts": {
+			"splitCounter": 0,
+			"maxPages": 0
+		},
+		"general": {
+			"byNewlines": false
+		}
+	}
+}

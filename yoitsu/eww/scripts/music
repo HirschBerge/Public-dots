@@ -1,0 +1,139 @@
+#!/usr/bin/env bash
+
+## Get data
+STATUS="$(playerctl status)"
+
+BRed='\033[1;31m'
+BPurple='\033[1;35m'      # Purple
+NoColor="\033[0m"
+BGreen='\033[1;32m'       # Green
+## Get status
+get_status() {
+	while true; do
+		if [ "$(playerctl status)" = "Playing" ]; then
+			echo ""
+		else
+			echo "喇"
+		fi
+		sleep 1
+	done
+}
+get_source() {
+  echo $(playerctl metadata |awk '/trackid/ { print $1 }')
+}
+## Get song
+get_song() {
+	while true; do
+	  song="$(playerctl metadata xesam:title)"
+		if [[ -z "$song" ]] || [[ "Plex" = "$song" ]]; then
+			echo "Play something."
+      song="Offline"
+		else
+			echo "$song"
+		fi
+		sleep 1
+	done		
+}
+
+## Get artist
+get_artist() {
+	while true; do
+		artist="$(playerctl metadata xesam:artist)"
+		if [[ -z "$artist" ]]; then
+			echo "Nothing Playing."
+		else
+			echo "$artist"
+		fi
+		sleep 1
+	done	
+}
+
+
+## Get cover
+get_cover() {
+	  if [ "$(playerctl status)" = "Playing" ] || [ "$(playerctl status)" == "Paused" ];then
+        path_img="$(playerctl metadata mpris:artUrl 2>/dev/null | sed 's/file:\/\///g')"
+        if [ -z "$path_img" ]; then
+          echo "$HOME/.config/eww/dashboard/img/music"
+        else
+          echo $path_img
+        fi
+	  else
+	    echo "$HOME/.config/eww/dashboard/img/music"
+	  fi
+		sleep 1
+}
+dl_cover(){
+  base_dir="$HOME/.cache"
+    if [ "$(playerctl status)" = "Playing" ]; then
+      # Get album art URL using D-Bus
+      album_art_url=$(playerctl metadata mpris:artUrl)
+      if [ -n "$album_art_url" ]; then
+      # Get the current song name
+        song_name="$(playerctl metadata xesam:title)"
+        # echo "stop point 2"
+        if [ -n "$song_name" ]; then
+          # Read the previously stored song name from a file
+          previous_song_name=$(cat "${base_dir}/spotify_song_name.txt" 2>/dev/null)
+          # Compare the current song name with the previously stored one
+          if [ "$song_name" != "$previous_song_name" ]; then
+            # Remove old album art file if it exists
+            rm -f "${base_dir}/image.jpg"
+            # Extract the track ID from the album art URL to uniquely identify the song
+            track_id=$(echo "$album_art_url" | awk -F'/' '{print $(NF-1)}')
+            # Download the album art for the current song as "image.jpg"
+            wget -q -O "${base_dir}/image.jpg" "$album_art_url"
+            # Update the stored song name
+            echo "$song_name" > "${base_dir}/spotify_song_name.txt"
+          fi
+        fi
+      fi
+    fi
+  echo "${base_dir}/image.jpg"
+}
+cover_logic() {
+  while true; do
+    if [ "$(playerctl status)" = "Playing" ] || [ "$(playerctl status)" = "Paused" ] ;then 
+      if playerctl metadata mpris:trackid |rg -q spotify; then dl_cover; else get_cover;fi
+    else
+      echo hello
+      echo "$HOME/.config/eww/dashboard/img/music"
+    fi
+    sleep 1
+  done
+}
+## Toggle status
+toggle() {
+  playerctl play-pause
+}
+
+## Next
+next() {
+  playerctl next
+}
+
+## Previous
+previous() {
+  playerctl previous
+}
+
+## Execute accordingly
+if [[ "$1" == "--song" ]]; then
+	get_song
+elif [[ "$1" == "--artist" ]]; then
+	get_artist
+elif [[ "$1" == "--status" ]]; then
+	get_status
+elif [[ "$1" == "--cover" ]]; then
+  cover_logic	
+elif [[ "$1" == "--toggle" ]]; then
+	toggle
+elif [[ "$1" == "--source" ]]; then
+    get_source
+elif [[ "$1" == "--next" ]]; then
+	next
+elif [[ "$1" == "--prev" ]]; then
+	previous
+else
+  printf "${BRed}[ERROR]${BPurple} Please use one of the following flags ${BGreen}\n--song, --artist, --status,\n--cover, --toggle, --source,\n--next, --prev${BPurple}. Thank you.${NoColor}"
+fi

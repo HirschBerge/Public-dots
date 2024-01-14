@@ -1,0 +1,601 @@
+*{
+	all: unset;
+	// font-family: "JetbrainsMono Nerd Font";
+	font-family: "Termina Test Demi";
+	font-size: 14px;
+}
+
+$white: #F8FBFC;
+$lightgray: #DFE2E3;
+$gray: #C5C8C9;
+$medgray: #797C7D;
+$darkgray: #46494A;
+$black: #1a1b26;
+
+$color1: #df5b61;
+$color2: #eba0ac;
+$color3: #f0a87f;
+$color4: #e4cc9a;
+$color5: #ebafdb;
+$color6: #e9bdbd;
+$color7: #f5e0dc;
+$color8: #5cb37f;
+$color9: #D2F7A6;
+$color10: #C2FFE5;
+$color11: #A358D5;
+$color12: #c350d8;
+$color13: #bc83e3;
+$mauve: #cba6f7;
+$color15: #4e40d4;
+$color16: #1e66f5;
+$blue: #89b4fa;
+$sapphire: #74c7ec;
+$color19: #d6ffff;
+$color20: #1a1b26;
+$color21: #0D0E19;
+$color22: rgba(13, 14, 25, 0.5);
+$color23: rgba(26, 27, 38, 0.7);
+$color24: rgba(36, 40, 59, 0.5);
+$color25: rgba(13, 14, 25, 0.2);
+$color26: rgba(26, 27, 38, 0.2);
+
+
+$bg: rgba(#ffffff,0.1);
+$fg: #dddddd;
+$shadow: rgba(#000000,0.3);
+$border_col: rgba(#cccccc,0.18);
+$best_so_far: rgba(255,255,255,0.1); 
+
+.main-container {
+    background-color: $color23;
+    border-radius: 14px;
+    margin: 8px 8px 8px 0px;
+    // box-shadow: 0px 8px 2px rgba(13, 14, 25, 0.6); /* Adjusted box-shadow to make it go above */
+}
+
+
+.workspaces {
+	background-color: $bg;
+	border-radius: 10px;
+	color: $fg;	
+	margin-bottom: 10px;
+	border: 1px solid $border_col;
+	padding: 6px 20px 4px 20px;
+       	font-size: 22px;
+	box-shadow: 2px 2px 2px $shadow;
+	min-height: 25px;	
+}
+
+.music {
+	background-color: $bg;
+	border-radius: 10px;
+	color: $fg;
+	border: 1px solid $border_col;
+	padding: 5px 15px 5px 14px;
+	margin-bottom: 10px; 
+	font-size: 16px;
+	box-shadow: 2px 2px 2px $shadow;
+	min-width: 230px;
+}
+
+.music_icon {
+    font-size:20px;
+    margin-top: 1px;
+    margin-left:2px;
+}
+
+.music_icon_butt{
+    padding:0px;
+    background:transparent;
+    color: $fg;
+    border:none;
+    margin:0;
+    box-shadow:none;
+    font-style: normal;
+    text-shadow: none;
+}
+
+.music_icon_butt:hover{
+    background: rgba(#ffffff,0.1);
+    color:rgba(#000000,0.5);;
+}
+
+.music_text{
+    margin-top:2px;
+
+}
+.time_battery {
+	background: $bg;
+	border-radius: 10px;
+	color: $fg;
+	font-size: 16px;
+	padding: 5px 15px 5px 14px; 
+	margin-bottom: 10px;
+	border: 1px solid $border_col;
+	box-shadow: 2px 2px 2px $shadow;
+	text-shadow: none;
+}
+
+.time_battery:hover {
+    background: rgba(#ffffff,0.15);
+}
+
+.clipboard_manager{
+    background: transparent;
+}
+
+.clipboard_container{
+    margin-right:10px;
+}
+
+.clipboard-item{
+    background: rgba(#cccccc,0.9);
+    color: black;
+    text-shadow: none;
+    border: 1px solid $border_col;
+    border-radius: 7px;
+    box-shadow: 2px 2px 2px $shadow;
+}
+
+.clipboard-item:hover{
+    background:  rgba(#eeeeee,0.9);
+}
+
+.playlist_selector{
+    background: rgba(#cccccc,0.9);
+    border-radius: 10px;
+}
+
+.playlist_button{
+    background: transparent;
+    color: black;
+    text-shadow: none;
+    border: none;
+    border-bottom: 1px solid gray ;
+    box-shadow: none;
+    border-radius: 10px;
+}
+
+.playlist_button:hover{
+    background: rgba(#eeeeee,0.8);
+}
+button:hover {
+	color: $color16;
+}
+tooltip {
+	color: $lightgray;
+	background-color: $color20;
+	font-weight: bolder;
+}
+
+.dash {
+	background-color: rgba(20, 22, 30, 0.0);
+	margin: 4px 16px 2px 16px;
+	padding: 2px;
+}
+// .workspaces-box {
+// 	padding: 6px;
+// }
+// .workspaces {
+// 	background-color: $color24;
+// 	border-radius: 10px;
+// 	color: $color16;
+// 	padding: 1px 5px 1px 5px;
+// }
+// .workspace-button {
+// 	color: $sapphire;
+// }
+// .workspace-active {
+// 	color:$color12;
+// }
+.window-title {
+	color: $gray;
+	padding: 2px;
+}
+.info-box-left {
+	padding: 4px;
+    padding-top: 4px;
+}
+.info-box-right {
+	padding: 4px;
+    padding-top: 4px;
+}
+.info-icon {
+	color: $mauve;
+}
+.info-text {
+	color: $color19;
+    font-weight: bold;
+}
+
+.sys_win {
+    border-radius: 5px;
+}
+.sys_cpu {
+  color: $color5;
+  background-color: $color22;
+  border-radius: 5px;
+}
+.sys_mem {
+  color: $color2;
+  background-color: $color22;
+  border-radius: 5px;
+}
+.sys_icon_bat {
+  color: #afbea2;
+}
+.sys_icon_cpu {
+	font-size: 12;
+	margin: 15px;
+	color: $color9;
+}
+.sys_icon_mem {
+	font-size: 12;
+	margin: 15px;
+    color: $blue;
+}
+.sys_cpu_box {
+    border-radius: 16px;
+    margin: 10px 10px 10px 10px;
+    padding-left: 20px;
+}
+.sys_mem_box {
+    border-radius: 16px;
+    margin: 10px 10px 10px 10px;
+    padding-right: 20px;
+}
+.mem_perc {
+	color: $sapphire;
+	padding-left: 6px;
+}
+.cpu_perc {
+	color: $color9;
+	padding-left: 6px;
+}
+.network {
+	padding: 5px 0px 5px 0px;
+}
+.network-label {
+	color: $color3;
+	font-size: 16px;
+	font-weight: bold;
+	padding: 10px 0px 4px 0px;
+}
+.network-up {
+  color: $mauve;
+  font-size: 22px;
+}
+.network-down {
+  color: $blue;
+  font-size: 22px;
+}
+.network-graph-up {
+	color: $mauve;
+	padding: 0px;
+	background-color: rgba(203, 166, 247, 0.2);
+}
+.network-graph-down {
+	color: $blue;
+	padding-bottom: 0px;
+	background-color: rgba(122, 162, 247, 0.2);
+}
+
+// CALENDAR ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+.cal-container {
+	border-radius: 10px;
+}
+.cal-box {
+	border-radius: 10px;
+}
+.cal-window {
+	border-radius: 10px;
+	padding-top: 10px;
+}
+.month-year {
+		font-size: 12px;
+		font-weight: bold;
+		margin: 10px;
+		padding: 1px;
+		color: $lightgray;
+}
+.day-names {
+		margin: 10px;
+		font-size: 12px;
+		font-weight: bold;
+		color: $color10;
+}
+
+.weatha {
+	font-size: 15px;
+	font-weight: bold;
+	color: $color9;
+	border-radius: 0px;
+	padding-top: 6px;
+}
+
+.nvidia {
+	font-size: 15px;
+	font-weight: bold;
+	color: $color13;
+	border-radius: 5px;
+	padding-top: 6px;
+}
+
+.date {
+	font-size: 15px;
+	font-weight: bold;
+	color: $color19;
+	border-radius: 10px;
+	padding-left: 6px;
+}
+.time {
+	font-size: 25px;
+	font-weight: bold;
+	color: $color13;
+	border-radius: 10px;
+	padding-right: 6px;
+}
+
+calendar {
+	&:selected {
+		color: $color9;
+	}
+	&:indeterminate {
+		color: rgba(205, 219, 249, 0.3);
+}}
+calendar.button {
+	color: $gray;
+}
+calendar.highlight {
+	color: $sapphire;
+	font-weight: bold;
+	padding: 10px;
+	margin: 10px;
+}
+.app-container {
+	font-size: 28px;
+}
+.app-label {
+	font-size: 18px;
+	color: $blue;
+}
+.app-box {
+	font-size: 32px;
+	color: $color5;
+	padding-bottom: 6px;
+}
+.quote-container {
+	padding-top: 10px;
+}
+.quote-label {
+	font-size: 16px;
+	font-weight: bold;
+	color: $color9;
+}
+.quote {
+	font-size: 12px;
+	font-weight: bold;
+	color: $white;
+	padding: 10px;
+}
+.function-label {
+	font-size: 18px;
+	color: $blue;
+}
+.function-box {
+	font-size: 32px;
+	color: $color1;
+	// padding-bottom: 10px;
+}
+
+// WEATHER ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+.weather-container {
+	border-radius: 10px;
+}
+.weather-window {
+	padding: 6px;
+}
+.weather-box {
+	padding-top: 2px;
+}
+.weather-icon {
+	color: $sapphire;
+	font-size: 32px;
+	font-weight: bold;
+	padding-right: 14px;
+}
+.weather-temp {
+	color: $sapphire;
+	font-size: 30px;
+	font-weight: bold;
+}
+.weather-feel {
+	color: $mauve;
+	font-size: 16px;
+	padding-bottom: 6px;
+}
+.weather-desc {
+	color: $color7;
+	font-size: 14px;
+}
+
+// MUSIC ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+.player-art {
+	border-radius: 12px;
+	padding: 6px;
+	margin-left: 4px;
+}
+.player-info {
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	border-radius: 12px;
+}
+.player-tint {
+	background: linear-gradient(to right, rgb(25, 25, 25, 0.9), rgba(38, 38, 38, 0.4));
+	border-radius: 12px;
+}
+.player-title {
+	font-size: 16px;
+	font-weight: bolder;
+	padding: 8px 0px 4px 2px;
+}
+.player-artist {
+	color: $white;
+	padding: 2px 0px 20px 2px;
+}
+.player-bar scale trough highlight {
+	all: unset;
+    background-image: linear-gradient(to right, $blue, $color12);
+	border-radius: 24px;
+}
+.player-bar scale trough {
+	all: unset;
+	background-color: $darkgray;
+    box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.3);
+	border-radius: 24px;
+	min-height: 5px;
+	min-width: 150px;
+}
+.player-position {
+	color: $lightgray;
+	font-weight: 500;
+	padding: 2px;
+}
+.player-time {
+	font-size: 12px;
+	padding: 4px;
+}
+.player-controls {
+	background: $color25;
+	padding: 2px 0px 2px 0px;
+	border-radius: 10px;
+	margin: 10px 10px 2px 10px;
+}
+.player-toggle {
+	font-size: 32px;
+	color: $color9;
+}
+.player-previous,
+.player-next {
+	font-size: 25px;
+	color: $lightgray;
+}
+.player-toggle:hover,
+.player-previous:hover,
+.player-next:hover {
+	color: $color16;
+}
+.player-shuffle {
+	font-size: 16px;
+	padding-right: 10px;
+	color: $lightgray;
+}
+.player-loop {
+	font-size: 16px;
+	color: $lightgray;
+}
+.player-shuffle:hover,s
+.player-loop:hover {
+	color: $color15;
+}
+.music-loop-color,
+.music-shuffle-color {
+	color: $color3;
+}
+.vol-text {
+	color: $color5;
+	padding-left: 10px;
+}
+.vol-label {
+	color: $gray;
+	padding-right: 10px;
+}
+.vol-text {
+	color: $gray;
+	padding-left: 10px;
+}
+// scale & Metric  ;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+.scale trough {
+	all: unset;
+	background-color: $black;
+	min-width: 150px;
+	min-height: 10px;
+	border-radius: 10px;
+}
+.scale trough highlight {
+	background-color: $color5;
+	border-radius: 10px;
+}
+.metric {
+	font-size: 12px;
+	font-weight: bold;
+	color: $color5;
+	padding-left: 10px;
+}
+.metric scale trough highlight {
+	background: linear-gradient(45deg, $color9 0%, #4e68be  50%, $mauve 100%);
+	border-radius: 6px;
+}
+.metric scale trough {
+	background-color: rgba(20, 22, 30, 0.5);
+	border-radius: 6px;
+	min-height: 10px;
+	min-width: 80px;
+	margin-left: 4px;
+	margin-right: 4px;
+}
+
+// POWER WINDOW ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+.powerframe {
+	background-color: $black;
+	border-radius: 10px;
+	min-width: 108px;
+	min-height: 384px;
+}
+.powermenu {
+	border-radius: 10px;
+	font-size: 24px;
+	padding: 10px;
+}
+.logout {
+	color: $color1;
+}
+.reboot {
+	color: $color2;
+}
+.poweroff {
+	color: $color1;
+}
+.idle {
+	color: $color2;
+}
+.screenshot {
+	color: $color3;
+}
+.wallpaper {
+	color: $color4;
+}
+.keybind {
+	color: $color5;
+}
+.notifications {
+    min-height: 0px;
+    background-color: transparent;
+}
+
+.notif {
+    background-color: #282828;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    border-width: 2;
+    border-color: #fabd2f;
+}
+
+.notif image {
+    padding-right: 10px;
+}
