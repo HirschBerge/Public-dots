@@ -21,7 +21,7 @@ with colors; {
                         bold_italic_font Fira Code SemiBold Nerd Font Complete
 						symbol_map U+1F980 Noto Color Emoji
 						enable_audio_bell no
-						background_opacity 0.6
+						# background_opacity 0.6
 						background_tint 0.6
 						dim_opacity 0.6
 						shell zsh

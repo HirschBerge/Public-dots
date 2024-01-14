@@ -1,0 +1,12 @@
+{
+	"dates": {
+		"lastMessageDate": {}
+	},
+	"general": {
+		"displayText": true
+	},
+	"places": {
+		"userPopout": true,
+		"userProfile": true
+	}
+}
