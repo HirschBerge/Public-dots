@@ -19,7 +19,7 @@
             <img src="https://img.shields.io/badge/NixOS-unstable-blue.svg?style=for-the-badge&labelColor=303446&logo=NixOS&logoColor=white&color=91D7E3">
          </a>
          <a = href="https://github.com/HirschBerge/Public-dots/issues">
-            <img src="https://img.shields.io/github/issues/HirschBerge/Public-dots.svg?style=for-the-badge&labelColor=303446&color=D2F7A6">
+            <img src="https://img.shields.io/github/issues/HirschBerge/anilist_cli.svg?style=for-the-badge&labelColor=303446&color=D2F7A6">
          </a>
          <a href="https://github.com/HirschBerge/Public-dots/blob/main/LICENSE">
             <img src="https://img.shields.io/static/v1.svg?style=for-the-badge&label=License&message=MIT&colorA=313244&colorB=F5A97F&logo=unlicense&logoColor=F5A97F&"/>
@@ -50,25 +50,25 @@ Please review the official [NixOS Installation Guide](https://nixos.wiki/wiki/Ni
 ## Overview
 
 | Category                  | Software/Theme/Distro                                                                                             |
-|---------------------------|---------------------------------------------------------------------------------------------------------------------|
+|---------------------------|-------------------------------------------------------------------------------------------------------------------|
 | OS                        | [NixOS](https://nixos.org/)                                                                                       |
 | Window Manager            | [Hyprland](https://hyprland.org/)                                                                                 |
 | Discord Modifications     | [BetterDiscord](https://betterdiscord.app/)                                                                       |
 | Notification Manager      | [Swaync](https://github.com/ErikReider/SwayNotificationCenter)                                                    |
 | Web Browser               | [Firefox](https://www.mozilla.org/en-US/firefox/new/)                                                             |
-| Video Player              | [MPV](https://mpv.io/)                                                                                           |
-| Text Editor               | [Neovim](https://neovim.io/)                                                                                     |
-| Neovim Distro             | [NVChad](https://nvchad.com/)                                                                                   |
+| Video Player              | [MPV](https://mpv.io/)                                                                                            |
+| Text Editor               | [Neovim](https://neovim.io/) and also trying out [Helix](https://helix-editor.com/)                               |
+| Neovim Distro             | [NVChad](https://nvchad.com/)                                                                                     |
 | Neovim Distro Plugins     | williamboman/mason.nvim, junegunn/fzf.vim, arnamak/stay-centered.nvim, elkowar/yuck.vim, catppuccin/nvim, neovim/nvim-lspconfig, simrat39/rust-tools.nvi, neovim/nvim-lspconfig, mfussenegger/nvim-dap, rust-lang/rust.vim, theHamsta/nvim-dap-virtual-text, hrsh7th/nvim-cmp |
-| CLI File Manager          | [Ranger](https://github.com/ranger/ranger)                                                                       |
-| GUI File Manager          | [Thunar](https://docs.xfce.org/xfce/thunar/start)                                                                |
-| Launcher                  | [Rofi](https://github.com/davatorium/rofi)                                                                       |
-| Bar/Widgets               | [EWW](https://github.com/elkowar/eww)                                                                            |
-| Shell                     | [Zsh](https://www.zsh.org/)                                                                                      |
+| CLI File Manager          | [Ranger](https://github.com/ranger/ranger)                                                                        |
+| GUI File Manager          | [Thunar](https://docs.xfce.org/xfce/thunar/start)                                                                 |
+| Launcher                  | [Rofi](https://github.com/davatorium/rofi)                                                                        |
+| Bar/Widgets               | [EWW](https://github.com/elkowar/eww)                                                                             |
+| Shell                     | [Zsh](https://www.zsh.org/)                                                                                       |
 | Fonts                     | [Termina Test](https://www.cufonfonts.com/font/termina-test), [Jetbrains Nerdfonts Mono](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/JetBrainsMono.zip), [Fira Code](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/FiraCode.zip), [Iosevka Nerd Font](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Iosevka.zip) |
-| Linux ISO Torrents        | [rtorrent](https://github.com/rakshasa/rtorrent)                                                                |
-| `Find` replacement        | [fd](https://github.com/sharkdp/fd) `nix-env -iA nixos.fd` for use in the Installation section                  |
-| `grep` replacement        | [rg](https://github.com/BurntSushi/ripgrep) `nix-env -iA nixos.ripgrep` if needed before installation           |
+| Linux ISO Torrents        | [rtorrent](https://github.com/rakshasa/rtorrent)                                                                  |
+| `Find` replacement        | [fd](https://github.com/sharkdp/fd) `nix-env -iA nixos.fd` for use in the Installation section                    |
+| `grep` replacement        | [rg](https://github.com/BurntSushi/ripgrep) `nix-env -iA nixos.ripgrep` if needed before installation             |
 
 ## Getting Started
 
