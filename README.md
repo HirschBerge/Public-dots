@@ -28,6 +28,13 @@
       <br>
    </div>
 </h1>
+<p align="center">
+   <img src="https://i.imgur.com/efEWq4M.png" width="800px" /> <br>
+</p>
+<p align="center">
+   Screeenshot last updated <b>01/14/24</b>
+</p>
+
 
 # My Dotfiles
 
