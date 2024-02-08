@@ -37,7 +37,7 @@
 ;; Sys Vars
 (defpoll memory :interval "5s"
     "$HOME/.config/eww/scripts/memory")
-(defpoll cpu :interval "5s"
+(defpoll cpu :interval "2s"
     "$HOME/.config/eww/scripts/cpu")
 (defpoll temp :initial 30 :interval "10s" `sensors | rg temp1 | rg -o "\\d+.\\d+" | head -1`)
 
@@ -278,7 +278,7 @@
                     :limit-width 4
                     :show_truncated false
                     :wrap false))
-            (label :class "cpu_perc" :valign "center" :text "${cpu}%")
+            (label :class "cpu_perc" :valign "center" :text "${round(cpu, 0)}%")
         )
         (box :class "sys_mem_box" :orientation "v" :space-evenly "false" :hexpand "false" :vexpand "false"
             (circular-progress 

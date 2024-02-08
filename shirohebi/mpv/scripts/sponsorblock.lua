@@ -14,10 +14,10 @@ local options = {
     categories = "sponsor,intro,outro,interaction,selfpromo,filler",
 
     -- Categories to skip automatically
-    skip_categories = "sponsor,intro,outro,interaction,selfpromo,filler",
+    skip_categories = "sponsor,intro,outro,interaction,selfpromo",
 
     -- If true, sponsored segments will only be skipped once
-    skip_once = true,
+    skip_once = false,
 
     -- Note that sponsored segments may ocasionally be inaccurate if this is turned off
     -- see https://blog.ajay.app/voting-and-pseudo-randomness-or-sponsorblock-or-youtube-sponsorship-segment-blocker
@@ -34,13 +34,13 @@ local options = {
     user_id = "",
 
     -- Name to display on the stats page https://sponsor.ajay.app/stats/ leave blank to keep current name
-    display_name = "",
+    display_name = "Sexay Hirschay",
 
     -- Tell the server when a skip happens
     report_views = true,
 
     -- Auto upvote skipped sponsors
-    auto_upvote = true,
+    auto_upvote = false,
 
     -- Use sponsor times from server if they're more up to date than our local database
     server_fallback = true,
@@ -49,7 +49,7 @@ local options = {
     make_chapters = true,
 
     -- Minimum duration for sponsors (in seconds), segments under that threshold will be ignored
-    min_duration = 1,
+    min_duration = 3,
 
     -- Fade audio for smoother transitions
     audio_fade = false,
@@ -64,10 +64,10 @@ local options = {
     fast_forward = false,
 
     -- Playback speed modifier when fast forwarding, applied once every second until cap is reached
-    fast_forward_increase = 1.0,
+    fast_forward_increase = .2,
 
     -- Playback speed cap
-    fast_forward_cap = 10,
+    fast_forward_cap = 2,
 
     -- Length of the sha256 prefix (3-32) when querying server, 0 to disable
     sha256_length = 4,

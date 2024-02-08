@@ -6,4 +6,4 @@
 # if you don't want a blakc screen.
 
 [ ! -z "$1" ] && notify-send -i "$1" "Wallpaper changed."
-swww img $1
+swww img "$1"

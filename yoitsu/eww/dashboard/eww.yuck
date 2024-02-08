@@ -15,7 +15,7 @@
 (deflisten SONG `bash ../scripts/music --song`)
 (deflisten ARTIST `bash ../scripts/music --artist`)
 (deflisten STATUS `bash ../scripts/music --status`)
-(deflisten COVER `bash ../scripts/music --cover`)
+(deflisten COVER `bash ../scripts/mediacontrol --json |jq .cover`)
 
 
 ;; Calendar vars

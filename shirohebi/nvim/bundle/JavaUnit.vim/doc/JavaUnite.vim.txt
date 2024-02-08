@@ -1,8 +1,0 @@
-*JavaUnite.vim.txt*	Java Unit Test in VIM
-wsdjeg                                                         *JavaUnite.vim*
-
-==============================================================================
-CONTENTS                                              *JavaUnite.vim-contents*
-
-
-vim:tw=78:ts=8:ft=help:norl:

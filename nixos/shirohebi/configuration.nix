@@ -33,17 +33,13 @@ in
         ../common/common_pkgs.nix
         ../common/wayland.nix
         ../common/configs/fonts.nix
+        ./configs/battery.nix
     ];
   # Bootloader.
   boot.loader = {
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
     timeout = 1;
-  };
-  nixpkgs.config.packageOverrides = pkgs: {
-    nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
-      inherit pkgs;
-    };
   };
   security.sudo = {
     enable = true;
@@ -175,6 +171,7 @@ in
   environment.systemPackages = with pkgs; [
       # see ../common/common_pkgs.nix
       themes.abstractguts-themes
+      acpi
   ];
 
   xdg.portal.enable = true;

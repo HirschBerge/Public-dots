@@ -263,7 +263,7 @@ in
             md="mkdir -p";
             mp3convert="sh ~/.scripts/mp3convert";
             mp4renm="~/.scripts/setname";
-            mpv="mpv -fs=yes";
+            # mpv="mpv -fs=yes";
             musicplay="~/.scripts/musicplay";
             mv="mv -i";
             nas="cd ~/NAS/Anime";
@@ -290,7 +290,7 @@ in
             pp="cd ~/Pictures && eza --no-quotes -a";
             publicip="curl api.ipify.org";
             python="python3";
-            r="ranger";
+            r="lf";
             rd="rmdir";
             reboot="reboot";
             ref="shortcuts >/dev/null; source ~/.config/shortcutrc";

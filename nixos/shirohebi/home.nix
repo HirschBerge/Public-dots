@@ -60,60 +60,59 @@ in
 #  ╚██████╗███████╗██║       ██║   ╚██████╔╝╚██████╔╝███████╗███████║
 #   ╚═════╝╚══════╝╚═╝       ╚═╝    ╚═════╝  ╚═════╝ ╚══════╝╚══════╝
 #   
-		btop
-        noto-fonts-color-emoji
-        jetbrains-mono
-        fira-code
-        brightnessctl
-		starship
-		fzf
-		bat
-		axel
-        jq
-        fd
-        lazygit
-		xfce.thunar
-		xfce.tumbler
-		nerdfonts
-		eww-wayland
-		unzip
-        rnnoise-plugin
-		sxiv
-        swaynotificationcenter # dunst# mako
-        swaylock-effects
-        swayidle
-        wlogout
-		betterdiscordctl
-		nmap
-		grc
-		neofetch
-        satty
-		mangohud
-		obsidian
-		zathura
-        xwaylandvideobridge
-		sweet
-		# libsForQt5.qtstyleplugin-kvantum
-        aria
-		ani-cli
-	    zip
-	    rtorrent
-	    lutris
-	    wineWowPackages.full
-	    libnotify
-        yt-dlp
-	    ranger
-	    gimp
-	    p7zip
-	    pavucontrol
-	    autojump
-	    youtube-music
-	    steam
-	    mpv
-	    playerctl
-	    discord
-        pywal
-	    wf-recorder
+    btop
+    noto-fonts-color-emoji
+    jetbrains-mono
+    fira-code
+    brightnessctl
+    starship
+    fzf
+    bat
+    axel
+    jq
+    fd
+    lazygit
+    xfce.thunar
+    xfce.tumbler
+    nerdfonts
+    eww-wayland
+    unzip
+    rnnoise-plugin
+    sxiv
+    swaynotificationcenter # dunst# mako
+    swaylock-effects
+    swayidle
+    wlogout
+    betterdiscordctl
+    nmap
+    grc
+    neofetch
+    satty
+    mangohud
+    obsidian
+    zathura
+    xwaylandvideobridge
+    sweet
+    # libsForQt5.qtstyleplugin-kvantum
+    aria
+    ani-cli
+    zip
+    rtorrent
+    lutris
+    wineWowPackages.full
+    libnotify
+    yt-dlp
+    lf
+    gimp
+    p7zip
+    pavucontrol
+    autojump
+    youtube-music
+    steam
+    playerctl
+    discord
+    pywal
+    wf-recorder
 	];
 	gtk = {
 		enable = true;
@@ -190,6 +189,7 @@ in
     "--header"
     "-o"
     "--no-permissions"
+    "--hyperlink"
     ];
   };
 	# programs.chromium = {
@@ -261,7 +261,7 @@ in
         }
         {
           event = "after-resume";
-          command = "${inputs.hyprland.packages.${pkgs.system}.hyprland}/bin/hyprctl dispatch dpms";
+          command = "${inputs.hyprland.packages.${pkgs.system}.hyprland}/bin/hyprctl dispatch dpms on";
         }
       ];
     };

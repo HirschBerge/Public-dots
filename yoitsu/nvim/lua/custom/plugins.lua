@@ -9,11 +9,38 @@ local plugins = {
       },
     },
   },
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    opts = {
+      routes = {
+        {
+          filter = { event = "notify", find = "No information available" },
+          opts = { skip = true },
+        },
+      },
+      presets = {
+        lsp_doc_border = true,
+      },
+    },
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "rcarriga/nvim-notify",
+    },
+  }, 
   { 'nvim-telescope/telescope-fzf-native.nvim', 
     build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' 
   },
   {
     "junegunn/fzf.vim",
+    version = false,
+  },
+  {
+    "arnamak/stay-centered.nvim",
+    version = false,
+  },
+  {
+    "elkowar/yuck.vim",
     version = false,
   },
   {
@@ -25,14 +52,7 @@ local plugins = {
       end
     end,
   },
-  {
-    "arnamak/stay-centered.nvim",
-    version = false,
-  },
-  {
-    "elkowar/yuck.vim",
-    version = false,
-  },
+  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
   {
     "neovim/nvim-lspconfig",
     config = function()
