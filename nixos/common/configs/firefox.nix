@@ -74,27 +74,27 @@
               bookmarks = [
               {
                 name = "Plex";
-                url = "http://srv-prod-nas.home.USER_NAMEkiss.net:32400/web/index.html#!";
+                url = "http://srv-prod-nas.home.hirschykiss.net:32400/web/index.html#!";
               }
               {
                 name = "Proxmox";
-                url = "https://srv-prod-proxmox.home.USER_NAMEkiss.net:8006/#v1:0:18:4:::::::";
+                url = "https://srv-prod-proxmox.home.hirschykiss.net:8006/#v1:0:18:4:::::::";
               }
               {
                 name = "Home Assistant";
-                url = "http://srv-prod-hac.home.USER_NAMEkiss.net:8123/lovelace/HPCA";
+                url = "http://srv-prod-hac.home.hirschykiss.net:8123/lovelace/HPCA";
               }
               {
                 name = "Router";
-                url = "https://router.home.USER_NAMEkiss.net/network/default/dashboard";
+                url = "https://router.home.hirschykiss.net/network/default/dashboard";
               }
                {
                 name = "Docker";
-                url = "http://srv-prod-docker.home.USER_NAMEkiss.net:9000";
+                url = "http://srv-prod-docker.home.hirschykiss.net:9000";
               }
              {
                 name = "NAS";
-                url = "https://srv-prod-nas.home.USER_NAMEkiss.net/ui/dashboard";
+                url = "https://srv-prod-nas.home.hirschykiss.net/ui/dashboard";
               }
              {
                 name = "";
@@ -122,7 +122,7 @@
               bookmarks = [
               {
                 name = "Home";
-                url = "https://github.USER_NAMEkiss.net/";
+                url = "https://github.hirschykiss.net/";
               }
               {
                 name = "Advent of Code";

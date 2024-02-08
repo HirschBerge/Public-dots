@@ -69,9 +69,9 @@ in
             zstyle ':completion:*' menu select # select completions with arrow keys
             zstyle ':completion:*' group-name \'\' # group results by category
             zstyle ':completion:::::' completer _expand _complete _ignored _approximate #enable approximate matches for completion
-	    # source /home/USER_NAME/.scripts/.venv/bin/activate
-	    #source /home/USER_NAME/.local/bin/.venv/bin/activate
-            export PATH=$PATH:/home/USER_NAME/.local/bin:/home/USER_NAME/.cargo/bin:/home/USER_NAME/.spicetify
+	    # source /home/hirschy/.scripts/.venv/bin/activate
+	    #source /home/hirschy/.local/bin/.venv/bin/activate
+            export PATH=$PATH:/home/hirschy/.local/bin:/home/hirschy/.cargo/bin:/home/hirschy/.spicetify
             export NIX_PAGER=cat
             export PROMPT_EOL_MARK=" "
             source ${pkgs.autojump}/share/zsh/site-functions/autojump.zsh

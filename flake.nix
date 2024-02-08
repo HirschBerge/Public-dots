@@ -29,7 +29,7 @@
         allowUnfreePredicate = _: true;
       };
     };
-    username = "USER_NAME"; #TODO change username
+    username = "hirschy"; #TODO change username
     desktop = "yoitsu"; #TODO Change Desktop name
     laptop = "shirohebi"; #TODO change Laptop name
     system = "x86_64-linux"; #TODO Rarely, change system architecture

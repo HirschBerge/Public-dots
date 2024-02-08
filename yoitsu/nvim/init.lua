@@ -31,7 +31,7 @@ require "plugins"
 local call = vim.call
 local cmd = vim.cmd
 local Plug = vim.fn['plug#']
-local PATH = "/home/USER_NAME/.local/bin/"
+local PATH = "/home/hirschy/.local/bin/"
 call('plug#begin', PATH)
 	Plug 'elkowar/yuck.vim'
 call'plug#end'

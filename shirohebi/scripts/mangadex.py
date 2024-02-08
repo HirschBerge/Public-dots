@@ -73,7 +73,7 @@ def time_it(func):
         print(f"{colored(0,0,255, message)}{colored(0,255,0,taken[:10])}")
     return wrapper
 
-class USER_NAME_MangaDex:
+class Hirschy_MangaDex:
     def __init__(self, manga_id: str = "", title="", start: float = 0, end: float = -1):
         self.cli = MangaDexPy.MangaDex()
         self.manga_id = manga_id
@@ -206,7 +206,7 @@ def main():
     else:
         argument = sys.argv[1]
         if is_valid_uuid(argument):
-            mdex = USER_NAME_MangaDex(manga_id=argument)
+            mdex = Hirschy_MangaDex(manga_id=argument)
             mdex.download_manga_en()
         elif argument == "chapter":
             try:
@@ -214,7 +214,7 @@ def main():
             except:
                 print("Enter a title, please.")
                 exit(1)
-            mdex = USER_NAME_MangaDex(title=titl)
+            mdex = Hirschy_MangaDex(title=titl)
             mdex.chapter_dl()
         elif argument == "updates":
             print("Finding and deleting empty chapters and images....")
@@ -224,11 +224,11 @@ def main():
             d = DiscordWebHook("Spam Incoming!")
             d.send_message("Starting mass updates...", Ping=True)
             for manga in md_list:
-                mdex = USER_NAME_MangaDex(manga_id=manga)
+                mdex = Hirschy_MangaDex(manga_id=manga)
                 mdex.download_manga_en()
             d.send_message("Spam complete!", Ping=False)
         else:
-            mdex = USER_NAME_MangaDex(title=argument)
+            mdex = Hirschy_MangaDex(title=argument)
             mdex.search_dl()
 
 

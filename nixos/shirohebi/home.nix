@@ -160,7 +160,7 @@ in
   programs.git = {
 	  enable = true;
 	  userName = "HirschBerge";
-	  userEmail = "THIS_IS_AN_EMAIL";
+	  userEmail = "hirschy.kirkwood@proton.me";
     delta = {
       enable = true;
       options = {  
