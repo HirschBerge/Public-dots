@@ -59,7 +59,7 @@ def get_latest_chapter(manga_id: str):
             )
             new_chapters, name_manga = download_chapters(latest_list, manga)
             d.send_message(f"This chapter has been downloaded.")
-    with open("/home/USER_NAME/.cache/manga_check.log", "a") as myfile:
+    with open("/home/hirschy/.cache/manga_check.log", "a") as myfile:
         myfile.write(
             f"{(datetime.datetime.now(datetime.timezone.utc)- datetime.timedelta(hours=4)).strftime('%m-%d-%y %H:%M:%S')}: {manga_title}: {latest_chapter.chapter}, {fix_time(latest_chapter.created_at)}\n"
         )

@@ -144,7 +144,7 @@
               gp
             }
             upgrade (){
-              rm $HOME/.mozilla/firefox/USER_NAME/search.json.mozlz4.backup
+              rm $HOME/.mozilla/firefox/hirschy/search.json.mozlz4.backup
               nix flake update $HOME/.dotfiles
               home-manager --flake $HOME/.dotfiles#$USER@yoitsu switch -b backup
               sleep 1
@@ -160,7 +160,7 @@
             }
 
             rebuild (){
-              rm $HOME/.mozilla/firefox/USER_NAME/search.json.mozlz4.backup
+              rm $HOME/.mozilla/firefox/hirschy/search.json.mozlz4.backup
               # nix flake update
               home-manager --flake $HOME/.dotfiles#$USER@yoitsu switch -b backup
               sleep 1

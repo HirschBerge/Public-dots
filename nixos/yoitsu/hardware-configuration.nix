@@ -30,7 +30,7 @@ fileSystems."/mnt/storage" =
     fsType = "btrfs";
   };
 fileSystems."/mnt/NAS" = {
-    device = "srv-prod-nas.home.USER_NAMEkiss.net:/mnt/Main Storage/USER_NAME/USER_NAME";
+    device = "srv-prod-nas.home.hirschykiss.net:/mnt/Main Storage/Hirschy/hirschy";
     fsType = "nfs";
   };
   fileSystems."/" =

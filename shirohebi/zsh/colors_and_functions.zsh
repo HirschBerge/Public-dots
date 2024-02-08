@@ -183,8 +183,8 @@
               printf "${Green}[+]${NoColor} Checking for NFS mounts...\n"
               sleep 1
               mount > ~/.cache/mounts
-              grep USER_NAMEkiss ~/.cache/mounts >/dev/null&& printf "${Red}[+]${NoColor} NFS mount found. Please unmount first.\n"
-              grep USER_NAMEkiss ~/.cache/mounts >/dev/null&& return|| printf "${Green}[+]${NoColor} No NFS mount found.\n"
+              grep hirschykiss ~/.cache/mounts >/dev/null&& printf "${Red}[+]${NoColor} NFS mount found. Please unmount first.\n"
+              grep hirschykiss ~/.cache/mounts >/dev/null&& return|| printf "${Green}[+]${NoColor} No NFS mount found.\n"
               printf "${Green}[+]${NoColor} Checking devices....\n"
               sleep 1
               up=$(nmcli device status | grep "enp" | grep -v dis | awk '{ print $1 }') >/dev/null

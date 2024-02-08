@@ -228,8 +228,8 @@ exec = bash $HOME/.config/hypr/scripts/hypronstart.sh &
 exec = bash $HOME/.config/hypr/scripts/bat_notify.sh --continue &
 exec-once = swww init
 exec = $HOME/.scripts/background/cron.sh ~/Pictures/Monogatari/
-exec-once = /etc/profiles/per-user/USER_NAME/bin/firefox
-exec-once = /etc/profiles/per-user/USER_NAME/bin/discord
+exec-once = /etc/profiles/per-user/hirschy/bin/firefox
+exec-once = /etc/profiles/per-user/hirschy/bin/discord
 # exec-once = ~/.config/hypr/scripts/sleep.sh &
 exec = eww open bar &
   '';
