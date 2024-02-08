@@ -10,12 +10,13 @@
 
 (deflisten nvidia `$HOME/.scripts/nvidia_mon_poly.sh`)
 ;; System
+(defpoll remaining :interval "20s" "acpi -b | awk -F\", \" '{ print $2 \" \" $3 }'")
 (defpoll memory :interval "5s"
     "$HOME/.config/eww/scripts/memory")
 (defpoll cpu :interval "5s"
     "$HOME/.config/eww/scripts/cpu")
 (defpoll temp :initial 30 :interval "10s" `sensors | rg temp1 | rg -o "\\d+.\\d+" | head -1`)
-(defpoll oxidized_weather :initial "..." :interval "1m" `$HOME/.local/bin/weather_app --polybar`)
+(defpoll oxidized_weather :initial "..." :interval "1m" `$HOME/.local/bin/weather_app --bar`)
 (deflisten workspaces0 "hyprland-workspaces `hyprctl monitors -j | jq -r \".[0].name\"`")
 
 (defpoll quote :interval "24h" "$HOME/.config/eww/scripts/quotes --quote-and-quotee")
@@ -76,14 +77,14 @@
         (box :class "info-box-right" :orientation "v" :space-evenly false
           (button :class "info-icon"
                   :onclick "kitty ./scripts/rebuild.sh --rebuild"
-                  :onrightclick "kitty ./scripts/rebuildsh --upgrade"
+                  :onrightclick "kitty ./scripts/rebuild.sh --upgrade"
                   :timeout "999999999"
                   :tooltip "Click to Rebuild, right-click to upgrade."
                   (label :text " :"))
           (label :class "info-text" :halign "start" :text "${packages_uniq}")
         )
         (box :class "info-box-right" :orientation "v" :space-evenly false
-          (label :class "info-icon" :text "󰅐 :")
+          (label :class "info-icon" :text "󰅐 :" :tooltip "${remaining}")
           (label :class "info-text" :halign "start" :text "${uptime}")
         )
       )

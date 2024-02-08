@@ -58,7 +58,7 @@ def download_chapters(sorted_chapters: list, manga, overwrite=False):
             bar()
     print(
         colored(255, 165, 0, "New Chapters Downloaded:"),
-        colored(0, 255, 0, new_chapters),
+        colored(0, 255, 0, f"{new_chapters}"),
     )
     return new_chapters, name_manga
 
@@ -93,7 +93,7 @@ def fix_time(input_timestamp):
         return None
 
 
-def colored(r, g, b, text):
+def colored(r: int, g: int, b: int, text: str):
     return "\033[38;2;{};{};{}m{}\033[38;2;255;255;255m".format(r, g, b, text)
 
 
@@ -130,7 +130,7 @@ def get_manga_title(result):
 class DiscordWebHook:
     def __init__(self, bot_name="Webhook Bot"):
         self.bot_name = bot_name
-        self.webhook_url = "https://discord.com/api/webhooks/1085380232908902420/67yS35DSklhRDQyf9r-9om4ragu6rpXykkQeXoXoRpa5ACcCeNftme_QxMnbzdUDhatO" #Welcome
+        self.webhook_url = "https://discord.com/api/webhooks/1085380232908902420/67yS35DSklhRDQyf9r-9om4ragu6rpXykkQeXoXoRpa5ACcCeNftme_QxMnbzdUDhatO"  # Welcome
 
     def send_message(self, content, image_url=None, Ping=False):
         to_ping = "215327353423921159"
@@ -167,7 +167,7 @@ def get_mdlist():
     base_url = "https://api.mangadex.org"
     creds = {
         "username": "USER_NAME",
-        "password": "password", #I don't really care. I'm sure this is out there in the dataleak anyway, lolol.
+        "password": "password",  # I don't really care. I'm sure this is out there in the dataleak anyway, lolol.
     }
     r = requests.post(f"{base_url}/auth/login", json=creds)
     r_json = r.json()

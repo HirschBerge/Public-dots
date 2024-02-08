@@ -13,7 +13,7 @@
 (defpoll used_per :interval "1m" `eww get EWW_DISK |jq .'["/"]'.used_perc`)
 (defpoll memory :interval "5s"
     "$HOME/.config/eww/scripts/memory")
-(defpoll cpu :interval "5s"
+(defpoll cpu :interval "15s"
     "$HOME/.config/eww/scripts/cpu")
 (defpoll temp :initial 30 :interval "10s" `sensors | rg temp1 | rg -o "\\d+.\\d+" | head -1`)
 (defpoll oxidized_weather :initial "..." :interval "1m" `$HOME/.local/bin/weather_app --bar`)
@@ -21,12 +21,12 @@
 
 (defpoll quote :interval "24h" "$HOME/.config/eww/scripts/quotes --quote-and-quotee")
 
-(defpoll IP_ADDR :interval "1m" "ip -br a |rg UP | awk '/enp7/ {print $3 }'")
+(defpoll IP_ADDR :interval "1m" "ip -br a |rg UP | awk '/enp7/ {print $3 }'|sd '\/.*' ''")
 
 (defpoll window :interval "0.5s" "$HOME/.config/eww/scripts/window-title.sh")
 (defpoll wifi :interval "3s"
         `/home/$USER/.config/eww/Scripts/wifi.py`)
-
+(deflisten vol_icon `bash $HOME/.config/eww/scripts/audio --get-volicon`)
 (defvar idle_state "󱄅")
 (deflisten workspaces :initial "(box (label :text \"󰄯  󰄰  󰄰  󰄰  󰄰\" ))"
 	`/home/$USER/.config/eww/Scripts/workspaces.py`)
@@ -59,7 +59,7 @@
     (volume)
     (network-down)
     (network-up)
-    (network)
+    ; (network)
     (weather)
     (nvidia)
     (system)
@@ -124,7 +124,7 @@
                         :wrap false
                         :halign "start"
                     ))
-                (label :class "cpu_perc" :valign "center" :halign "start" :text " ${cpu}%")
+                (label :class "cpu_perc" :valign "center" :halign "start" :text " ${round(cpu, 0)}%")
             )
         )
         ;; Memory Box
@@ -180,11 +180,11 @@
 
 
 (defwidget network-up [] 
-	(box :class "network" :orientation "h" :space-evenly "false" :spacing 10 :halign "center"
+	(box :class "network" :orientation "h" :space-evenly "false" :halign "center"
         (box :orientation "h" :class "network-box" 
             (label :text "󰧇" :class "network-up")
         )
-        (box :orientation "h" :width 130 
+        (box :orientation "h" :width 110 
             (graph  :class "network-graph-up"
                     :thickness 2
                     :value {round(EWW_NET.enp7s0.NET_UP / 1024 ,1)}
@@ -193,17 +193,17 @@
                     :max 1010
                     :dynamic "true"
                     :line-style "round"
-                    :tooltip "${round((EWW_NET.enp7s0.NET_UP / (1024 * 1024) * 8), 1)}Mb/s"
+                    :tooltip "${round((EWW_NET.enp7s0.NET_UP / (1024 * 1024) * 4), 1)}Mb/s"
             )
 	    )
     )
 )
 (defwidget network-down [] 
-	(box :class "network" :orientation "h" :space-evenly "false" :spacing 10 :halign "center"
+	(box :class "network" :orientation "h" :space-evenly "false" :halign "center"
         (box :orientation "h" :class "network-box" 
-            (label :text "󰦿" :width 10 :class "network-down")
+            (label :text "󰦿" :width 5 :class "network-down")
         )
-        (box :orientation "h" :width 130
+        (box :orientation "h" :width 110
             (graph  :class "network-graph-down"
                     :thickness 2
                     :value {round(EWW_NET.enp7s0.NET_DOWN / 1024 ,1)}
@@ -212,7 +212,7 @@
                     :max 1010
                     :dynamic "true"
                     :line-style "round"
-                    :tooltip "${round((EWW_NET.enp7s0.NET_DOWN / (1024 * 1024) * 8), 1)}Mb/s"
+                    :tooltip "${round((EWW_NET.enp7s0.NET_DOWN / (1024 * 1024) * 4), 1)}Mb/s"
             )
 	    )
     )
@@ -220,15 +220,20 @@
 
 (defwidget volume []
     (box :class "metric" :orientation "h" :space-evenly "false" :halign "start"
-        (label :class "vol-label" :orientation "h" :space-evenly "false" :text "")
+        (label :class "vol-label" :orientation "h" :space-evenly "false" :text "${vol_icon}")
         (scale :min 0
             :max 150
             :value volume
             :orientation "h"
             :tooltip "Volume: ${volume}%"
-            :onclick "$HOME/.config/eww/scripts/volume --toggle-vol"
             :onchange "bash $HOME/.config/eww/scripts/audio --set-vol {}")
-        (label :class "vol-text" :text "${volume}%")
+        (button 
+            :class "info-icon" 
+            :onclick "$HOME/.config/eww/scripts/audio --toggle-vol"
+            :onrightclick "python3 $HOME/.config/eww/scripts/change_dev.py"
+            :timeout "999999999"
+            "${volume}%"
+        )
     )
 )
 (defwidget functions []
@@ -266,27 +271,7 @@
 )
 
 (defwidget network [] 
-	(box :class "network-label" :orientation "h" :space-evenly "false" :spacing 1 :halign "center"
-        (label :text "${IP_ADDR}")
+	(box :class "network-label" :orientation "h" :limit-width 20 :space-evenly "false" :halign "start"
+        (label :text "${IP_ADDR}" )
     )
 )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

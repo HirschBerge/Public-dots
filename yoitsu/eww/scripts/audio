@@ -61,7 +61,7 @@ toggle_mic() {
 ## Get Mic
 get_mic() {
 	while true; do
-  	wpctl get-volume $input_dev | grep '^Volume:' | grep -oE '[0-9]{2}' 
+		wpctl get-volume $input_dev | sd '0\.' ''|sd '\.' ''| rg '^Volume:' | rg -o '[0-9]{2,3}'
 		sleep 1
 	done
 }

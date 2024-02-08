@@ -61,30 +61,30 @@ in
 #  ╚██████╗███████╗██║       ██║   ╚██████╔╝╚██████╔╝███████╗███████║
 #   ╚═════╝╚══════╝╚═╝       ╚═╝    ╚═════╝  ╚═════╝ ╚══════╝╚══════╝
 #                                                                    
-        fira-code
-        btop
-		starship
-		fzf
-        jq
-        betterdiscordctl
-		sweet
-        html-tidy
-		nmap
-		grc
-        lazygit
-        ydotool
-		autojump
-		neofetch
-		fd
-        bat
-		rtorrent
-		libnotify
-		ranger
-		axel
-        youtube-music
-		playerctl
-        pywal
-        sass
+    fira-code
+    btop
+    starship
+    fzf
+    jq
+    betterdiscordctl
+    sweet
+    html-tidy
+    nmap
+    grc
+    lazygit
+    ydotool
+    autojump
+    neofetch
+    fd
+    bat
+    rtorrent
+    libnotify
+    lf
+    axel
+    youtube-music
+    playerctl
+    pywal
+    sass
 #  ████████╗██╗  ██╗██╗   ██╗███╗   ██╗ █████╗ ██████╗ 
 #  ╚══██╔══╝██║  ██║██║   ██║████╗  ██║██╔══██╗██╔══██╗
 #     ██║   ███████║██║   ██║██╔██╗ ██║███████║██████╔╝
@@ -103,7 +103,7 @@ in
 #                                                                                        
 		unrar
 		p7zip
-        unzip
+    unzip
 		zip
 #  ███╗   ███╗███████╗██████╗ ██╗ █████╗ 
 #  ████╗ ████║██╔════╝██╔══██╗██║██╔══██╗
@@ -111,21 +111,18 @@ in
 #  ██║╚██╔╝██║██╔══╝  ██║  ██║██║██╔══██║
 #  ██║ ╚═╝ ██║███████╗██████╔╝██║██║  ██║
 #  ╚═╝     ╚═╝╚══════╝╚═════╝ ╚═╝╚═╝  ╚═╝
-        satty
-		yt-dlp
-		nerdfonts
-		gimp
-		ani-cli
-        xwaylandvideobridge
-		aria
-		mpv
-        mpvScripts.mpris
-        mpvScripts.sponsorblock
-		wf-recorder
-		eww-wayland
-        sxiv
-		pavucontrol
-		rnnoise-plugin
+    satty
+    yt-dlp
+    nerdfonts
+    gimp
+    ani-cli
+    xwaylandvideobridge
+    aria
+    wf-recorder
+    eww-wayland
+    sxiv
+    pavucontrol
+    rnnoise-plugin
 #   ██████╗ ██╗   ██╗██╗     █████╗ ██████╗ ██████╗ ███████╗
 #  ██╔════╝ ██║   ██║██║    ██╔══██╗██╔══██╗██╔══██╗██╔════╝
 #  ██║  ███╗██║   ██║██║    ███████║██████╔╝██████╔╝███████╗
@@ -133,7 +130,7 @@ in
 #  ╚██████╔╝╚██████╔╝██║    ██║  ██║██║     ██║     ███████║
 #   ╚═════╝  ╚═════╝ ╚═╝    ╚═╝  ╚═╝╚═╝     ╚═╝     ╚══════╝
 #                                                           
-        obsidian
+    obsidian
 		discord
 		zathura
 		swaynotificationcenter
@@ -233,6 +230,7 @@ in
     "--header"
     "-o"
     "--no-permissions"
+    "--hyperlink"
     ];
   };
 	# programs.chromium = {
@@ -300,7 +298,7 @@ in
         }
         {
           event = "after-resume";
-          command = "${inputs.hyprland.packages.${pkgs.system}.hyprland}/bin/hyprctl dispatch dpms";
+          command = "${inputs.hyprland.packages.${pkgs.system}.hyprland}/bin/hyprctl dispatch dpms on";
         }
       ];
     };

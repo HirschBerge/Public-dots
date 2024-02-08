@@ -126,7 +126,7 @@ device:epic-mouse-v1 {
     sensitivity = -0.5
 }
 misc {
-  force_hypr_chan = true
+  # force_hypr_chan = true
   mouse_move_enables_dpms = true
 }
 # Enable Floating on Windows
@@ -140,7 +140,7 @@ misc {
 $mainMod = SUPER
 # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
 
-bind = $mainMod, grave, fakefullscreen
+bind = ALT, grave, fakefullscreen
 bind = $mainMod, Return, exec, kitty
 bind = $mainMod, O, killactive, 
 bind = $mainMod, M, exit,

@@ -22,7 +22,9 @@ game_opts["Apex Legends"]="-eac_launcher_settings SettingsDX12.json +fps_max 200
 game_opts["ARMORED CORE™ VI FIRES OF RUBICON™"]="mangohud"
 game_opts["Overwatch® 2"]="MANGOHUD=1"
 game_opts["Cyberpunk 2077"]="--launcher-skip --intro-skip --skipStartScreen"
-game_opts["Baldur's Gate 3"]="--skip-launcher --vulkan"
+# game_opts["Baldur's Gate 3"]="--skip-launcher --vulkan"
+game_opts["Baldur's Gate 3"]="--skip-launcher"
+game_opts["THE FINALS"]="PROTON_ENABLE_NVAPI=1 PROTON_USE_EAC_LINUX=1 DXVK_ASYNC=1 gamemoderun %command%"
 # check steam mount paths
 SteamPaths=`grep '"path"' $SteamLib | awk -F '"' '{print $4}'`
 ManifestList=`find $SteamPaths/steamapps/ -type f -name "appmanifest_*.acf" 2>/dev/null`

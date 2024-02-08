@@ -1,3 +1,0 @@
-module Test {
-  predicate test() {}
-}

@@ -11,7 +11,7 @@ in
      {    label = "hibernate";    action = "${lockAction} ; systemctl hibernate";    text = "Hibernate";    keybind = "h";  }
      {    label = "logout";    action = "hyprctl dispatch exit";    text = "Logout";    keybind = "x";  }
      {    label = "shutdown";    action = "systemctl poweroff";    text = "Shutdown";    keybind = "s";  }
-     {    label = "suspend";    action = "${lockAction} ; systemctl suspend";    text = "Suspend";    keybind = "u";  }
+     {    label = "suspend";    action = "${lockAction} ; hyprctl dispatch dpms off";    text = "Screen Off";    keybind = "u";  }
      {    label = "reboot";    action = "systemctl reboot";    text = "Reboot";    keybind = "r";  }
     ];
     style = ''

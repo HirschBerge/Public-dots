@@ -35,8 +35,8 @@
     recursive = true;
   };
 
-  home.file."${config.xdg.configHome}/ranger" = {
-    source = ../../.. + "/${hostname}" + /ranger;
+  home.file."${config.xdg.configHome}/lf" = {
+    source = ../../.. + "/${hostname}" + /lf;
     recursive = true;
   };
 

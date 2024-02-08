@@ -129,7 +129,7 @@ device:epic-mouse-v1 {
     sensitivity = -0.5
 }
 misc {
-  force_hypr_chan = true
+  # force_hypr_chan = true
   mouse_move_enables_dpms = true
 }
 blurls = dashboard
@@ -226,7 +226,7 @@ bind = $mainMod,x,exec, ${pkgs.wlogout}/bin/wlogout
 bind = $mainMod,l,exec, ~/.config/hypr/scripts/locker.sh
   '';
   home.file."${config.xdg.configHome}/hypr/startup.conf".text = /* bash  */ ''
-exec = bash $HOME/.scripts/hypronstart.sh
+exec = bash $HOME/.config/hypr/scripts/hypronstart.sh
 exec-once = ${pkgs.swww}/bin/swww init
 # exec = $HOME/.scripts/background/cron.sh ~/Pictures/Space/
 exec-once = ${pkgs.discord}/bin/discord &

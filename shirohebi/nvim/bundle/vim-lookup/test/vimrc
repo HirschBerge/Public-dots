@@ -1,4 +1,0 @@
-set runtimepath+=vader.vim
-set runtimepath+=fixture
-set runtimepath+=..
-set hidden

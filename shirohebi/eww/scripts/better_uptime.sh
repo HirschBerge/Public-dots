@@ -14,7 +14,7 @@ converts()
     if [[ $h > 0 ]]; then
             [[ $h = 1 ]] && echo -n "${h}h " || echo -n "${h}h "
     fi
-    if [[ $m > 0 ]]; then
+    if [[ $m > 0 ]] && [[ $d -lt 1 ]]; then
             [[ $m = 1 ]] && echo -n "${m}m " || echo -n "${m}m "
     fi
     if [[ $d = 0 && $h = 0 && $m = 0 ]]; then
