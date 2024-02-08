@@ -116,3 +116,5 @@ If you run into issues doing this, please make an issue and I will try and get i
 | [Frost-Phoenix](https://github.com/Frost-Phoenix/nixos-config) | README.md Ricing guidance             |
 | [Hypr-Dots](https://github.com/prasanthrangan/hyprdots)        | Scripts mostly.                       |
 | [r/UnixPorn](https://www.reddit.com/r/unixporn/)               | More inspiration than you can imagine |
+| [LibrePhoenix(https://github.com/librephoenix)                 | Beautiful guides and great knowledge  |
+| [VimJoyer(https://www.youtube.com/@vimjoyer]                   | Short, simple, concise guides and info|
