@@ -80,7 +80,7 @@
                   :onrightclick "kitty ./scripts/rebuild.sh --upgrade"
                   :onmiddleclick "./scripts/rebuild.sh --home"
                   :timeout "999999999"
-                  :tooltip "Click to Rebuild, right-click to upgrade."
+                  :tooltip "Click to Rebuild,middle to home manage, right-click to upgrade."
                   (label :text " :"))
           (label :class "info-text" :halign "start" :text "${packages_uniq}")
         )

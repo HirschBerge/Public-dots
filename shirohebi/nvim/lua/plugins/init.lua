@@ -11,20 +11,13 @@ local default_plugins = {
       require("base46").load_all_highlights()
     end,
   },
-  {
-    "elkowar/yuck.vim",
-    lazy = true,
-  },
+
   {
     "NvChad/ui",
     branch = "v2.0",
     lazy = false,
   },
-	{
-		"theRealCarneiro/hyprland-vim-syntax",
-		dependencies = { "nvim-treesitter/nvim-treesitter" },
-		ft = "hypr",
-	},
+
   {
     "NvChad/nvterm",
     init = function()
@@ -35,22 +28,12 @@ local default_plugins = {
       require("nvterm").setup(opts)
     end,
   },
-  {
-    "elkowar/yuck.vim",
-    enabled = true,
-  },
+
   {
     "NvChad/nvim-colorizer.lua",
-    opts = function(_, opts)
-      css = {rgb_fn = true;}
-    end,
-    init = function()
-      require("core.utils").lazy_load "nvim-colorizer.lua"
-      require("plugins.configs.colorizer")
-    end,
+    event = "User FilePost",
     config = function(_, opts)
       require("colorizer").setup(opts)
-      
 
       -- execute colorizer as soon as possible
       vim.defer_fn(function()
@@ -73,9 +56,7 @@ local default_plugins = {
   {
     "lukas-reineke/indent-blankline.nvim",
     version = "2.20.7",
-    init = function()
-      require("core.utils").lazy_load "indent-blankline.nvim"
-    end,
+    event = "User FilePost",
     opts = function()
       return require("plugins.configs.others").blankline
     end,
@@ -88,9 +69,8 @@ local default_plugins = {
 
   {
     "nvim-treesitter/nvim-treesitter",
-    init = function()
-      require("core.utils").lazy_load "nvim-treesitter"
-    end,
+    event = { "BufReadPost", "BufNewFile" },
+    tag = "v0.9.2",
     cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
     build = ":TSUpdate",
     opts = function()
@@ -105,22 +85,7 @@ local default_plugins = {
   -- git stuff
   {
     "lewis6991/gitsigns.nvim",
-    ft = { "gitcommit", "diff" },
-    init = function()
-      -- load gitsigns only when a git file is opened
-      vim.api.nvim_create_autocmd({ "BufRead" }, {
-        group = vim.api.nvim_create_augroup("GitSignsLazyLoad", { clear = true }),
-        callback = function()
-          vim.fn.system("git -C " .. '"' .. vim.fn.expand "%:p:h" .. '"' .. " rev-parse")
-          if vim.v.shell_error == 0 then
-            vim.api.nvim_del_augroup_by_name "GitSignsLazyLoad"
-            vim.schedule(function()
-              require("lazy").load { plugins = { "gitsigns.nvim" } }
-            end)
-          end
-        end,
-      })
-    end,
+    event = "User FilePost",
     opts = function()
       return require("plugins.configs.others").gitsigns
     end,
@@ -143,7 +108,9 @@ local default_plugins = {
 
       -- custom nvchad cmd to install all mason binaries listed
       vim.api.nvim_create_user_command("MasonInstallAll", function()
-        vim.cmd("MasonInstall " .. table.concat(opts.ensure_installed, " "))
+        if opts.ensure_installed and #opts.ensure_installed > 0 then
+          vim.cmd("MasonInstall " .. table.concat(opts.ensure_installed, " "))
+        end
       end, {})
 
       vim.g.mason_binaries_list = opts.ensure_installed
@@ -152,9 +119,7 @@ local default_plugins = {
 
   {
     "neovim/nvim-lspconfig",
-    init = function()
-      require("core.utils").lazy_load "nvim-lspconfig"
-    end,
+    event = "User FilePost",
     config = function()
       require "plugins.configs.lspconfig"
     end,
@@ -244,7 +209,7 @@ local default_plugins = {
 
   {
     "nvim-telescope/telescope.nvim",
-    dependencies = { "nvim-treesitter/nvim-treesitter", { "nvim-telescope/telescope-fzf-native.nvim", build = "make" } },
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
     cmd = "Telescope",
     init = function()
       require("core.utils").load_mappings "telescope"
@@ -263,13 +228,11 @@ local default_plugins = {
       end
     end,
   },
-  {
-    "smartpde/telescope-recent-files",
-  },
+
   -- Only load whichkey after all the gui
   {
     "folke/which-key.nvim",
-    keys = { "<leader>", "<c-r>", '"', "'", "`", "c", "v", "g" },
+    keys = { "<leader>", "<c-r>", "<c-w>", '"', "'", "`", "c", "v", "g" },
     init = function()
       require("core.utils").load_mappings "whichkey"
     end,

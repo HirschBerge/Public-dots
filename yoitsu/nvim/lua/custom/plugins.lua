@@ -30,8 +30,8 @@ local plugins = {
       ensure_installed = {
         "rust-analyzer",
         -- "pyright", 
-        -- "mypy",
-        -- "ruff",
+        "mypy",
+        "ruff",
       },
     },
   },
