@@ -3,9 +3,8 @@ local M = {}
 
 -- Path to overriding theme and highlights files
 local highlights = require "custom.highlights"
-
 M.ui = {
-  theme = "tokyodark",
+  theme = "tokyonight",
   -- theme_toggle = { "onedark", "one_light" },
 
   hl_override = highlights.override,

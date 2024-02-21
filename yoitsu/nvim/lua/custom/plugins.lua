@@ -17,7 +17,7 @@ local plugins = {
     end,
   },
   {
-    "jose-elias-alvarez/null-ls.nvim",
+    "nvimtools/none-ls.nvim",
     ft = {"python"},
     opts = function()
       return require "custom.configs.null-ls"
@@ -28,8 +28,8 @@ local plugins = {
     opts = {
       --installed elsewhere
       ensure_installed = {
-        "rust-analyzer",
-        -- "pyright", 
+        -- "rust-analyzer",
+        "pyright",
         "mypy",
         "ruff",
       },
@@ -53,7 +53,7 @@ local plugins = {
       "MunifTanjim/nui.nvim",
       "rcarriga/nvim-notify",
     },
-  }, 
+  },
   {
     "rcarriga/nvim-notify",
     keys = {
