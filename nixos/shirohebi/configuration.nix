@@ -41,6 +41,12 @@ in
     efi.canTouchEfiVariables = true;
     timeout = 1;
   };
+  environment.variables = {
+    EDITOR = "nvim";
+    BROWSER = "firefox";
+    TERMINAL = "kitty";
+    TERM = "kitty";
+  };
   security.sudo = {
     enable = true;
     extraRules = [{
@@ -117,8 +123,8 @@ in
 
   # Configure keymap in X11
   services.xserver = {
-    layout = "us";
-    xkbVariant = "";
+    xkb.layout = "us";
+    xkb.variant = "";
   };
 
   # Enable CUPS to print documents.

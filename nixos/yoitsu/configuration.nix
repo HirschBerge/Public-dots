@@ -73,6 +73,12 @@ in
       options = "--delete-older-than 7d";
     };
   };
+  environment.variables = {
+    EDITOR = "nvim";
+    BROWSER = "firefox";
+    TERMINAL = "kitty";
+    TERM = "kitty";
+  };
   security.sudo = {
     enable = true;
     extraRules = [{
@@ -152,8 +158,8 @@ in
     };
   # Configure keymap in X11
   services.xserver = {
-    layout = "us";
-    xkbVariant = "";
+    xkb.layout = "us";
+    xkb.variant = "";
   };
 
   # Enable CUPS to print documents.
@@ -205,6 +211,7 @@ in
   environment.systemPackages = with pkgs; [
       # see ../common/common_pkgs.nix
       themes.abstractguts-themes
+      godot_4
   ];
 
   # XDG portal

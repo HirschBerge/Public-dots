@@ -51,6 +51,9 @@ local options = {
 
   extensions_list = { "themes", "terms", "fzf" },
   extensions = {
+    recent_files = {
+      stat_files = true,
+    },
     fzf = {
       fuzzy = true,
       override_generic_sorter = true,
@@ -59,5 +62,5 @@ local options = {
     },
   },
 }
-
+require("telescope").load_extension("recent_files")
 return options

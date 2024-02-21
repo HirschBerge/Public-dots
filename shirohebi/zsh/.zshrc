@@ -19,14 +19,14 @@ fi
 # Load aliases and shortcuts if existent.
 #~/.scripts/corona.sh
 /usr/local/bin/weather_app --forecast --location "Pittsburgh"
-[ -f "$HOME/.config/shortcutrc" ] && source "/home/hirschy/.config/shortcutrc"
-[ -f "$HOME/.config/aliasrc" ] && source "/home/hirschy/.config/aliasrc"
-[ -f "$HOME/.config/colorsrc" ] && source "/home/hirschy/.config/colorsrc"
+[ -f "$HOME/.config/shortcutrc" ] && source "/home/USER_NAME/.config/shortcutrc"
+[ -f "$HOME/.config/aliasrc" ] && source "/home/USER_NAME/.config/aliasrc"
+[ -f "$HOME/.config/colorsrc" ] && source "/home/USER_NAME/.config/colorsrc"
 # If you come from bash you might have to change your $PATH.
 #export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/hirschy/.oh-my-zsh"
+export ZSH="/home/USER_NAME/.oh-my-zsh"
 Red="\033[1;31m"
 Green="\033[1;32m"
 NoColor="\033[0m"
@@ -481,8 +481,8 @@ vpn_swap(){
   printf "${Green}[+]${NoColor} Checking for NFS mounts...\n"
   sleep 1
   mount > ~/.cache/mounts
-  grep hirschykiss ~/.cache/mounts >/dev/null&& printf "${Red}[+]${NoColor} NFS mount found. Please unmount first.\n"
-  grep hirschykiss ~/.cache/mounts >/dev/null&& return|| printf "${Green}[+]${NoColor} No NFS mount found.\n"
+  grep USER_NAMEkiss ~/.cache/mounts >/dev/null&& printf "${Red}[+]${NoColor} NFS mount found. Please unmount first.\n"
+  grep USER_NAMEkiss ~/.cache/mounts >/dev/null&& return|| printf "${Green}[+]${NoColor} No NFS mount found.\n"
   printf "${Green}[+]${NoColor} Checking devices....\n"
   sleep 1
   up=$(nmcli device status | grep "enp" | grep -v dis | awk '{ print $1 }') >/dev/null
@@ -578,6 +578,6 @@ mn(){
 eval "$(starship init zsh)"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 #source ~/powerlevel10k/powerlevel10k.zsh-theme
-export PATH=$PATH:/home/hirschy/.local/bin:/home/hirschy/.cargo/bin:/home/hirschy/.spicetify
+export PATH=$PATH:/home/USER_NAME/.local/bin:/home/USER_NAME/.cargo/bin:/home/USER_NAME/.spicetify
 export NIX_PAGER=cat
 export PROMPT_EOL_MARK=" " 

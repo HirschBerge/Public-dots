@@ -69,15 +69,18 @@ in
             zstyle ':completion:*' menu select # select completions with arrow keys
             zstyle ':completion:*' group-name \'\' # group results by category
             zstyle ':completion:::::' completer _expand _complete _ignored _approximate #enable approximate matches for completion
-	    # source /home/hirschy/.scripts/.venv/bin/activate
-	    #source /home/hirschy/.local/bin/.venv/bin/activate
-            export PATH=$PATH:/home/hirschy/.local/bin:/home/hirschy/.cargo/bin:/home/hirschy/.spicetify
+	    # source /home/USER_NAME/.scripts/.venv/bin/activate
+	    #source /home/USER_NAME/.local/bin/.venv/bin/activate
+            export PATH=$PATH:/home/USER_NAME/.local/bin:/home/USER_NAME/.cargo/bin:/home/USER_NAME/.spicetify
             export NIX_PAGER=cat
             export PROMPT_EOL_MARK=" "
+            eval "$(zoxide init zsh)"
             source ${pkgs.autojump}/share/zsh/site-functions/autojump.zsh
             [ -f "$HOME/.config/zsh/colors_and_functions.zsh" ] && source $HOME/.config/zsh/colors_and_functions.zsh
       '';
         shellAliases = {
+            "cd" ="z";
+            "dots" = "cd ~/.dotfiles";
             "-s {jpg,png,jpeg}" = "kitty +kitten icat";
             "-s {mp4,mkv,mp3}" = "mpv";
             "-s gif" = "sxiv -a";
@@ -110,6 +113,9 @@ in
             cat="bat --paging=never";
             ccat="highlight --out-format=ansi";
             cf="cd ~/.config && eza -a";
+            zrust="zellij -s rusty --layout=$HOME/.config/zellij/layouts/rust.kdl";
+            trust="zellij action new-tab --layout rust";
+            zel="zellij";
             cfa="${pkgs.helix}/bin/hx ~/.config/aliasrc";
             cfb="${pkgs.helix}/bin/hx ~/.config/i3blocks/config";
             cfd="${pkgs.helix}/bin/hx ~/.Xdefaults";
@@ -307,7 +313,8 @@ in
             speedtest="speedtest-cli";
             ssh="kitty +kitten ssh";
             tree="eza -lah --tree --icons=always";
-            v="echo -en \"I Bet you mean hx, RIGHT?\"; sleep 0.5;${pkgs.helix}/bin/hx";
+            # v="echo -en \"I Bet you mean hx, RIGHT?\"; sleep 0.5;${pkgs.helix}/bin/hx";
+            v = "nvim"; 
             vi="vim";
             vim="${pkgs.helix}/bin/hx";
             vimdiff="${pkgs.helix}/bin/hx -d";

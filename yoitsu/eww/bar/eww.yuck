@@ -80,8 +80,9 @@
           (button :class "info-icon"
                   :onclick "kitty ../scripts/rebuild.sh --rebuild"
                   :onrightclick "kitty ../scripts/rebuild.sh --upgrade"
+                  :onmiddleclick "../scripts/rebuild.sh --home"
                   :timeout "999999999"
-                  :tooltip "Click to Rebuild. Right click to upgrade."
+                  :tooltip "Click to Rebuild middle click to update home manager, right click to upgrade."
                   (label :text " :"))
           (label :class "info-text" :halign "start" :text "${pkgs_uniq}")
         )
@@ -182,7 +183,7 @@
 (defwidget network-up [] 
 	(box :class "network" :orientation "h" :space-evenly "false" :halign "center"
         (box :orientation "h" :class "network-box" 
-            (label :text "󰧇" :class "network-up")
+            (label :text "󰧇 " :class "network-up")
         )
         (box :orientation "h" :width 110 
             (graph  :class "network-graph-up"
@@ -201,7 +202,7 @@
 (defwidget network-down [] 
 	(box :class "network" :orientation "h" :space-evenly "false" :halign "center"
         (box :orientation "h" :class "network-box" 
-            (label :text "󰦿" :width 5 :class "network-down")
+            (label :text "󰦿 " :width 5 :class "network-down")
         )
         (box :orientation "h" :width 110
             (graph  :class "network-graph-down"

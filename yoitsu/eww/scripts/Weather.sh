@@ -9,6 +9,7 @@ ID="5206379"
 UNITS="imperial"
 WEATHER=$(curl -sf "api.openweathermap.org/data/2.5/weather?appid=$KEY&id=$ID&units=$UNITS")
 
+CITY=$(echo "$WEATHER" | jq -r ."name")
 SUNRISE=$(date -d @"$(echo "$WEATHER" | jq ".sys.sunrise")" | awk '{ print $4 }' | rg ':[0-9]{2}$' -r "")
 SUNSET=$(date -d @"$(echo "$WEATHER" | jq ".sys.sunset")" | awk '{ print $4 }' | rg ':[0-9]{2}$' -r "")
 WEATHER_DESC=$(echo "$WEATHER" | jq -r ".weather[].description" | head -1 | sed -e "s/\b\(.\)/\u\1/g")
