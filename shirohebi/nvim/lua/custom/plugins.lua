@@ -12,7 +12,7 @@ local plugins = {
     config = function()
       local home = vim.fn.expand("$HOME")
         require("chatgpt").setup({
-          api_key_cmd = "gpg --decrypt " .. home .. "/.dotfiles/yoitsu/gpt.txt.gpg"
+          api_key_cmd = "gpg --decrypt " .. home .. "/.dotfiles/shirohebi/gpt.txt.gpg"
       })
     end,
   },
@@ -30,8 +30,8 @@ local plugins = {
       ensure_installed = {
         "rust-analyzer",
         -- "pyright", 
-        -- "mypy",
-        -- "ruff",
+        "mypy",
+        "ruff",
       },
     },
   },
@@ -76,9 +76,6 @@ local plugins = {
       background_colour = "#cba6f7"
     },
   },
-  -- { 'nvim-telescope/telescope-fzf-native.nvim', 
-  --   build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' 
-  -- },
   {
     "junegunn/fzf.vim",
     version = false,

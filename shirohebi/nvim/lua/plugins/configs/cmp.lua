@@ -31,6 +31,7 @@ local formatting_style = {
   end,
 }
 
+
 local function border(hl_name)
   return {
     { "╭", hl_name },
