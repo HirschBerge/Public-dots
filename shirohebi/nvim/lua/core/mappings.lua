@@ -16,7 +16,7 @@ M.general = {
   },
 
   n = {
-    ["<Esc>"] = { ":noh <CR>", "Clear highlights" },
+    ["<Esc>"] = { "<cmd> noh <CR>", "Clear highlights" },
     -- switch between windows
     ["<C-h>"] = { "<C-w>h", "Window left" },
     ["<C-l>"] = { "<C-w>l", "Window right" },
@@ -193,7 +193,7 @@ M.lspconfig = {
       "LSP references",
     },
 
-    ["<leader>f"] = {
+    ["<leader>lf"] = {
       function()
         vim.diagnostic.open_float { border = "rounded" }
       end,
