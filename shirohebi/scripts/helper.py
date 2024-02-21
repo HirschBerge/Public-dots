@@ -166,7 +166,7 @@ if __name__ == "__main__":
 def get_mdlist():
     base_url = "https://api.mangadex.org"
     creds = {
-        "username": "hirschy",
+        "username": "USER_NAME",
         "password": "password", #I don't really care. I'm sure this is out there in the dataleak anyway, lolol.
     }
     r = requests.post(f"{base_url}/auth/login", json=creds)

@@ -11,6 +11,8 @@
     nodePackages_latest.bash-language-server
     nodePackages_latest.pyright
     black
+    ruff
+    mypy
     kitty
     neovim
     helix
@@ -36,6 +38,8 @@
     pistol
     poppler_utils
     glow
+    zellij
+    zoxide
   ];
 }
 

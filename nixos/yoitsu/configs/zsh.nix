@@ -76,9 +76,12 @@ in
             export NIX_PAGER=cat
             export PROMPT_EOL_MARK=" "
             [ -f "$HOME/.config/zsh/colors_and_functions.zsh" ] && source $HOME/.config/zsh/colors_and_functions.zsh
+            eval "$(zoxide init zsh)"
             source ${pkgs.autojump}/share/zsh/site-functions/autojump.zsh
       '';
         shellAliases = {
+            "cd" ="z";
+            "dots" = "cd ~/.dotfiles";
             "-s {jpg,png,jpeg}" = "kitty +kitten icat";
             "-s {mp4,mkv,mp3}" = "mpv";
             "-s gif" = "sxiv -a";
@@ -111,6 +114,9 @@ in
             cat="bat --paging=never";
             ccat="highlight --out-format=ansi";
             cf="cd ~/.config && eza --no-quotes -a";
+            zrust="zellij -s rusty --layout=$HOME/.config/zellij/layouts/rust.kdl";
+            trust="zellij action new-tab --layout rust";
+            zel="zellij";
             cfa="${editor} ~/.config/aliasrc";
             cfb="${editor} ~/.config/i3blocks/config";
             cfd="${editor} ~/.Xdefaults";
@@ -309,7 +315,8 @@ in
             speedtest="speedtest-cli";
             ssh="kitty +kitten ssh";
             tree="eza --no-quotes -lah --tree --icons";
-            v="echo -en \"You meant hx, right?\"; sleep 2;${editor}";
+            # v="echo -en \"You meant hx, right?\"; sleep 2;${editor}";
+            v = "nvim"; 
             vi="vim";
             vim="${editor}";
             vimdiff="${editor} -d";

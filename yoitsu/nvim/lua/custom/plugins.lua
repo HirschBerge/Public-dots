@@ -2,10 +2,36 @@ local cmp = require "cmp"
 
 local plugins = {
   {
+    "jackMort/ChatGPT.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+    },
+    config = function()
+      local home = vim.fn.expand("$HOME")
+        require("chatgpt").setup({
+          api_key_cmd = "gpg --decrypt " .. home .. "/.dotfiles/yoitsu/gpt.txt.gpg"
+      })
+    end,
+  },
+  {
+    "jose-elias-alvarez/null-ls.nvim",
+    ft = {"python"},
+    opts = function()
+      return require "custom.configs.null-ls"
+    end,
+  },
+  {
     "williamboman/mason.nvim",
     opts = {
+      --installed elsewhere
       ensure_installed = {
         "rust-analyzer",
+        -- "pyright", 
+        -- "mypy",
+        -- "ruff",
       },
     },
   },
@@ -28,9 +54,31 @@ local plugins = {
       "rcarriga/nvim-notify",
     },
   }, 
-  { 'nvim-telescope/telescope-fzf-native.nvim', 
-    build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' 
+  {
+    "rcarriga/nvim-notify",
+    keys = {
+      {
+        "<leader>dn",
+        function()
+          require("notify").dismiss({ silent = true, pending = true})
+        end,
+        desc = "Dismiss all notifications.",
+      },
+    },
+    opts = {
+      timeout = 3000,
+      max_height = function()
+       return math.floor(vim.o.lines * 0.75)
+      end,
+      max_width = function()
+        return math.floor(vim.o.columns * 0.75)
+      end,
+      background_colour = "#cba6f7"
+    },
   },
+  -- { 'nvim-telescope/telescope-fzf-native.nvim', 
+  --   build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' 
+  -- },
   {
     "junegunn/fzf.vim",
     version = false,

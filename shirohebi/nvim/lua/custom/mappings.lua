@@ -34,6 +34,9 @@ M.crates = {
     }
   }
 }
+vim.api.nvim_set_keymap("n", "<Leader><Leader>",
+  [[<cmd>lua require('telescope').extensions.recent_files.pick()<CR>]],
+  {noremap = true, silent = true})
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")

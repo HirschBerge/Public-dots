@@ -7,20 +7,25 @@ converts()
     local h=$((t/60/60%24))
     local m=$((t/60%60))
     local s=$((t%60))
-
+    # Test to see if the amount of days is greater than Zero
     if [[ $d > 0 ]]; then
-            [[ $d = 1 ]] && echo -n "${d}d " || echo -n "${d}d "
+      # Echo amount of days 
+      echo -n "${d}d "
     fi
+    # If amount of hours is positive
     if [[ $h > 0 ]]; then
-            [[ $h = 1 ]] && echo -n "${h}h " || echo -n "${h}h "
+      # Echo the amount of hours.
+      echo -n "${h}h "
     fi
+    # If there are minutes, and it is less than one day, print only the minutes
     if [[ $m > 0 ]] && [[ $d -lt 1 ]]; then
-            [[ $m = 1 ]] && echo -n "${m}m " || echo -n "${m}m "
+      echo -n "${m}m "
     fi
+    # If days and hours are zero, print minutes only.
     if [[ $d = 0 && $h = 0 && $m = 0 ]]; then
-            [[ $s = 1 ]] && echo -n "${s}s" || echo -n "${s}s"
+      echo -n "${s}s"
     fi  
     echo
 }
-
+# Accepts
 converts "$1"

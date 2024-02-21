@@ -7,7 +7,7 @@ unmountusb() {
 	[ -z "$drives" ] && exit
 	chosen=$(echo "$drives" | rofi -dmenu -config ~/.config/rofi/launchers/type-1/style-3.rasi  -i -p "Unmount which drive?" | awk '{print $1}')
 	[ -z "$chosen" ] && exit
-	sudo -A umount "$chosen" && notify-send "💻 USB unmounting" "$chosen unmounted."
+	sudo -A umount -l "$chosen" && notify-send "💻 USB unmounting" "$chosen unmounted."
 	}
 
 unmountandroid() { \

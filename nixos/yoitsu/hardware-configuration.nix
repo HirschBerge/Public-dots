@@ -12,7 +12,7 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
-  
+  boot.supportedFilesystems = [ "ntfs" ]; 
 # NVIDIA Drivers are Unfree
   #nixpkgs.config.allowUnfree = pkgs.lib.mkForce true;
    nixpkgs.config.allowUnfreePredicate = pkg:
@@ -30,7 +30,7 @@ fileSystems."/mnt/storage" =
     fsType = "btrfs";
   };
 fileSystems."/mnt/NAS" = {
-    device = "srv-prod-nas.home.hirschykiss.net:/mnt/Main Storage/Hirschy/hirschy";
+    device = "srv-prod-nas.home.USER_NAMEkiss.net:/mnt/Main Storage/USER_NAME/USER_NAME";
     fsType = "nfs";
   };
   fileSystems."/" =

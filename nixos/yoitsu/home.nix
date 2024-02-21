@@ -202,7 +202,7 @@ in
   programs.git = {
 	  enable = true;
 	  userName = "HirschBerge";
-	  userEmail = "hirschy.kirkwood@proton.me";
+	  userEmail = "THIS_IS_AN_EMAIL";
     delta = {
       enable = true;
       options = {  
@@ -262,45 +262,45 @@ in
  #            { id = "amaaokahonnfjjemodnpmeenfpnnbkco";} # Grepper
 	# 		{ id = "mnjggcdmjocbbbhaepdhchncahnbgone";} # Sponsorblock
 	# 	];
-	# };
-	services.swayidle =
-    let
-      lockCommand = "${pkgs.swaylock-effects}/bin/swaylock --screenshots --clock --indicator --indicator-radius 100 --indicator-thickness 7 --effect-blur 7x5 --effect-vignette 0.5:0.5 --ring-color bb00cc --key-hl-color 880033 --line-color 00000000 --inside-color 00000088 --separator-color 00000000 --grace 2 --fade-in 0.2";
-    in
-    {
-      enable = true;
-      systemdTarget = "hyprland-session.target";
-      timeouts =
-        let
-          dpmsCommand = "${inputs.hyprland.packages.${pkgs.system}.hyprland}/bin/hyprctl dispatch dpms";
-        in
-        [
-          {
-            # timeout = 300;
-            timeout = 600;
-            command = lockCommand;
-          }
-          {
-            # timeout = 600;
-            timeout = 900;
-            command = "${dpmsCommand} off";
-            resumeCommand = "${dpmsCommand} on";
-          }
-        ];
-      events = [
-        {
-          event = "before-sleep";
-          command = lockCommand;
-        }
-        {
-          event = "lock";
-          command = lockCommand;
-        }
-        {
-          event = "after-resume";
-          command = "${inputs.hyprland.packages.${pkgs.system}.hyprland}/bin/hyprctl dispatch dpms on";
-        }
-      ];
-    };
-}
+  	# };
 
+#   services.swayidle =
+#     let
+#       lockCommand = "${pkgs.swaylock-effects}/bin/swaylock --screenshots --clock --indicator --indicator-radius 100 --indicator-thickness 7 --effect-blur 7x5 --effect-vignette 0.5:0.5 --ring-color bb00cc --key-hl-color 880033 --line-color 00000000 --inside-color 00000088 --separator-color 00000000 --grace 2 --fade-in 0.2";
+#     in
+#     {
+#       enable = true;
+#       systemdTarget = "hyprland-session.target";
+#       timeouts =
+#         let
+#           dpmsCommand = "${inputs.hyprland.packages.${pkgs.system}.hyprland}/bin/hyprctl dispatch dpms";
+#         in
+#         [
+#           {
+#             # timeout = 300;
+#             timeout = 600;
+#             command = lockCommand;
+#           }
+#           {
+#             # timeout = 600;
+#             timeout = 900;
+#             command = "${dpmsCommand} off";
+#             resumeCommand = "${dpmsCommand} on";
+#           }
+#         ];
+#       events = [
+#         {
+#           event = "before-sleep";
+#           command = lockCommand;
+#         }
+#         {
+#           event = "lock";
+#           command = lockCommand;
+#         }
+#         {
+#           event = "after-resume";
+#           command = "${inputs.hyprland.packages.${pkgs.system}.hyprland}/bin/hyprctl dispatch dpms on";
+#         }
+#       ];
+#     };
+}

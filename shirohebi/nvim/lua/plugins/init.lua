@@ -263,7 +263,9 @@ local default_plugins = {
       end
     end,
   },
-
+  {
+    "smartpde/telescope-recent-files",
+  },
   -- Only load whichkey after all the gui
   {
     "folke/which-key.nvim",
