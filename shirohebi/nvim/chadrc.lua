@@ -5,8 +5,14 @@ local M = {}
 local highlights = require "custom.highlights"
 M.ui = {
   theme = "tokyonight",
-  -- theme_toggle = { "onedark", "one_light" },
-
+  theme_toggle = { "tokyonight", "tokyodark" },
+  tabufline = {
+    enabled = false
+  },
+  statusline = {
+    theme = "vscode_colored",
+    separator_style = "round",
+  },
   hl_override = highlights.override,
   hl_add = highlights.add,
 }
