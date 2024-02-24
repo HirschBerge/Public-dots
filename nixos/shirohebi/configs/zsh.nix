@@ -46,11 +46,11 @@ in
      enable = true;
      enableNushellIntegration = true;
    };
-	programs.zsh = {
-		enable = true;
-		enableCompletion = true;
-		enableAutosuggestions = true;
-		syntaxHighlighting.enable = true;
+programs.zsh = {
+        enable = true;
+        enableCompletion = true;
+        enableAutosuggestions = true;
+        syntaxHighlighting.enable = true;
         initExtra = ''
             setopt autocd # auto cd when only path is entered
             setopt nomatch # throw an error on glob matching nothing

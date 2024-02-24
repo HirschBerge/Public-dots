@@ -58,8 +58,7 @@ Please review the official [NixOS Installation Guide](https://nixos.wiki/wiki/Ni
 | Web Browser               | [Firefox](https://www.mozilla.org/en-US/firefox/new/)                                                             |
 | Video Player              | [MPV](https://mpv.io/)                                                                                            |
 | Text Editor               | [Neovim](https://neovim.io/) and also trying out [Helix](https://helix-editor.com/)                               |
-| Neovim Distro             | [NVChad](https://nvchad.com/)                                                                                     |
-| Neovim Plugins            | williamboman/mason.nvim, junegunn/fzf.vim, arnamak/stay-centered.nvim, elkowar/yuck.vim, catppuccin/nvim, neovim/nvim-lspconfig, simrat39/rust-tools.nvi, neovim/nvim-lspconfig, mfussenegger/nvim-dap, rust-lang/rust.vim, theHamsta/nvim-dap-virtual-text, hrsh7th/nvim-cmp |
+| Neovim Distro             | [nixCats-nvim](https://github.com/BirdeeHub/nixCats-nvim)                                                         |
 | CLI File Manager          | [lf](https://github.com/gokcehan/lf)                                                                              |
 | GUI File Manager          | [Thunar](https://docs.xfce.org/xfce/thunar/start)                                                                 |
 | Launcher                  | [Rofi](https://github.com/davatorium/rofi)                                                                        |
@@ -111,10 +110,14 @@ If you run into issues doing this, please make an issue and I will try and get i
 # Credits and Inspiration
 
 
-| Credit                                                         |  Reason                               |
-|----------------------------------------------------------------|---------------------------------------|
-| [Frost-Phoenix](https://github.com/Frost-Phoenix/nixos-config) | README.md Ricing guidance             |
-| [Hypr-Dots](https://github.com/prasanthrangan/hyprdots)        | Scripts mostly.                       |
-| [r/UnixPorn](https://www.reddit.com/r/unixporn/)               | More inspiration than you can imagine |
-| [LibrePhoenix](https://github.com/librephoenix)                | Beautiful guides and great knowledge  |
-| [VimJoyer](https://www.youtube.com/@vimjoyer)                  | Short, simple, concise guides and info|
+| Credit                                                              |  Reason                               |
+|---------------------------------------------------------------------|---------------------------------------|
+| [Frost-Phoenix](https://github.com/Frost-Phoenix/nixos-config)      | README.md Ricing guidance             |
+| [Hypr-Dots](https://github.com/prasanthrangan/hyprdots)             | Scripts mostly.                       |
+| [r/UnixPorn](https://www.reddit.com/r/unixporn/)                    | More inspiration than you can imagine |
+| [LibrePhoenix](https://github.com/librephoenix)                     | Beautiful guides and great knowledge  |
+| [VimJoyer](https://www.youtube.com/@vimjoyer)                       | Short, simple, concise guides and info|
+| [BirdeeHub/nixCats-nvim](https://github.com/BirdeeHub/nixCats-nvim) | Super neat tool and very useful help  |
+
+
+

@@ -36,6 +36,7 @@ in
         ../common/wayland.nix
         ./configs/gaming.nix
         ../common/configs/fonts.nix
+        ../common/systemCat.nix
     ];
   systemd = {
     user.services.polkit-gnome-authentication-agent-1 = {

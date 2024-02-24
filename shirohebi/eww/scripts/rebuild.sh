@@ -1,5 +1,18 @@
 #!/usr/bin/env bash
 
+fix_nvim_links() {
+  # lua-language
+  local nvim_path=~/.local/share/nvim
+  fd lua-language $nvim_path -tf -X rm -f
+  fd lua-language $nvim_path -tl -X rm -f
+  sudo ln -s $(which lua-language-server ) $HOME/.local/share/nvim/mason/packages/lua-language-server/
+  if command -v rust-analyzer &> /dev/null; then
+    fd rust-analyzer $nvim_path -tf -X rm -f
+    fd rust-analyzer $nvim_path -tl -X rm -f
+    sudo ln -s $(which rust-analyzer ) $HOME/.local/share/nvim/mason/bin/
+  fi
+}
+
 upgrade () {
   fd . ~/ -H -e backup -tf -X rm -f
   # nix flake update
@@ -8,6 +21,7 @@ upgrade () {
   sleep 1
   sudo nixos-rebuild switch --flake $HOME/.dotfiles#shirohebi
   send_notification
+  fix_nvim_links
 }
 
 home_manager_only(){
@@ -15,6 +29,7 @@ home_manager_only(){
   fd . ~/ -H -e backup -tf -X rm -f
   home-manager --flake $HOME/.dotfiles#$USER@shirohebi switch -b backup
   send_notification
+  fix_nvim_links
 }
 
 rebuild (){
@@ -22,7 +37,9 @@ rebuild (){
   home-manager --flake $HOME/.dotfiles#$USER@shirohebi switch -b backup
   sleep 1
   sudo nixos-rebuild switch --flake $HOME/.dotfiles#shirohebi
+  fix_nvim_links
   send_notification
+  fix_nvim_links
 }
 
 
@@ -36,6 +53,7 @@ send_notification(){
   esac
   read -p "Press any key to continue"
 }
+
 
 while [[ $# -gt 0 ]]; do
     case "$1" in

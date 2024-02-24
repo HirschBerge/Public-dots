@@ -24,6 +24,9 @@ local plugins = {
     end,
   },
   {
+    'jdhao/better-escape.vim',
+    event = 'InsertEnter'},
+  {
     "williamboman/mason.nvim",
     opts = {
       --installed elsewhere

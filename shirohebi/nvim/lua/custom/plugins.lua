@@ -12,7 +12,7 @@ local plugins = {
     config = function()
       local home = vim.fn.expand("$HOME")
         require("chatgpt").setup({
-          api_key_cmd = "gpg --decrypt " .. home .. "/.dotfiles/yoitsu/gpt.txt.gpg"
+          api_key_cmd = "gpg --decrypt " .. home .. "/.dotfiles/shirohebi/gpt.txt.gpg"
       })
     end,
   },
@@ -23,6 +23,9 @@ local plugins = {
       return require "custom.configs.null-ls"
     end,
   },
+  {
+    'jdhao/better-escape.vim',
+    event = 'InsertEnter'},
   {
     "williamboman/mason.nvim",
     opts = {
