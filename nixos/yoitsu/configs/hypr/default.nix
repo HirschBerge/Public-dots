@@ -80,7 +80,7 @@ decoration {
       noise = 0.05
       ignore_opacity = true
     }
-    fullscreen_opacity = 0.7
+    # fullscreen_opacity = 0.7
     shadow_range = 4
     shadow_render_power = 3
     col.shadow = rgba(1a1a1aee)
@@ -247,7 +247,7 @@ windowrulev2 = float,class:^(thunar)$
 windowrulev2 = size 842 465, class:Thunar
 windowrulev2 = opacity 0.83 0.83, class:Thunar
 windowrulev2 = float,class:^(Thunar)$
-
+windowrulev2 = opacity 1.0 1.0, class=mpv
 
 # Example windowrule v2
 # windowrulev2 = float,class:^(kitty)$,title:^(kitty)$

@@ -1,21 +1,20 @@
 #!/usr/bin/env python3.11
 import MangaDexPy
-from MangaDexPy import downloader
-import os, contextlib, sys, logging, string, re, shutil, uuid
+import os
+import sys
+import uuid
 from datetime import datetime
-from helper import *
+from helper import (
+    colored,
+    DiscordWebHook,
+    get_manga_title,
+    download_chapters,
+    get_mdlist,
+    clean_up_parents,
+)
 
 
 def sort_chapters(chapters: list):
-    # skipped_chapters = [
-    #     x for x in chapters if x.uploader.username == "NotXunder" if x.chapter
-    # ]
-    # sorted_skipped_chapters = sorted(
-    #     skipped_chapters, key=lambda chap: float(chap.chapter)
-    # )
-    # print(
-    #     f"Skipped chapters uploaded by Mangaplus: {''.join(str(colored(255,0,0,c.chapter)) for c in sorted_skipped_chapters)}."
-    # )
     external_uploaders = [
         "MangaDex",
         "comikey",
@@ -30,8 +29,6 @@ def sort_chapters(chapters: list):
         if x.uploader.username not in external_uploaders
         if x.chapter
     ]
-    # test = [[x.uploader.username, x.chapter] for x in eng_chapters if x.chapter == "2"]
-    # print(test)
     sorted_chapters = sorted(eng_chapters, key=lambda chap: float(chap.chapter))
     unique_chapters_dict = {}
     for chapter in sorted_chapters:
@@ -84,7 +81,7 @@ class USER_NAME_MangaDex:
             exit(1)
         try:
             manga_title = manga.title["en"]
-        except KeyError as e:
+        except KeyError:
             manga_title = manga.title["ja-ro"]
         print(
             f"Manga is: {colored(87,8,97,manga_title)} written by {colored(255,0,0,manga.author[0].name)}"
@@ -108,7 +105,6 @@ class USER_NAME_MangaDex:
 
     def search(self):
         results = self.cli.search("manga", {"title": self.title}, limit=20)
-        reses = []
         count = 1
         for result in results:
             # author = self.cli.search("author", {"id": result.author[0]})
@@ -146,8 +142,8 @@ class USER_NAME_MangaDex:
             input("Enter the number of the result you'd like to download: ")
         )
         return results[download_this - 1].id
-        print(f"Now Downloading:")
-        search_dl(manga_id=results[download_this - 1].id)
+        # print(f"Now Downloading:")
+        # search_dl(manga_id=results[download_this - 1].id)
 
     def chapter_dl(self):
         self.manga_id = self.search()
@@ -167,7 +163,7 @@ class USER_NAME_MangaDex:
             exit(1)
         try:
             manga_title = manga.title["en"]
-        except KeyError as e:
+        except KeyError:
             manga_title = manga.title["ja-ro"]
         print(
             f"Manga is: {colored(87,8,97,manga_title)} written by {colored(255,0,0,manga.author[0].name)}"

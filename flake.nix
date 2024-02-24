@@ -8,6 +8,9 @@
          inputs.nixpkgs.follows = "nixpkgs";
     };
     nur.url = "github:nix-community/nur";
+    nixCats = {
+      url = "github:BirdeeHub/nixCats-nvim";
+    };
   };
 
 

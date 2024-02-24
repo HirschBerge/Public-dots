@@ -8,12 +8,11 @@
     })
   ];
   environment.systemPackages = with pkgs; [
-    nodePackages_latest.bash-language-server
-    nodePackages_latest.pyright
-    black
-    ruff
-    mypy
+    # Neovim Deps
+    nodejs_21
+    lua-language-server
     kitty
+    
     neovim
     helix
     wget

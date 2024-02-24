@@ -278,3 +278,15 @@
             search_font(){
               fc-list | rg -o '[^/]*$[^:]*' | awk -F':' '{print $1}' |grep "$1"
             }
+            fix_nvim_links () {
+                nvim_path=~/.local/share/nvim 
+                fd lua-language $nvim_path -tf -X rm -f
+                fd lua-language $nvim_path -tl -X rm -f
+                sudo ln -s $(which lua-language-server ) $HOME/.local/share/nvim/mason/packages/lua-language-server/
+                if command -v rust-analyzer &> /dev/null
+                then
+                    fd rust-analyzer $nvim_path -tf -X rm -f
+                    fd rust-analyzer $nvim_path -tl -X rm -f
+                    sudo ln -s $(which rust-analyzer ) $HOME/.local/share/nvim/mason/bin/
+                fi
+            }

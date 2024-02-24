@@ -1,7 +1,10 @@
-import requests, os, shutil
+import requests
+import os
+import shutil
 from datetime import datetime, timedelta, timezone
 from MangaDexPy import downloader
-import sys, re, contextlib
+import re
+import contextlib
 from alive_progress import alive_bar
 
 
@@ -66,7 +69,6 @@ def download_chapters(sorted_chapters: list, manga, overwrite=False):
 def check_recent(timestamp, offset: int = 5):
     input_time = datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S%z")
     current_time = datetime.now(input_time.tzinfo)
-    time_difference = current_time - input_time
     if input_time > current_time:
         # Input time is in the future, set it to today's date at noon UTC
         input_time = current_time.replace(hour=12, minute=0, second=0, microsecond=0)

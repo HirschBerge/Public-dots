@@ -235,6 +235,7 @@ windowrule = opacity 0.8 0.7, firefox
 windowrule = opacity 0.8 0.7, thunar 
 windowrulev2 = size 842 465, class:thunar
 windowrulev2 = float, class:^(thunar)$
+windowrulev2 = opacity 1.0 1.0, class=mpv
 windowrulev2 = opacity 0.8 0.7, class:discord
 windowrulev2 = opacity 1.0 1.0, title:^(.*YouTube.*)$
 windowrulev2 = fullscreen,class:^(.*steam_app.*)$
