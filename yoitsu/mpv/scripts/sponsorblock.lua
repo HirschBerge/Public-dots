@@ -1,88 +1,62 @@
+#!/usr/bin/env lua
 -- sponsorblock.lua
 --
 -- This script skips sponsored segments of YouTube videos
 -- using data from https://github.com/ajayyy/SponsorBlock
-
 local ON_WINDOWS = package.config:sub(1,1) ~= "/"
-
 local options = {
     server_address = "https://sponsor.ajay.app",
-
     python_path = ON_WINDOWS and "python" or "python3",
-
     -- Categories to fetch
     categories = "sponsor,intro,outro,interaction,selfpromo,filler",
-
     -- Categories to skip automatically
     skip_categories = "sponsor,intro,outro,interaction,selfpromo",
-
     -- If true, sponsored segments will only be skipped once
     skip_once = false,
-
     -- Note that sponsored segments may ocasionally be inaccurate if this is turned off
     -- see https://blog.ajay.app/voting-and-pseudo-randomness-or-sponsorblock-or-youtube-sponsorship-segment-blocker
     local_database = false,
-
     -- Update database on first run, does nothing if local_database is false
     auto_update = true,
-
     -- How long to wait between local database updates
     -- Format: "X[d,h,m]", leave blank to update on every mpv run
     auto_update_interval = "6h",
-
     -- User ID used to submit sponsored segments, leave blank for random
     user_id = "",
-
     -- Name to display on the stats page https://sponsor.ajay.app/stats/ leave blank to keep current name
     display_name = "Sexay Hirschay",
-
     -- Tell the server when a skip happens
     report_views = true,
-
     -- Auto upvote skipped sponsors
     auto_upvote = false,
-
     -- Use sponsor times from server if they're more up to date than our local database
     server_fallback = true,
-
     -- Create chapters at sponsor boundaries for OSC display and manual skipping
     make_chapters = true,
-
     -- Minimum duration for sponsors (in seconds), segments under that threshold will be ignored
     min_duration = 3,
-
     -- Fade audio for smoother transitions
     audio_fade = false,
-
     -- Audio fade step, applied once every 100ms until cap is reached
     audio_fade_step = 10,
-
     -- Audio fade cap
     audio_fade_cap = 0,
-
     -- Fast forward through sponsors instead of skipping
     fast_forward = false,
-
     -- Playback speed modifier when fast forwarding, applied once every second until cap is reached
     fast_forward_increase = .2,
-
     -- Playback speed cap
     fast_forward_cap = 2,
-
     -- Length of the sha256 prefix (3-32) when querying server, 0 to disable
     sha256_length = 4,
-
     -- Pattern for video id in local files, ignored if blank
     -- Recommended value for base youtube-dl is "-([%w-_]+)%.[mw][kpe][v4b]m?$"
     local_pattern = "",
-
     -- Legacy option, use skip_categories instead
     skip = true
 }
-
 mp.options = require "mp.options"
 mp.options.read_options(options, "sponsorblock")
-
 local legacy = mp.command_native_async == nil
 --[[
 if legacy then
@@ -90,10 +64,8 @@ if legacy then
 end
 --]]
 options.local_database = false
-
 local utils = require "mp.utils"
 scripts_dir = mp.find_config_file("scripts")
-
 local sponsorblock = utils.join_path(scripts_dir, "sponsorblock_shared/sponsorblock.py")
 local uid_path = utils.join_path(scripts_dir, "sponsorblock_shared/sponsorblock.txt")
 local database_file = options.local_database and utils.join_path(scripts_dir, "sponsorblock_shared/sponsorblock.db") or ""
@@ -110,7 +82,6 @@ local volume_before = mp.get_property_number("volume")
 local categories = {}
 local all_categories = {"sponsor", "intro", "outro", "interaction", "selfpromo", "preview", "music_offtopic", "filler"}
 local chapter_cache = {}
-
 for category in string.gmatch(options.skip_categories, "([^,]+)") do
     categories[category] = true
 end
@@ -136,20 +107,16 @@ end
 function parse_update_interval()
     local s = options.auto_update_interval
     if s == "" then return 0 end -- Interval Disabled
-
     local num, mod = s:match "^(%d+)([hdm])$"
-
     if num == nil or mod == nil then
         mp.osd_message("[sponsorblock] auto_update_interval " .. s .. " is invalid", 5)
         return nil
     end
-
     local time_table = {
         m = 60,
         h = 60 * 60,
         d = 60 * 60 * 24,
     }
-
     return num * time_table[mod]
 end
 
@@ -390,7 +357,6 @@ function file_loaded()
     mp.msg.debug("Path: " .. video_path)
     local video_referer = string.match(mp.get_property("http-header-fields", ""), "Referer:([^,]+)") or ""
     mp.msg.debug("Referer: " .. video_referer)
-
     local urls = {
         "ytdl://([%w-_]+).*",
         "https?://youtu%.be/([%w-_]+).*",
@@ -447,14 +413,12 @@ function file_loaded()
         end
     end
     if not options.local_database or (not options.auto_update and file_exists(database_file)) then return end
-
     if file_exists(database_file) then
         local db_info = utils.file_info(database_file)
         local cur_time = os.time(os.date("*t"))
         local upd_interval = parse_update_interval()
         if upd_interval == nil or os.difftime(cur_time, db_info.mtime) < upd_interval then return end
     end
-
     update()
 end
 
@@ -556,7 +520,6 @@ function submit_segment(category)
         end
     end
 end
-
 mp.register_event("file-loaded", file_loaded)
 mp.add_key_binding("g", "set_segment", set_segment)
 mp.add_key_binding("G", "submit_segment", submit_segment)

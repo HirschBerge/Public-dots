@@ -337,7 +337,7 @@ tooltip {
 	padding-top: 6px;
 }
 
-.nvidia {
+.GPU {
 	font-size: 13px;
 	font-weight: bold;
 	color: $color13;
@@ -618,6 +618,14 @@ calendar.highlight {
     border-radius: 10px;
     border-width: 2;
     border-color: #fabd2f;
+}
+
+.clock {
+	font-size: 38px;
+	font-weight: bold;
+	color: $color13;
+	border-radius: 10px;
+	padding-top: 6px;
 }
 
 .notif image {

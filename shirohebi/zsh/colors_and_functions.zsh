@@ -282,3 +282,6 @@
                     sudo ln -s $(which rust-analyzer ) $HOME/.local/share/nvim/mason/bin/
                 fi
             }
+            inhibitors(){
+              hyprctl clients -j | jq 'map({class, title, monitor} | select((.title? | test("YouTube")) or (.class? | test("YouTube")) or (.title? | test("steam_app") and test("yuzu")) or (.class? | test("steam_app") and test("yuzu")) or (.title? | test("S[0-9].*E[0-9]")) or (.class? | test("S[0-9].*E[0-9]"))))'
+            }

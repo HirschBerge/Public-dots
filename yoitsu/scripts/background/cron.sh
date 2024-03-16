@@ -44,7 +44,7 @@ sets_background() {
   export SWWW_TRANSITION_FPS=120
   export SWWW_TRANSITION_STEP=2
   $(which swww) img -t random -o DP-1 "$img1"
-  $(which swww) img -t random -o DP-2 "$img2"
+  $(which swww) img -t random -o DP-3 "$img2"
   # $(which notify-send) --icon "$imgwide" "Hyprland Started!" "Have a great day!"
 }
 

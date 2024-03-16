@@ -25,7 +25,7 @@
 
     # Lutris
     #lutris-unwrapped  # (not needed)
-    lutris
+    # lutris
 
     # Extra dependencies
     # https://github.com/lutris/docs/

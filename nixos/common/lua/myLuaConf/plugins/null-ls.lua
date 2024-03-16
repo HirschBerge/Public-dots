@@ -17,3 +17,4 @@ local opts = {
   end,
 }
 null_ls.register(opts)
+

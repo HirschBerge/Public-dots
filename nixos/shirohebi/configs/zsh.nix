@@ -314,9 +314,9 @@ programs.zsh = {
             ssh="kitty +kitten ssh";
             tree="eza -lah --tree --icons=always";
             # v="echo -en \"I Bet you mean hx, RIGHT?\"; sleep 0.5;${pkgs.helix}/bin/hx";
-            v = "nvim"; 
-            vi="vim";
-            vim="${pkgs.helix}/bin/hx";
+            # v = "nvim"; 
+            vi="nvim";
+            # vim="${pkgs.helix}/bin/hx";
             vimdiff="${pkgs.helix}/bin/hx -d";
             vv="cd ~/Videos && eza -a";
             weath="less -S ~/.local/share/weatherreport";

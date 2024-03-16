@@ -48,7 +48,7 @@ end
 -- servers.rust_analyzer = {},
 -- servers.tsserver = {},
 -- servers.html = { filetypes = { 'html', 'twig', 'hbs'} },
-  servers.rust_analyzer = { filetypes = { 'rust' } }
+  -- servers.rust_analyzer = { filetypes = { 'rust' } }
   servers.bashls = { filetypes = { 'sh' } }
   servers.pyright = { filetypes = { 'python'} }
   servers.nixd = { filetypes = { 'nix'} }

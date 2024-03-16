@@ -1,4 +1,3 @@
-#! /usr/bin/env python3
 import numpy as np
 import tkinter as tk
 from tkinter import messagebox

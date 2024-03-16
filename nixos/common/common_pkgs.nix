@@ -10,9 +10,9 @@
   environment.systemPackages = with pkgs; [
     # Neovim Deps
     nodejs_21
+    clipse
     lua-language-server
     kitty
-    
     neovim
     helix
     wget
@@ -28,7 +28,7 @@
     ffmpeg
     pciutils
     # Testing out some cool rust-based replacements
-    sd
+    sd # Sed replacement
     # delta #enabled by home-manager with programs.git.delta.enable = true;
     tokei
     kondo
@@ -36,9 +36,11 @@
     file
     pistol
     poppler_utils
-    glow
     zellij
     zoxide
+    pika-backup
+    hyprlock
+    hypridle
   ];
 }
 

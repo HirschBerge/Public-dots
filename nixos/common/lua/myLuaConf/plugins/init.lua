@@ -8,7 +8,6 @@ require('myLuaConf.plugins.telescope')
 require('myLuaConf.plugins.null-ls')
 require('myLuaConf.plugins.startify')
 require('myLuaConf.plugins.treesitter')
-require('myLuaConf.plugins.mapping')
 require('myLuaConf.plugins.crates')
 require('myLuaConf.plugins.completion')
 require('myLuaConf.plugins.noice')
@@ -16,9 +15,9 @@ require('myLuaConf.plugins.other')
 
 if nixCats('markdown') then
   vim.g.mkdp_auto_close = 0
-  vim.keymap.set('n','<leader>mp','<cmd>MarkdownPreview <CR>',{ noremap = true, desc = 'markdown preview' })
-  vim.keymap.set('n','<leader>ms','<cmd>MarkdownPreviewStop <CR>',{ noremap = true, desc = 'markdown preview stop' })
-  vim.keymap.set('n','<leader>mt','<cmd>MarkdownPreviewToggle <CR>',{ noremap = true, desc = 'markdown preview toggle' })
+  vim.keymap.set('n','<leader>Mp','<cmd>MarkdownPreview <CR>',{ noremap = true, desc = 'markdown preview' })
+  vim.keymap.set('n','<leader>Ms','<cmd>MarkdownPreviewStop <CR>',{ noremap = true, desc = 'markdown preview stop' })
+  vim.keymap.set('n','<leader>Mt','<cmd>MarkdownPreviewToggle <CR>',{ noremap = true, desc = 'markdown preview toggle' })
 end
 
 vim.keymap.set('n', '<leader>U', vim.cmd.UndotreeToggle, { desc = "Undo Tree" })
@@ -199,6 +198,6 @@ require('which-key').register {
   ['<leader>r'] = { name = '[r]ename', _ = 'which_key_ignore' },
   ['<leader>s'] = { name = '[s]earch', _ = 'which_key_ignore' },
   ['<leader>w'] = { name = '[w]orkspace', _ = 'which_key_ignore' },
-  ['<leader>m'] = { name = '[m]arkdown', _ = 'which_key_ignore' },
+  ['<leader>M'] = { name = '[m]arkdown', _ = 'which_key_ignore' },
   ['<leader>t'] = { name = '[t]oggles', _ = 'which_key_ignore' },
 }

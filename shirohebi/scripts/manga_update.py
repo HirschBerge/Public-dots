@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+#!/usr/bin/env nix-shell
+#!nix-shell -i python3 -p "python3.withPackages (ps: with ps; [ Mangadex.py argparse dbus-python ])"
 import MangaDexPy
 from MangaDexPy import downloader
 from helper import *

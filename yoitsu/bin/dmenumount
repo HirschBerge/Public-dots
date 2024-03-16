@@ -7,7 +7,7 @@
 
 getmount() { \
 	[ -z "$chosen" ] && exit 1
-	mp="$(find $1 2>/dev/null | rofi -dmenu -config ~/.config/rofi/launchers/type-1/style-3.rasi -i -p "Type in mount point.")"
+	mp="$(fd . "$1" -td -te -d 1 2>/dev/null | rofi -dmenu -config ~/.config/rofi/launchers/type-1/style-3.rasi -i -p "Type in mount point.")"
 	[ "$mp" = "" ] && exit 1
 	if [ ! -d "$mp" ]; then
 		mkdiryn=$(printf "No\\nYes" | rofi -dmenu -config ~/.config/rofi/launchers/type-1/style-3.rasi -i -p "$mp does not exist. Create it?")
@@ -19,7 +19,7 @@ mountusb() { \
 	chosen="$(echo "$usbdrives" | rofi -dmenu -config ~/.config/rofi/launchers/type-1/style-3.rasi -i -p "Mount which drive?" | awk '{print $1}')"
 	sudo -A mount "$chosen" 2>/dev/null && notify-send "💻 USB mounting" "$chosen mounted." && exit 0
 	alreadymounted=$(lsblk -nrpo "name,type,mountpoint" | awk '$2=="part"&&$3!~/\/boot|\/home$|SWAP/&&length($3)>1{printf "-not \\( -path *%s -prune \\) \\ \n",$3}')
-	getmount "/mnt /media /mount /home -maxdepth 5 -type d $alreadymounted"
+	getmount "$HOME/.cache"
 	partitiontype="$(lsblk -no "fstype" "$chosen")"
 	case "$partitiontype" in
 		"vfat") sudo -A mount -t vfat "$chosen" "$mp" -o rw,umask=0000;;

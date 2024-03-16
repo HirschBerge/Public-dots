@@ -8,7 +8,7 @@
 (defpoll battery :interval "30s"
 	`/home/$USER/.config/eww/Scripts/battery.py`)
 
-(deflisten nvidia `../scripts/nvidia_mon_poly.sh`)
+(deflisten GPU `../scripts/GPU_mon.sh`)
 ;; System
 (defpoll used_per :interval "1m" `eww get EWW_DISK |jq .'["/"]'.used_perc`)
 (defpoll memory :interval "5s"
@@ -61,7 +61,7 @@
     (network-up)
     ; (network)
     (weather)
-    (nvidia)
+    (GPU)
     (system)
     (info)
     (clock)
@@ -96,10 +96,10 @@
 )
 
 
-(defwidget nvidia []
+(defwidget GPU []
   (label
-    :class "nvidia"
-    :text "${nvidia}"
+    :class "GPU"
+    :text "${GPU}"
     )
 )
 (defwidget weather []
