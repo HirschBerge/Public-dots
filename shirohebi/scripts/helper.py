@@ -1,7 +1,10 @@
-import requests, os, shutil
+import requests
+import os
+import shutil
 from datetime import datetime, timedelta, timezone
 from MangaDexPy import downloader
-import sys, re, contextlib
+import re
+import contextlib
 from alive_progress import alive_bar
 
 
@@ -58,7 +61,7 @@ def download_chapters(sorted_chapters: list, manga, overwrite=False):
             bar()
     print(
         colored(255, 165, 0, "New Chapters Downloaded:"),
-        colored(0, 255, 0, new_chapters),
+        colored(0, 255, 0, f"{new_chapters}"),
     )
     return new_chapters, name_manga
 
@@ -66,7 +69,6 @@ def download_chapters(sorted_chapters: list, manga, overwrite=False):
 def check_recent(timestamp, offset: int = 5):
     input_time = datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S%z")
     current_time = datetime.now(input_time.tzinfo)
-    time_difference = current_time - input_time
     if input_time > current_time:
         # Input time is in the future, set it to today's date at noon UTC
         input_time = current_time.replace(hour=12, minute=0, second=0, microsecond=0)
@@ -93,7 +95,7 @@ def fix_time(input_timestamp):
         return None
 
 
-def colored(r, g, b, text):
+def colored(r: int, g: int, b: int, text: str):
     return "\033[38;2;{};{};{}m{}\033[38;2;255;255;255m".format(r, g, b, text)
 
 
@@ -130,7 +132,7 @@ def get_manga_title(result):
 class DiscordWebHook:
     def __init__(self, bot_name="Webhook Bot"):
         self.bot_name = bot_name
-        self.webhook_url = "https://discord.com/api/webhooks/1085380232908902420/67yS35DSklhRDQyf9r-9om4ragu6rpXykkQeXoXoRpa5ACcCeNftme_QxMnbzdUDhatO" #Welcome
+        self.webhook_url = "https://discord.com/api/webhooks/1085380232908902420/67yS35DSklhRDQyf9r-9om4ragu6rpXykkQeXoXoRpa5ACcCeNftme_QxMnbzdUDhatO"  # Welcome
 
     def send_message(self, content, image_url=None, Ping=False):
         to_ping = "215327353423921159"
@@ -167,7 +169,7 @@ def get_mdlist():
     base_url = "https://api.mangadex.org"
     creds = {
         "username": "USER_NAME",
-        "password": "password", #I don't really care. I'm sure this is out there in the dataleak anyway, lolol.
+        "password": "password",  # I don't really care. I'm sure this is out there in the dataleak anyway, lolol.
     }
     r = requests.post(f"{base_url}/auth/login", json=creds)
     r_json = r.json()

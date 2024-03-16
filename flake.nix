@@ -12,8 +12,6 @@
       url = "github:BirdeeHub/nixCats-nvim";
     };
   };
-
-
   outputs = {
     self,
     nixpkgs,
@@ -21,7 +19,6 @@
     ...
   } @ inputs: let
     inherit (self) outputs;
-    stateVersion = "23.05";
     pkgs = import nixpkgs {
       inherit system;
       overlays = [
@@ -32,39 +29,40 @@
         allowUnfreePredicate = _: true;
       };
     };
-    username = "USER_NAME"; #TODO change username
-    desktop = "yoitsu"; #TODO Change Desktop name
-    laptop = "shirohebi"; #TODO change Laptop name
-    system = "x86_64-linux"; #TODO Rarely, change system architecture
+    #  Export Variables
+    stateVersion = "23.11"; # TODO change stateVersion
+    username = "USER_NAME"; # TODO change username
+    desktop = "yoitsu"; # TODO Change Desktop name
+    laptop = "shirohebi"; # TODO change Laptop name
+    system = "x86_64-linux"; # TODO Rarely, change system architecture
   in {
-    # NixOS configuration entrypoint
-    # Available through 'nixos-rebuild --flake .#your-hostname'
+    #  NixOS configuration entrypoint
+    #  Available through 'nixos-rebuild --flake .# your-hostname'
     nixosConfigurations = {
       ${desktop} = nixpkgs.lib.nixosSystem {
-        specialArgs = let #TODO Change actual hostname
-        hostname = "yoitsu"; in {inherit inputs username self system stateVersion hostname;};
-        # > Our main nixos configuration file <
+        specialArgs = let
+        hostname = "yoitsu"; /* TODO change hostname */ in {inherit inputs username self system stateVersion hostname;};
+        #  > Our main nixos configuration file <
         modules = [./nixos/${desktop}/configuration.nix];
       };
-      ${laptop} = nixpkgs.lib.nixosSystem { #TODO Change actual hostname
-        specialArgs = let hostname = "shirohebi"; in {inherit inputs username self system stateVersion hostname;};
-        # > Our main nixos configuration file <
+      ${laptop} = nixpkgs.lib.nixosSystem { 
+        specialArgs = let hostname = "shirohebi"; /* TODO change hostname */ in {inherit inputs username self system stateVersion hostname;};
+        #  > Our main nixos configuration file <
         modules = [./nixos/${laptop}/configuration.nix];
       };
     };
-
-    # Standalone home-manager configuration entrypoint
-    # Available through 'home-manager --flake .#your-username@your-hostname'
+    #  Standalone home-manager configuration entrypoint
+    #  Available through 'home-manager --flake .# your-username@your-hostname'
     homeConfigurations = {
-      "${username}@${desktop}" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;# > Our main home-manager configuration file <
+      "${username}@${desktop}" =  home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;#  > Our main home-manager configuration file <
         modules = [./nixos/${desktop}/home.nix];
-        extraSpecialArgs = let hostname = desktop; in {inherit username hostname self system stateVersion inputs;};
+        extraSpecialArgs = /* TODO change hostname */ let hostname = desktop; in {inherit username hostname self system stateVersion inputs;};
       };
        "${username}@${laptop}" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;# > Our main home-manager configuration file <
+        inherit pkgs;#  > Our main home-manager configuration file <
         modules = [./nixos/${laptop}/home.nix];
-        extraSpecialArgs = let hostname = laptop; in {inherit username hostname self system stateVersion inputs;};
+        extraSpecialArgs = /* TODO change hostname */ let hostname = laptop; in {inherit username hostname self system stateVersion inputs;};
       };
     };
   };

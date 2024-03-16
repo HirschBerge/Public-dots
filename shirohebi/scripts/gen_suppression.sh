@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 NoColor="\033[0m"
 Black='\033[0;30m'        # Black

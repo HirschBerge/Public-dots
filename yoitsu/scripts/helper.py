@@ -15,7 +15,6 @@ def download_chapters(sorted_chapters: list, manga, overwrite=False):
     except KeyError as e:
         name_manga = manga.title["ja-ro"]
     new_chapters = 0
-    skipped = 0
     with alive_bar(len(sorted_chapters), title=name_manga) as bar:
         for chapter in sorted_chapters:
             if chapter.title is None:
@@ -175,7 +174,7 @@ def get_mdlist():
     r_json = r.json()
 
     session_token = r_json["token"]["session"]
-    expires = datetime.now().timestamp() + 15 * 60000
+    # expires = datetime.now().timestamp() + 15 * 60000
     # refresh_token = r_json["token"]["refresh"]
 
     base_url = "https://api.mangadex.org"

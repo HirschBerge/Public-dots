@@ -12,5 +12,5 @@ randomize(){
 }
 randomize
 swww img -t random -o DP-1 $opt1
-swww img -t random -o DP-2 $opt2
+swww img -t random -o DP-3 $opt2
 notify-send "Setting new backgrounds!" ":)" --icon "$opt2"

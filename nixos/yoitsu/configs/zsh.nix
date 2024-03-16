@@ -316,8 +316,8 @@ in
             ssh="kitty +kitten ssh";
             tree="eza --no-quotes -lah --tree --icons";
             # v="echo -en \"You meant hx, right?\"; sleep 2;${editor}";
-            v = "nvim"; 
-            vi="vim";
+            # v = "nvim"; 
+            vi="nvim";
             vim="${editor}";
             vimdiff="${editor} -d";
             vv="cd ~/Videos && eza --no-quotes -a";

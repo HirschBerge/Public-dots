@@ -14,7 +14,7 @@ if platform == "linux" or platform == "linux2":
     # linux
 elif platform == "darwin":
     # OS X
-    pass
+    exit(1)
 elif platform == "win32":
     path = Path(
         "E:/SteamLibrary/steamapps/common/Hunt Showdown/user/profiles/default/attributes.xml"
@@ -67,10 +67,6 @@ def sort_dict(d):
     return dict(sorted(d.items(), key=lambda item: int(item[1]), reverse=True))
 
 
-# def sort_dict(d):
-#     return dict(sorted(d.items(), key=lambda item: item[1], reverse=True))
-
-
 def prettify(d):
     stars = {
         2000: "✯ ",
@@ -96,15 +92,16 @@ def prettify(d):
         max_len = max(len(l) for l in d.keys())
         if count == 0:
             print(
-                f"{'Rank'.ljust(6)}{'Player'.ljust(max_len +1 )}{colors.fg.red}MMR{colors.reset}"
+                f"{colors.fg.lightgreen}{'Rank'.ljust(6)}{'Player'.ljust(max_len +1 )}MMR{colors.reset}"
             )
         count += 1
-        if re.search(r"Abraham LinkedIn|storm|Giliath Osborne", key):
+        if re.search(r"Abraham LinkedIn|Storm|Giliath Osborne", key):
             print(
                 f"{stars_str.ljust(6)}{colors.bold}{colors.fg.green}{colors.bg.black}{key.ljust(max_len +1 )}{colors.reset}{colors.fg.red}{value}{colors.reset}"
             )
         elif re.search(
-            r"cctank1|powerShellBestShell|xJoshMoshx|It Berns when I pee|SlimyWarlock", key
+            r"cctank1|powerShellBestShell|xJoshMoshx|It Berns when I pee|SlimyWarlock|Necro-om-nom-icon",
+            key,
         ):
             print(
                 f"{stars_str.ljust(6)}{colors.bold}{colors.fg.cyan}{colors.bg.black}{key.ljust(max_len +1 )}{colors.reset}{colors.fg.red}{value}{colors.reset}"

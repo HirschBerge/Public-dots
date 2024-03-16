@@ -43,6 +43,7 @@ in {
           mypy
           ruff
           nixd
+          lldb_17
         ];
         neonixdev = {
           # also you can do this.
@@ -53,9 +54,6 @@ in {
       };
       startupPlugins = {
         debug = with pkgs.vimPlugins; [
-          nvim-dap
-          nvim-dap-ui
-          nvim-dap-virtual-text
         ];
         neonixdev = with pkgs.vimPlugins; [
           neodev-nvim
@@ -94,6 +92,10 @@ in {
             ];
             general = with pkgs.vimPlugins; [
               telescope-fzf-native-nvim
+              nvim-dap
+              nvim-dap-ui
+              nvim-dap-virtual-text
+              nvim-dap-python
               plenary-nvim
               telescope-nvim
               # treesitter
@@ -115,8 +117,9 @@ in {
               comment-nvim
               vim-sleuth
               vim-fugitive
-              vim-rhubarb
-              vim-repeat
+              # vim-rhubarb
+              # vim-repeat
+              todo-comments-nvim
               undotree
               nvim-surround
               indent-blankline-nvim
@@ -131,6 +134,8 @@ in {
               better-escape-nvim
               tokyonight-nvim
               nvim-autopairs
+              nvim-highlight-colors
+              rust-tools-nvim
             ];
           };
         };
@@ -189,13 +194,13 @@ in {
             # IMPORTANT:
             # you may not alias to nvim
             # your alias may not conflict with your other packages.
-            aliases = [ "nv" "systemVim" ];
+            aliases = [ "nv" "v" ];
             # nvimSRC = inputs.neovim;
           };
           # and a set of categories that you want
           # (and other information to pass to lua)
           categories = {
-            test = true;
+            # test = true;
             general = true;
             markdown = true;
             lspsAndRuntimeDeps.general = true;

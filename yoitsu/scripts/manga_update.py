@@ -57,8 +57,10 @@ def get_latest_chapter(manga_id: str):
                 image_url=f"{manga.cover.url}",
                 Ping=True,
             )
-            new_chapters, name_manga = download_chapters(latest_list, manga)
-            d.send_message(f"This chapter has been downloaded.")
+            # Currently broken.
+            # new_chapters, name_manga = download_chapters(latest_list, manga)
+            # d.send_message(f"This chapter has been downloaded.")
+            d.send_message("Downloading is currently broken. Thanks mangadex fuckers")
     with open("/home/USER_NAME/.cache/manga_check.log", "a") as myfile:
         myfile.write(
             f"{(datetime.datetime.now(datetime.timezone.utc)- datetime.timedelta(hours=4)).strftime('%m-%d-%y %H:%M:%S')}: {manga_title}: {latest_chapter.chapter}, {fix_time(latest_chapter.created_at)}\n"

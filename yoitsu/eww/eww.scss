@@ -90,6 +90,13 @@ tooltip {
 .info-box-right {
 	padding: 4px;
 }
+.GPU {
+	font-size: 13px;
+	font-weight: bold;
+	color: $color13;
+	border-radius: 5px;
+	padding-top: 6px;
+}
 .info-icon {
     padding-top: 3px;
 	color: $mauve;
@@ -210,9 +217,9 @@ tooltip {
 }
 
 .clock {
-	font-size: 38px;
+	font-size: 30px;
 	font-weight: bold;
-	color: $color13;
+	color: $color9;
 	border-radius: 10px;
 	padding-top: 6px;
 }

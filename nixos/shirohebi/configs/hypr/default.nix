@@ -140,7 +140,7 @@ bind = $mainMod, M, exit,
 bind = $mainMod, N, exec, swaync-client -t
 bind = $mainMod, R, exec,hyprctl reload
 bind = $mainMod, E, exec, ~/.local/bin/dmenuunicode
-bind = $mainMod, V, exec, youtube-music --disable-gpu 
+bind = $mainMod, V, exec, ${pkgs.kitty}/bin/kitty --title clipse -e zsh  -c '${pkgs.clipse}/bin/clipse $PPID' # bind the open clipboard operation to a nice key.
 bind = $mainMod, G, exec, ~/.config/hypr/scripts/gamelauncher.sh 2
 # bind = $mainMod, R, exec, wofi --show drun
 bind = $mainMod, P, pseudo, # dwindle
@@ -219,6 +219,7 @@ bind = , XF86MonBrightnessUp, exec, brightnessctl set 5%+
 # Startup :workspace:workspace
 exec = bash $HOME/.config/hypr/scripts/hypronstart.sh &
 exec = bash $HOME/.config/hypr/scripts/bat_notify.sh --continue &
+exec-once = ${pkgs.clipse}/bin/clipse -listen
 exec-once = swww init
 exec = $HOME/.scripts/background/cron.sh ~/Pictures/Monogatari/
 exec-once = /etc/profiles/per-user/USER_NAME/bin/firefox
@@ -228,6 +229,9 @@ exec = eww open bar &
   '';
   home.file."${config.xdg.configHome}/hypr/window_rules.conf".text = /* hyprlang  */ ''
 # Example windowrule v1
+windowrulev2 = float,class:^(kitty.*)$,title:^(.*clipse.*)$
+windowrulev2 = size 546 552,class:^(kitty.*)$,title:^(.*clipse.*)$
+windowrulev2 = opacity, 0.5 0.5,class:^(kitty.*)$,title:^(.*clipse.*)$
 windowrule = float, ^(pavucontrol)$
 windowrule = opacity 0.8 0.7, obsidian
 windowrule = opacity 0.8 0.7, firefox-browser
@@ -235,7 +239,7 @@ windowrule = opacity 0.8 0.7, firefox
 windowrule = opacity 0.8 0.7, thunar 
 windowrulev2 = size 842 465, class:thunar
 windowrulev2 = float, class:^(thunar)$
-windowrulev2 = opacity 1.0 1.0, class=mpv
+windowrulev2 = opacity 1.0 1.0, class:mpv
 windowrulev2 = opacity 0.8 0.7, class:discord
 windowrulev2 = opacity 1.0 1.0, title:^(.*YouTube.*)$
 windowrulev2 = fullscreen,class:^(.*steam_app.*)$

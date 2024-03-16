@@ -7,7 +7,6 @@ import argparse
 import contextlib
 import subprocess
 
-
 parser = argparse.ArgumentParser(description="Downloading anime")
 parser.add_argument(
     "-t",
@@ -40,15 +39,6 @@ parser.add_argument(
 )
 args = vars(parser.parse_args())
 
-def time_it(func):
-    def wrapper(*args, **kwargs):
-        start_time = datetime.now()
-        result = func(*args, **kwargs)
-        end_time = datetime.now()
-        taken = str(end_time - start_time)
-        message = "Time taken: "
-        print(f"{colored(0,0,255, message)}{colored(0,255,0,taken[:10])}")
-    return wrapper
 
 def colored(r, g, b, text):
     return "\033[38;2;{};{};{}m{} \033[38;2;255;255;255m".format(r, g, b, text)
@@ -60,7 +50,7 @@ class AnimeWget:
         self.season = season
         self.episode = episode
         self.file_name = file_name
-    @time_it
+
     def overall_downloader(self):
         with open(self.anime, "r") as f:
             lines = f.readlines()
@@ -83,7 +73,7 @@ class AnimeWget:
                             f"""axel -q -k -a -n 6 "{line}" --out="{filnm}" --no-clobber --user-agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"  2>/dev/null"""
                         )
                     bar()
-    @time_it
+
     def downloader(self):
         with open(self.anime, "r") as f:
             lines = f.readlines()
@@ -103,7 +93,7 @@ class AnimeWget:
                 os.system(
                     f"""axel -a -n 6 -k "{line}" --out="{filnm}" --no-clobber --user-agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" """
                 )
-    @time_it
+
     def downloader_single(self):
         if self.episode is None:
             print(
@@ -144,6 +134,20 @@ def get_info():
     filnm = f"S{season}E{episode}.mp4"
     return content, season, episode, filnm
 
+
+def time_it(func):
+    start = datetime.now()
+    try:
+        func()
+    except TypeError:
+        pass
+    end = datetime.now()
+    timing = str(end - start)
+    # os.system(f"""clear ; exa -lah --group-directories-first --icons""")
+    print(f"{colored(0,255,0,'Download complete!')}")
+    print(f"Time taken: {colored(0, 255, 0, timing[:10])}")
+
+
 def get_anime_title():
     return subprocess.getoutput(
         """pwd |awk -F"Anime/" '{ print $2 }' |awk -F"/" '{ print $1 }'"""
@@ -162,15 +166,15 @@ def main():
     if args["type"] == "episode":
         now_downloading = f"Now Downloading: {ani_title}: {filnm}"
         print(colored(255, 0, 0, now_downloading))
-        get_anime.downloader_single()
+        time_it(get_anime.downloader_single)
         notify_send()
         exit(0)
 
     if args["type"].lower() == "season" and args["progress"]:
-        get_anime.overall_downloader()
+        time_it(get_anime.overall_downloader)
         notify_send()
     else:
-        get_anime.downloader()
+        time_it(get_anime.downloader())
         notify_send()
 
 

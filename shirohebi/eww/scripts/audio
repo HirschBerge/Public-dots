@@ -26,7 +26,7 @@ toggle_vol() {
 }
 
 ## Get Volume Icon
-#TODO: different icons according to volume level, maybe
+# TODO: different icons according to volume level, maybe
 get_volicon() {
 	while true; do
   	MUTE="$(wpctl status |grep $output_dev |grep -o 'MUTED')"

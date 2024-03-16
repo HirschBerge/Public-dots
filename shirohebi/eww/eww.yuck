@@ -1,14 +1,9 @@
 (defvar home_dir "/home/$USER/.config/eww/Scripts")
-
 (defpoll clipboard_content :interval "1s"
         `/home/$USER/.config/eww/Scripts/clipboard_manager.py`)
-
-
 (deflisten volume `bash $HOME/.config/eww/scripts/audio --get-vol`)
 (defpoll battery :interval "30s"
 	`/home/$USER/.config/eww/Scripts/battery.py`)
-
-(deflisten nvidia `$HOME/.scripts/nvidia_mon_poly.sh`)
 ;; System
 (defpoll remaining :interval "20s" "acpi -b | awk -F\", \" '{ print $2 \" \" $3 }'")
 (defpoll memory :interval "5s"
@@ -17,30 +12,21 @@
     "$HOME/.config/eww/scripts/cpu")
 (defpoll temp :initial 30 :interval "10s" `sensors | rg temp1 | rg -o "\\d+.\\d+" | head -1`)
 (defpoll oxidized_weather :initial "..." :interval "1m" `$HOME/.local/bin/weather_app --bar`)
-(deflisten workspaces0 "hyprland-workspaces `hyprctl monitors -j | jq -r \".[0].name\"`")
-
 (defpoll quote :interval "24h" "$HOME/.config/eww/scripts/quotes --quote-and-quotee")
-
 (defpoll IP_ADDR :interval "1m" "ip -br a |rg UP | awk '/enp7/ {print $3 }'")
-
 (defpoll window :interval "0.5s" "$HOME/.config/eww/scripts/window-title.sh")
 (defpoll wifi :interval "3s"
         `/home/$USER/.config/eww/Scripts/wifi.py`)
-
 (defvar idle_state "󱄅")
 (deflisten workspaces :initial "(box (label :text \"󰄯  󰄰  󰄰  󰄰  󰄰\" ))"
 	`/home/$USER/.config/eww/Scripts/workspaces.py`)
-
 (deflisten song_status :initial "Select playlist to begin"
         `/home/$USER/.config/eww/Scripts/song_status.py`)
-
-
 (defpoll wm :interval "12h" "echo $XDG_CURRENT_DESKTOP")
 (defpoll shell :interval "1h" "echo $SHELL | awk -F'/' '{print $NF}'")
 (defpoll term :interval "1h" "notify-send $(echo $TERM | awk -F'-' '{print $NF}')")
 (defpoll uptime :interval "1m" "bash ./scripts/better_uptime.sh $(cut -f1 -d. /proc/uptime)")
 (defpoll packages_uniq :initial "..." :interval "10m" "bash $HOME/.config/eww/scripts/packages.sh") 
-
 (defpoll time :interval "5s" "date '+%H:%M'")
 (defpoll date :interval "1m" "date '+%D'")
 (defwindow bar
@@ -52,7 +38,6 @@
 			:anchor "bottom center"
 			)
 	:exclusive true	
-
 	(box :class "main-container"
     (functions)
     (volume)
@@ -65,7 +50,6 @@
     (clock)
 	)
 )
-
 (defwidget info []
   (box :class "info-box-outer" :orientation "h" :space-evenly true :halign "center"
     (box :class "info-box-top" :orientation "v" :space-evenly false
@@ -91,14 +75,6 @@
       )
     )
   )
-)
-
-
-(defwidget nvidia []
-  (label
-    :class "nvidia"
-    :text "${nvidia}"
-    )
 )
 (defwidget weather []
   (label :space-evenly "true" :halign "start"
@@ -145,7 +121,6 @@
         )
     )
 )
-
 (defwidget clock []
   (box :orientation "h" :space-evenly "false" :hexpand "false" :vexpand "true" :halign "center"
     (label :class "time" :text time :valign "center" :halign "start")
@@ -155,8 +130,6 @@
       (label :class "date" :text date :valign "center" :halign "end"))
     )
 )
-
-
 (defwidget network-up [] 
 	(box :class "network" :orientation "h" :space-evenly "false" :spacing 10 :halign "center"
         (box :orientation "h" :class "network-box" 
@@ -195,7 +168,6 @@
 	    )
     )
 )
-
 (defwidget volume []
     (box :class "metric" :orientation "h" :space-evenly "false" :halign "center"
         (label :class "vol-label" :orientation "h" :space-evenly "false" :text "")
@@ -242,29 +214,9 @@
 (defwidget dash []
     (box :class "dash" :orientation "h" :space-evenly "false")
 )
-
 (defwidget network [] 
 	(box :class "network-label" :orientation "h" :space-evenly "false" :spacing 10 :halign "center"
         (label :text "${IP_ADDR}")
     )
 )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

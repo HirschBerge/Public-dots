@@ -22,7 +22,7 @@
     devShells.${system}.default =
       pkgs.mkShell {
         propagatedBuildInputs = [
-            eww-wayland # or just eww for X
+            eww # or just eww for X
             python
             # just in case lsp does not see dependencies
             pkgs.python311Packages.dbus-python

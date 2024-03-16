@@ -34,6 +34,7 @@ in
         ../common/wayland.nix
         ../common/configs/fonts.nix
         ./configs/battery.nix
+        ../common/systemCat.nix
     ];
   # Bootloader.
   boot.loader = {
@@ -41,6 +42,14 @@ in
     efi.canTouchEfiVariables = true;
     timeout = 1;
   };
+  # Writes current *system* packagesto /etc/current-system/packages
+  environment.etc."current-system-packages".text =
+  let
+    packages = builtins.map (p: "${p.name}") config.environment.systemPackages;
+    sortedUnique = builtins.sort builtins.lessThan (pkgs.lib.lists.unique packages);
+    formatted = builtins.concatStringsSep "\n" sortedUnique;
+  in
+    formatted;
   environment.variables = {
     EDITOR = "nvim";
     BROWSER = "firefox";
@@ -73,6 +82,10 @@ in
         }
         {
           command = "${pkgs.systemd}/bin/systemctl";
+          options = [ "NOPASSWD" ];
+        }
+        {
+          command = "/run/current-system/sw/bin/ln";
           options = [ "NOPASSWD" ];
         }
         {

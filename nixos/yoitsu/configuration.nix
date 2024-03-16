@@ -74,8 +74,16 @@ in
       options = "--delete-older-than 7d";
     };
   };
+    # Writes current *system* packagesto /etc/current-system/packages
+  environment.etc."current-system-packages".text =
+  let
+    packages = builtins.map (p: "${p.name}") config.environment.systemPackages;
+    sortedUnique = builtins.sort builtins.lessThan (pkgs.lib.lists.unique packages);
+    formatted = builtins.concatStringsSep "\n" sortedUnique;
+  in
+    formatted;
   environment.variables = {
-    EDITOR = "nvim";
+    EDITOR = "v";
     BROWSER = "firefox";
     TERMINAL = "kitty";
     TERM = "kitty";
@@ -84,6 +92,10 @@ in
     enable = true;
     extraRules = [{
       commands = [
+        {
+          command = "/run/current-system/sw/bin/ln";
+          options = [ "NOPASSWD" ];
+        }
         {
           command = "${pkgs.systemd}/bin/systemctl suspend";
           options = [ "NOPASSWD" ];
@@ -192,6 +204,7 @@ in
     description = "${username}";
     extraGroups = [ "networkmanager" "wheel" "keyd" ];
     packages = with pkgs; [
+      rocmPackages.rocm-smi
       firefox
     #  thunderbird
     ];
@@ -276,7 +289,10 @@ in
     ];
   };
   # List services that you want to enable:
-
+  services.hardware.openrgb = {
+    enable = true;
+    motherboard = "amd";
+  };
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
 

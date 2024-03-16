@@ -10,24 +10,12 @@
 (defpoll shell :interval "1h" "echo $SHELL | awk -F'/' '{print $NF}'")
 (defpoll term :interval "1h" "notify-send $(echo $TERM | awk -F'-' '{print $NF}')")
 (defpoll uptime :interval "1m" "./scripts/better_uptime.sh $(cut -f1 -d. /proc/uptime)")
-;; (defpoll packages :interval "15m" "nix-store --query --requisites /run/current-system/sw |wc -l")
 (defpoll updates_poll :initial "..." :interval "10m" "bash $HOME/.config/eww/scripts/packages.sh") 
+(deflisten GPU `./scripts/GPU_mon.sh --side`)
 
 
 ;; MUSIC VARS
 (defpoll music_json :interval "1s" "./scripts/mediacontrol --json")
-;; (defpoll music-art :interval "1s" "$HOME/.config/eww/scripts/mediacontrol coverloc")
-;; (defpoll music-title :interval "1s" "$HOME/.config/eww/scripts/mediacontrol title")
-;; (defpoll music-artist :interval "1s" "$HOME/.config/eww/scripts/mediacontrol artist")
-;; (defpoll music-toggle :interval "1s" "$HOME/.config/eww/scripts/mediacontrol statusicon")
-;; (defpoll music-status :interval "1s" "$HOME/.config/eww/scripts/mediacontrol status")
-;; (defpoll music-position :interval "1s" "$HOME/.config/eww/scripts/mediacontrol position")
-;; (defpoll music-length :interval "1s" "$HOME/.config/eww/scripts/mediacontrol length")
-;; (defpoll music-positions :interval "1s" "$HOME/.config/eww/scripts/mediacontrol positions")
-;; (defpoll music-lengths :interval "1s" "$HOME/.config/eww/scripts/mediacontrol lengths")
-;; (defpoll music-shuffle-color :interval "1s" "$HOME/.config/eww/scripts/mediacontrol shufflecolor")
-;; (defpoll music-loop-icon :interval "1s" "$HOME/.config/eww/scripts/mediacontrol loopicon")
-;; (defpoll music-loop-color :interval "1s" "$HOME/.config/eww/scripts/mediacontrol loopcolor")
 (defvar music-rev false)
 
 (deflisten volume `bash ./scripts/audio --get-vol`)
@@ -94,6 +82,12 @@
     )
 )
 
+(defwidget GPU []
+  (label
+    :class "GPU"
+    :text "${GPU}"
+    )
+)
 (defwidget info []
     (box :class "info-box-outer" :orientation "h" :space-evenly false :halign "center"
         (box :class "info-box-top" :orientation "v" :space-evenly false
@@ -349,6 +343,10 @@
     )
 )
 
+(defwidget clock []
+  ( box :orientation "h" :space-evenly "false" :hexpand "false" :vexpand "false" :halign "center"
+    (label :class "clock" :text time :valign "center" :halign "start" ))
+)
 
 (defwidget powermenu []
     (box :class "powermenu" :orientation "h" :space-evenly false :halign "center" :spacing 12
@@ -398,8 +396,11 @@
         (network-down)
         (dash)
         (system)
-	    (dash)
+        (GPU)
+        (dash)
         (weather)
+        (dash)
+        (clock)
     )
 )
 

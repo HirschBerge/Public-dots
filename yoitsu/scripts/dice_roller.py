@@ -1,11 +1,11 @@
+from typing import Tuple
 import numpy as np
 import tkinter as tk
-from tkinter import messagebox
 import random
 from fractions import Fraction as frac
 
 
-def colored(r, g, b, text):
+def colored(r:int, g:int, b:int, text) -> str:
     return "\033[38;2;{};{};{}m{}\033[38;2;255;255;255m".format(r, g, b, text)
 
 
@@ -16,10 +16,10 @@ TOTAL_ZERO = 0
 TOTAL_ROLLS = 0
 
 
-def die_roller(d_type, amount, modifier):
+def die_roller(d_type:int, amount: int, modifier:int) -> Tuple[int, int]:
     # print(f"Rolling {amount}d{d_type} + {modifier}")
     simulation = []
-    for i in range(1, (amount + 1)):
+    for _ in range(1, (amount + 1)):
         rng = np.random.default_rng()
         options = rng.integers(low=1, high=(d_type + 1), size=10)
         simulation.append(random.choice(options))
@@ -31,16 +31,16 @@ def die_roller(d_type, amount, modifier):
     return result, max_damage
 
 
-def domi_normal(amount, to_hit_modifier, fire):
+def domi_normal(amount:int, to_hit_modifier:int, fire:int):
     global LAST_ZERO, LAST_CRIT, TOTAL_CRIT, TOTAL_ZERO, TOTAL_ROLLS
-    to_hit, discard = die_roller(20, 1, to_hit_modifier)
+    to_hit, _ = die_roller(20, 1, to_hit_modifier)
     damage, max_damage = die_roller(10, amount, 7)
     crit_damage = 2 * damage
     if to_hit == (20 + to_hit_modifier):
         d_twenty_fancy = colored(0, 255, 0, (to_hit - to_hit_modifier))
         if (max_damage * 2) == (crit_damage):
             print(
-                f"As Dominion swings her flaming scythe towards her target ",
+                "As Dominion swings her flaming scythe towards her target ",
                 f"she strikes with a {d_twenty_fancy}.\n",
                 f"With a huge gush of blood, she deals {colored(0, 255, 0, crit_damage)} ",
                 f"slashing damage and {colored(0, 255, 0, (2 * fire))} ",
@@ -49,7 +49,7 @@ def domi_normal(amount, to_hit_modifier, fire):
             )
         else:
             print(
-                f"As Dominion swings her flaming scythe towards her target ",
+                "As Dominion swings her flaming scythe towards her target ",
                 f"she strikes with a {d_twenty_fancy}.\n",
                 f"With a huge gush of blood, she deals {colored(0, 255, 0, crit_damage)} ",
                 f"slashing damage and {colored(0, 255, 0, (2 * fire))} ",
@@ -76,7 +76,7 @@ def domi_normal(amount, to_hit_modifier, fire):
         d_twenty_fancy = colored(255, 69, 0, to_hit)
         if damage == max_damage:
             print(
-                f"As Dominion swings her flaming scythe towards her target",
+                "As Dominion swings her flaming scythe towards her target",
                 f"she strikes with a {d_twenty_fancy}.\n",
                 f"With a huge gush of blood, she deals {colored(255, 69, 0, damage)} ",
                 f"slashing damage and {colored(255, 69, 0, fire)} ",
@@ -86,7 +86,7 @@ def domi_normal(amount, to_hit_modifier, fire):
             )
         else:
             print(
-                f"As Dominion swings her flaming scythe towards her target",
+                "As Dominion swings her flaming scythe towards her target",
                 f"she strikes with a {d_twenty_fancy}.\n",
                 f"With a huge gush of blood, she deals {colored(255, 69, 0, damage)} ",
                 f"slashing damage and {colored(255, 69, 0, fire)} ",

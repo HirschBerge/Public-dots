@@ -1,21 +1,20 @@
 #!/usr/bin/env python3.11
 import MangaDexPy
-from MangaDexPy import downloader
-import os, contextlib, sys, logging, string, re, shutil, uuid
+import os
+import sys
+import uuid
 from datetime import datetime
-from helper import *
+from helper import (
+    colored,
+    DiscordWebHook,
+    get_manga_title,
+    download_chapters,
+    get_mdlist,
+    clean_up_parents,
+)
 
 
 def sort_chapters(chapters: list):
-    # skipped_chapters = [
-    #     x for x in chapters if x.uploader.username == "NotXunder" if x.chapter
-    # ]
-    # sorted_skipped_chapters = sorted(
-    #     skipped_chapters, key=lambda chap: float(chap.chapter)
-    # )
-    # print(
-    #     f"Skipped chapters uploaded by Mangaplus: {''.join(str(colored(255,0,0,c.chapter)) for c in sorted_skipped_chapters)}."
-    # )
     external_uploaders = [
         "MangaDex",
         "comikey",
@@ -23,7 +22,6 @@ def sort_chapters(chapters: list):
         "AzukiTeam",
         "inkrcomics",
     ]
-
     eng_chapters = [
         x
         for x in chapters
@@ -31,8 +29,6 @@ def sort_chapters(chapters: list):
         if x.uploader.username not in external_uploaders
         if x.chapter
     ]
-    # test = [[x.uploader.username, x.chapter] for x in eng_chapters if x.chapter == "2"]
-    # print(test)
     sorted_chapters = sorted(eng_chapters, key=lambda chap: float(chap.chapter))
     unique_chapters_dict = {}
     for chapter in sorted_chapters:
@@ -46,7 +42,7 @@ def sort_chapters(chapters: list):
 
 def notify_send(title, new_chapters, cover_url=None):
     os.system(
-        f"""notify-send -i ~/.cache/mdex.jpg -u normal {title} \"Downloaded {new_chapters} new chapters of {title} from MangaDex\" """
+        f"""notify-send -i ~/.cache/mdex.jpg -u normal \"Downloaded {new_chapters} new chapters of {title} from MangaDex\" """
     )
     d = DiscordWebHook(f"{title}")
     if cover_url and new_chapters > 0:
@@ -63,23 +59,15 @@ def notify_send(title, new_chapters, cover_url=None):
     else:
         d.send_message(f"No new chapters of ***{title}*** from MangaDex")
 
-def time_it(func):
-    def wrapper(*args, **kwargs):
-        start_time = datetime.now()
-        result = func(*args, **kwargs)
-        end_time = datetime.now()
-        taken = str(end_time - start_time)
-        message = "Time taken: "
-        print(f"{colored(0,0,255, message)}{colored(0,255,0,taken[:10])}")
-    return wrapper
 
 class USER_NAME_MangaDex:
     def __init__(self, manga_id: str = "", title="", start: float = 0, end: float = -1):
         self.cli = MangaDexPy.MangaDex()
         self.manga_id = manga_id
         self.title = title
-    @time_it
+
     def download_manga_en(self):
+        start = datetime.now()
         # Asking the API about that manga with uuid 'manga_id'
         try:
             manga = self.cli.get_manga(self.manga_id)
@@ -93,7 +81,7 @@ class USER_NAME_MangaDex:
             exit(1)
         try:
             manga_title = manga.title["en"]
-        except KeyError as e:
+        except KeyError:
             manga_title = manga.title["ja-ro"]
         print(
             f"Manga is: {colored(87,8,97,manga_title)} written by {colored(255,0,0,manga.author[0].name)}"
@@ -108,12 +96,15 @@ class USER_NAME_MangaDex:
             return 1
         sorted_chapters = sort_chapters(chapters)
         new_chapters, name_manga = download_chapters(sorted_chapters, manga)
+        end = datetime.now()
+        taken = str(end - start)
+        message = "Time taken: "
+        print(f"{colored(0,0,255, message)}{colored(0,255,0,taken[:10])}")
         if new_chapters >= 1:
             notify_send(name_manga, new_chapters, cover)
 
     def search(self):
         results = self.cli.search("manga", {"title": self.title}, limit=20)
-        reses = []
         count = 1
         for result in results:
             # author = self.cli.search("author", {"id": result.author[0]})
@@ -151,14 +142,14 @@ class USER_NAME_MangaDex:
             input("Enter the number of the result you'd like to download: ")
         )
         return results[download_this - 1].id
-        print(f"Now Downloading:")
-        search_dl(manga_id=results[download_this - 1].id)
+        # print(f"Now Downloading:")
+        # search_dl(manga_id=results[download_this - 1].id)
 
-    @time_it
     def chapter_dl(self):
         self.manga_id = self.search()
         start_chapter = float(input("Choose starting chapter: "))
         end_chapter = float(input("Choose ending chapter: "))
+        start_time = datetime.now()
         # Asking the API about that manga with uuid 'manga_id'
         try:
             manga = self.cli.get_manga(self.manga_id)
@@ -172,7 +163,7 @@ class USER_NAME_MangaDex:
             exit(1)
         try:
             manga_title = manga.title["en"]
-        except KeyError as e:
+        except KeyError:
             manga_title = manga.title["ja-ro"]
         print(
             f"Manga is: {colored(87,8,97,manga_title)} written by {colored(255,0,0,manga.author[0].name)}"
@@ -186,6 +177,10 @@ class USER_NAME_MangaDex:
             if float(x.chapter) <= end_chapter and float(x.chapter) >= start_chapter
         ]
         download_chapters(new_chapters, manga)
+        end_time = datetime.now()
+        taken = str(end_time - start_time)
+        message = "Time taken: "
+        print(f"{colored(0,0,255, message)}{colored(0,255,0,taken[:10])}")
 
     def search_dl(self):
         self.manga_id = self.search()

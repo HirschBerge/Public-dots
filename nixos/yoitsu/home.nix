@@ -119,7 +119,7 @@ in
     xwaylandvideobridge
     aria
     wf-recorder
-    eww-wayland
+    eww
     sxiv
     pavucontrol
     rnnoise-plugin
@@ -150,9 +150,8 @@ in
 #  ╚██████╔╝██║  ██║██║ ╚═╝ ██║██║██║ ╚████║╚██████╔╝
 #   ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝ 
 #                                                     
-		lutris
-		wineWowPackages.full
-        yuzu-mainline
+	wineWowPackages.full
+        appimage-run
 	];
   # Enable home-manager and git
 
@@ -222,7 +221,7 @@ in
   };
   programs.eza = {
     enable = true;
-    enableAliases = false;
+    # enableAliases = false;
     git = true;
     icons = true;
     extraOptions = [
@@ -304,3 +303,4 @@ in
 #       ];
 #     };
 }
+#

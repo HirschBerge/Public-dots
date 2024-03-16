@@ -75,7 +75,7 @@ in
     xfce.thunar
     xfce.tumbler
     nerdfonts
-    eww-wayland
+    eww
     unzip
     rnnoise-plugin
     sxiv
@@ -181,7 +181,7 @@ in
 	};
   programs.eza = {
     enable = true;
-    enableAliases = false;
+    # enableAliases = false;
     git = true;
     icons = true;
     extraOptions = [
