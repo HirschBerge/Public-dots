@@ -48,9 +48,10 @@ in
      enableNushellIntegration = true;
     };
     programs.zsh = {
-        enable = true;    
+        enable = true;
+        prezto.caseSensitive = false;
         enableCompletion = true;
-        enableAutosuggestions = true;
+        autosuggestion.enable = true;
         syntaxHighlighting.enable = true;
         initExtra = ''
             setopt autocd # auto cd when only path is entered

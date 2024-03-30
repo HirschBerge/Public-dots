@@ -337,12 +337,29 @@ tooltip {
 	padding-top: 6px;
 }
 
-.GPU {
+.GPU_model,
+.GPU_one,
+.GPU_two,
+.GPU_three {
 	font-size: 13px;
 	font-weight: bold;
-	color: $color13;
 	border-radius: 5px;
 	padding-top: 6px;
+}
+.GPU_model {
+	color: $color13;
+}
+
+.GPU_one {
+	color: $color9;
+}
+
+.GPU_two {
+	color: $mauve;
+}
+
+.GPU_three {
+	color: $color3;
 }
 
 .date {

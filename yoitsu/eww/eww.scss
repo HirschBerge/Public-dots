@@ -90,12 +90,32 @@ tooltip {
 .info-box-right {
 	padding: 4px;
 }
-.GPU {
+
+
+.GPU_model,
+.GPU_one,
+.GPU_two,
+.GPU_three {
 	font-size: 13px;
 	font-weight: bold;
-	color: $color13;
 	border-radius: 5px;
 	padding-top: 6px;
+}
+
+.GPU_model {
+	color: $color13;
+}
+
+.GPU_one {
+	color: $color9;
+}
+
+.GPU_two {
+	color: $blue;
+}
+
+.GPU_three {
+	color: $color3;
 }
 .info-icon {
     padding-top: 3px;

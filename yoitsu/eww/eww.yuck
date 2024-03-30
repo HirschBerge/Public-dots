@@ -11,7 +11,8 @@
 (defpoll term :interval "1h" "notify-send $(echo $TERM | awk -F'-' '{print $NF}')")
 (defpoll uptime :interval "1m" "./scripts/better_uptime.sh $(cut -f1 -d. /proc/uptime)")
 (defpoll updates_poll :initial "..." :interval "10m" "bash $HOME/.config/eww/scripts/packages.sh") 
-(deflisten GPU `./scripts/GPU_mon.sh --side`)
+;; (deflisten GPU `./scripts/GPU_mon.sh --side`)
+(defpoll GPU :initial "..." :interval "3s" `bash ./scripts/GPU_mon.sh --json`)
 
 
 ;; MUSIC VARS
@@ -82,12 +83,16 @@
     )
 )
 
+
 (defwidget GPU []
-  (label
-    :class "GPU"
-    :text "${GPU}"
+    (box :class "cal-container" :orientation "v" :space-evenly "false" :halign "center"
+          (label :halign "center" :valign "center" :class "GPU_model" :text "RX 7900 GRE")
+          (label :halign "center" :valign "center" :class "GPU_one" :text "󰔏 ${GPU.Temp} 󰍛 ${GPU.VRAMPercent}")
+          (label :halign "center" :valign "center" :class "GPU_two" :text "  ${GPU.GPUPercent} 󱑴 ${GPU.Fan}")
+          (label :halign "center" :valign "center" :class "GPU_three" :text "󰐧 ${GPU.AvgPwr} 󰓅  ${GPU.SerialClock}")
     )
 )
+
 (defwidget info []
     (box :class "info-box-outer" :orientation "h" :space-evenly false :halign "center"
         (box :class "info-box-top" :orientation "v" :space-evenly false

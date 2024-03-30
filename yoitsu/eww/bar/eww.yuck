@@ -8,7 +8,7 @@
 (defpoll battery :interval "30s"
 	`/home/$USER/.config/eww/Scripts/battery.py`)
 
-(deflisten GPU `../scripts/GPU_mon.sh`)
+(defpoll GPU :initial "..." :interval "3s" `bash ../scripts/GPU_mon.sh --json`)
 ;; System
 (defpoll used_per :interval "1m" `eww get EWW_DISK |jq .'["/"]'.used_perc`)
 (defpoll memory :interval "5s"
@@ -97,9 +97,11 @@
 
 
 (defwidget GPU []
-  (label
-    :class "GPU"
-    :text "${GPU}"
+    (box :class "cal-container" :orientation "v" :space-evenly "false" :halign "center"
+          ;; (label :halign "center" :valign "center" :class "GPU_model" :text "RX 7900GRE")
+          (label :halign "center" :valign "center" :class "GPU_one" :text "󰔏 ${GPU.Temp} 󰍛 ${GPU.VRAMPercent}")
+          (label :halign "center" :valign "center" :class "GPU_two" :text "  ${GPU.GPUPercent} 󱑴 ${GPU.Fan}")
+          ;; (label :halign "center" :valign "center" :class "GPU_three" :text "󰐧 ${GPU.AvgPwr} 󰓅  ${GPU.SerialClock}")
     )
 )
 (defwidget weather []

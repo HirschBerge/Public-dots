@@ -41,6 +41,7 @@
     pika-backup
     hyprlock
     hypridle
+    warp-terminal
   ];
 }
 
