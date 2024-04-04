@@ -1,0 +1,111 @@
+---
+name: Rust Weather
+windows:
+  - tabs:
+      - title: Rust Dev
+        layout:
+          split_direction: horizontal
+          panes:
+            - cwd: ~/projects/Weather_app
+              commands:
+                - exec: nix develop -c v ./src/main.rs
+            - split_direction: vertical
+              panes:
+                - cwd: ~/projects/Weather_app/
+                  commands:
+                    - exec: nix develop -c bacon run
+                - cwd: ~/projects/Weather_app/
+                  commands:
+                    - exec: nix develop -c bacon test
+        color: blue
+      - title: Normal Terminal
+        layout:
+          split_direction: horizontal
+          panes:
+            - cwd: ~/
+            - cwd: ~/
+        color: cyan
+
+---
+name: Rust Anilist
+windows:
+  - tabs:
+      - title: Rust Dev
+        layout:
+          split_direction: horizontal
+          panes:
+            - cwd: ~/projects/anilist_cli
+              commands:
+                - exec: nix develop -c v ./src/main.rs
+            - split_direction: vertical
+              panes:
+                - cwd: ~/projects/anilist_cli/
+                  commands:
+                    - exec: nix develop -c bacon run
+                - cwd: ~/projects/anilist_cli/
+                  commands:
+                    - exec: nix develop -c bacon test
+        color: blue
+      - title: Normal Terminal
+        layout:
+          split_direction: horizontal
+          panes:
+            - cwd: ~/
+            - cwd: ~/
+        color: cyan
+
+---
+name: Rust Save manager
+windows:
+  - tabs:
+      - title: Rust Dev
+        layout:
+          split_direction: horizontal
+          panes:
+            - cwd: ~/projects/oxidized_saves
+              commands:
+                - exec: nix develop -c v ./src/main.rs
+            - split_direction: vertical
+              panes:
+                - cwd: ~/projects/oxidized_saves/
+                  commands:
+                    - exec: nix develop -c bacon run
+                - cwd: ~/projects/oxidized_saves/
+                  commands:
+                    - exec: nix develop -c bacon test
+        color: blue
+      - title: Normal Terminal
+        layout:
+          split_direction: horizontal
+          panes:
+            - cwd: ~/
+            - cwd: ~/
+        color: cyan
+---
+name: Ani-Cli
+windows:
+  - tabs:
+      - title: Rust Dev
+        layout:
+          split_direction: horizontal
+          panes:
+            - cwd: ~/projects/ani-cli
+              commands:
+                - exec: nix develop -c v ./src/main.rs
+            - split_direction: vertical
+              panes:
+                - cwd: ~/projects/ani-cli/
+                  commands:
+                    - exec: nix develop -c bacon run
+                - cwd: ~/projects/ani-cli/
+                  commands:
+                    - exec: nix develop -c bacon test
+        color: blue
+      - title: Normal Terminal
+        layout:
+          split_direction: horizontal
+          panes:
+            - cwd: ~/
+            - cwd: ~/
+        color: cyan
+

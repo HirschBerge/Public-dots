@@ -19,8 +19,8 @@ upgrade () {
   nix flake update $HOME/.dotfiles
   home-manager --flake $HOME/.dotfiles#$USER@shirohebi switch -b backup
   sleep 1
-  sudo nixos-rebuild switch --flake $HOME/.dotfiles#shirohebi
-  send_notification
+  sudo nixos-rebuild boot --flake $HOME/.dotfiles#shirohebi
+  send_notification "Upgrade complete. Reboot to finalize."
   fix_nvim_links
 }
 
@@ -28,7 +28,7 @@ home_manager_only(){
   notify-send "Started Home Manager" "We'll let ya know" -i ~/.config/swaync/nixos-logo.png
   fd . ~/ -H -e backup -tf -X rm -f
   home-manager --flake $HOME/.dotfiles#$USER@shirohebi switch -b backup
-  send_notification
+  send_notification "Home Manager build complete\!"
   fix_nvim_links
 }
 
@@ -38,14 +38,14 @@ rebuild (){
   sleep 1
   sudo nixos-rebuild switch --flake $HOME/.dotfiles#shirohebi
   fix_nvim_links
-  send_notification
+  send_notification "Rebuild Complete\!"
   fix_nvim_links
 }
 
 
 send_notification(){
   aplay $HOME/.config/swaync/notification.wav &
-  response=$(timeout 10 notify-send -A "Okay!" "Rebuild Complete!" "All built uppppp!" -A "Reboot" -i ~/.config/swaync/nixos-logo.png)
+  response=$(timeout 10 notify-send -A "Okay!" "Rebuild Complete!" "$1" -A "Reboot" -i ~/.config/swaync/nixos-logo.png)
   case "$response" in
     0) exit 0 ;;
     1) reboot ;;

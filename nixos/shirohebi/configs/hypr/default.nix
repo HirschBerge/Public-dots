@@ -1,4 +1,8 @@
 {pkgs, lib, config, inputs, ... }:
+let
+    term = "${pkgs.warp-terminal}/bin/warp-terminal";
+    # term = "${pkgs.kitty}/bin/kitty";
+in
 {
 	home.packages = with pkgs; [
 		wl-clipboard
@@ -134,7 +138,7 @@ $mainMod = SUPER
 # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
 
 bind = ALT, grave, fakefullscreen
-bind = $mainMod, Return, exec, kitty
+bind = $mainMod, Return, exec, ${term}
 bind = $mainMod, O, killactive, 
 bind = $mainMod, M, exit,
 bind = $mainMod, N, exec, swaync-client -t
@@ -221,6 +225,7 @@ exec = bash $HOME/.config/hypr/scripts/hypronstart.sh &
 exec = bash $HOME/.config/hypr/scripts/bat_notify.sh --continue &
 exec-once = ${pkgs.clipse}/bin/clipse -listen
 exec-once = swww init
+exec-once = ${pkgs.discord}/bin/discord
 exec = $HOME/.scripts/background/cron.sh ~/Pictures/Monogatari/
 exec-once = /etc/profiles/per-user/USER_NAME/bin/firefox
 exec-once = /etc/profiles/per-user/USER_NAME/bin/discord
@@ -229,9 +234,10 @@ exec = eww open bar &
   '';
   home.file."${config.xdg.configHome}/hypr/window_rules.conf".text = /* hyprlang  */ ''
 # Example windowrule v1
+windowrulev2 = tile,class:^(.*Warp.*)$
 windowrulev2 = float,class:^(kitty.*)$,title:^(.*clipse.*)$
 windowrulev2 = size 546 552,class:^(kitty.*)$,title:^(.*clipse.*)$
-windowrulev2 = opacity, 0.5 0.5,class:^(kitty.*)$,title:^(.*clipse.*)$
+windowrulev2 = opacity 0.5 0.5,class:^(kitty.*)$,title:^(.*clipse.*)$
 windowrule = float, ^(pavucontrol)$
 windowrule = opacity 0.8 0.7, obsidian
 windowrule = opacity 0.8 0.7, firefox-browser

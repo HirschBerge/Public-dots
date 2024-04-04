@@ -138,13 +138,13 @@
         (box :orientation "h" :width 130 
             (graph  :class "network-graph-up"
                     :thickness 2
-                    :value {round(EWW_NET.wlo1.NET_UP / 1024 ,1)}
+                    :value {round(EWW_NET.wlo1.NET_UP ,1)}
                     :time-range "2m"
                     :min 10
                     :max 1010
                     :dynamic "true"
                     :line-style "round"
-                    :tooltip "${round((EWW_NET.wlo1.NET_UP / (1024 * 1024)), 1)}MB/s"
+                    :tooltip "${round((EWW_NET.wlo1.NET_UP / 8 ), 1)}MB/s"
             )
 	    )
     )
@@ -157,13 +157,13 @@
         (box :orientation "h" :width 130
             (graph  :class "network-graph-down"
                     :thickness 2
-                    :value {round(EWW_NET.wlo1.NET_DOWN / 1024 ,1)}
+                    :value {round(EWW_NET.wlo1.NET_DOWN,1)}
                     :time-range "2m"
                     :min 10
-                    :max 1010
+                    :max 512
                     :dynamic "true"
                     :line-style "round"
-                    :tooltip "${round((EWW_NET.wlo1.NET_DOWN / (1024 * 1024)), 1)}MB/s"
+                    :tooltip "${round((EWW_NET.wlo1.NET_DOWN /8 ), 1)}MB/s"
             )
 	    )
     )

@@ -81,6 +81,7 @@ in
             source ${pkgs.autojump}/share/zsh/site-functions/autojump.zsh
       '';
         shellAliases = {
+            "netstat" = "grc netstat";
             "cd" ="z";
             "dots" = "cd ~/.dotfiles";
             "-s {jpg,png,jpeg}" = "kitty +kitten icat";
@@ -140,11 +141,10 @@ in
             dtop="cd ~/Desktop && eza --no-quotes --group-directories-first -l";
             du="~/.scripts/dudu.sh";
             e="${editor}";
-            egrep="grep -E --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox}";
             etrash="sudo rm -rf ~/.local/share/Trash/files/* ~/.local/share/Trash/info/*";
             f="";
             fgrep="grep -F --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox}";
-            find="time find";
+            find="\time find";
             g="git";
             grep="rg";
             ga="git add";

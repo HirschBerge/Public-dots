@@ -196,7 +196,7 @@
                     :max 1010
                     :dynamic "true"
                     :line-style "round"
-                    :tooltip "${round((EWW_NET.enp7s0.NET_UP / (1024 * 1024) * 4), 1)}Mb/s"
+                    :tooltip "${round((EWW_NET.enp7s0.NET_UP / 8), 1)}Mb/s"
             )
 	    )
     )
@@ -209,13 +209,13 @@
         (box :orientation "h" :width 110
             (graph  :class "network-graph-down"
                     :thickness 2
-                    :value {round(EWW_NET.enp7s0.NET_DOWN / 1024 ,1)}
+                    :value {round(EWW_NET.enp7s0.NET_DOWN ,1)}
                     :time-range "2m"
                     :min 10
-                    :max 1010
+                    :max 800
                     :dynamic "true"
                     :line-style "round"
-                    :tooltip "${round((EWW_NET.enp7s0.NET_DOWN / (1024 * 1024) * 4), 1)}Mb/s"
+                    :tooltip "${round((EWW_NET.enp7s0.NET_DOWN / 8), 1)}Mb/s"
             )
 	    )
     )

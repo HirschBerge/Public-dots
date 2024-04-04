@@ -15,10 +15,10 @@ with colors; {
     # 	shell = "zsh";
     # };
     extraConfig=''
-						font_family      Dank Mono Regular
-						bold_font        Fira Code Bold Nerd Font Complete
-						italic_font      Dank Mono Italic
-                        bold_italic_font Fira Code SemiBold Nerd Font Complete
+						font_family      Dank Mono
+						bold_font        Dank Mono
+						italic_font      Dank Mono
+						bold_italic_font Dank Mono
 						symbol_map U+1F980 Noto Color Emoji
 						enable_audio_bell no
 						# background_opacity 0.6

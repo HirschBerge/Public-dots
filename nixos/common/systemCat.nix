@@ -136,6 +136,7 @@ in {
               nvim-autopairs
               nvim-highlight-colors
               rust-tools-nvim
+              renamer-nvim
             ];
           };
         };

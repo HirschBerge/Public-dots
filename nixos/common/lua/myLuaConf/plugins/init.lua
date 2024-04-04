@@ -12,6 +12,7 @@ require('myLuaConf.plugins.crates')
 require('myLuaConf.plugins.completion')
 require('myLuaConf.plugins.noice')
 require('myLuaConf.plugins.other')
+require('myLuaConf.plugins.renamer')
 
 if nixCats('markdown') then
   vim.g.mkdp_auto_close = 0

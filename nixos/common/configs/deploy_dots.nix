@@ -1,31 +1,39 @@
 { pkgs, lib, config, hostname, ... }:
 {
   home.file."${config.home.homeDirectory}/.scripts" = {
-    source = ../../.. + "/${hostname}" + /scripts;
+    source = ../../.. + "/common" + /scripts;
     recursive = true;
   };
-  home.file."${config.home.homeDirectory}/.local/bin" = {
-    source = ../../.. + "/${hostname}" + /bin;
+  home.file."${config.home.homeDirectory}/.local/share/warp-terminal" = {
+    source = ../../.. + "/common" + /warp-terminal;
     recursive = true;
   };
 
+  home.file."${config.home.homeDirectory}/.local/bin" = {
+    source = ../../.. + "/common" + /bin;
+    recursive = true;
+  };
+  home.file."${config.xdg.configHome}/mpv" = {
+    source = ../../.. + "/common" + /mpv;
+    recursive = true;
+  };
   # home.file."${config.xdg.configHome}/nvim" = {
   #   source = ../../.. + "/${hostname}" + /nvim;
   #   recursive = true;
   # };
 
   home.file."${config.xdg.configHome}/swaync" = {
-    source = ../../.. + "/${hostname}" + /swaync;
+    source = ../../.. + "/common" + /swaync;
     recursive = true;
   };
 
   home.file."${config.xdg.configHome}/zsh" = {
-    source = ../../.. + "/${hostname}" + /zsh;
+    source = ../../.. + "/common" + /zsh;
     recursive = false;
   };
 
   home.file."${config.xdg.configHome}/rofi" = {
-    source = ../../.. + "/${hostname}" + /rofi;
+    source = ../../.. + "/common" + /rofi;
     recursive = true;
   };
 
@@ -35,7 +43,7 @@
   };
 
   home.file."${config.xdg.configHome}/lf" = {
-    source = ../../.. + "/${hostname}" + /lf;
+    source = ../../.. + "/common" + /lf;
     recursive = true;
   };
   home.file."${config.xdg.configHome}/pipewire/pipewire.conf.d/99-input-denoising.conf".text = ''

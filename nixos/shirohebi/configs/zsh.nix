@@ -49,7 +49,7 @@ in
 programs.zsh = {
         enable = true;
         enableCompletion = true;
-        enableAutosuggestions = true;
+        autosuggestion.enable = true;
         syntaxHighlighting.enable = true;
         initExtra = ''
             setopt autocd # auto cd when only path is entered
@@ -79,6 +79,7 @@ programs.zsh = {
             [ -f "$HOME/.config/zsh/colors_and_functions.zsh" ] && source $HOME/.config/zsh/colors_and_functions.zsh
       '';
         shellAliases = {
+            "netstat" = "grc netstat";
             "cd" ="z";
             "dots" = "cd ~/.dotfiles";
             "-s {jpg,png,jpeg}" = "kitty +kitten icat";
@@ -311,7 +312,7 @@ programs.zsh = {
             shutdown="umount -R /mnt/ ; sudo shutdown -h now";
             sorts="sort | uniq -c | sort -n";
             speedtest="speedtest-cli";
-            ssh="kitty +kitten ssh";
+            # ssh="kitty +kitten ssh";
             tree="eza -lah --tree --icons=always";
             # v="echo -en \"I Bet you mean hx, RIGHT?\"; sleep 0.5;${pkgs.helix}/bin/hx";
             # v = "nvim"; 

@@ -18,8 +18,10 @@
     wget
     home-manager
     traceroute
-    python311
-    python311Packages.pip
+    python312
+    python312Packages.pip
+    python312Packages.tkinter
+    python312Packages.numpy
     obs-studio
     ripgrep
     du-dust

@@ -37,6 +37,6 @@ get_cpu() {
 	echo "${TOTAL}" > "${cpuFile}"
 	echo "${IDLE}" >> "${cpuFile}"
 }
-printf "%b" "import psutil\nprint('{}'.format(psutil.cpu_percent(interval=2)))" | ~/.scripts/.venv/bin/python3.11
+printf "%b" "import psutil\nprint('{}'.format(psutil.cpu_percent(interval=2)))" | ~/.scripts/.venv/bin/python3
 # cat /proc/stat |grep cpu |tail -1|awk '{print ($5*100)/($2+$3+$4+$5+$6+$7+$8+$9+$10)}'|awk '{print 100-$1}'|xargs
 # get_cpu
