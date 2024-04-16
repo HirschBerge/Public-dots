@@ -1,3 +1,0 @@
-Execute ( Plugin config: ctrlp.vim ):
-  so config/plugins/ctrlp.vim
-  AssertEqual g:ctrlp_map, '<c-p>'

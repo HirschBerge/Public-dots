@@ -1,1 +1,0 @@
-lua require('hop').setup()
