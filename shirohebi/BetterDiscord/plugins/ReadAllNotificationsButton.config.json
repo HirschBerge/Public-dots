@@ -1,0 +1,21 @@
+{
+	"all": {
+		"batch": {
+			"guilds": true,
+			"muted": false,
+			"dms": false
+		},
+		"blacklist": [],
+		"general": {
+			"addClearButton": true,
+			"confirmClear": false
+		},
+		"settings": {
+			"addClearButton": true,
+			"confirmClear": false,
+			"includeGuilds": true,
+			"includeMuted": false,
+			"includeDMs": false
+		}
+	}
+}

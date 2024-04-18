@@ -1,0 +1,1017 @@
+"=============================================================================
+" flygrep.vim --- Grep on the fly in SpaceVim
+" Copyright (c) 2016-2023 Wang Shidong & Contributors
+" Author: Shidong Wang < wsdjeg@outlook.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
+" Loading SpaceVim api {{{
+scriptencoding utf-8
+if has('nvim-0.7.0')
+  function! SpaceVim#plugins#flygrep#open(argv) abort
+    lua require("spacevim.plugin.flygrep").open(
+          \ require("spacevim").eval("a:argv")
+          \ )
+  endfunction
+  function! SpaceVim#plugins#flygrep#lineNr() abort
+    lua require("spacevim.plugin.flygrep").lineNr()
+  endfunction
+  function! SpaceVim#plugins#flygrep#mode() abort
+    lua require("spacevim.plugin.flygrep").mode()
+  endfunction
+  finish
+endif
+let s:MPT = SpaceVim#api#import('prompt')
+let s:JOB = SpaceVim#api#import('job')
+let s:SYS = SpaceVim#api#import('system')
+let s:BUFFER = SpaceVim#api#import('vim#buffer')
+let s:LIST = SpaceVim#api#import('data#list')
+let s:REGEX = SpaceVim#api#import('vim#regex')
+let s:VIM = SpaceVim#api#import('vim')
+let s:LOGGER =SpaceVim#logger#derive('FlyGrep')
+let s:HI = SpaceVim#api#import('vim#highlight')
+if has('nvim')
+  let s:FLOATING = SpaceVim#api#import('neovim#floating')
+else
+  let s:FLOATING = SpaceVim#api#import('vim#floating')
+endif
+let s:JSON = SpaceVim#api#import('data#json')
+
+let s:SL = SpaceVim#api#import('vim#statusline')
+let s:Window = SpaceVim#api#import('vim#window')
+
+let s:grepid = 0
+
+let s:filename_pattern = '[^:]*:\d\+:\d\+:'
+
+" if win_getid does not existing, use winnr instead
+let s:previous_winid = 0
+
+function! s:close_flygrep_win() abort
+  noautocmd q
+  " this function requires vim 7.4.1557
+  if has('patch-7.4.1557')
+    call win_gotoid(s:previous_winid)
+  else
+    exe s:previous_winid .  'wincmd w'
+  endif
+endfunction
+
+" Init local options: {{{
+let s:grep_expr = ''
+let [
+      \ s:grep_default_exe,
+      \ s:grep_default_opt,
+      \ s:grep_default_ropt,
+      \ s:grep_default_expr_opt,
+      \ s:grep_default_fix_string_opt,
+      \ s:grep_default_ignore_case,
+      \ s:grep_default_smart_case
+      \ ] = SpaceVim#mapping#search#default_tool()
+let s:grep_timer_id = -1
+let s:preview_timer_id = -1
+let s:grepid = 0
+function! s:read_histroy() abort
+  if filereadable(expand(g:spacevim_data_dir.'SpaceVim/flygrep_history'))
+    let _his = s:JSON.json_decode(join(readfile(expand(g:spacevim_data_dir.'SpaceVim/flygrep_history'), ''), ''))
+    if type(_his) ==# type([])
+      return _his
+    else
+      return []
+    endif
+  else
+    return []
+  endif
+endfunction
+function! s:update_history() abort
+  if index(s:grep_history, s:grep_expr) >= 0
+    call remove(s:grep_history, index(s:grep_history, s:grep_expr))
+  endif
+  call add(s:grep_history, s:grep_expr)
+  if !isdirectory(expand(g:spacevim_data_dir.'SpaceVim'))
+    silent call mkdir(expand(g:spacevim_data_dir.'SpaceVim'))
+  endif
+  if filewritable(expand(g:spacevim_data_dir.'SpaceVim/flygrep_history'))
+    call writefile([s:JSON.json_encode(s:grep_history)], expand(g:spacevim_data_dir.'SpaceVim/flygrep_history'))
+  endif
+endfunction
+let s:grep_history = s:read_histroy()
+let s:complete_input_history_num = [0,0]
+" }}}
+
+" grep local funcs:{{{
+" @vimlint(EVL103, 1, a:timer)
+let s:current_grep_pattern = ''
+function! s:grep_timer(...) abort
+  if s:grep_mode ==# 'expr'
+    let s:current_grep_pattern = join(split(s:grep_expr), '.*')
+  else
+    let s:current_grep_pattern = s:grep_expr
+  endif
+  let cmd = s:get_search_cmd(s:current_grep_pattern)
+  call s:LOGGER.info('grep cmd: ' . string(cmd))
+  let s:grepid =  s:JOB.start(cmd, {
+        \ 'on_stdout' : function('s:grep_stdout'),
+        \ 'on_stderr' : function('s:grep_stderr'),
+        \ 'in_io' : 'null',
+        \ 'on_exit' : function('s:grep_exit'),
+        \ })
+  " sometimes the flygrep command failed to run, so we need to log the jobid
+  " of the grep command.
+  call s:LOGGER.info('flygrep job id is: ' . string(s:grepid))
+endfunction
+
+function! s:get_search_cmd(expr) abort
+  let cmd = [s:grep_exe] + s:grep_opt
+  if &ignorecase
+    let cmd += s:grep_ignore_case
+  endif
+  if &smartcase
+    let cmd += s:grep_smart_case
+  endif
+  if s:grep_mode ==# 'string'
+    let cmd += s:grep_default_fix_string_opt
+  endif
+  let cmd += s:grep_expr_opt
+  if !empty(s:grep_files) && type(s:grep_files) == 3
+    " grep files is a list, which mean to use flygrep searching in 
+    " multiple files
+    let cmd += [a:expr] + s:grep_files
+  elseif !empty(s:grep_files) && type(s:grep_files) == 1
+    " grep file is a single file
+    let cmd += [a:expr] + [s:grep_files]
+  elseif !empty(s:grep_dir)
+    " grep dir is not a empty string
+    if s:grep_exe ==# 'findstr'
+      let cmd += [s:grep_dir] + [a:expr] + ['%CD%\*']
+    else
+      let cmd += [a:expr] + [s:grep_dir]
+    endif
+  else
+    " if grep dir is empty, grep files is empty, which means searhing in
+    " current directory.
+    let cmd += [a:expr] 
+    " when using rg, ag, need to add '.' at the end.
+    if s:grep_exe ==# 'rg' || s:grep_exe ==# 'ag' || s:grep_exe ==# 'pt'
+      let cmd += ['.']
+    endif
+    let cmd += s:grep_ropt
+  endif
+  " let cmd = map(cmd, 'shellescape(v:val)')
+  " if has('win32')
+  " let cmd += ['|', 'select', '-first', '3000']
+  " else
+  " let cmd += ['|', 'head', '-3000']
+  " endif
+  " let cmd = join(cmd, ' ')
+  return cmd
+endfunction
+
+" s:grep_mode expr or string
+" argv:expr is the input content from user
+" return a pattern for s:matchadd
+function! s:expr_to_pattern(expr) abort
+  if s:grep_mode ==# 'expr'
+    let items = split(a:expr)
+    let pattern = join(items, '.*')
+    let ignorecase = &ignorecase ? '\c' : '\C'
+    let pattern = s:filename_pattern . '.*\zs' . ignorecase . s:REGEX.parser(pattern, 0)
+    call s:LOGGER.info('matchadd pattern: ' . pattern)
+    return pattern
+  else
+    return a:expr
+  endif
+endfunction
+
+function! s:matchadd(group, partten, propty) abort
+  try
+    return matchadd(a:group, a:partten, a:propty)
+  catch /^Vim\%((\a\+)\)\=:E54/
+    let partten = substitute(a:partten, '\\(', '(', 'g')
+    try
+      return matchadd(a:group, partten, a:propty)
+    catch
+      return -1
+    endtry
+  catch /^Vim\%((\a\+)\)\=:E55/
+    let partten = substitute(a:partten, '\\)', ')', 'g')
+    try
+      return matchadd(a:group, partten, a:propty)
+    catch
+      return -1
+    endtry
+  catch 
+    return -1
+  endtry
+endfunction
+
+function! s:flygrep(expr) abort
+  call s:MPT._build_prompt()
+  if a:expr ==# ''
+    redrawstatus
+    return
+  endif
+  try 
+    call matchdelete(s:hi_id)
+  catch
+  endtry
+  hi def link FlyGrepPattern MoreMsg
+  let s:hi_id = s:matchadd('FlyGrepPattern', s:expr_to_pattern(a:expr), 2)
+  let s:grep_expr = a:expr
+  if has('timers')
+    call timer_stop(s:grep_timer_id)
+    let s:grep_timer_id = timer_start(200, function('s:grep_timer'), {'repeat' : 1})
+  else
+    call s:grep_timer()
+  endif
+endfunction
+
+" }}}
+
+" filter local funcs: {{{
+" @vimlint(EVL103, 0, a:timer)
+let s:filter_file = ''
+function! s:start_filter() abort
+  let s:mode = 'f'
+  redrawstatus
+  let s:MPT._handle_fly = function('s:filter')
+  let s:MPT._prompt = {
+        \ 'mpt' : s:MPT._prompt.mpt,
+        \ 'begin' : '',
+        \ 'cursor' : '',
+        \ 'end' : '',
+        \ }
+  let s:filter_file = tempname()
+  try
+    call writefile(getbufline('%', 1, '$'), s:filter_file, 'b')
+  catch
+    call s:LOGGER.info('Failed to write filter content to temp file')
+  endtry
+  call s:MPT._build_prompt()
+endfunction
+
+function! s:filter(expr) abort
+  call s:MPT._build_prompt()
+  if a:expr ==# ''
+    redrawstatus
+    return
+  endif
+  try 
+    call matchdelete(s:hi_id)
+  catch
+  endtry
+  hi def link FlyGrepPattern MoreMsg
+  let s:hi_id = s:matchadd('FlyGrepPattern', s:expr_to_pattern(a:expr), 2)
+  let s:grep_expr = a:expr
+  if has('timers')
+    let s:grep_timer_id = timer_start(200, function('s:filter_timer'), {'repeat' : 1})
+  else
+    call s:filter_timer()
+  endif
+endfunction
+
+" @vimlint(EVL103, 1, a:timer)
+function! s:filter_timer(...) abort
+  let cmd = s:get_filter_cmd(join(split(s:grep_expr), '.*'))
+  let s:grepid =  s:JOB.start(cmd, {
+        \ 'on_stdout' : function('s:grep_stdout'),
+        \ 'in_io' : 'null',
+        \ 'on_exit' : function('s:grep_exit'),
+        \ })
+endfunction
+" @vimlint(EVL103, 0, a:timer)
+
+function! s:get_filter_cmd(expr) abort
+  let cmd = [s:grep_exe] + SpaceVim#mapping#search#getFopt(s:grep_exe)
+  return cmd + [a:expr] + [s:filter_file]
+endfunction
+" }}}
+
+" replace local funcs {{{
+function! s:start_replace() abort
+  let s:mode = 'r'
+  try 
+    call matchdelete(s:hi_id)
+  catch
+  endtry
+  if s:grepid != 0
+    call s:JOB.stop(s:grepid)
+  endif
+  let replace_text = s:current_grep_pattern
+  if !empty(replace_text)
+    let rst = SpaceVim#plugins#iedit#start({'expr' : replace_text}, 1, line('$'))
+  endif
+  let s:hi_id = s:matchadd('FlyGrepPattern', s:expr_to_pattern(rst), 2)
+  redrawstatus
+  if rst !=# replace_text
+    call s:update_files(s:flygrep_result_to_files())
+    checktime
+  endif
+endfunction
+" }}}
+
+function! s:flygrep_result_to_files() abort
+  let files = []
+  for line in getbufline(s:flygrep_buffer_id, 1, '$')
+    let filename = fnameescape(split(line, ':\d\+:')[0])
+    let linenr = matchstr(line, ':\d\+:')[1:-2]
+    " if the search command is grep, the searching result is
+    " helloworld.vim:12: echo 'hello'
+    " echo matchstr("helloworld.vim:12: echo 'hello'", '\(:\d\+\)\+:\zs.*')
+    " ` echo 'hello'`
+    " echo matchstr("helloworld.vim:1:12: echo 'hello'", '\(:\d\+\)\+:\zs.*')
+    " ` echo 'hello'`
+    let str = matchstr(line, '\(:\d\+\)\+:\zs.*')
+    call add(files, [filename, linenr, str])
+  endfor
+  return files
+endfunction
+
+function! s:update_files(files) abort
+  let fname = ''
+  let lines = {}
+  for file in a:files
+    if file[0] == fname
+      call extend(lines, {file[1] : file[2]})
+    else
+      if !empty(fname)
+        call s:update_file(fname, lines)
+      endif
+      let fname = file[0]
+      let lines = {}
+      call extend(lines, {file[1] : file[2]})
+    endif
+  endfor
+  if !empty(fname)
+    call s:update_file(fname, lines)
+  endif
+endfunction
+
+function! s:update_file(fname, lines) abort
+  let contents = readfile(a:fname, '')
+  for linenr in keys(a:lines)
+    let contents[linenr - 1] = a:lines[ linenr ]
+  endfor
+  call writefile(contents, a:fname, '')
+endfunction
+
+
+" API: MPT._prompt {{{
+let s:MPT._prompt.mpt = g:spacevim_commandline_prompt . ' '
+" }}}
+
+" API: MPT._onclose {{{
+function! s:close_buffer() abort
+  " NOTE: the jobid maybe -1, that is means the cmd is not executable.
+  if s:grepid > 0
+    call s:JOB.stop(s:grepid)
+  endif
+  if has('timers')
+    call timer_stop(s:grep_timer_id)
+    call timer_stop(s:preview_timer_id)
+  endif
+  if s:preview_able == 1
+    for id in s:previewd_bufnrs
+      try
+        exe 'silent bd ' . id
+      catch
+      endtry
+    endfor
+    noautocmd call s:close_preview_win()
+    let s:preview_able = 0
+  endif
+  call s:close_flygrep_win()
+endfunction
+let s:MPT._onclose = function('s:close_buffer')
+" }}}
+
+" API: MPT._oninputpro {{{
+function! s:close_grep_job() abort
+  " NOTE: the jobid maybe -1, that is means the cmd is not executable.
+  if s:grepid > 0
+    try
+      call s:JOB.stop(s:grepid)
+    catch
+    endtry
+    let s:std_line = 0
+  endif
+  if has('timers')
+    call timer_stop(s:grep_timer_id)
+    call timer_stop(s:preview_timer_id)
+  endif
+  noautocmd normal! gg"_dG
+  call s:update_statusline()
+  let s:complete_input_history_num = [0,0]
+endfunction
+
+let s:MPT._oninputpro = function('s:close_grep_job')
+" }}}
+
+function! s:file_line(line) abort
+  return matchstr(a:line, '[^:]*:\d\+:')
+endfunction
+
+" FlyGrep job handles: {{{
+" @vimlint(EVL103, 1, a:data)
+" @vimlint(EVL103, 1, a:id)
+" @vimlint(EVL103, 1, a:event)
+
+" if exists('*nvim_open_win')
+" let s:std_line = 0
+" function! s:grep_stdout(id, data, event) abort
+" let datas =filter(a:data, '!empty(v:val)')
+" call nvim_buf_set_lines(s:buffer_id,s:std_line,-1,v:true,datas)
+" let s:std_line += len(datas)
+" call s:MPT._build_prompt()
+" endfunction
+" else
+function! s:grep_stdout(id, data, event) abort
+  let datas =filter(a:data, '!empty(v:val)')
+  " let datas = s:LIST.uniq_by_func(datas, function('s:file_line'))
+  if bufnr('%') == s:flygrep_buffer_id
+    " You probably split lines by \n, but Windows ses \r\n, so the \r (displayed via ^M) is still left.
+    " ag support is broken in windows + neovim-qt
+    if getline(1) ==# ''
+      call setline(1, datas)
+    else
+      call append('$', datas)
+    endif
+  endif
+endfunction
+" endif
+
+function! s:grep_stderr(id, data, event) abort
+  call s:LOGGER.error(' flygerp stderr: ' . string(a:data))
+endfunction
+
+function! s:grep_exit(id, data, event) abort
+  call s:update_statusline()
+  redraw
+  call s:MPT._build_prompt()
+  redrawstatus
+  let s:std_line = 1
+  let s:grepid = 0
+endfunction
+" @vimlint(EVL103, 0, a:data)
+" @vimlint(EVL103, 0, a:id)
+" @vimlint(EVL103, 0, a:event)
+"}}}
+
+" FlyGrep Key prompt key bindings: {{{
+function! s:next_item() abort
+  if line('.') == line('$')
+    noautocmd normal! gg
+  else
+    noautocmd normal! j
+  endif
+  if s:preview_able == 1
+    call s:preview()
+  endif
+  call s:update_statusline()
+  redraw
+  call s:MPT._build_prompt()
+  redrawstatus
+endfunction
+
+function! s:page_up() abort
+  exe "noautocmd normal! \<PageUp>"
+  if s:preview_able == 1
+    call s:preview()
+  endif
+  redraw
+  call s:MPT._build_prompt()
+  redrawstatus
+endfunction
+
+function! s:page_down() abort
+  exe "noautocmd normal! \<PageDown>"
+  if s:preview_able == 1
+    call s:preview()
+  endif
+  redraw
+  call s:MPT._build_prompt()
+  redrawstatus
+endfunction
+
+function! s:page_home() abort
+  noautocmd normal! gg
+  if s:preview_able == 1
+    call s:preview()
+  endif
+  redraw
+  call s:MPT._build_prompt()
+  redrawstatus
+endfunction
+
+function! s:page_end() abort
+  noautocmd normal! G
+  if s:preview_able == 1
+    call s:preview()
+  endif
+  redraw
+  call s:MPT._build_prompt()
+  redrawstatus
+endfunction
+
+function! s:previous_item() abort
+  if line('.') == 1
+    noautocmd normal! G
+  else
+    noautocmd normal! k
+  endif
+  if s:preview_able == 1
+    call s:preview()
+  endif
+  call s:update_statusline()
+  redraw
+  call s:MPT._build_prompt()
+  redrawstatus
+endfunction
+
+function! s:open_item() abort
+  let s:MPT._handle_fly = function('s:flygrep')
+  if getline('.') !=# ''
+    if s:grepid != 0
+      call s:JOB.stop(s:grepid)
+    endif
+    call s:MPT._clear_prompt()
+    let s:MPT._quit = 1
+    let line = getline('.')
+    let [filename, linenr, colum] = s:get_file_pos(line)
+    if s:preview_able == 1
+      call s:close_preview_win()
+    endif
+    let s:preview_able = 0
+    call s:close_flygrep_win()
+    call s:update_history()
+    call s:BUFFER.open_pos('edit', filename, linenr, colum)
+    noautocmd normal! :
+  endif
+endfunction
+
+function! s:open_item_in_tab() abort
+  let s:MPT._handle_fly = function('s:flygrep')
+  if getline('.') !=# ''
+    if s:grepid != 0
+      call s:JOB.stop(s:grepid)
+    endif
+    call s:MPT._clear_prompt()
+    let s:MPT._quit = 1
+    let line = getline('.')
+    let [filename, linenr, colum] = s:get_file_pos(line)
+    if s:preview_able == 1
+      call s:close_preview_win()
+    endif
+    let s:preview_able = 0
+    call s:close_flygrep_win()
+    call s:update_history()
+    call s:BUFFER.open_pos('tabedit', filename, linenr, colum)
+    noautocmd normal! :
+  endif
+endfunction
+
+function! s:open_item_vertically() abort
+  let s:MPT._handle_fly = function('s:flygrep')
+  if getline('.') !=# ''
+    if s:grepid != 0
+      call s:JOB.stop(s:grepid)
+    endif
+    call s:MPT._clear_prompt()
+    let s:MPT._quit = 1
+    let line = getline('.')
+    let [filename, linenr, colum] = s:get_file_pos(line)
+    if s:preview_able == 1
+      call s:close_preview_win()
+    endif
+    let s:preview_able = 0
+    call s:close_flygrep_win()
+    call s:update_history()
+    call s:BUFFER.open_pos('vsplit', filename, linenr, colum)
+    noautocmd normal! :
+  endif
+endfunction
+
+function! s:open_item_horizontally() abort
+  let s:MPT._handle_fly = function('s:flygrep')
+  if getline('.') !=# ''
+    if s:grepid != 0
+      call s:JOB.stop(s:grepid)
+    endif
+    call s:MPT._clear_prompt()
+    let s:MPT._quit = 1
+    let line = getline('.')
+    let [filename, linenr, colum] = s:get_file_pos(line)
+    if s:preview_able == 1
+      call s:close_preview_win()
+    endif
+    let s:preview_able = 0
+    call s:close_flygrep_win()
+    call s:update_history()
+    call s:BUFFER.open_pos('split', filename, linenr, colum)
+    noautocmd normal! :
+  endif
+endfunction
+
+function! s:get_file_pos(line) abort
+  let filename = fnameescape(split(a:line, ':\d\+:')[0])
+  let linenr = str2nr(matchstr(a:line, ':\d\+:')[1:-2])
+  let colum = str2nr(matchstr(a:line, '\(:\d\+\)\@<=:\d\+:')[1:-2])
+  return [filename, linenr, colum]
+endfunction
+
+function! s:apply_to_quickfix() abort
+  let s:MPT._handle_fly = function('s:flygrep')
+  if getline('.') !=# ''
+    if s:grepid != 0
+      call s:JOB.stop(s:grepid)
+    endif
+    let s:MPT._quit = 1
+    if s:preview_able == 1
+      call s:close_preview_win()
+    endif
+    let s:preview_able = 0
+    let searching_result = s:BUFFER.buf_get_lines(s:buffer_id, 0, -1, 0)
+    call s:close_flygrep_win()
+    call s:update_history()
+    if !empty(searching_result)
+      cgetexpr join(searching_result, "\n")
+      call setqflist([], 'a', {'title' : 'FlyGrep partten:' . s:MPT._prompt.begin . s:MPT._prompt.cursor .s:MPT._prompt.end})
+      call s:MPT._clear_prompt()
+      copen
+    endif
+    noautocmd normal! :
+  endif
+endfunction
+
+function! s:double_click() abort
+  if line('.') !=# ''
+    if s:grepid != 0
+      call s:JOB.stop(s:grepid)
+    endif
+    call s:MPT._clear_prompt()
+    let s:MPT._quit = 1
+    let isfname = &isfname
+    if s:SYS.isWindows
+      set isfname-=:
+    endif
+    normal! gF
+    let nr = bufnr('%')
+    q
+    exe 'silent b' . nr
+    normal! :
+    let &isfname = isfname
+  endif
+endfunction
+
+function! s:move_cursor() abort
+  if v:mouse_win == winnr()
+    let cl = line('.')
+    if cl < v:mouse_lnum
+      exe 'normal! ' . (v:mouse_lnum - cl) . 'j'
+    elseif cl > v:mouse_lnum
+      exe 'normal! ' . (cl - v:mouse_lnum) . 'k'
+    endif
+  endif
+  call s:MPT._build_prompt()
+endfunction
+
+let s:preview_able = 0
+function! s:toggle_preview() abort
+  if s:preview_able == 0
+    let s:preview_able = 1
+    call s:preview()
+  else
+    call s:close_preview_win()
+    let s:preview_able = 0
+  endif
+  redraw
+  call s:MPT._build_prompt()
+endfunction
+
+
+let s:previewd_bufnrs = []
+
+" @vimlint(EVL103, 1, a:timer)
+" use floating windows to preview
+let s:preview_win_id = -1
+if exists('*nvim_open_win') && exists('*nvim_win_set_buf')
+  function! s:preview_timer(timer) abort
+    for id in filter(s:previewd_bufnrs, 'bufexists(v:val) && buflisted(v:val)')
+      exe 'silent bd ' . id
+    endfor
+    let br = bufnr('$')
+    let line = getline('.')
+    let filename = fnameescape(split(line, ':\d\+:')[0])
+    let linenr = str2nr(matchstr(line, ':\d\+:')[1:-2])
+    noautocmd let bufnr = s:BUFFER.bufadd(filename)
+    call bufload(bufnr)
+    if s:Window.is_float(s:preview_win_id)
+      call nvim_win_set_buf(s:preview_win_id, bufnr)
+    else
+      let flygrep_win_height = 16
+      noautocmd let s:preview_win_id = s:FLOATING.open_win(bufnr, v:false,
+            \ {
+            \ 'relative': 'editor',
+            \ 'width'   : &columns, 
+            \ 'height'  : 5,
+            \ 'row': &lines - flygrep_win_height - 2 - 5,
+            \ 'col': 0
+            \ })
+
+    endif
+    noautocmd call s:Window.set_cursor(s:preview_win_id, [linenr, 1])
+    if bufnr > br
+      call add(s:previewd_bufnrs, bufnr)
+    endif
+    call s:MPT._build_prompt()
+  endfunction
+  function! s:close_preview_win() abort
+    if s:Window.is_float(s:preview_win_id)
+      call s:FLOATING.win_close(s:preview_win_id, 1)
+    endif
+  endfunction
+else
+  function! s:preview_timer(...) abort
+    for id in filter(s:previewd_bufnrs, 'bufexists(v:val) && buflisted(v:val)')
+      exe 'silent bd ' . id
+    endfor
+    let br = bufnr('$')
+    let line = getline('.')
+    let filename = fnameescape(split(line, ':\d\+:')[0])
+    let linenr = matchstr(line, ':\d\+:')[1:-2]
+    exe 'silent pedit! +' . linenr . ' ' . filename
+    wincmd p
+    if bufnr('%') > br
+      call add(s:previewd_bufnrs, bufnr('%'))
+    endif
+    wincmd p
+    resize 18
+    call s:MPT._build_prompt()
+  endfunction
+  function! s:close_preview_win() abort
+    pclose
+  endfunction
+endif
+" @vimlint(EVL103, 0, a:timer)
+
+
+if has('timers')
+  function! s:preview() abort
+    call timer_stop(s:preview_timer_id)
+    let s:preview_timer_id = timer_start(200,
+          \ function('s:preview_timer'), {'repeat' : 1})
+  endfunction
+else
+  function! s:preview() abort
+    call s:preview_timer()
+  endfunction
+endif
+
+let s:grep_mode = 'expr'
+function! s:toggle_expr_mode() abort
+  if s:grep_mode ==# 'expr'
+    let s:grep_mode = 'string'
+  else
+    let s:grep_mode = 'expr'
+  endif
+  call s:MPT._oninputpro()
+  call s:MPT._handle_fly(s:MPT._prompt.begin . s:MPT._prompt.cursor .s:MPT._prompt.end)
+endfunction
+
+let s:complete_input_history_base = ''
+function! s:previous_match_history() abort
+  if s:complete_input_history_num == [0,0]
+    let s:complete_input_history_base = s:MPT._prompt.begin
+    let s:MPT._prompt.cursor = ''
+    let s:MPT._prompt.end = ''
+  endif
+  let s:complete_input_history_num[0] += 1
+  let s:MPT._prompt.begin = s:complete_input_history(s:complete_input_history_base, s:complete_input_history_num)
+  noautocmd normal! gg"_dG
+  call s:MPT._handle_fly(s:MPT._prompt.begin . s:MPT._prompt.cursor .s:MPT._prompt.end)
+endfunction
+
+function! s:next_match_history() abort
+  if s:complete_input_history_num == [0,0]
+    let s:complete_input_history_base = s:MPT._prompt.begin
+    let s:MPT._prompt.cursor = ''
+    let s:MPT._prompt.end = ''
+  endif
+  let s:complete_input_history_num[1] += 1
+  let s:MPT._prompt.begin = s:complete_input_history(s:complete_input_history_base, s:complete_input_history_num)
+  noautocmd normal! gg"_dG
+  call s:MPT._handle_fly(s:MPT._prompt.begin . s:MPT._prompt.cursor .s:MPT._prompt.end)
+endfunction
+
+function! s:complete_input_history(str,num) abort
+  let results = filter(copy(s:grep_history), "v:val =~# '^' . a:str")
+  if !empty(results) && results[-1] !=# a:str
+    let complete_items = results + [a:str]
+  elseif empty(results)
+    let complete_items = [a:str]
+  else
+    let complete_items = results
+  endif
+  "                   5                    0          6
+  let patch = (a:num[0] - a:num[1]) % len(complete_items)
+  if patch >= 0
+    let index = len(complete_items) - 1 - patch
+  else
+    let index = abs(patch) - 1
+  endif
+  return complete_items[index]
+endfunction
+
+let s:MPT._function_key = {
+      \ "\<Tab>" : function('s:next_item'),
+      \ "\<C-j>" : function('s:next_item'),
+      \ "\<ScrollWheelDown>" : function('s:next_item'),
+      \ "\<S-tab>" : function('s:previous_item'),
+      \ "\<C-k>" : function('s:previous_item'),
+      \ "\<ScrollWheelUp>" : function('s:previous_item'),
+      \ "\<Return>" : function('s:open_item'),
+      \ "\<C-t>" : function('s:open_item_in_tab'),
+      \ "\<LeftMouse>" : function('s:move_cursor'),
+      \ "\<2-LeftMouse>" : function('s:double_click'),
+      \ "\<C-f>" : function('s:start_filter'),
+      \ "\<C-v>" : function('s:open_item_vertically'),
+      \ "\<C-s>" : function('s:open_item_horizontally'),
+      \ "\<C-q>" : function('s:apply_to_quickfix'),
+      \ "\<M-r>" : function('s:start_replace'),
+      \ "\<C-p>" : function('s:toggle_preview'),
+      \ "\<C-e>" : function('s:toggle_expr_mode'),
+      \ "\<Up>" : function('s:previous_match_history'),
+      \ "\<Down>" : function('s:next_match_history'),
+      \ "\<PageDown>" : function('s:page_down'),
+      \ "\<PageUp>" : function('s:page_up'),
+      \ "\<C-End>" : function('s:page_end'),
+      \ "\<C-Home>" : function('s:page_home'),
+      \ }
+
+if has('nvim')
+  call extend(s:MPT._function_key, 
+        \ {
+        \ "\x80\xfdK" : function('s:previous_item'),
+        \ "\x80\xfc \x80\xfdK" : function('s:previous_item'),
+        \ "\x80\xfc@\x80\xfdK" : function('s:previous_item'),
+        \ "\x80\xfc`\x80\xfdK" : function('s:previous_item'),
+        \ "\x80\xfdL" : function('s:next_item'),
+        \ "\x80\xfc \x80\xfdL" : function('s:next_item'),
+        \ "\x80\xfc@\x80\xfdL" : function('s:next_item'),
+        \ "\x80\xfc`\x80\xfdL" : function('s:next_item'),
+        \ }
+        \ )
+endif
+
+let s:MPT._keys.close = ["\<Esc>", "\<C-c>"]
+" }}}
+
+" Public API: SpaceVim#plugins#flygrep#open(argv) {{{
+
+" keys:
+" files: files for grep, @buffers means listed buffer.
+" dir: specific a directory for grep
+function! SpaceVim#plugins#flygrep#open(argv) abort
+  if has('patch-7.4.1557')
+    let s:previous_winid = win_getid()
+  else
+    let s:previous_winid = winnr()
+  endif
+  if empty(s:grep_default_exe)
+    call s:LOGGER.warn(' [flygrep] make sure you have one search tool in your PATH', 1)
+    return
+  endif
+  let s:mode = ''
+  " set default handle func: s:flygrep
+  let s:MPT._handle_fly = function('s:flygrep')
+  if exists('*nvim_open_win')
+    let s:buffer_id = s:BUFFER.create_buf(v:false, v:true)
+    let flygrep_win_height = 16
+    noautocmd let s:flygrep_win_id =  s:FLOATING.open_win(s:buffer_id, v:true,
+          \ {
+          \ 'relative': 'editor',
+          \ 'width'   : &columns, 
+          \ 'height'  : flygrep_win_height,
+          \ 'row': &lines - flygrep_win_height - 2,
+          \ 'col': 0
+          \ })
+  else
+    noautocmd botright split __flygrep__
+    if has('patch-7.4.1557')
+      let s:flygrep_win_id = win_getid()
+    else
+      let s:flygrep_win_id = winnr()
+    endif
+    let s:buffer_id = bufnr('__flygrep__')
+  endif
+  if exists('&winhighlight')
+    set winhighlight=Normal:Pmenu,EndOfBuffer:Pmenu,CursorLine:PmenuSel
+  endif
+  let s:flygrep_buffer_id = bufnr('%')
+  setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
+  let save_tve = &t_ve
+  setlocal t_ve=
+  let cursor_hi = {}
+  let cursor_hi = s:HI.group2dict('Cursor')
+  let lcursor_hi = s:HI.group2dict('lCursor')
+  let guicursor = &guicursor
+  call s:HI.hide_in_normal('Cursor')
+  call s:HI.hide_in_normal('lCursor')
+  " hi Cursor ctermbg=16 ctermfg=16 guifg=#282c34 guibg=#282c34
+  " hi lCursor ctermbg=16 ctermfg=16 guifg=#282c34 guibg=#282c34
+  if has('nvim')
+    set guicursor+=a:Cursor/lCursor
+  endif
+  " setlocal nomodifiable
+  setf SpaceVimFlyGrep
+  call s:update_statusline()
+  call s:matchadd('FileName', s:filename_pattern, 3)
+  let s:MPT._prompt.begin = get(a:argv, 'input', '')
+  let fs = get(a:argv, 'files', '')
+  if !s:VIM.is_list(fs) && fs ==# '@buffers'
+    let s:grep_files = map(s:BUFFER.listed_buffers(), 'bufname(v:val)')
+  elseif !empty(fs)
+    let s:grep_files = fs
+  else
+    let s:grep_files = ''
+  endif
+  let dir = expand(get(a:argv, 'dir', ''))
+  if !empty(dir) && isdirectory(dir)
+    let s:grep_dir = dir
+  else
+    let s:grep_dir = ''
+  endif
+  let s:grep_exe = get(a:argv, 'cmd', s:grep_default_exe)
+  if empty(s:grep_dir) && empty(s:grep_files) && s:grep_exe ==# 'findstr'
+    let s:grep_files = '*.*'
+  elseif s:grep_exe ==# 'findstr' && !empty(s:grep_dir)
+    let s:grep_dir = '/D:' . s:grep_dir
+  endif
+
+  let s:grep_opt = get(a:argv, 'opt', s:grep_default_opt)
+  let s:grep_ropt = get(a:argv, 'ropt', s:grep_default_ropt)
+  let s:grep_ignore_case = get(a:argv, 'ignore_case', s:grep_default_ignore_case)
+  let s:grep_smart_case  = get(a:argv, 'smart_case', s:grep_default_smart_case)
+  let s:grep_expr_opt  = get(a:argv, 'expr_opt', s:grep_default_expr_opt)
+  call s:LOGGER.info('FlyGrep startting ===========================')
+  call s:LOGGER.info('   executable    : ' . s:grep_exe)
+  call s:LOGGER.info('   option        : ' . string(s:grep_opt))
+  call s:LOGGER.info('   r_option      : ' . string(s:grep_ropt))
+  call s:LOGGER.info('   files         : ' . string(s:grep_files))
+  call s:LOGGER.info('   dir           : ' . string(s:grep_dir))
+  call s:LOGGER.info('   ignore_case   : ' . string(s:grep_ignore_case))
+  call s:LOGGER.info('   smart_case    : ' . string(s:grep_smart_case))
+  call s:LOGGER.info('   expr opt      : ' . string(s:grep_expr_opt))
+  " sometimes user can not see the flygrep windows, redraw only once.
+  redraw
+  call s:MPT.open()
+  if s:SL.support_float()
+    call s:close_statusline()
+  endif
+  call s:LOGGER.info('FlyGrep ending    ===========================')
+  let &t_ve = save_tve
+  call s:HI.hi(cursor_hi)
+  call s:HI.hi(lcursor_hi)
+  let &guicursor = guicursor
+endfunction
+" }}}
+
+function! s:update_statusline() abort
+  if !get(g:, 'FlyGrep_enable_statusline', 1)
+    return
+  endif
+
+  if s:SL.support_float() && win_id2tabwin(s:flygrep_win_id)[0] ==# tabpagenr() && s:Window.is_float(s:flygrep_win_id)
+    noautocmd call s:SL.open_float([
+          \ ['FlyGrep ', 'SpaceVim_statusline_a_bold'],
+          \ [' ', 'SpaceVim_statusline_a_SpaceVim_statusline_b'],
+          \ [SpaceVim#plugins#flygrep#mode() . ' ', 'SpaceVim_statusline_b'],
+          \ [' ', 'SpaceVim_statusline_b_SpaceVim_statusline_c'],
+          \ [getcwd() . ' ', 'SpaceVim_statusline_c'],
+          \ [' ', 'SpaceVim_statusline_c_SpaceVim_statusline_b'],
+          \ [SpaceVim#plugins#flygrep#lineNr() . ' ', 'SpaceVim_statusline_b'],
+          \ [' ', 'SpaceVim_statusline_b_SpaceVim_statusline_z'],
+          \ [repeat(' ', &columns - 11), 'SpaceVim_statusline_z'],
+          \ ])
+  endif
+endfunction
+
+
+function! s:close_statusline() abort
+  noautocmd call s:SL.close_float()
+endfunction
+
+" Plugin API: SpaceVim#plugins#flygrep#lineNr() {{{
+function! SpaceVim#plugins#flygrep#lineNr() abort
+  if getline(1) ==# ''
+    return 'no results'
+  else
+    return line('.') . '/' . line('$')
+  endif
+endfunction
+
+function! SpaceVim#plugins#flygrep#mode() abort
+  return s:grep_mode . (empty(s:mode) ? '' : '(' . s:mode . ')')
+endfunction
+" }}}

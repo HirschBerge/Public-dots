@@ -1,0 +1,38 @@
+theme: jekyll-theme-midnight
+title: SpaceVim
+description: A community-driven vim distribution
+show_downloads: false
+google_analytics: UA-89745542-1
+gitment_client_id: 8f0cd1f544d1e4219798
+gitment_client_secret: b8ac9c26cc5ab8cff84adda7a491ba24ca869688
+project_repo_url: https://github.com/SpaceVim/SpaceVim
+url: https://spacevim.org
+logo: https://spacevim.org/SpaceVim.png
+permalink: /:title/
+lang: en
+
+plugins:
+  - jekyll-redirect-from
+
+github: [metadata]
+
+webmaster_verifications:
+  google: 2QrXyd7Wz5_ahXqefiYC_4-HvynQrefWDWORb7EjLCU
+
+sass:
+ sass_dir: _sass
+ style: compressed
+
+social:
+  name: SpaceVim
+  links:
+      - https://twitter.com/SpaceVim
+      - https://github.com/SpaceVim/SpaceVim
+      - https://www.reddit.com/r/SpaceVim/
+      - https://www.facebook.com/SpaceVim
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      image: https://img.spacevim.org/release-v2.2.0.png

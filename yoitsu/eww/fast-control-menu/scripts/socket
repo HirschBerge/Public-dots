@@ -1,0 +1,20 @@
+#!/bin/sh
+
+A_MON="eDP-1"
+A_WKSP="1"
+
+function handle {
+  output=$(echo "$line" | sed -e 's/\([>]\)\1\+/ /g' -e 's/,/ /g')
+  action=$(echo $output | awk '{ print $1 }')
+
+  if [[ "$action" == "activemon" ]]; then
+    A_MON=$(echo $output | awk '{ print $2 }')
+    A_WKSP=$(echo $output | awk '{ print $3 }')
+    echo $A_MON $A_WKSP
+  elif [[ "$action" == "workspace" ]]; then
+    A_WKSP=$(echo $output | awk '{ print $2 }')
+    echo $A_MON $A_WKSP
+  fi
+}
+
+socat - UNIX-CONNECT:/tmp/hypr/$(echo $HYPRLAND_INSTANCE_SIGNATURE)/.socket2.sock | while read line; do handle $line; done

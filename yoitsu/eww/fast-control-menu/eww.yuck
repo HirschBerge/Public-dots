@@ -1,0 +1,305 @@
+;; ============================================================
+;;                                                      Widgets
+;; ============================================================
+
+(defwidget cc-top-left-widgets []
+	(box	:class "cc-connectivity-box"
+				:orientation "h"
+				:space-evenly false
+				:halign "fill"
+		(box	:class "cc-connectivity-glyph-rows"
+				:orientation "v"
+				:width 70
+				(button	:class "cc-wifi-glyph"
+						:halign "center"
+						:valign "center"
+						:onclick "scripts/popup wifi"
+						(label :class "cc-wifi-glyph-lb":text wifi-icon)
+				)
+				(button :class "cc-bluetooth-glyph"
+						:halign "center"
+						:valign "center"
+						:onclick "scripts/popup bluetooth"
+					(label :text bluetooth-icon)
+				)
+				(button :class "cc-airplane-glyph"
+						:halign "center"
+						:valign "center"
+						:onclick "scripts/airplane --toggle"
+						(label :class "cc-airplane-glyph-lb" :text airplane-icon)
+				)
+		)
+		(box	:class "cc-connectivity-rows"
+				:orientation "v"
+				:width 100
+				:padding 5
+			(box	:class "cc-wifi-box"
+					:orientation "v"
+					:valign "center"
+				(label	:class "cc-title-label"
+						:halign "start"
+						:text "WiFi")
+				(label :class "cc-sub-label"
+						:halign "start"
+						:text "${wifi-name}"))
+			(box	:class "cc-bt-box"
+					:orientation "v"
+					:valign "center"
+				(label	:class "cc-title-label"
+						:halign "start"
+						:text "Bluetooth")
+				(label	:class "cc-sub-label"
+						:halign "start"
+						; :text "${bluetooth-status} ${bluetooth-battery}"))
+						:text bluetooth-status))
+			(box	:class "cc-airplane-box"
+					:orientation "v"
+					:valign "center"
+				(label	:class "cc-title-label"
+						:halign "start"
+						:text "Airplane")
+				(label	:class "cc-sub-label"
+						:halign "start"
+						:text airplane-status))
+		)
+	)
+)
+
+(defwidget cc-top-right-widgets []
+	(box	:class "cc-row-box"
+			:orientation "v"
+			:space-evenly true
+			:spacing 15
+		(box	:class "cc-dnd-box"
+				:orientation "h"
+				:space-evenly false
+			(overlay	:halign "start"
+						:valign "center"
+						:width 70
+				; (label	:class "cc-dnd-circle-glyph"
+				; 		:halign "center"
+				; 		:style "color: ${dnd-color};"
+				; 		:text "󰄯")
+				(button	:class "cc-dnd-glyph"
+						:halign "center"
+						:valign "center"
+						:style "background: ${dnd-color};"
+						:onclick "scripts/dnd --toggle"
+						(label :text dnd-icon)
+				)
+			)
+			(box	:class "cc-dnd-box"
+					:orientation "v"
+					:valign "center"
+					:halign "start"
+				(label	:class "cc-title-label"
+						:halign "start"
+						:text "Не беспокоить")
+				(label :class "cc-sub-label"
+						:halign "start"
+						:text dnd-status))
+		)
+		(box	:class "cc-row-box"
+				:orientation "h"
+				:halign "fill"
+				:spacing 15
+			(battery-monitor)
+			(overlay :class "${weather-color}"
+				(box	:class "cc-weather-box"
+						:orientation "v"
+						:space-evenly false
+					(label	:class "cc-weather-icon"
+							:halign "center"
+							:stacking "fg"
+							:text "${weather-icon}")
+					(label	:class "cc-weather-label"
+							:halign "center"
+							:text "${weather-temp}°")))
+		)
+	)
+)
+
+(defwidget volume-slider []
+	(box	:class "cc-slider-box"
+			:orientation "v"
+		(label	:class "cc-slider-title"
+				:halign "start"
+				:text "Звук")
+		(box	:class "cc-saber-box"
+				:orientation "h"
+				:space-evenly false
+			(overlay
+				(scale	:class "cc-volbar"
+						:valign "start"
+						:value current-volume
+						:orientation "h"
+						:flipped false
+						:tooltip "Звук: ${current-volume}%"
+						:width 430
+						:max 101
+						:min 0
+						:onchange "pactl set-sink-volume @DEFAULT_SINK@ {}%" )
+				(image	:path "images/lightsaber1.png"
+						:halign "start"
+						:stacking "fg")
+				(label	:class "cc-slider-label"
+						:halign "start"
+						:text "")
+			)
+		)
+	)
+)
+
+(defwidget microphone-slider []
+	(box	:class "cc-slider-box"
+			:orientation "v"
+		(label	:class "cc-slider-title"
+				:halign "start"
+				:text "Микрофон")
+		(box	:class "cc-saber-box"
+				:orientation "h"
+				:space-evenly false
+			(overlay
+				(scale	:class "cc-bribar"
+						:valign "start"
+						:value current-volume-microphone
+						:orientation "h"
+						:flipped false
+						:tooltip "Микрофон: ${current-volume-microphone}%"
+						:width 430
+						:max 101
+						:min 0
+						:onchange "pactl set-source-volume @DEFAULT_SOURCE@ {}%" )
+				(image :path "images/lightsaber3.png"
+						:halign "start"
+						:stacking "fg")
+				(label	:class "cc-slider-label"
+						:halign "start"
+						:text "")
+			)
+		)
+	)
+)
+
+(defwidget battery-monitor []
+	(box	:class "cc-bat-box"
+			:orientation "h"
+			:space-evenly true
+		(circular-progress	:class "cc-bat"
+							; :value battery-capacity
+							:value bluetooth-battery
+							:thickness 10
+			(label	:class "cc-bat-icon"
+					:limit-width 3
+					:show_truncated false
+					:wrap false
+					; :text ""
+					:text bluetooth-battery
+			)
+		)
+	)
+)
+
+(defpoll airplane-icon :interval "1s" "scripts/airplane --icon")
+(defpoll airplane-status :interval "1s" "scripts/airplane --status")
+
+(defpoll battery-capacity :interval "5m" "scripts/battery --percent")
+
+(defpoll bluetooth-icon :interval "1s" "scripts/bluetooth --icon")
+(defpoll bluetooth-status :interval "1s" "scripts/bluetooth --status")
+(defpoll bluetooth-battery :interval "40s" "scripts/bluetooth --battery")
+
+(defpoll current-volume-microphone :interval "1s" "sh scripts/get-vol-mic")
+(defpoll current-volume :interval "0s" "pamixer --get-volume")
+
+(defpoll dnd-status :interval "1s" "scripts/dnd --status")
+(defpoll dnd-icon :interval "1s" "scripts/dnd --icon")
+(defvar dnd-color "rgba(255,255,255,0.15)")
+
+
+(defpoll weather-temp :interval "5m" "scripts/weather")
+(defvar	 weather-color "")
+(defvar  weather-icon "")
+
+(defpoll wifi-icon :interval "1s" "scripts/wifi icon")
+(defpoll wifi-name :interval "1s" "scripts/wifi name")
+
+;; Area designated for mouse hover to reveal control center
+;; Also, hidden initializer script to initialize values on defvars 
+;; so they are accurate on startup (defvars can't be initialized 
+;; from a script so the following script calls the eww update command 
+;; to do it)
+
+(defpoll initializer :interval "24h" "scripts/initializer")
+
+;; ============================================================
+;;                                         Widget Consolidation
+;; ============================================================
+
+;; Top Row Widgets
+(defwidget cc-top []
+	(box	:orientation "h"
+			:space-evenly true
+			:height 200
+			:spacing 15
+(cc-top-left-widgets)
+(cc-top-right-widgets)))
+
+;; Middle Row Widgets
+(defwidget cc-middle []
+	(box	:class "cc-row-two-box"
+			:orientation "v"
+			:space-evenly false
+			:width 470	
+			:spacing 10
+(volume-slider)
+(microphone-slider)))
+
+;; Bottom Row Widgets
+; (defwidget cc-bottom []
+; 	(box	:class "cc-charts"
+; 			:orientation "h" 
+; 			:space-evenly true 
+; 			:spacing 15
+; ; (battery-monitor)
+; ; (cpu-monitor)
+; ; (memory-monitor)
+; ))
+
+;; ============================================================
+;;                                      Control Center Assembly
+;; ============================================================
+
+(defwidget control-center []
+	(eventbox	:onhoverlost "scripts/control-center"
+		(box	:class "cc-main-box"
+				:orientation "v" 
+				:space-evenly false  
+				:halign "center"
+				:width 500
+			(box	:class "cc-padded-box"
+					:orientation "v"
+					:space-evenly false
+					:spacing 15
+
+						(cc-top)
+						(cc-middle)
+						; (cc-bottom)
+			)
+		)
+	)
+)
+;; ============================================================
+;;                                                      Windows
+;; ============================================================
+
+;; Control Center
+(defwindow control-center
+	:geometry (geometry :x "1408" 
+						:y "1%" 
+)
+		:monitor 0
+		:wm-ignore false
+		:hexpand false
+		:vexpand false
+(control-center))
