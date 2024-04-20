@@ -58,8 +58,9 @@ Please review the official [NixOS Installation Guide](https://nixos.wiki/wiki/Ni
 | Web Browser               | [Firefox](https://www.mozilla.org/en-US/firefox/new/)                                                             |
 | Video Player              | [MPV](https://mpv.io/)                                                                                            |
 | Text Editor               | [Neovim](https://neovim.io/) and also trying out [Helix](https://helix-editor.com/)                               |
-| Neovim Distro             | [nixCats-nvim](https://github.com/BirdeeHub/nixCats-nvim)                                                         |
+| Neovim "Distro"           | [nixCats-nvim](https://github.com/BirdeeHub/nixCats-nvim)                                                         |
 | CLI File Manager          | [lf](https://github.com/gokcehan/lf)                                                                              |
+| Wallpaper Engine          | [SWWW](https://github.com/LGFae/swww)                                                                             |
 | GUI File Manager          | [Thunar](https://docs.xfce.org/xfce/thunar/start)                                                                 |
 | Launcher                  | [Rofi](https://github.com/davatorium/rofi)                                                                        |
 | Bar/Widgets               | [EWW](https://github.com/elkowar/eww)                                                                             |
@@ -68,13 +69,14 @@ Please review the official [NixOS Installation Guide](https://nixos.wiki/wiki/Ni
 | Linux ISO Torrents        | [rtorrent](https://github.com/rakshasa/rtorrent)                                                                  |
 | `Find` replacement        | [fd](https://github.com/sharkdp/fd)                                                                               |
 | `grep` replacement        | [rg](https://github.com/BurntSushi/ripgrep)                                                                       |
+| NixOS Helper              | [nh](https://github.com/viperML/nh)                                                                               |
 
 ## Getting Started
 
 ### Prerequisites
  
 - Generic NixOS installation. Whether this is minimal or not, does not matter.
-- git installed
+- `git` installed
 - General skill with troubleshooting.
 - Recommendation to fork the repo and substitute your repo's URL below
 
@@ -103,6 +105,34 @@ sudo nixos-rebuild switch --flake ~/.dotfiles#yoitsu
 home-manager --flake ~/.dotfiles#$USER@yoitsu switch -b backup
 # Optionally, you can then update the flake with
 nix flake update #and repeat the above two. I would definitely reboot before that though and sign back in.
+```
+
+## `nh` Nix Helper
+These are my workflows with `nh` to rebuild/update Home-Manager and NixOS
+
+### Full rebuild
+
+```bash
+nh os switch
+# These files tend to rewrite themselves from being links, so i remove them.
+rm -rf ~/.scripts/.venv
+rm ~/.mozilla/firefox/<profile>/search.json.mozlz4
+nh home switch
+```
+### Home Manager only
+```bash
+# These files tend to rewrite themselves from being links, so i remove them.
+rm -rf ~/.scripts/.venv
+rm ~/.mozilla/firefox/<profile>/search.json.mozlz4 -f
+nh home switch
+```
+### System Upgrade
+```bash
+nh os boot --update
+# These files tend to rewrite themselves from being links, so i remove them.
+rm -rf ~/.scripts/.venv
+rm ~/.mozilla/firefox/USER_NAME/search.json.mozlz4
+nh home switch
 ```
 
 If you run into issues doing this, please make an issue and I will try and get it working or update instructions.
