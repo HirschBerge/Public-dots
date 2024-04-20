@@ -1,3 +1,0 @@
-Execute ( Plugin config: ag.vim ):
-  so config/plugins/ag.vim
-  AssertEqual g:ag_prg, 'ag  --vimgrep'

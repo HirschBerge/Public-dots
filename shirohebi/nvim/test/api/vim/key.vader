@@ -1,3 +1,0 @@
-Execute ( SpaceVim api: vim#key ):
-  let key = SpaceVim#api#import('vim#key')
-  AssertEqual key.nr2name(32), 'SPC'
