@@ -79,8 +79,14 @@ Please review the official [NixOS Installation Guide](https://nixos.wiki/wiki/Ni
 - `git` installed
 - General skill with troubleshooting.
 - Recommendation to fork the repo and substitute your repo's URL below
+</details>
+<details>
+   <summary>
+      <h2>
+         Installation
+      </h2>
+   </summary>
 
-### Installation
 
 I have not had the opportunity to test installation too much, as I really just want to share
 Note: Termina Test from above does seem to think that is has a copy right, but doesn't provide a real license anywhere I could find. Out of respect, I don't want to host it for imperatively install, so please go to the link in the table to install.
@@ -106,8 +112,15 @@ home-manager --flake ~/.dotfiles#$USER@yoitsu switch -b backup
 # Optionally, you can then update the flake with
 nix flake update #and repeat the above two. I would definitely reboot before that though and sign back in.
 ```
+If you run into issues doing this, please make an issue and I will try and get it working or update instructions.
+</details>
+<details>
+   <summary>
+      <h2>
+         NH Nix Helper
+      </h2>
+   </summary>
 
-## `nh` Nix Helper
 These are my workflows with `nh` to rebuild/update Home-Manager and NixOS
 
 ### Full rebuild
@@ -131,11 +144,11 @@ nh home switch
 nh os boot --update
 # These files tend to rewrite themselves from being links, so i remove them.
 rm -rf ~/.scripts/.venv
-rm ~/.mozilla/firefox/USER_NAME/search.json.mozlz4
+rm ~/.mozilla/firefox/hirschy/search.json.mozlz4
 nh home switch
 ```
+</details>
 
-If you run into issues doing this, please make an issue and I will try and get it working or update instructions.
 
 # Credits and Inspiration
 
