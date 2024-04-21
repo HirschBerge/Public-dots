@@ -72,8 +72,13 @@ Please review the official [NixOS Installation Guide](https://nixos.wiki/wiki/Ni
 | NixOS Helper              | [nh](https://github.com/viperML/nh)                                                                               |
 
 ## Getting Started
-
-### Prerequisites
+</details>
+<details>
+   <summary>
+      <h3>
+         Prerequisites
+      </h3>
+   </summary>
  
 - Generic NixOS installation. Whether this is minimal or not, does not matter.
 - `git` installed
@@ -82,9 +87,9 @@ Please review the official [NixOS Installation Guide](https://nixos.wiki/wiki/Ni
 </details>
 <details>
    <summary>
-      <h2>
+      <h3>
          Installation
-      </h2>
+      </h3>
    </summary>
 
 
@@ -116,9 +121,9 @@ If you run into issues doing this, please make an issue and I will try and get i
 </details>
 <details>
    <summary>
-      <h2>
+      <h3>
          NH Nix Helper
-      </h2>
+      </h3>
    </summary>
 
 These are my workflows with `nh` to rebuild/update Home-Manager and NixOS
