@@ -1,5 +1,3 @@
-desktop/mozilla/firefox
-desktop/mozilla/firefox
-nightTab_backup.json
-sidebery.json
+remote_build.sh
 common/BetterDiscord
+nixos/common/configs/firefox.nix
