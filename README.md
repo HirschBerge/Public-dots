@@ -149,7 +149,7 @@ nh home switch
 nh os boot --update
 # These files tend to rewrite themselves from being links, so i remove them.
 rm -rf ~/.scripts/.venv
-rm ~/.mozilla/firefox/hirschy/search.json.mozlz4
+rm ~/.mozilla/firefox/USER_NAME/search.json.mozlz4
 nh home switch
 ```
 </details>
