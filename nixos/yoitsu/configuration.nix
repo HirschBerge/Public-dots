@@ -93,7 +93,7 @@ in
     sessionVariables = {
       HOME_MANAGER_BACKUP_EXT = "backup";
       FLAKE = "/home/${username}/.dotfiles";
-      TACO_BELL = "${discord}=";
+      TACO_BELL = "${discord}GNVZjd5Yi1tWWNSYmFHMmREX09XUkFEVFJ4amtwMW1qamhlTTB4RklkWVV6VWlYRgo=";
       WARP_ENABLE_WAYLAND = 1;
       LD_LIBRARY_PATH = "${pkgs.wayland}/lib";
     };
