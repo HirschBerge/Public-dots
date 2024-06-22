@@ -39,7 +39,7 @@ in {
           rust-analyzer
           lua-language-server
           nodePackages_latest.bash-language-server
-          nodePackages_latest.pyright
+          pyright
           black
           mypy
           ruff
@@ -139,6 +139,7 @@ in {
               nvim-highlight-colors
               rust-tools-nvim
               renamer-nvim
+              rainbow-delimiters-nvim
             ];
           };
         };

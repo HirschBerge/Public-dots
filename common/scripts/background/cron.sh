@@ -48,8 +48,14 @@ sets_background_yoitsu() {
   cp "$img2" ~/.config/wallwide2.png
   export SWWW_TRANSITION_FPS=120
   export SWWW_TRANSITION_STEP=2
-  $(which swww) img -t random -o DP-1 "$img1"
-  $(which swww) img -t random -o DP-3 "$img2"
+  GAME_RUNNING="$(hyprctl clients -j | jq 'any(.[]; .class | type == "string" and contains("steam_app"))')"
+  if "$GAME_RUNNING" -eq "true" ; then
+    echo "Game is running, skipping..."
+  else
+    echo "No Game is running. Changing BG"
+    $(which swww) img -t random -o DP-1 "$img1"
+    $(which swww) img -t random -o DP-3 "$img2"
+  fi
   # $(which notify-send) --icon "$imgwide" "Hyprland Started!" "Have a great day!"
 }
 

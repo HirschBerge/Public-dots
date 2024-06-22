@@ -91,8 +91,8 @@ class USER_NAME_MangaDex:
         # # Getting chapters for that manga
         try:
             chapters = manga.get_chapters()
-        except:
-            print(colored(255, 0, 0, f"Something went wrong with {manga_title}"))
+        except Exception as e:
+            print(colored(255, 0, 0, f"Something went wrong with {manga_title}: {e}"))
             return 1
         sorted_chapters = sort_chapters(chapters)
         new_chapters, name_manga = download_chapters(sorted_chapters, manga)

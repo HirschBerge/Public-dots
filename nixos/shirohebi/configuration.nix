@@ -42,6 +42,19 @@ in
     efi.canTouchEfiVariables = true;
     timeout = 1;
   };
+  nixos-boot = {
+    enable  = true;
+
+    # Different colors
+    # bgColor.red   = 100; # 0 - 255
+    # bgColor.green = 100; # 0 - 255
+    # bgColor.blue  = 100; # 0 - 255
+
+    # INFO: Options are: dna, dragon, hexa_retro, lone, pixels
+    theme = "hexa_retro";
+    # If you want to make sure the theme is seen when your computer starts too fast
+    duration = 3.0; # in seconds
+  };
   # Writes current *system* packagesto /etc/current-system/packages
   environment.etc."current-system-packages".text =
   let
@@ -54,6 +67,8 @@ in
     sessionVariables = {
       HOME_MANAGER_BACKUP_EXT = "backup";
       FLAKE = "/home/${username}/.dotfiles";
+      # WARP_ENABLE_WAYLAND = 1;
+      LD_LIBRARY_PATH = "${pkgs.wayland}/lib";
     };
     variables = {
       EDITOR = "v";
@@ -137,6 +152,7 @@ in
    services.displayManager.sddm = {
     enable = true;
     enableHidpi = true;
+    wayland.enable = true;
     theme = "abstractguts-themes";
    };
 
@@ -176,6 +192,7 @@ in
     description = "${username}";
     extraGroups = [ "networkmanager" "wheel" "keyd" ];
     packages = with pkgs; [
+      acpi
       firefox
     #  thunderbird
     ];
@@ -183,22 +200,27 @@ in
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+  # nixpkgs.overlays = [
+  #   (self: super: {
+  #    warp-terminal = super.warp-terminal.overrideAttrs (oldAttrs: {
+  #        waylandSupport = true;
+  #        });
+  #    })
+  # ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  nixpkgs.overlays = [
-    (self: super: {
-      waybar = super.waybar.overrideAttrs (oldAttrs: {
-        mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
-      });
-    })
-  ];
-  environment.systemPackages = with pkgs; [
+  # nixpkgs.overlays = [
+  #   (self: super: {
+  #     waybar = super.waybar.overrideAttrs (oldAttrs: {
+  #       mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
+  #     });
+  #   })
+  # ];
+  environment.systemPackages =  [
       # see ../common/common_pkgs.nix
       themes.abstractguts-themes
-      acpi
   ];
-
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   # Some programs need SUID wrappers, can be configured further or are
@@ -214,6 +236,7 @@ in
     settings = {
       auto-optimise-store = true;
       experimental-features = [ "nix-command" "flakes" ];
+      trusted-users = [ "root" "@wheel" ];
     };
   };
   services.keyd = {
@@ -243,11 +266,21 @@ in
       '';
     };
   };
+  environment.etc = {
+    "pam.d/hyprlock" = {
+      text = ''
+        auth include login
+        '';
+# Optionally, specify the permissions you want for the file
+# by setting the `mode` attribute:
+      mode = "077m";
+    };
+  };
   programs.mtr.enable = true;
   services.openssh = {
     enable = true;
     settings = {
-      PasswordAuthentication = false;
+      PasswordAuthentication = true;
       KbdInteractiveAuthentication = false;
       PermitRootLogin = "no";    
     };
@@ -263,6 +296,7 @@ in
       "* * * * *         ${username}    date >> /home/${username}/.cache/test.log"
       # "*/30 * * * *      ${username}    /home/${username}/.scripts/.venv/bin/python3 /home/${username}/.scripts/manga_update.py"
       "*/5 * * * *      ${username}     /home/${username}/.scripts/bat_notify.sh"
+      "* * * * *        ${username}    if [ -d ~/Desktop ]; then rm -rf ~/Desktop; fi"
     ];
   };
   # List services that you want to enable:

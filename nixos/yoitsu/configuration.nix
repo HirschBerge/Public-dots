@@ -8,16 +8,14 @@
 #  ██║ ╚████║██║██╔╝ ██╗╚██████╔╝███████║
 #  ╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝
 #                                        
-{ inputs,
-  outputs,
+{ 
   config,
-  lib,
   pkgs,
   hostname,
   username,
-  system,
   stateVersion,
-  ... }:
+  ... 
+}:
 let
   themes = pkgs.callPackage  ../common/configs/themes.nix {};
 
@@ -62,6 +60,19 @@ in
     efi.canTouchEfiVariables = true;
     timeout = 1;
   };
+  nixos-boot = {
+    enable  = true;
+
+    # Different colors
+    # bgColor.red   = 100; # 0 - 255
+    # bgColor.green = 100; # 0 - 255
+    # bgColor.blue  = 100; # 0 - 255
+
+    # INFO: Options are: dna, dragon, hexa_retro, lone, pixels
+    theme = "dragon";
+    # If you want to make sure the theme is seen when your computer starts too fast
+    duration = 3.0; # in seconds
+  };
   nix = {
     settings = {
       auto-optimise-store = true;
@@ -81,6 +92,8 @@ in
     sessionVariables = {
       HOME_MANAGER_BACKUP_EXT = "backup";
       FLAKE = "/home/${username}/.dotfiles";
+      WARP_ENABLE_WAYLAND = 1;
+      LD_LIBRARY_PATH = "${pkgs.wayland}/lib";
     };
     variables = {
       EDITOR = "v";
@@ -168,6 +181,7 @@ in
    services.displayManager.sddm = {
       enable = true;
       enableHidpi = true;
+      wayland.enable = true;
       theme = "abstractguts-themes";
     };
   # Configure keymap in X11
@@ -180,15 +194,37 @@ in
 
   # Enable sound with pipewire.
   sound.enable = true;
-  hardware.pulseaudio.enable = false;
+  hardware = {
+    pulseaudio.enable = false;
+    bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+      package = pkgs.bluez;
+      settings = { 
+      General = {
+        Experimental = true;
+        Enable = "Source,Sink,Media,Socket";
+        };
+      };  
+    };
+  };
+  services.blueman.enable = true;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
+    wireplumber.extraConfig = {
+      "monitor.bluez.properties" = {
+        "bluez5.enable-sbc-xq" = true;
+        "bluez5.enable-msbc" = true;
+        "bluez5.enable-hw-volume" = true;
+        "bluez5.roles" = [ "hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag" ];
+      };
+    };
+# If you want to use JACK applications, uncomment this
+    # jack.enable = true;
 
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
@@ -206,27 +242,28 @@ in
     extraGroups = [ "networkmanager" "wheel" "keyd" ];
     packages = with pkgs; [
       rocmPackages.rocm-smi
+      godot_4
+      piper
       firefox
     #  thunderbird
     ];
   };
-
+  services.ratbagd.enable = true;
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
   # nixpkgs.allowUnfreePredicate = _: true;
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  nixpkgs.overlays = [
-    (self: super: {
-      waybar = super.waybar.overrideAttrs (oldAttrs: {
-        mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
-      });
-    })
-  ];
-  environment.systemPackages = with pkgs; [
+  # nixpkgs.overlays = [
+  #   (self: super: {
+  #     waybar = super.waybar.overrideAttrs (oldAttrs: {
+  #       mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
+  #     });
+  #   })
+  # ];
+  environment.systemPackages =  [
       # see ../common/common_pkgs.nix
       themes.abstractguts-themes
-      godot_4
   ];
 
   # XDG portal
@@ -252,6 +289,17 @@ in
       '';
     };
   };
+  # Allows hyprlock to use pam
+environment.etc = {
+    "pam.d/hyprlock" = {
+        text = ''
+        auth include login
+        '';
+        # Optionally, specify the permissions you want for the file
+        # by setting the `mode` attribute:
+        mode = "0777";
+    };
+};
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   services.keyd = {
@@ -287,6 +335,7 @@ in
     systemCronJobs = [
       "* * * * *         ${username}    date >> /home/${username}/.cache/test.log"
       "*/30 * * * *      ${username}    /home/${username}/.scripts/.venv/bin/python3 /home/${username}/.scripts/manga_update.py"
+      "* * * * *        ${username}    if [ -d ~/Desktop ]; then rm -rf ~/Desktop; fi"
     ];
   };
   # List services that you want to enable:

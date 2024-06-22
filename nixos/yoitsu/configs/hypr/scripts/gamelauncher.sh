@@ -39,8 +39,6 @@ do
     fi
 done | sort)
 
-echo $GameList
-exit 0
 # launch rofi menu
 RofiSel=$( echo "$GameList" | while read -r acf
 do
@@ -75,8 +73,9 @@ if [ -n "$RofiSel" ] ; then
             ;;
         *)
             if [[ -v game_opts["$RofiSel"] ]]; then
-                steam -applaunch "${launchid}" "[${game_opts["$RofiSel"]}] gamemoderun %command%" &
-                printf "Launching with: ${launchid} [${game_opts["$RofiSel"]}] gamemoderun command\n"
+                steam steam://rungameid/${launchid}
+                # steam -applaunch "${launchid}" "${game_opts["$RofiSel"]} gamemoderun %command%" &
+                # printf "Launching with: ${launchid} ${game_opts["$RofiSel"]} gamemoderun command\n"
             else
                 steam -applaunch "${launchid}" "gamemoderun %command%" &
             fi

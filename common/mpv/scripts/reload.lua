@@ -1,4 +1,3 @@
-#!/usr/bin/env lua
 -- reload.lua
 --
 -- When an online video is stuck buffering or got very slow CDN

@@ -11,7 +11,7 @@ function M.setup(v)
             nixCats_default_value = true
         end
         -- if not in nix, just make it return a boolean
-        require('_G').nixCats = function(_) return nixCats_default_value end
+        -- require('_G').nixCats = function(_) return nixCats_default_value end
     end
 end
 

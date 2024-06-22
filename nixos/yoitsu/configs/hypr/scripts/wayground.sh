@@ -10,7 +10,13 @@ randomize(){
     randomize
   fi
 }
-randomize
-swww img -t random -o DP-1 "$opt1"
-swww img -t random -o DP-3 "$opt2"
-notify-send "Setting new backgrounds!" ":)" --icon "$opt2"
+
+GAME_RUNNING="$(hyprctl clients -j | jq 'any(.[]; .class | type == "string" and contains("steam_app"))')"
+if "$GAME_RUNNING" -eq "true" ; then
+  notify-send "Not Changing Wallpaper" "Game is running, skipping..." --icon "$HOME/.config/hypr/.hypr.png"
+else
+  randomize
+  swww img -t random -o DP-1 "$opt1"
+  swww img -t random -o DP-3 "$opt2"
+  notify-send "Setting new backgrounds!" ":)" --icon "$opt2"
+fi

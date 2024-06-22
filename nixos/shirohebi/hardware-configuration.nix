@@ -19,7 +19,7 @@ boot = {
   };
 
   fileSystems."/mnt/NAS" = {
-    device = "srv-prod-nas.home.USER_NAMEkiss.net:/mnt/Main Storage/USER_NAME/USER_NAME";
+    device = "nas-prod-dir.home.USER_NAMEkiss.net:/mnt/Main Storage/USER_NAME/USER_NAME";
     fsType = "nfs";
   };
 

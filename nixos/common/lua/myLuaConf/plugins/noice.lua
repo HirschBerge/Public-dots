@@ -38,3 +38,23 @@ require("notify").setup({
 vim.keymap.set("n", "<leader>dn", function()
   require("noice").cmd("dismiss")
 end)
+local function firstToUpper(str)
+  return (str:gsub("^%l", string.upper))
+end
+
+local function greet_user()
+  -- Get the $USER environment variable
+  local user = vim.fn.getenv("USER")
+  local upper_user = firstToUpper(user)
+
+  -- Construct the message
+  local message = "Hello, " .. upper_user .. "\\n0x45 is my favorite number."
+
+  -- Echo the message in Neovim
+  vim.cmd('echo "' .. message .. '"')
+end
+
+-- Set an autocmd for the VimEnter event to echo the message
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = greet_user,
+})

@@ -5,16 +5,17 @@ let
 in
 {
 	home.packages = with pkgs; [
-		wl-clipboard
-		grim
-		slurp
-    	swww
-    	rofi-wayland
+	    wl-clipboard
+	    grim
+	    slurp
+	    swww
+	    rofi-wayland
 	    waybar
+	    hyprland
 	];
   wayland.windowManager.hyprland = {
     enable = true;
-    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    # package = inputs.hyprland.packages.${pkgs.system}.hyprland; # TODO: Comment back in when hyprland is stable again
     # No longer exists as it is not necessary.
     # enableNvidiaPatches = true;
     xwayland.enable = true;
@@ -60,7 +61,7 @@ decoration {
     # See https://wiki.hyprland.org/Configuring/Variables/ for more
     # blur_ignore_opacity = true
     rounding = 10
-    fullscreen_opacity =  0.69
+    # fullscreen_opacity =  0.69
     blur {
       enabled = true
       size = 12
@@ -143,7 +144,7 @@ bind = $mainMod, O, killactive,
 bind = $mainMod, M, exit,
 bind = $mainMod, N, exec, swaync-client -t
 bind = $mainMod, R, exec,hyprctl reload
-bind = $mainMod, E, exec, ~/.local/bin/dmenuunicode
+bind = $mainMod, E, exec, ~/.nix-profile/bin/dmenuunicode
 bind = $mainMod, S, exec, ~/.config/eww/scripts/search_nixpkgs.sh
 bind = $mainMod, V, exec, ${pkgs.kitty}/bin/kitty --title clipse -e zsh  -c '${pkgs.clipse}/bin/clipse $PPID' # bind the open clipboard operation to a nice key.
 bind = $mainMod, G, exec, ~/.config/hypr/scripts/gamelauncher.sh 2
@@ -207,13 +208,14 @@ bind = $mainMod, C, exec, ${pkgs.kitty}/bin/kitty ${pkgs.helix}/bin/hx ~/.dotfil
 bind = $mainMod, U, exec, firefox
 bind = $mainMod, D, exec, ~/.config/rofi/launchers/launcher.sh
 bind = ALT, space, exec, $HOME/.config/rofi/launchers/launcher.sh
-bind = $mainMod, Y, exec, ~/.local/bin/yt
+bind = $mainMod, Y, exec, yt
 bind = $mainMod,F,fullscreen
 bind = $mainMod,TAB,workspace,previous
-bind = $mainMod SHIFT,s,exec, ~/.config/hypr/scripts/screenshot --area
+bind = $mainMod SHIFT, S,exec, ~/.config/hypr/scripts/screenshot --area
+bind = $mainMod SHIFT, W,exec, ~/.config/hypr/scripts/screenshot --win
 bind = $mainMod, X, exec, wlogout
 # bind = $mainMod,x,exec, ~/.config/rofi/powermenu/powermenu.sh
-bind = $mainMod,l,exec, ~/.config/hypr/scripts/locker.sh
+bind = $mainMod,l,exec, ${pkgs.hyprlock}/bin/hyprlock
 bind = , XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 1%+
 bind = , XF86AudioLowerVolume, exec, wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 1%-
 bind = , XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
@@ -225,11 +227,11 @@ bind = , XF86MonBrightnessUp, exec, brightnessctl set 5%+
 exec = bash $HOME/.config/hypr/scripts/hypronstart.sh &
 exec-once = bash $HOME/.config/hypr/scripts/bat_notify.sh --continue &
 exec-once = swww init
-exec-once = ${pkgs.discord}/bin/discord
+exec-once = ${pkgs.vesktop}/bin/vesktop
 exec = $HOME/.scripts/background/cron.sh ~/Pictures/Monogatari/
 exec-once = /etc/profiles/per-user/USER_NAME/bin/firefox
-exec-once = /etc/profiles/per-user/USER_NAME/bin/discord
-exec-once = ~/.config/hypr/scripts/sleep.sh &
+exec-once = /etc/profiles/per-user/USER_NAME/bin/vesktop
+exec = ~/.config/hypr/scripts/sleep.sh &
 exec = eww open bar &
   '';
   home.file."${config.xdg.configHome}/hypr/window_rules.conf".text = /* hyprlang  */ ''
@@ -246,18 +248,24 @@ windowrule = opacity 0.8 0.7, thunar
 windowrulev2 = size 842 465, class:thunar
 windowrulev2 = float, class:^(thunar)$
 windowrulev2 = opacity 1.0 1.0, class:mpv
-windowrulev2 = opacity 0.8 0.7, class:discord
+windowrulev2 = opacity 0.8 0.7, class:vesktop
 windowrulev2 = opacity 1.0 1.0, title:^(.*YouTube.*)$
 windowrulev2 = fullscreen,class:^(.*steam_app.*)$
 windowrulev2 = float,class:^(.*steam_app.*)$
 windowrulev2 = opacity 0.8 0.7, class:^.*kitty.*$
+
+# Idle Inhibit
+windowrulev2 = idleinhibit always, title:.*(nh).*
+windowrulev2 = idleinhibit focus, class:.*(steam_app).*
+windowrulev2 = idleinhibit focus, class:firefox,title:^(.*S[0-9].*E[0-9].*)$
+windowrulev2 = idleinhibit focus, class:firefox,title:^(.*YouTube.*)$
 # windowrulev2 = float,class:^(kitty)$,title:^(kitty)$
 # See https://wiki.hyprland.org/Configuring/Window-Rules/ for more
 # App Workspace Bindings
 windowrule = workspace 1, ^(.*firefox.*)$
 windowrulev2 = workspace 3, class:^(.*steam_app.*)$
 windowrule = workspace 8, ^(.*mpv.*)$
-windowrule = workspace 7, ^(.*discord.*)$
+windowrule = workspace 7, ^(.*vesktop.*)$
 windowrulev2 = workspace 6, class:^(.*YouTube Music.*)$# Example windowrule v2
 # XwaylandVideoBridge
 windowrulev2 = opacity 0.0 override 0.0 override,class:^(xwaylandvideobridge)$

@@ -1,8 +1,9 @@
 {
   description = "My Favorite NixOS flake!";
   inputs = {
+    nixos-boot.url = "github:HirschBerge/nixos-boot";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    hyprland.url = "github:hyprwm/Hyprland";
+    # hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     home-manager = {
          url = "github:nix-community/home-manager";
          inputs.nixpkgs.follows = "nixpkgs";
@@ -16,6 +17,7 @@
     self,
     nixpkgs,
     home-manager,
+    nixos-boot,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -23,32 +25,57 @@
       inherit system;
       overlays = [
         inputs.nur.overlay
+        (self: super: {
+          warp-terminal = super.warp-terminal.override{
+            waylandSupport = true;
+          };
+        })
       ];
+
       config = {
         allowUnfree = true;
         allowUnfreePredicate = _: true;
       };
     };
     #  Export Variables
-    stateVersion = "23.11"; # TODO change stateVersion
-    username = "USER_NAME"; # TODO change username
-    desktop = "yoitsu"; # TODO Change Desktop name
-    laptop = "shirohebi"; # TODO change Laptop name
-    system = "x86_64-linux"; # TODO Rarely, change system architecture
+    stateVersion = "23.11"; # TODO: change stateVersion
+    username = "USER_NAME"; # TODO: change username
+    desktop = "yoitsu"; # TODO: Change Desktop name
+    laptop = "shirohebi"; # TODO: change Laptop name
+    system = "x86_64-linux"; # TODO: Rarely, change system architecture
+    email = "THIS_IS_AN_EMAIL"; # TODO: Change your email for Git and such 
   in {
     #  NixOS configuration entrypoint
     #  Available through 'nixos-rebuild --flake .# your-hostname'
     nixosConfigurations = {
       ${desktop} = nixpkgs.lib.nixosSystem {
         specialArgs = let
-        hostname = "yoitsu"; /* TODO change hostname */ in {inherit inputs username self system stateVersion hostname;};
+          hostname = "${desktop}";  in {
+            inherit
+              inputs
+              self
+              username
+              system
+              stateVersion
+              email
+              hostname;
+          };
         #  > Our main nixos configuration file <
-        modules = [./nixos/${desktop}/configuration.nix];
+        modules = [./nixos/${desktop}/configuration.nix nixos-boot.nixosModules.default];
       };
       ${laptop} = nixpkgs.lib.nixosSystem { 
-        specialArgs = let hostname = "shirohebi"; /* TODO change hostname */ in {inherit inputs username self system stateVersion hostname;};
+        specialArgs = let hostname = "${laptop}";  in {
+          inherit
+            inputs
+            self
+            username
+            system
+            stateVersion
+            email
+            hostname;
+        };
         #  > Our main nixos configuration file <
-        modules = [./nixos/${laptop}/configuration.nix];
+        modules = [./nixos/${laptop}/configuration.nix nixos-boot.nixosModules.default];
       };
     };
     #  Standalone home-manager configuration entrypoint
@@ -57,13 +84,31 @@
       "${username}@${desktop}" =  home-manager.lib.homeManagerConfiguration {
         inherit pkgs;#  > Our main home-manager configuration file <
         modules = [./nixos/${desktop}/home.nix];
-        extraSpecialArgs = /* TODO change hostname */ let hostname = desktop; in {inherit username hostname self system stateVersion inputs;};
+        extraSpecialArgs =  let hostname = desktop; in {
+          inherit
+            self
+            inputs
+            username
+            hostname
+            system
+            stateVersion
+            email;
+        };
       };
        "${username}@${laptop}" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;#  > Our main home-manager configuration file <
         modules = [./nixos/${laptop}/home.nix];
-        extraSpecialArgs = /* TODO change hostname */ let hostname = laptop; in {inherit username hostname self system stateVersion inputs;};
-      };
+        extraSpecialArgs = let hostname = laptop; in {
+          inherit 
+            self
+            inputs
+            username
+            hostname
+            system
+            stateVersion
+            email;
+            };
+       };
     };
   };
 }

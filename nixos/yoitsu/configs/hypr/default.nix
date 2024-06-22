@@ -4,13 +4,13 @@
 		wl-clipboard
 		grim
 		slurp
-    	swww
-    	rofi-wayland
-	    waybar
+		swww
+		rofi-wayland
+		hyprland # Comment out when back to using flake version
 	];
   wayland.windowManager.hyprland = {
     enable = true;
-    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    # package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     # No longer exists as it is not necessary.
     xwayland.enable = true;
     extraConfig = /* hyprlang*/ ''
@@ -54,6 +54,10 @@ input {
         natural_scroll = no
     }
     sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
+}
+misc {
+    mouse_move_enables_dpms = false
+    # key_press_enables_dpms = true
 }
 general {
     # See https://wiki.hyprland.org/Configuring/Variables/ for more
@@ -138,7 +142,7 @@ bind = $mainMod SHIFT, D, exec, ps aux |rg [d]iscord | awk '{ print $2 }' |xargs
 bind = $mainMod, M, exit,
 bind = $mainMod, N, exec, ${pkgs.swaynotificationcenter}/bin/swaync-client -t
 bind = $mainMod, R, exec,hyprctl reload
-bind = $mainMod, E, exec, ~/.local/bin/dmenuunicode
+bind = $mainMod, E, exec, ~/.nix-profile/bin/dmenuunicode
 bind = $mainMod, S, exec, ~/.config/eww/scripts/search_nixpkgs.sh
 # bind = $mainMod, V, exec, ${pkgs.youtube-music}/bin/youtube-music --disable-gpu 
 bind = $mainMod, G, exec, ~/.config/hypr/scripts/gamelauncher.sh 2
@@ -189,7 +193,7 @@ bindm = $mainMod, mouse:273, resizewindow
 # Enable Floating on Windows
 bind = $mainMod SHIFT, space,togglefloating
 # Discord PPT 
-bind = ,Insert,pass,^(.*discord*.)$
+bind = ,Insert,pass,^(.*Discord*.)$
 
 # FKey binds
 bind = $mainMod, F1, exec, ~/.config/hypr/scripts/show_binds.sh
@@ -201,19 +205,20 @@ bind = $mainMod, T, exec, ${pkgs.xfce.thunar}/bin/thunar
 bind = $mainMod, B, exec, ${pkgs.kitty}/bin/kitty ${pkgs.btop}/bin/btop
 bind = $mainMod, H, exec, $HOME/.config/eww/scripts/eww-start.sh &
 # Kill discord
-bind = $mainMod SHIFT, D, exec, \'\'ps aux | rg [d]iscord | awk '{ print $2 }' | xargs kill\'\'
+bind = $mainMod SHIFT, D, exec, \'\'ps aux | rg [v]esktop | awk '{ print $2 }' | xargs kill\'\'
 
 # bind = $mainMod, U, exec, brave
 bind = $mainMod, U, exec, ${pkgs.firefox}/bin/firefox
 bind = $mainMod, D, exec, ~/.config/rofi/launchers/launcher.sh
 bind = ALT, space, exec, ~/.config/rofi/launchers/launcher.sh
-bind = $mainMod, Y, exec, ~/.local/bin/yt
+bind = $mainMod, Y, exec, yt
 bind = $mainMod,F,fullscreen
 bind = $mainMod,TAB,workspace,previous
-bind = $mainMod SHIFT,s,exec, ~/.config/hypr/scripts/screenshot --area
+bind = $mainMod SHIFT, S,exec, ~/.config/hypr/scripts/screenshot --area
+bind = $mainMod SHIFT, W,exec, ~/.config/hypr/scripts/screenshot --win
 bind = $mainMod,x,exec, ${pkgs.wlogout}/bin/wlogout
 # bind = $mainMod,x,exec, ~/.config/rofi/powermenu/powermenu.sh
-bind = $mainMod,l,exec, ~/.config/hypr/scripts/locker.sh
+bind = $mainMod,l,exec, ${pkgs.hyprlock}/bin/hyprlock
   '';
   home.file."${config.xdg.configHome}/hypr/startup.conf".text = /* hyprlang  */ ''
 # vim: filetype=hyprlang
@@ -222,10 +227,10 @@ exec = ${pkgs.clipse}/bin/clipse -kill ;sleep 1; ${pkgs.clipse}/bin/clipse -list
 exec-once = ${pkgs.swww}/bin/swww init
 exec-once = ${pkgs.openrgb}/bin/openrgb -p ~/.config/OpenRGB/Purple.orp
 # exec = $HOME/.scripts/background/cron.sh ~/Pictures/Space/
-exec-once = ${pkgs.discord}/bin/discord &
+exec-once = ${pkgs.vesktop}/bin/vesktop &
 # exec-once = /etc/profiles/per-user/USER_NAME/bin/brave
 exec-once = ${pkgs.firefox}/bin/firefox &
-exec-once = ~/.config/hypr/scripts/sleep.sh & #Systemctl service works now for some reason
+exec = ~/.config/hypr/scripts/sleep.sh & #Systemctl service works now for some reason
 exec = sleep 1 ; bash $HOME/.config/eww/scripts/eww-start.sh &
 exec = sleep 0.5 ; ${pkgs.eww}/bin/eww -c ~/.config/eww/bar close bar; ${pkgs.eww}/bin/eww -c ~/.config/eww/bar open bar &
   '';
@@ -239,7 +244,7 @@ windowrulev2 = opacity 0.5 0.5,class:^(kitty.*)$,title:^(.*clipse.*)$
 windowrule = float, ^(pavucontrol)$
 windowrulev2 = float, class:^(.*desktop-portal-gtk.*)$
 windowrule = opacity 0.9 0.8, firefox
-windowrulev2 = opacity 0.95 0.90, class:discord
+windowrulev2 = opacity 0.95 0.90, class:vesktop
 windowrulev2 = opacity 1.0 1.0, title:^(.*YouTube.*)$
 # windowrulev2 = float, class:^(*.steam_app.*)$
 windowrulev2 = fullscreen, class:^(*.steam_app.*)$
@@ -264,7 +269,7 @@ windowrule = workspace 1, ^(.*firefox.*)$
 # windowrule = workspace 1, ^(.*brave.*)$
 windowrulev2 = workspace 3, class:^(.*steam_app.*)$
 windowrule = workspace 9, ^(.*mpv.*)$
-windowrule = workspace 7, ^(.*discord.*)$
+windowrule = workspace 7, ^(.*vesktop.*)$
 windowrulev2 = workspace 6, class:^(.*YouTube Music.*)$
 # XWaylandBridge
 windowrulev2 = opacity 0.75 0.6, class:^.*kitty.*$
@@ -278,6 +283,7 @@ windowrulev2 = minsize 1 1, title:^()$,class:^(steam)$
 
 # Idle Inhibit
 
+windowrulev2 = idleinhibit always, title:.*(nh).*
 windowrulev2 = idleinhibit focus, title:.*(yuzu).*
 windowrulev2 = idleinhibit focus, class:.*(steam_app).*
 windowrulev2 = idleinhibit always, class:firefox,title:^(.*S[0-9].*E[0-9].*)$

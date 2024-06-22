@@ -272,7 +272,8 @@
                 :class "sys_cpu"
                 :thickness 8
                 :tooltip "${EWW_TEMPS.ASUSEC_CPU}°C"
-                (label :text "󰻠 "
+                    (label :text "󰻠"
+                ;; (label :text "󰻠 "
                     :class "sys_icon_cpu"
                     :limit-width 4
                     :show_truncated false
@@ -285,7 +286,7 @@
                 :class "sys_mem"
                 :thickness 8
                 :tooltip "${round((EWW_RAM.used_mem / 1024 / 1024 / 1000), 1)}GB"
-                (label :text " "
+                (label :text ""
                     :class "sys_icon_mem"
                     :limit-width 4
                     :show_truncated false
@@ -303,10 +304,10 @@
             (button :class "app-firefox" 
                 :onclick "firefox 2> /dev/null" "")
             (button :class "app-files" 
-                :onclick "thunar 2> /dev/null" "")
+                :onclick "thunar ~/ 2> /dev/null" "")
             (button :class "app-code"
                 :timeout "1000ms"
-                :onclick "kitty nvim /etc/nixos/home.nix +':cd %:h' 2> /dev/null" "󰘦")
+                :onclick "kitty --working-directory ~/ v  2> /dev/null" "󰘦")
             (button :class "app-spotify" 
                 :onclick "$HOME/.config/eww/scripts/spot-play.sh 2> /dev/null" "")
             (button :class "app-steam"

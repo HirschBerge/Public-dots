@@ -1,11 +1,17 @@
-{ pkgs,username, ...}:
+{ pkgs,
+  username,
+ ...}:
 {
-    nixpkgs.overlays = [
+  nixpkgs.overlays = [
     (self: super: {
-      mpv = super.mpv.override {
-        scripts = [ self.mpvScripts.mpris self.mpvScripts.sponsorblock self.mpvScripts.thumbfast];
-      };
-    })
+     mpv = super.mpv.override { scripts = [
+         self.mpvScripts.mpris
+         self.mpvScripts.sponsorblock
+         self.mpvScripts.thumbfast
+         self.mpvScripts.uosc
+         ];
+       };
+     })
   ];
   environment.systemPackages = with pkgs; [
     tlrc
@@ -13,6 +19,7 @@
     zig
     lua-language-server
     kitty
+    vesktop
     neovim
     helix
     wget

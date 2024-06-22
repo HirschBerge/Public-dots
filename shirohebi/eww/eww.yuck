@@ -12,6 +12,7 @@
     "$HOME/.config/eww/scripts/cpu")
 (defpoll temp :initial 30 :interval "10s" `sensors | rg temp1 | rg -o "\\d+.\\d+" | head -1`)
 (defpoll oxidized_weather :initial "..." :interval "1m" `$HOME/.local/bin/weather_app --bar`)
+(defpoll PR_TRACKER :initial "..." :interval "20m" `./scripts/pr_tracker.sh`)
 (defpoll quote :interval "24h" "$HOME/.config/eww/scripts/quotes --quote-and-quotee")
 (defpoll IP_ADDR :interval "1m" "ip -br a |rg UP | awk '/enp7/ {print $3 }'")
 (defpoll window :interval "0.5s" "$HOME/.config/eww/scripts/window-title.sh")
@@ -44,7 +45,8 @@
     (network-down)
     (network-up)
     ;; (network)
-    (weather)
+    ;; (weather)
+    (pr_tracker)
     (system)
     (info)
     (clock)
@@ -73,6 +75,19 @@
           (label :class "info-text" :halign "start" :text "${uptime}")
         )
       )
+    )
+  )
+)
+(defwidget pr_tracker []
+  ( box :orientation "h" :space-evenly "false" :hexpand "false" :vexpand "false" :halign "center"
+    (button
+      :onclick "firefox ${PR_TRACKER.url}"
+      ;; :tooltip "Open Dashboard."
+    (label
+      :class "weatha"
+      :text "${PR_TRACKER.master}${PR_TRACKER.small}${PR_TRACKER.nix_pkgs}${PR_TRACKER.unstable}"
+      :tooltip "${PR_TRACKER.title}"
+    )
     )
   )
 )
@@ -159,8 +174,8 @@
                     :thickness 2
                     :value {round(EWW_NET.wlo1.NET_DOWN,1)}
                     :time-range "2m"
-                    :min 10
-                    :max 512
+                    :min 1
+                    :max 1010
                     :dynamic "true"
                     :line-style "round"
                     :tooltip "${round((EWW_NET.wlo1.NET_DOWN /8 ), 1)}MB/s"

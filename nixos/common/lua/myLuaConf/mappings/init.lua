@@ -1,4 +1,11 @@
+local telescope_builtin = require('telescope.builtin')
+if not telescope_builtin then
+  error('Failed to load telescope.builtin')
+end
+
+
 vim.keymap.set("n", "J", "mzJ`z")
+vim.api.nvim_set_keymap('n', '<C-w>', '<C-w>', { noremap = true, silent = true })
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "n", "nzzzv")
@@ -30,6 +37,26 @@ vim.keymap.set("n", "<leader>fh", "<cmd> Telescope help_tags <CR>", { desc = "He
 vim.keymap.set("n", "<leader>fo", "<cmd> Telescope oldfiles <CR>", { desc = "Find oldfiles" })
 vim.keymap.set("n", "<leader>fz", "<cmd> Telescope current_buffer_fuzzy_find <CR>", { desc = "Find in current buffer" })
 vim.keymap.set("n", "<leader>ft", "<cmd> TodoTelescope <CR>", { desc = "Telescope TODO items" })
+vim.keymap.set("n", '<leader>fd', telescope_builtin.lsp_definitions, { desc = '[F]ind [D]efinition'})
+vim.keymap.set("n", '<leader>fr', telescope_builtin.lsp_references, { desc = '[F]ind [R]eferences'})
+vim.keymap.set("n", '<leader>fi', telescope_builtin.lsp_implementations, { desc = '[F]ind [I]mplementation'})
+vim.keymap.set("n", '<leader>ds', telescope_builtin.lsp_document_symbols, { desc = '[D]ocument [S]ymbols'})
+vim.keymap.set("n", '<leader>ws', telescope_builtin.lsp_dynamic_workspace_symbols, { desc = '[W]orkspace [S]ymbols'})
+vim.keymap.set("n", '<leader>fl', telescope_builtin.resume, { desc = '[F]ind [L]ast Search'})
+-- vim.keymap.set("n", '<leader>wd', telescope_builtin.diagnostics, { buffer = 0, desc = '[W]orkspace [D]iagnostics'})
+-- Define a keybinding for workspace diagnostics
+vim.keymap.set("n", '<leader>wd', function()
+    -- Invoke the diagnostics picker with the 'bufnr' set to 0 for workspace diagnostics
+    telescope_builtin.diagnostics({
+        bufnr = nil, -- Specify workspace diagnostics
+    })
+end, {
+    desc = '[W]orkspace [D]iagnostics'
+})
+
+vim.keymap.set("n", "<Leader>db", ':DapToggleBreakpoint<CR>', { desc = "Debug Breakpoint" })
+vim.keymap.set("n", "<Leader>dx", ':DapTerminate<CR>', { desc = "Debug Exit" })
+vim.keymap.set("n", "<Leader>do", ':DapStepOver<CR>', { desc = "Debug Next Point" })
 
 -- Git
 vim.keymap.set("n", "<leader>cm", "<cmd> Telescope git_commits <CR>", { desc = "Git commits" })

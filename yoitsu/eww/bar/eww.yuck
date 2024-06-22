@@ -17,6 +17,7 @@
     "$HOME/.config/eww/scripts/cpu")
 (defpoll temp :initial 30 :interval "10s" `sensors | rg temp1 | rg -o "\\d+.\\d+" | head -1`)
 (defpoll oxidized_weather :initial "..." :interval "1m" `$HOME/.local/bin/weather_app --bar`)
+(defpoll PR_TRACKER :initial "..." :interval "20m" `../scripts/pr_tracker.sh`)
 (deflisten workspaces0 "hyprland-workspaces `hyprctl monitors -j | jq -r \".[0].name\"`")
 
 (defpoll quote :interval "24h" "$HOME/.config/eww/scripts/quotes --quote-and-quotee")
@@ -60,7 +61,8 @@
     (network-down)
     (network-up)
     ; (network)
-    (weather)
+    ;; (weather)
+    (pr_tracker)
     (GPU)
     (system)
     (info)
@@ -104,6 +106,22 @@
           ;; (label :halign "center" :valign "center" :class "GPU_three" :text "󰐧 ${GPU.AvgPwr} 󰓅  ${GPU.SerialClock}")
     )
 )
+
+
+(defwidget pr_tracker []
+  ( box :orientation "h" :space-evenly "false" :hexpand "false" :vexpand "false" :halign "center"
+    (button
+      :onclick "firefox ${PR_TRACKER.url}"
+      ;; :tooltip "Open Dashboard."
+    (label
+      :class "weatha"
+      :text "${PR_TRACKER.master}${PR_TRACKER.small}${PR_TRACKER.nix_pkgs}${PR_TRACKER.unstable}"
+      :tooltip "${PR_TRACKER.title}"
+    )
+    )
+  )
+)
+
 (defwidget weather []
   (label
     :class "weatha"
@@ -249,6 +267,7 @@
 		    "${idle_state}")
             (button :class "screenshot"
                 :onclick "sleep 0.1; bash $HOME/.config/hypr/scripts/screenshot --area 2> /dev/null"
+                :onrightclick "sleep 1; bash $HOME/.config/hypr/scripts/screenshot --win 2> /dev/null"
                 :timeout "500ms"
                 :tooltip "Screenshot"
             (label :text "󰹑 " :class "tooltip"))

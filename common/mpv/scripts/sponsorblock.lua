@@ -1,4 +1,3 @@
-#!/usr/bin/env lua
 -- sponsorblock.lua
 --
 -- This script skips sponsored segments of YouTube videos

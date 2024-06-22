@@ -124,7 +124,7 @@ If you run into issues doing this, please make an issue and I will try and get i
       <h3>
          NH Nix Helper
       </h3>
-   </summary>
+ 
 
 These are my workflows with `nh` to rebuild/update Home-Manager and NixOS
 
@@ -132,15 +132,12 @@ These are my workflows with `nh` to rebuild/update Home-Manager and NixOS
 
 ```bash
 nh os switch
-# These files tend to rewrite themselves from being links, so i remove them.
-rm -rf ~/.scripts/.venv
 rm ~/.mozilla/firefox/<profile>/search.json.mozlz4
 nh home switch
 ```
 ### Home Manager only
 ```bash
 # These files tend to rewrite themselves from being links, so i remove them.
-rm -rf ~/.scripts/.venv
 rm ~/.mozilla/firefox/<profile>/search.json.mozlz4 -f
 nh home switch
 ```
@@ -148,15 +145,12 @@ nh home switch
 ```bash
 nh os boot --update
 # These files tend to rewrite themselves from being links, so i remove them.
-rm -rf ~/.scripts/.venv
-rm ~/.mozilla/firefox/USER_NAME/search.json.mozlz4
+rm ~/.mozilla/firefox/<profile>/search.json.mozlz4
 nh home switch
 ```
 </details>
 
-
 # Credits and Inspiration
-
 
 | Credit                                                              |  Reason                               |
 |---------------------------------------------------------------------|---------------------------------------|
@@ -166,6 +160,3 @@ nh home switch
 | [LibrePhoenix](https://github.com/librephoenix)                     | Beautiful guides and great knowledge  |
 | [VimJoyer](https://www.youtube.com/@vimjoyer)                       | Short, simple, concise guides and info|
 | [BirdeeHub/nixCats-nvim](https://github.com/BirdeeHub/nixCats-nvim) | Super neat tool and very useful help  |
-
-
-

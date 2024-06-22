@@ -2,24 +2,37 @@ local M = {}
 function M.on_attach(_, bufnr)
   -- we create a function that lets us more easily define mappings specific
   -- for LSP related items. It sets the mode, buffer and description for us each time.
+  local telescope_builtin = require('telescope.builtin')
+  if not telescope_builtin then
+    error('Failed to load telescope.builtin')
+  end
 
   local nmap = function(keys, func, desc)
     if desc then
       desc = 'LSP: ' .. desc
     end
 
+    -- Check if func is nil
+    if func == nil then
+      error("Function is nil for keymap: " .. keys)
+    end
+
     vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
+  end
+
+  -- Check if vim.lsp.buf is available
+  if not vim.lsp or not vim.lsp.buf then
+    error("vim.lsp.buf is not available")
   end
 
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-
-  nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-  nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-  nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
+  -- nmap('gd', telescope_builtin.lsp_definition, '[G]oto [D]efinition')
+  -- nmap('gr', telescope_builtin.lsp_references, '[G]oto [R]eferences')
+  -- nmap('gI', telescope_builtin.lsp_implementations, '[G]oto [I]mplementation')
   nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-  nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-  nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+  nmap('<leader>ds', telescope_builtin.lsp_document_symbols, '[D]ocument [S]ymbols')
+  nmap('<leader>ws', telescope_builtin.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
@@ -39,7 +52,6 @@ function M.on_attach(_, bufnr)
   end, { desc = 'Format current buffer with LSP' })
 
   vim.keymap.set("n", "<leader>Fm", "<cmd>Format<CR>", { noremap = true, desc = '[F]or[m]at (lsp)' })
-
 end
 
 function M.get_capabilities()
@@ -49,4 +61,6 @@ function M.get_capabilities()
   capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
   return capabilities
 end
+
 return M
+

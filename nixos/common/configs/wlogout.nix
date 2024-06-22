@@ -1,6 +1,7 @@
 {config, pkgs, ...}:
 let 
-  lockAction = "sleep 0.5;${pkgs.swaylock-effects}/bin/swaylock --screenshots --clock --indicator --indicator-radius 100 --indicator-thickness 7 --effect-blur 7x5 --effect-vignette 0.5:0.5 --ring-color bb00cc --key-hl-color 880033 --line-color 00000000 --inside-color 00000088 --separator-color 00000000 --grace 2 --fade-in 0.2 -f";
+  lockAction = "${pkgs.hyprlock}/bin/hyprlock";
+  # lockAction = "sleep 0.5;${pkgs.swaylock-effects}/bin/swaylock --screenshots --clock --indicator --indicator-radius 100 --indicator-thickness 7 --effect-blur 7x5 --effect-vignette 0.5:0.5 --ring-color bb00cc --key-hl-color 880033 --line-color 00000000 --inside-color 00000088 --separator-color 00000000 --grace 2 --fade-in 0.2 -f";
   
 in
 {
@@ -8,10 +9,10 @@ in
     enable = true;
     layout = [
      {    label = "lock";    action = lockAction;    text = "Lock";    keybind = "l";  }
-     {    label = "hibernate";    action = "${lockAction} ; systemctl hibernate";    text = "Hibernate";    keybind = "h";  }
+     {    label = "hibernate";    action = "${lockAction} & systemctl hibernate";    text = "Hibernate";    keybind = "h";  }
      {    label = "logout";    action = "hyprctl dispatch exit";    text = "Logout";    keybind = "x";  }
      {    label = "shutdown";    action = "systemctl poweroff";    text = "Shutdown";    keybind = "s";  }
-     {    label = "suspend";    action = "${lockAction} ; hyprctl dispatch dpms off";    text = "Screen Off";    keybind = "u";  }
+     {    label = "suspend";    action = "${lockAction} & hyprctl dispatch dpms off";    text = "Screen Off";    keybind = "u";  }
      {    label = "reboot";    action = "systemctl reboot";    text = "Reboot";    keybind = "r";  }
     ];
     style = ''

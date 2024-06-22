@@ -7,6 +7,7 @@ luasnip.config.setup {}
 local lspkind = require('lspkind')
 
 cmp.setup {
+  preselect = cmp.PreselectMode.None,
   formatting = {
     format = lspkind.cmp_format {
       mode = 'text',
@@ -34,9 +35,12 @@ cmp.setup {
     ['<C-p>'] = cmp.mapping.scroll_docs(-4),
     ['<C-n>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete {},
+    -- [ '<CR>'] = cmp.config.disable,
     ['<CR>'] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
+     -- NOTE: I don't like not being able to just hit enter to
+     -- go to the next line if there is a cmp.
+      select = false,
     },
     ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then

@@ -37,4 +37,4 @@ main (){
   pgrep -x clipse || clipse -listen
 }
 main
-notify-send --icon  ~/.config/wallwide2.png "Hyprland Started!" "Have a great day!"
+notify-send --icon  ~/.config/wallwide2.png "Hyprland Started!" "Have a great day!" -a "Hyprland"

@@ -12,7 +12,7 @@ function M.enableForCategory(v, default)
       return false
     end
   else
-    return default
+    -- return default
   end
 end
 

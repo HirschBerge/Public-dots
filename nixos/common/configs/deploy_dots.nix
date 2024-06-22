@@ -9,10 +9,10 @@
     recursive = true;
   };
 
-  home.file."${config.home.homeDirectory}/.local/bin" = {
-    source = ../../.. + "/common" + /bin;
-    recursive = true;
-  };
+  # home.file."${config.home.homeDirectory}/.local/bin" = {
+  #   source = ../../.. + "/common" + /bin;
+  #   recursive = true;
+  # };
   home.file."${config.xdg.configHome}/mpv" = {
     source = ../../.. + "/common" + /mpv;
     recursive = true;

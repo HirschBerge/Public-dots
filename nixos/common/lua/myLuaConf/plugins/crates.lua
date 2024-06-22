@@ -1,11 +1,11 @@
-local crates  = require('crates')
+local crates = require('crates')
 crates.setup({
-    smart_insert = true,
-    insert_closing_quote = true,
-    avoid_prerelease = true,
+  smart_insert = true,
+  insert_closing_quote = true,
+  -- avoid_prerelease = true,
 })
 -- require('cmp').setup.buffer({
-  -- sources = { { name = "crates" }}
+-- sources = { { name = "crates" }}
 -- })
 crates.show()
 -- Rust Tools
@@ -18,9 +18,10 @@ rt.setup({
     capabilities = require("cmp_nvim_lsp").default_capabilities(),
     on_attach = function(_, bufnr)
       vim.keymap.set("n", "K", rt.hover_actions.hover_actions, { buffer = bufnr })
-      vim.keymap.set("n", "<Leader>ca", rt.code_action_group.code_action_group, { buffer = bufnr, desc = "[C]ode [A]ction" })
+      vim.keymap.set("n", "<Leader>ca", rt.code_action_group.code_action_group,
+        { buffer = bufnr, desc = "[C]ode [A]ction" })
       vim.keymap.set("n", "<Leader>ca", rt.code_action_group.rename, { buffer = bufnr, desc = "[C]ode [R]ename" })
-      vim.keymap.set("n", "<Leader>cv", rt.open_cargo_toml.open_cargo_toml, { buffer = bufnr, desc = "[C]argo [V]iew" })
+      vim.keymap.set("n", "<leader>cv", rt.open_cargo_toml.open_cargo_toml, { buffer = bufnr, desc = "[C]argo [V]iew" })
     end,
   },
   settings = {
@@ -63,19 +64,19 @@ rt.setup({
 rt.inlay_hints.enable()
 
 vim.diagnostic.config({
-	virtual_text = true,
-	signs = true,
-	update_in_insert = true,
-	underline = true,
-	severity_sort = false,
-	float = {
-		focusable = false,
-		style = "minimal",
-		border = "rounded",
-		source = "always",
-		header = "",
-		prefix = "",
-	},
+  virtual_text = true,
+  signs = true,
+  update_in_insert = true,
+  underline = true,
+  severity_sort = false,
+  float = {
+    focusable = false,
+    style = "minimal",
+    border = "rounded",
+    source = "always",
+    header = "",
+    prefix = "",
+  },
 })
 -- Dap
 
@@ -93,6 +94,3 @@ dap.listeners.before.event_exited["dapui_config"] = function()
   dapui.close()
 end
 
-vim.keymap.set("n", "<Leader>db", ':DapToggleBreakpoint<CR>', {desc = "Debug Breakpoint"})
-vim.keymap.set("n", "<Leader>dx", ':DapTerminate<CR>',{desc = "Debug Exit"})
-vim.keymap.set("n", "<Leader>do", ':DapStepOver<CR>',{desc = "Debug Next Point"} )

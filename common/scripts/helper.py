@@ -6,7 +6,7 @@ from MangaDexPy import downloader
 import re
 import contextlib
 from alive_progress import alive_bar
-
+import base64
 
 def download_chapters(sorted_chapters: list, manga, overwrite=False):
     # name_manga = f"{manga.title['en']}"
@@ -131,11 +131,14 @@ def get_manga_title(result):
 class DiscordWebHook:
     def __init__(self, bot_name="Webhook Bot"):
         self.bot_name = bot_name
-        self.webhook_url = "https://discord.com/api/webhooks/1085380232908902420/67yS35DSklhRDQyf9r-9om4ragu6rpXykkQeXoXoRpa5ACcCeNftme_QxMnbzdUDhatO"  # Welcome
+        # NOTE: had to encode webhook URL because rookies like @CipherDeveloper on Discord think that all Public Webhooks are evil. Fucking idiot
+        # If you see this. Mind your own damn business, you half-rate wannabe hero.
+        self.webhook_url = base64.b64decode("aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI1NDA4NDY0NTAwMDMxNDk1MS9uSnVLV2hJbWstQjRWdzRkMUVyTHhtSndUelVXWnpQNjVZampWTUs4R1NWdHUxS3dmbEttZXNneGhWOUF0bkNXbGZLRgo=").decode('utf-8').strip()
 
     def send_message(self, content, image_url=None, Ping=False):
         to_ping = "215327353423921159"
-        if Ping == True:
+        print(self.webhook_url)
+        if Ping:
             data = {"content": f"<@{to_ping}> {content}", "username": self.bot_name}
         else:
             data = {"content": content, "username": self.bot_name}
