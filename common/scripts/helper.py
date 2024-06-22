@@ -63,7 +63,18 @@ def download_chapters(sorted_chapters: list, manga, overwrite=False):
         colored(0, 255, 0, f"{new_chapters}"),
     )
     return new_chapters, name_manga
+import base64
 
+def base64_decode_n_times(encoded_str, n):
+    decoded_bytes = encoded_str.encode('utf-8')
+    
+    for _ in range(n):
+        try:
+            decoded_bytes = base64.b64decode(decoded_bytes)
+        except Exception as e:
+            raise ValueError(f"Decoding failed at iteration {_ + 1}: {e}")
+    
+    return decoded_bytes.decode('utf-8')
 
 def check_recent(timestamp, offset: int = 5):
     input_time = datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S%z")
@@ -133,11 +144,10 @@ class DiscordWebHook:
         self.bot_name = bot_name
         # NOTE: had to encode webhook URL because rookies like @CipherDeveloper on Discord think that all Public Webhooks are evil. Fucking idiot
         # If you see this. Mind your own damn business, you half-rate wannabe hero.
-        self.webhook_url = base64.b64decode("aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI1NDA4NDY0NTAwMDMxNDk1MS9uSnVLV2hJbWstQjRWdzRkMUVyTHhtSndUelVXWnpQNjVZampWTUs4R1NWdHUxS3dmbEttZXNneGhWOUF0bkNXbGZLRgo=").decode('utf-8').strip()
+        self.webhook_url = base64.b64decode(os.getenv("TACO_BELL")).decode('utf-8').strip()# base64.b64decode("aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI1NDEyMDE3ODA3NDEyODQ5Ni9jdklWWVlfZURGMXRLcmR1aHJRWGNVZjd5Yi1tWWNSYmFHMmREX09XUkFEVFJ4amtwMW1qamhlTTB4RklkWVV6VWlYRgo=").decode('utf-8').strip()
 
     def send_message(self, content, image_url=None, Ping=False):
         to_ping = "215327353423921159"
-        print(self.webhook_url)
         if Ping:
             data = {"content": f"<@{to_ping}> {content}", "username": self.bot_name}
         else:

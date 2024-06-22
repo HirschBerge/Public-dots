@@ -42,7 +42,7 @@ def sort_chapters(chapters: list):
 
 def notify_send(title, new_chapters, cover_url=None):
     os.system(
-        f"""notify-send -i ~/.cache/mdex.jpg -u normal \"Downloaded {new_chapters} new chapters of {title} from MangaDex\" """
+        f"""notify-send -a MangaUpdater -i ~/.cache/mdex.jpg -u normal \"Downloaded {new_chapters} new chapters of {title} from MangaDex\" """
     )
     d = DiscordWebHook(f"{title}")
     if cover_url and new_chapters > 0:

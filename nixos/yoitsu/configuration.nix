@@ -13,6 +13,7 @@
   pkgs,
   hostname,
   username,
+  discord,
   stateVersion,
   ... 
 }:
@@ -92,6 +93,7 @@ in
     sessionVariables = {
       HOME_MANAGER_BACKUP_EXT = "backup";
       FLAKE = "/home/${username}/.dotfiles";
+      TACO_BELL = "${discord}=";
       WARP_ENABLE_WAYLAND = 1;
       LD_LIBRARY_PATH = "${pkgs.wayland}/lib";
     };
