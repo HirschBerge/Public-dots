@@ -57,18 +57,20 @@ Please review the official [NixOS Installation Guide](https://nixos.wiki/wiki/Ni
 | Notification Manager      | [Swaync](https://github.com/ErikReider/SwayNotificationCenter)                                                    |
 | Web Browser               | [Firefox](https://www.mozilla.org/en-US/firefox/new/)                                                             |
 | Video Player              | [MPV](https://mpv.io/)                                                                                            |
-| Text Editor               | [Neovim](https://neovim.io/) and also trying out [Helix](https://helix-editor.com/)                               |
+| Text Editor               | [Neovim](https://neovim.io/)                                                                                      |
 | Neovim "Distro"           | [nixCats-nvim](https://github.com/BirdeeHub/nixCats-nvim)                                                         |
 | CLI File Manager          | [lf](https://github.com/gokcehan/lf)                                                                              |
 | Wallpaper Engine          | [SWWW](https://github.com/LGFae/swww)                                                                             |
 | GUI File Manager          | [Thunar](https://docs.xfce.org/xfce/thunar/start)                                                                 |
 | Launcher                  | [Rofi](https://github.com/davatorium/rofi)                                                                        |
 | Bar/Widgets               | [EWW](https://github.com/elkowar/eww)                                                                             |
+| Terminal                  | [Kitty](https://sw.kovidgoyal.net/kitty/)                                                                         |
+| MultiPlexer               | [Zellij](https://zellij.dev/)                                                                                     |
+| Zellij Bar                | [zjstatus](https://github.com/dj95/zjstatus/)                                                                     |
 | Shell                     | [Zsh](https://www.zsh.org/)                                                                                       |
 | Fonts                     | [Termina Test](https://www.cufonfonts.com/font/termina-test), [Jetbrains Nerdfonts Mono](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/JetBrainsMono.zip), [Fira Code](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/FiraCode.zip), [Iosevka Nerd Font](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Iosevka.zip) |
 | Linux ISO Torrents        | [rtorrent](https://github.com/rakshasa/rtorrent)                                                                  |
-| `Find` replacement        | [fd](https://github.com/sharkdp/fd)                                                                               |
-| `grep` replacement        | [rg](https://github.com/BurntSushi/ripgrep)                                                                       |
+| CLI tool rewrites         | `find` ➡ [fd](https://github.com/sharkdp/fd)  `grep` ➡ [rg](https://github.com/BurntSushi/ripgrep) `sed` ➡ [sd](https://github.com/chmln/sd) `du` ➡ [dust](https://github.com/bootandy/dust)|
 | NixOS Helper              | [nh](https://github.com/viperML/nh)                                                                               |
 
 ## Getting Started

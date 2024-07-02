@@ -272,7 +272,8 @@
                 :tooltip "Screenshot"
             (label :text "󰹑 " :class "tooltip"))
             (button :class "wallpaper"
-                :onclick "bash $HOME/.config/hypr/scripts/wayground.sh 2> /dev/null"
+                :onclick " waypaper&"
+                :onrightclick "bash $HOME/.config/hypr/scripts/wayground.sh 2> /dev/null"
                 :tooltip "Wallpaper"
             (label :text " " :class "tooltip"))
             (button :class "keybind"

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 PR="$(cat "$HOME/.cache/PR_tracker.txt")"
 data=$(curl -slf https://nixpk.gs/pr-tracker.html\?pr="$PR")
-title="$(echo "$data" |rg title | rg -oP '(?<=\().+?(?=\))' | sd "\-&gt;" "  " |sd '"' ""| tr '[:lower:]' '[:upper:]' | sed 's/\([[:alpha:]]\)\([[:alpha:]]*\)/\u\1\L\2/g'))"
+title="$(echo "$data" |rg title | rg -oP '(?<=\().+?(?=\))' | sd "\-&gt;" "  " |sd '"' ""| tr '[:lower:]' '[:upper:]' | sed 's/\([[:alpha:]]\)\([[:alpha:]]*\)/\u\1\L\2/g')"
 statuses="$(echo "$data" |rg -v li| rg "state" -A2 | rg -oP '(?<=>).+?(?=<)' |awk 'NR%2{emoji=$0; next} {print $0 ":" emoji}' |sd "⚪" " " |sd "✅" "  ")" > /dev/null
 url="https://github.com/NixOS/nixpkgs/pull/$PR"
 master=$(echo "$statuses" |rg "master" |awk -F':' '{ print $2 }')

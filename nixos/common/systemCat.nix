@@ -1,4 +1,4 @@
-{ config, lib, inputs, ... }: let
+{inputs, ... }: let
   utils = inputs.nixCats.utils;
   # the options for this are defined at the end of the file,
   # and will be how to include this template module in your system configuration.
@@ -101,8 +101,8 @@ in {
               telescope-nvim
               # treesitter
               nvim-treesitter-textobjects
-              nvim-treesitter.withAllGrammars
               nvim-treesitter-parsers.rasi
+              nvim-treesitter.withAllGrammars
               # This is for if you only want some of the grammars
               # (nvim-treesitter.withPlugins (
               #   plugins: with plugins; [
@@ -119,8 +119,6 @@ in {
               comment-nvim
               vim-sleuth
               vim-fugitive
-              # vim-rhubarb
-              # vim-repeat
               todo-comments-nvim
               undotree
               nvim-surround
@@ -140,6 +138,7 @@ in {
               rust-tools-nvim
               renamer-nvim
               rainbow-delimiters-nvim
+              zellij-nvim
             ];
           };
         };

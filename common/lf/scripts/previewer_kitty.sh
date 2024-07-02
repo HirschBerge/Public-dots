@@ -73,7 +73,7 @@ case "$(printf "%s\n" "$(readlink -f "$1")" | awk '{print tolower($0)}')" in
         tar tzf "$1"
         ;;
     *.md)
-        glow "$1"
+        preview_text "$1"
         ;;
     *.tar.bz2|*.tbz2)
         tar tjf "$1"

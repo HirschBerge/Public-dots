@@ -19,11 +19,6 @@
 }:
 let
   themes = pkgs.callPackage  ../common/configs/themes.nix {};
-
-  # For outputting list of packages.
-  # packages = builtins.map (p: "${p.name}") config.environment.systemPackages;
-  # sortedUnique = builtins.sort builtins.lessThan (lib.unique packages);
-  # formatted = builtins.concatStringsSep "\n" sortedUnique;
 in
 
 {
@@ -52,9 +47,6 @@ in
         };
     };
   };
-  nixpkgs.config.permittedInsecurePackages = [
-    "electron-25.9.0"
-  ];
   # Bootloader.
   boot.loader = {
     systemd-boot.enable = true;
@@ -94,8 +86,6 @@ in
       HOME_MANAGER_BACKUP_EXT = "backup";
       FLAKE = "/home/${username}/.dotfiles";
       TACO_BELL = "${discord}GNVZjd5Yi1tWWNSYmFHMmREX09XUkFEVFJ4amtwMW1qamhlTTB4RklkWVV6VWlYRgo=";
-      WARP_ENABLE_WAYLAND = 1;
-      LD_LIBRARY_PATH = "${pkgs.wayland}/lib";
     };
     variables = {
       EDITOR = "v";
@@ -149,12 +139,6 @@ in
     }];
   };
   networking.hostName = "${hostname}"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
   # Enable networking
   networking.networkmanager.enable = true;
 
@@ -244,6 +228,7 @@ in
     extraGroups = [ "networkmanager" "wheel" "keyd" ];
     packages = with pkgs; [
       rocmPackages.rocm-smi
+      heroic-unwrapped
       godot_4
       piper
       firefox
@@ -345,21 +330,5 @@ environment.etc = {
     enable = true;
     motherboard = "amd";
   };
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = stateVersion; # Did you read the comment?
-  # environment.etc."current-packages".text = formatted;
 }

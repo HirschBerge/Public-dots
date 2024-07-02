@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, ... }:
 let
   	custom-font = pkgs.callPackage ./fonts-deriviation.nix {};
 in
@@ -12,5 +12,6 @@ in
     fira-code
     fira-code-symbols
     custom-font.dank-mono
-  ];
+   # required to autoload fonts from packages installed via Home Manager
+ ];
 }

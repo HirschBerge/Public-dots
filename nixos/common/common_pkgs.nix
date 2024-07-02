@@ -2,17 +2,6 @@
   username,
  ...}:
 {
-  nixpkgs.overlays = [
-    (self: super: {
-     mpv = super.mpv.override { scripts = [
-         self.mpvScripts.mpris
-         self.mpvScripts.sponsorblock
-         self.mpvScripts.thumbfast
-         self.mpvScripts.uosc
-         ];
-       };
-     })
-  ];
   environment.systemPackages = with pkgs; [
     tlrc
     clipse
@@ -26,9 +15,6 @@
     home-manager
     traceroute
     python312
-    python312Packages.pip
-    python312Packages.tkinter
-    python312Packages.numpy
     obs-studio
     ripgrep
     du-dust
@@ -36,12 +22,10 @@
     lm_sensors
     ffmpeg
     pciutils
-    # Testing out some cool rust-based replacements
-    sd # Sed replacement
-    # delta #enabled by home-manager with programs.git.delta.enable = true;
     tokei
     kondo
     mpv
+    sd
     file
     pistol
     poppler_utils
@@ -50,7 +34,11 @@
     pika-backup
     hyprlock
     hypridle
-    warp-terminal
+    # bat-extras.batgrep
+    # bat-extras.batman
+    bat-extras.batpipe
+    bat-extras.batwatch
+    # bat-extras.prettybat
   ];
   programs.nh = {
     enable = true;

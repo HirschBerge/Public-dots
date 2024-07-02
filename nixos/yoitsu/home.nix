@@ -6,22 +6,13 @@
 #  ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝    ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝
 #                                                                                                              
 {
-  inputs,
-    lib,
-    config,
     pkgs,
     email,
     username,
-    hostname,
     stateVersion,
     ...
 }: 
 let 
-# nixpkgs.url = "nixpkgs/nixos-unstable";
-# home-manager = {
-#   url = "github:nix-community/home-manager";
-#   inputs.nixpkgs.follows = "nixpkgs";
-# };
 themes = pkgs.callPackage ../common/configs/themes.nix {};
 in
 {
@@ -29,19 +20,22 @@ in
   imports = [ 
     ../common/scripts.nix
     ../common/configs/firefox.nix
+    ../common/configs/zathura.nix
+    ../common/configs/zellij.nix
+    ../common/configs/rofi.nix
+    ../common/configs/mpv.nix
     ../common/configs/deploy_dots.nix
     ../common/configs/zsh.nix 
     ./configs/hypr/default.nix 
     ../common/configs/kitty.nix 
     ../common/configs/starship.nix 
     ../common/configs/wlogout.nix
-# ../common/configs/nixvim.nix
   ];
   nixpkgs = {
-# You can add overlays here
+# NOTE: You can add overlays here
 #   overlays = [
-#
 #   ];
+
 # Configure your nixpkgs instance
     config = {
 # Disable if you don't want unfree packages
@@ -50,108 +44,58 @@ in
 # allowUnfreePredicate = _: true;
     };
   };
-# imports = [./configs/zsh.nix ./configs/i3.nix ./configs/kitty.nix ./configs/sxhkd.nix ./configs/polybar.nix ./configs/starship.nix ]; #X Orgd
   home.username = "${username}";
   home.homeDirectory = "/home/${username}";
   home.stateVersion = stateVersion;
   programs.home-manager.enable = true;
   home.packages = with pkgs; [
-#   ██████╗██╗     ██╗    ████████╗ ██████╗  ██████╗ ██╗     ███████╗
-#  ██╔════╝██║     ██║    ╚══██╔══╝██╔═══██╗██╔═══██╗██║     ██╔════╝
-#  ██║     ██║     ██║       ██║   ██║   ██║██║   ██║██║     ███████╗
-#  ██║     ██║     ██║       ██║   ██║   ██║██║   ██║██║     ╚════██║
-#  ╚██████╗███████╗██║       ██║   ╚██████╔╝╚██████╔╝███████╗███████║
-#   ╚═════╝╚══════╝╚═╝       ╚═╝    ╚═════╝  ╚═════╝ ╚══════╝╚══════╝
-#                                                                    
       btop
-      starship
       fzf
       jq
-      sweet
-      html-tidy
       nmap
       grc
       lazygit
       ydotool
       autojump
-      neofetch
       fd
       bat
       rtorrent
       libnotify
-      lf
       axel
       youtube-music
       playerctl
-      pywal
-      sass
-#  ████████╗██╗  ██╗██╗   ██╗███╗   ██╗ █████╗ ██████╗ 
-#  ╚══██╔══╝██║  ██║██║   ██║████╗  ██║██╔══██╗██╔══██╗
-#     ██║   ███████║██║   ██║██╔██╗ ██║███████║██████╔╝
-#     ██║   ██╔══██║██║   ██║██║╚██╗██║██╔══██║██╔══██╗
-#     ██║   ██║  ██║╚██████╔╝██║ ╚████║██║  ██║██║  ██║
-#     ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═╝
-#                                                       
       xfce.thunar
       xfce.tumbler
-      unrar
-      p7zip
-      unzip
-      zip
-#  ███╗   ███╗███████╗██████╗ ██╗ █████╗ 
-#  ████╗ ████║██╔════╝██╔══██╗██║██╔══██╗
-#  ██╔████╔██║█████╗  ██║  ██║██║███████║
-#  ██║╚██╔╝██║██╔══╝  ██║  ██║██║██╔══██║
-#  ██║ ╚═╝ ██║███████╗██████╔╝██║██║  ██║
-#  ╚═╝     ╚═╝╚══════╝╚═════╝ ╚═╝╚═╝  ╚═╝
       satty
       yt-dlp
       gimp
       ani-cli
-      xwaylandvideobridge
       aria
       wf-recorder
       eww
-      sxiv
       pavucontrol
-      rnnoise-plugin
-#   ██████╗ ██╗   ██╗██╗     █████╗ ██████╗ ██████╗ ███████╗
-#  ██╔════╝ ██║   ██║██║    ██╔══██╗██╔══██╗██╔══██╗██╔════╝
-#  ██║  ███╗██║   ██║██║    ███████║██████╔╝██████╔╝███████╗
-#  ██║   ██║██║   ██║██║    ██╔══██║██╔═══╝ ██╔═══╝ ╚════██║
-#  ╚██████╔╝╚██████╔╝██║    ██║  ██║██║     ██║     ███████║
-#   ╚═════╝  ╚═════╝ ╚═╝    ╚═╝  ╚═╝╚═╝     ╚═╝     ╚══════╝
-#                                                           
       obsidian
-      zathura
       swaynotificationcenter
-#   ██████╗  █████╗ ███╗   ███╗██╗███╗   ██╗ ██████╗ 
-#  ██╔════╝ ██╔══██╗████╗ ████║██║████╗  ██║██╔════╝ 
-#  ██║  ███╗███████║██╔████╔██║██║██╔██╗ ██║██║  ███╗
-#  ██║   ██║██╔══██║██║╚██╔╝██║██║██║╚██╗██║██║   ██║
-#  ╚██████╔╝██║  ██║██║ ╚═╝ ██║██║██║ ╚████║╚██████╔╝
-#   ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝ 
-#                                                     
       wineWowPackages.full
       appimage-run
       ];
 # Enable home-manager and git
-
+  programs.lf = {
+    enable = true;
+  };
 # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
   gtk = {
     enable = true;
-# theme.package = pkgs.sweet;
-# theme.name = "Sweet-Dark";
     theme = {
-      name = "Catppuccin-Mocha-Compact-Pink-Dark";
-      package = pkgs.catppuccin-gtk.override {
-	accents = [ "pink" ];
-	size = "compact";
-	tweaks = [ "rimless" ];
-	variant = "mocha";
-      };
+      package = pkgs.sweet;
+      name = "Sweet-Dark";
     };
+    # NOTE: Also a nice theme
+    # theme = {
+    #   name = "Nightfox-Dusk-B";
+    #   package = pkgs.nightfox-gtk-theme;
+    # };
 
     iconTheme = {
       name = "candy-icons";
@@ -184,6 +128,13 @@ in
     enable = true;
     userName = "HirschBerge";
     userEmail = "${email}";
+    signing = {
+      signByDefault = true;
+      key = null;
+    };
+    extraConfig = {
+      init.defaultBranch = "main";
+    };
     delta = {
       enable = true;
       options = {  
@@ -213,36 +164,26 @@ in
 	"--hyperlink"
     ];
   };
-# programs.chromium = {
-# 	enable = true;
-# 	extensions = [
-# 		{ id = "cjpalhdlnbpafiamejdnhcphjbkeiagm";} # ublock origin
-# 		{ id = "aapbdbdomjkkjkaonfhkkikfgjllcleb";} # Google Translate
-# 		{ id = "eimadpbcbfnmbkopoojfekhnkhdbieeh";} # Dark Reader
-# 		{ id = "bmnlcjabgnpnenekpadlanbbkooimhnj";} # Honey
-# 		{ id = "hdokiejnpimakedhajhdlcegeplioahd";} # Last Pass
-# 		{ id = "ponfpcnoihfmfllpaingbgckeeldkhle";} # Enhancer for Youtube
-# 		{ id = "kbfnbcaeplbcioakkpcpgfkobkghlhen";} # Grammarly
-#          { id = "amaaokahonnfjjemodnpmeenfpnnbkco";} # Grepper
-# 		{ id = "gebbhagfogifgggkldgodflihgfeippi";} # Return YouTube Dislike Button
-# 		{ id = "mnjggcdmjocbbbhaepdhchncahnbgone";} # Sponsorblock
-# 	];
-# };
-# programs.brave = {
-# 	enable = true;
-# 	extensions = [
-# 		{ id = "cjpalhdlnbpafiamejdnhcphjbkeiagm";} # ublock origin
-# 		{ id = "aapbdbdomjkkjkaonfhkkikfgjllcleb";} # Google Translate
-# 		{ id = "eimadpbcbfnmbkopoojfekhnkhdbieeh";} # Dark Reader
-# 		{ id = "bmnlcjabgnpnenekpadlanbbkooimhnj";} # Honey
-# 		{ id = "hdokiejnpimakedhajhdlcegeplioahd";} # Last Pass
-# 		{ id = "ponfpcnoihfmfllpaingbgckeeldkhle";} # Enhancer for Youtube
-# 		{ id = "kbfnbcaeplbcioakkpcpgfkobkghlhen";} # Grammarly
-# 		{ id = "gebbhagfogifgggkldgodflihgfeippi";} # Return YouTube Dislike Button
-#            { id = "amaaokahonnfjjemodnpmeenfpnnbkco";} # Grepper
-# 		{ id = "mnjggcdmjocbbbhaepdhchncahnbgone";} # Sponsorblock
-# 	];
-# };
+  fonts.fontconfig.enable = true; 
+
+  xdg.configFile = {
+  # HACK: Patches Dank Mono to work for kitty
+    "fontconfig/conf.d/75-disable-fantasque-calt.conf".text = ''
+<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<fontconfig>
+<match target="scan">
+    <test name="family">
+        <string>Dank Mono</string>
+        <!-- <string>Dank Mono Italic</string> -->
+    </test>
+    <edit name="spacing">
+        <int>100</int>
+    </edit>
+</match>
+</fontconfig>
+    '';
+  };
 
 }
 #

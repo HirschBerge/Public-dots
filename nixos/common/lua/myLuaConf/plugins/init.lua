@@ -31,22 +31,60 @@ require('hlargs').setup {
 vim.cmd([[hi clear @lsp.type.parameter]])
 vim.cmd([[hi link @lsp.type.parameter Hlargs]])
 require('Comment').setup()
+
 require('fidget').setup()
-require('lualine').setup({
+
+local custom_palenight = require('lualine.themes.palenight')
+local mauve =  '#cba6f7'
+
+-- use emotes for mode names
+
+local mode_map = {
+  n = "パワー N",
+  nt = "パワー N",
+  i = "ホロ Ins",
+  R = "忍野忍 Rep",
+  v = "👀 ",
+  V = "👀 ",
+  no = "What is this mode?",
+  ["\22"] = "(⊙ _ ⊙ )",
+  t = "(⌐■_■)",
+  ['!'] = " ",
+  c = " ",
+  s = "SUB"
+}
+custom_palenight.normal.c.fg = mauve
+custom_palenight.inactive.c.fg = mauve
+custom_palenight.inactive.b.fg = mauve
+
+local lualine = require('lualine')
+lualine.setup {
   options = {
-    icons_enabled = false,
-    theme = colorschemeName,
-    component_separators = '|',
-    section_separators = '',
+    icons_enabled = true,
+    theme = custom_palenight,
+    component_separators = '┆',
+    section_separators = {
+          right = "",
+          left = ""
+        },
   },
   sections = {
+    lualine_a = {
+      {
+        "mode",
+        icons_enabled = true,
+        fmt = function()
+          return mode_map[vim.api.nvim_get_mode().mode] or vim.api.nvim_get_mode().mode
+        end
+      },
+    },
     lualine_c = {
       {
         'filename', path = 1, status = true,
       },
     },
-  },
-})
+  }
+}
 require('nvim-surround').setup()
 
 -- indent-blank-line
@@ -131,7 +169,7 @@ require("oil").setup({
     "icon",
     "permissions",
     "size",
-    -- "mtime",
+    "mtime",
   },
   keymaps = {
     ["g?"] = "actions.show_help",
@@ -202,3 +240,7 @@ require('which-key').register {
   ['<leader>M'] = { name = '[m]arkdown', _ = 'which_key_ignore' },
   ['<leader>t'] = { name = '[t]oggles', _ = 'which_key_ignore' },
 }
+
+-- NOTE: Default state on
+require('gitsigns').toggle_deleted()
+  package.loaded.gitsigns.blame_line()

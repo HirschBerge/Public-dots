@@ -1,6 +1,0 @@
-{
-    "diagnostics.globals": [
-        "nixCats",
-        "vim"
-    ]
-}

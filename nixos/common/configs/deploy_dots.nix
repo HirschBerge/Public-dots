@@ -1,26 +1,9 @@
-{ pkgs, lib, config, hostname, ... }:
+{ pkgs, config, hostname, ... }:
 {
   home.file."${config.home.homeDirectory}/.scripts" = {
     source = ../../.. + "/common" + /scripts;
     recursive = true;
   };
-  home.file."${config.home.homeDirectory}/.local/share/warp-terminal" = {
-    source = ../../.. + "/common" + /warp-terminal;
-    recursive = true;
-  };
-
-  # home.file."${config.home.homeDirectory}/.local/bin" = {
-  #   source = ../../.. + "/common" + /bin;
-  #   recursive = true;
-  # };
-  home.file."${config.xdg.configHome}/mpv" = {
-    source = ../../.. + "/common" + /mpv;
-    recursive = true;
-  };
-  # home.file."${config.xdg.configHome}/nvim" = {
-  #   source = ../../.. + "/${hostname}" + /nvim;
-  #   recursive = true;
-  # };
 
   home.file."${config.xdg.configHome}/swaync" = {
     source = ../../.. + "/common" + /swaync;
@@ -31,11 +14,16 @@
     source = ../../.. + "/common" + /zsh;
     recursive = false;
   };
-
-  home.file."${config.xdg.configHome}/rofi" = {
-    source = ../../.. + "/common" + /rofi;
+# NOTE: Phasing out in lieu of ./rofi.nix
+  home.file."${config.xdg.configHome}/rofi/steam" = {
+    source = ../../.. + "/common/rofi" + /steam;
     recursive = true;
   };
+
+  # home.file."${config.xdg.configHome}/zellij/config.kdl" = {
+  #   source = ../../.. + "/common" + /zellij/config.kdl;
+  #   recursive = false;
+  # };
 
   home.file."${config.xdg.configHome}/eww" = {
     source = ../../.. + "/${hostname}" + /eww;
@@ -46,6 +34,10 @@
     source = ../../.. + "/common" + /lf;
     recursive = true;
   };
+  home.file."${config.xdg.configHome}/bat/config".text = ''
+--style=header-filename,header-filesize
+--paging=never
+      '';
   home.file."${config.xdg.configHome}/pipewire/pipewire.conf.d/99-input-denoising.conf".text = ''
 context.modules = [
 {   name = libpipewire-module-filter-chain
@@ -80,9 +72,5 @@ context.modules = [
     }
 }
 ]
-    '';
-  # home.file."${config.xdg.configHome}/" = {
-  #   source = ../../.. + "/${hostname}" + /;
-  #   recursive = true;
-  # };
-}
+r   '';
+    }

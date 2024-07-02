@@ -1,4 +1,4 @@
-{ inputs, pkgs, system, username, config, ... }:
+{ pkgs,username,... }:
 {
   programs.firefox = {
     enable = true;
@@ -74,27 +74,27 @@
               bookmarks = [
               {
                 name = "Plex";
-                url = "http://nas-prod.home.hirschykiss.net/web/index.html#!";
+                url = "redacted.com
               }
               {
                 name = "Proxmox";
-                url = "https://proxmox-prod.home.hirschykiss.net/#v1:0:18:4:::::::";
+                url = "redacted.com
               }
               {
                 name = "Home Assistant";
-                url = "http://hac-prod.home.hirschykiss.net/lovelace/HPCA";
+                url = "redacted.com
               }
               {
                 name = "Router";
-                url = "https://router.home.hirschykiss.net/network/default/dashboard";
+                url = "redacted.com
               }
                {
                 name = "Docker";
-                url = "http://docker-prod.home.hirschykiss.net";
+                url = "redacted.com
               }
              {
                 name = "NAS";
-                url = "https://nas-prod.home.hirschykiss.net/ui/dashboard";
+                url = "redacted.com
               }
              {
                 name = "";
@@ -122,7 +122,7 @@
               bookmarks = [
               {
                 name = "Home";
-                url = "https://github.hirschykiss.net/";
+                url = "redacted.com
               }
               {
                 name = "Advent of Code";

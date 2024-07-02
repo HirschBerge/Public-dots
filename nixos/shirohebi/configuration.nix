@@ -8,27 +8,20 @@
 #  ██║ ╚████║██║██╔╝ ██╗╚██████╔╝███████║
 #  ╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝
 #                                        
-{ inputs,
-  outputs,
+{ 
   config,
-  lib,
   pkgs,
   hostname,
   username,
-  stateVersion,
+  discord,
   ... }:
 let
   themes = pkgs.callPackage  ../common/configs/themes.nix {};
-
-  # For outputting list of packages.
-  # packages = builtins.map (p: "${p.name}") config.environment.systemPackages;
-  # sortedUnique = builtins.sort builtins.lessThan (lib.unique packages);
-  # formatted = builtins.concatStringsSep "\n" sortedUnique;
 in
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
         ./hardware-configuration.nix
         ../common/common_pkgs.nix
         ../common/wayland.nix
@@ -44,7 +37,6 @@ in
   };
   nixos-boot = {
     enable  = true;
-
     # Different colors
     # bgColor.red   = 100; # 0 - 255
     # bgColor.green = 100; # 0 - 255
@@ -55,18 +47,11 @@ in
     # If you want to make sure the theme is seen when your computer starts too fast
     duration = 3.0; # in seconds
   };
-  # Writes current *system* packagesto /etc/current-system/packages
-  environment.etc."current-system-packages".text =
-  let
-    packages = builtins.map (p: "${p.name}") config.environment.systemPackages;
-    sortedUnique = builtins.sort builtins.lessThan (pkgs.lib.lists.unique packages);
-    formatted = builtins.concatStringsSep "\n" sortedUnique;
-  in
-    formatted;
   environment = {
     sessionVariables = {
       HOME_MANAGER_BACKUP_EXT = "backup";
       FLAKE = "/home/${username}/.dotfiles";
+      TACO_BELL = "${discord}GNVZjd5Yi1tWWNSYmFHMmREX09XUkFEVFJ4amtwMW1qamhlTTB4RklkWVV6VWlYRgo=";
       # WARP_ENABLE_WAYLAND = 1;
       LD_LIBRARY_PATH = "${pkgs.wayland}/lib";
     };
@@ -118,11 +103,6 @@ in
     }];
   };
   networking.hostName = "${hostname}"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -200,38 +180,12 @@ in
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-  # nixpkgs.overlays = [
-  #   (self: super: {
-  #    warp-terminal = super.warp-terminal.overrideAttrs (oldAttrs: {
-  #        waylandSupport = true;
-  #        });
-  #    })
-  # ];
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  # nixpkgs.overlays = [
-  #   (self: super: {
-  #     waybar = super.waybar.overrideAttrs (oldAttrs: {
-  #       mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
-  #     });
-  #   })
-  # ];
   environment.systemPackages =  [
       # see ../common/common_pkgs.nix
       themes.abstractguts-themes
   ];
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
   nix = {
     settings = {
       auto-optimise-store = true;
@@ -299,23 +253,6 @@ in
       "* * * * *        ${username}    if [ -d ~/Desktop ]; then rm -rf ~/Desktop; fi"
     ];
   };
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
 
 }

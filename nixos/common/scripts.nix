@@ -9,6 +9,38 @@
       # Checks to make sure that an argument is passed and if it does, it sends a notification and changes the bg
      [ -n "$1" ] && notify-send -i "$1" "Wallpaper changed." && swww img "$1"
      '')
+     (pkgs.writeScriptBin "gitstatus" /*bash*/ ''
+
+#!/usr/bin/env bash
+if [ ! -d .git ]; then
+    cd ~/.dotfiles || { echo "Failed to change directory to ~/.dotfiles"; exit 1; }
+fi
+case $1 in
+  --files)
+    result=$(git diff --shortstat | awk -F',' '{ print $1 }' | awk '{ print $1 }')
+    [ -z "$result" ] && echo 0 || echo $result
+    ;;
+  --add)
+    result=$(git diff --shortstat | awk -F',' '{ print $2 }' | awk '{ print $1 }')
+    [ -z "$result" ] && echo 0 || echo $result
+    ;;
+  --sub)
+    result=$(git diff --shortstat | awk -F',' '{ print $3 }' | awk '{ print $1 }')
+    [ -z "$result" ] && echo 0 || echo $result
+    ;;
+  --name)
+  result=$(git config --get remote.origin.url |xargs basename -s .git)
+    [ -z "$result" ] && echo "Not a repo" || echo $result
+    ;;
+  --branch)
+  result=$(git rev-parse --abbrev-ref HEAD)
+    [ -z "$result" ] && echo "Not a repo" || echo $result
+  ;;
+  *)
+    echo "Invalid option. Please provide --files,--branch, --add, --name, or --sub."
+    ;;
+esac
+      '')
     (pkgs.writeScriptBin "yt" /*bash*/ ''
 #!/usr/bin/env sh
 clip=$(wl-paste)
@@ -25,18 +57,105 @@ meta="$(yt-dlp --print "%(channel)s - %(duration>%H:%M:%S)s - %(title)s" "$clip"
 channel="$(echo "$meta" |awk -F" - " '{ print $1 }')"
 length="$(echo "$meta" |awk -F" - " '{ print $2 }')"
 title="$(echo "$meta" |awk -F" - " '{ print $3 }')"
-echo "Watching a Video from *$channel.*" "$length - $title"
-mpv $url >/dev/null 2>&1 &
-notify-send "Watching a Video from *$channel.*" "$length - $title" -a "YouTube" --icon ~/.cache/youtube.svg
-host="$(hostname)"
-if [ "shirohebi" = "$host" ];
-then
+
+no_vid() {
+  echo "Watching a Video from *$channel.*" "$length - $title"
+  mpv $url >/dev/null --input-ipc-server=/tmp/mpvsocket 2>&1 &
+  notify-send "Watching a Video from *$channel.*" "$length - $title" -a "YouTube" --icon ~/.cache/youtube.svg
+  host="$(hostname)"
+  if [ "shirohebi" = "$host" ];
+  then
     hyprctl dispatch workspace 8
-else
+  else
     hyprctl dispatch workspace 9
+  fi
+}
+
+yes_vid() {
+  echo '{ "command": [ "loadfile", "'$url'", "append-play" ] }' | ${pkgs.socat}/bin/socat - /tmp/mpvsocket > /dev/null 2>&1 &
+  echo "Added a video from *$channel.* to the queue" "$length - $title"
+  notify-send "Added a video from $channel." "$length - $title" -a "YouTube" --icon ~/.cache/youtube.svg
+}
+
+if pgrep -x "mpv" > /dev/null; then
+  yes_vid
+else
+  no_vid
 fi
 # clear
 # exit
+     '')
+     ( pkgs.writeScriptBin "ex" /*bash*/ ''
+#!/usr/bin/env bash
+if [ -f $1 ] ; then
+   case $1 in
+     *.tar.bz2)   ${pkgs.gnutar}/bin/tar xjf $1   ;;
+     *.tar.gz)    ${pkgs.gnutar}/bin/tar xzf $1   ;;
+     *.bz2)       ${pkgs.bzip2}/bin/bunzip2 $1   ;;
+     *.rar)       ${pkgs.unrar}/bin/unrar x $1     ;;
+     *.gz)        ${pkgs.gzip}/bin/gunzip $1    ;;
+     *.tar)       ${pkgs.gnutar}/bin/tar xf $1    ;;
+     *.tbz2)      ${pkgs.gnutar}/bin/tar xjf $1   ;;
+     *.tgz)       ${pkgs.gnutar}/bin/tar xzf $1   ;;
+     *.zip)       ${pkgs.unzip}/bin/unzip $1     ;;
+     *.Z)         uncompress $1;;
+     *.7z)        ${pkgs.p7zip}/bin/7z x $1      ;;
+     *.tar.xz)    ${pkgs.gnutar}/bin/tar -xf $1   ;;
+     *)           printf "\033[1;31m[✗] \033[1;33m'$1' \033[0mcannot be extracted via ex()\033[0m" ;;
+   esac
+     else
+       echo "'$1' is not a valid file" 
+fi
+'')
+     ( pkgs.writeScriptBin "rustupdate" /*bash*/
+     ''
+#!/usr/bin/env bash
+init="$(pwd)"
+option=build
+# Loop through each directory in ~/projects
+for dir in ~/projects/*; do
+    # Check if it is a directory
+    if [ -d "$dir" ]; then
+        # Check if Cargo.toml exists in the directory
+        if [ -f "$dir/Cargo.toml" ]; then
+            dir_name=$(basename "$dir")
+            # Change to the project directory
+            cd "$dir" || return
+            # Git pull, redirecting all output to /dev/null
+            if git remote -v >/dev/null 2>&1; then
+              if git pull >/dev/null 2>&1; then
+                  printf "\033[32m[+]\033[0m Git pull successful for \033[34m%s\033[0m\n" "$dir_name"
+              else
+                  printf "\033[31m[✗]\033[0m Git pull failed for \033[34m%s\033[0m\n" "$dir_name"
+              fi
+            fi
+            sleep 1
+            # Update the flake, redirecting stdout to /dev/null but keeping stderr intact
+            printf "\033[32m[+]\033[0m Updating \033[34m%s\033[0m\n" "$dir_name"
+            nix flake update >/dev/null 2>&1
+            git commit -am "Automated flake update." >/dev/null 2>&1
+            if git remote -v >/dev/null 2>&1; then
+              if git push >/dev/null 2>&1; then
+                  printf "\033[32m[+]\033[0m Git push successful for \033[34m%s\033[0m\n" "$dir_name"
+              else
+                  printf "\033[31m[✗]\033[0m Git push failed for \033[34m%s\033[0m\n" "$dir_name"
+              fi
+            fi
+            printf "\033[32m[+]\033[0m Building \033[34m%s\033[0m\n" "$dir_name"
+            sleep 1
+            # Develop and build the project, redirecting stdout to /dev/null but keeping stderr intact
+            if [ "$option" = run ]; then
+                nix develop -c cargo build --release
+            elif [ "$option" = build ]; then
+                nix develop -c cargo build --release >/dev/null 2>&1
+            else
+                printf "\033[31m[✗]\033[0m Bad option\n"
+                break
+            fi
+        fi
+    fi
+done
+cd "$init"
      '')
      ( pkgs.writeScriptBin "toradd" /*bash */ ''
 #!/usr/bin/env bash

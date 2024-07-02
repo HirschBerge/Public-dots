@@ -1,23 +1,20 @@
-{pkgs, lib, config, inputs, ... }:
+{pkgs, config, ... }:
 let
-    term = "${pkgs.warp-terminal}/bin/warp-terminal";
-    # term = "${pkgs.kitty}/bin/kitty";
+    term = "${pkgs.kitty}/bin/kitty";
 in
 {
 	home.packages = with pkgs; [
 	    wl-clipboard
+	    waypaper
 	    grim
 	    slurp
 	    swww
-	    rofi-wayland
-	    waybar
+	    # rofi-wayland
 	    hyprland
 	];
   wayland.windowManager.hyprland = {
     enable = true;
     # package = inputs.hyprland.packages.${pkgs.system}.hyprland; # TODO: Comment back in when hyprland is stable again
-    # No longer exists as it is not necessary.
-    # enableNvidiaPatches = true;
     xwayland.enable = true;
     extraConfig = /* hyprlang */ ''
 # Please note not all available settings / options are set here.
@@ -90,17 +87,6 @@ animations { #Thank you to HyprDots
     animation = fade, 1, 10, default
     animation = workspaces, 1, 5, wind
 }
-# animations {
-    # enabled = yes
-    # Some default animations, see https://wiki.hyprland.org/Configuring/Animations/ for more
-    # bezier = myBezier, 0.05, 0.9, 0.1, 1.05
-    # animation = windows, 1, 7, myBezier
-    # animation = windowsOut, 1, 7, default, popin 80%
-    # animation = border, 1, 10, default
-    # animation = borderangle, 1, 8, default
-    # animation = fade, 1, 7, default
-    # animation = workspaces, 1, 6, default
-# }
 dwindle {
     # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
     pseudotile = 0
@@ -118,11 +104,6 @@ gestures {
 binds {
    allow_workspace_cycles = yes
 }
-# Example per-device config
-# See https://wiki.hyprland.org/Configuring/Keywords/#executing for more
-# device:epic-mouse-v1 {
-#     sensitivity = -0.5
-# }
 misc {
   # force_hypr_chan = true
   mouse_move_enables_dpms = true
@@ -206,13 +187,15 @@ bind = $mainMod, B, exec, kitty btop
 bind = $mainMod, C, exec, ${pkgs.kitty}/bin/kitty ${pkgs.helix}/bin/hx ~/.dotfiles
 # bind = $mainMod, U, exec, brave
 bind = $mainMod, U, exec, firefox
-bind = $mainMod, D, exec, ~/.config/rofi/launchers/launcher.sh
-bind = ALT, space, exec, $HOME/.config/rofi/launchers/launcher.sh
+bind = $mainMod, D, exec, rofi -show drun window calc emoji
+bind = ALT, space, exec, rofi -show drun window calc emoji
 bind = $mainMod, Y, exec, yt
+bind = ,XF86Calculator, exec, rofi -show calc
 bind = $mainMod,F,fullscreen
 bind = $mainMod,TAB,workspace,previous
 bind = $mainMod SHIFT, S,exec, ~/.config/hypr/scripts/screenshot --area
 bind = $mainMod SHIFT, W,exec, ~/.config/hypr/scripts/screenshot --win
+bind = $mainMod SHIFT, A,exec, ${pkgs.waypaper}/bin/waypaper
 bind = $mainMod, X, exec, wlogout
 # bind = $mainMod,x,exec, ~/.config/rofi/powermenu/powermenu.sh
 bind = $mainMod,l,exec, ${pkgs.hyprlock}/bin/hyprlock
@@ -236,15 +219,16 @@ exec = eww open bar &
   '';
   home.file."${config.xdg.configHome}/hypr/window_rules.conf".text = /* hyprlang  */ ''
 # Example windowrule v1
-windowrulev2 = tile,class:^(.*Warp.*)$
+windowrulev2 = float,class:^(.*waypaper.*)$
+windowrulev2 = size 889 629,class:^(.*waypaper.*)
 windowrulev2 = float,class:^(kitty.*)$,title:^(.*clipse.*)$
 windowrulev2 = size 546 552,class:^(kitty.*)$,title:^(.*clipse.*)$
 windowrulev2 = opacity 0.5 0.5,class:^(kitty.*)$,title:^(.*clipse.*)$
-windowrule = float, ^(pavucontrol)$
-windowrule = opacity 0.8 0.7, obsidian
-windowrule = opacity 0.8 0.7, firefox-browser
-windowrule = opacity 0.8 0.7, firefox
-windowrule = opacity 0.8 0.7, thunar 
+windowrule   = float, ^(pavucontrol)$
+windowrule   = opacity 0.8 0.7, obsidian
+windowrule   = opacity 0.8 0.7, firefox-browser
+windowrule   = opacity 0.8 0.7, firefox
+windowrule   = opacity 0.8 0.7, thunar 
 windowrulev2 = size 842 465, class:thunar
 windowrulev2 = float, class:^(thunar)$
 windowrulev2 = opacity 1.0 1.0, class:mpv
@@ -262,10 +246,10 @@ windowrulev2 = idleinhibit focus, class:firefox,title:^(.*YouTube.*)$
 # windowrulev2 = float,class:^(kitty)$,title:^(kitty)$
 # See https://wiki.hyprland.org/Configuring/Window-Rules/ for more
 # App Workspace Bindings
-windowrule = workspace 1, ^(.*firefox.*)$
+windowrule   = workspace 1, ^(.*firefox.*)$
 windowrulev2 = workspace 3, class:^(.*steam_app.*)$
-windowrule = workspace 8, ^(.*mpv.*)$
-windowrule = workspace 7, ^(.*vesktop.*)$
+windowrule   = workspace 8, ^(.*mpv.*)$
+windowrule   = workspace 7, ^(.*vesktop.*)$
 windowrulev2 = workspace 6, class:^(.*YouTube Music.*)$# Example windowrule v2
 # XwaylandVideoBridge
 windowrulev2 = opacity 0.0 override 0.0 override,class:^(xwaylandvideobridge)$

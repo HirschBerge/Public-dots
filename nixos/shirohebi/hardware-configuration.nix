@@ -27,8 +27,10 @@ boot = {
 # Make sure opengl is enabled
   hardware.opengl = {
     enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
+    # NOTE: driSupport has been removed.
+    # TODO: Remove in future 
+    # driSupport = true;
+    # driSupport32Bit = true;
   };
 
 # Enable the X11 windowing system.

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 
-search_term="$(rofi -dmenu -p "NixOS Packages:" -format "s" -config ~/.config/rofi/launchers/type-1/style-3.rasi)"
+search_term="$(rofi -dmenu -p "NixOS Packages:" -format "s")"
 
 # Declare arrays to store package names and URLs
 names=()
@@ -39,7 +39,7 @@ done
 formatted_names=$(printf "%s\n" "${reversed_names[@]}"|sed '/^[[:space:]]*$/d')
 
 # Pass the names to rofi
-selected_index=$(echo "$formatted_names" | rofi -dmenu -replace -sep "\n" -p "Search Results" -format "i" -config ~/.config/rofi/launchers/type-1/style-3.rasi)
+selected_index=$(echo "$formatted_names" | rofi -dmenu -replace -sep "\n" -p "Search Results" -format "i" )
 
 # Look up the URL corresponding to the selected name
 selected_url="${reversed_urls[$selected_index]}"

@@ -1,4 +1,4 @@
-{config, pkgs, ...}:
+{ pkgs, ...}:
 
 {
   #enable Steam: https://linuxhint.com/how-to-instal-steam-on-nixos/
@@ -16,17 +16,11 @@
     # Steam 
     mangohud
     gamemode
-
     # WINE 
     wine
     winetricks
     protontricks
     vulkan-tools
-
-    # Lutris
-    #lutris-unwrapped  # (not needed)
-    # lutris
-
     # Extra dependencies
     # https://github.com/lutris/docs/
     gnutls

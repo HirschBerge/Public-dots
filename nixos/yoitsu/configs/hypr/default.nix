@@ -1,17 +1,16 @@
-{pkgs, lib, config, inputs, ... }:
+{pkgs, config, ... }:
 {
 	home.packages = with pkgs; [
 		wl-clipboard
+		waypaper
 		grim
 		slurp
 		swww
-		rofi-wayland
 		hyprland # Comment out when back to using flake version
 	];
   wayland.windowManager.hyprland = {
     enable = true;
     # package = inputs.hyprland.packages.${pkgs.system}.hyprland;
-    # No longer exists as it is not necessary.
     xwayland.enable = true;
     extraConfig = /* hyprlang*/ ''
 # vim: filetype=hyprlang
@@ -209,13 +208,17 @@ bind = $mainMod SHIFT, D, exec, \'\'ps aux | rg [v]esktop | awk '{ print $2 }' |
 
 # bind = $mainMod, U, exec, brave
 bind = $mainMod, U, exec, ${pkgs.firefox}/bin/firefox
-bind = $mainMod, D, exec, ~/.config/rofi/launchers/launcher.sh
-bind = ALT, space, exec, ~/.config/rofi/launchers/launcher.sh
+bind = $mainMod, D, exec, rofi -show drun window calc emoji
+bind = ALT, space, exec, rofi -show drun window calc emoji
+# bind = $mainMod, D, exec, ~/.config/rofi/launchers/launcher.sh
+# bind = ALT, space, exec, ~/.config/rofi/launchers/launcher.sh
 bind = $mainMod, Y, exec, yt
+bind = ,XF86Calculator, exec, rofi -show calc
 bind = $mainMod,F,fullscreen
 bind = $mainMod,TAB,workspace,previous
 bind = $mainMod SHIFT, S,exec, ~/.config/hypr/scripts/screenshot --area
 bind = $mainMod SHIFT, W,exec, ~/.config/hypr/scripts/screenshot --win
+bind = $mainMod SHIFT, A,exec, ${pkgs.waypaper}/bin/waypaper
 bind = $mainMod,x,exec, ${pkgs.wlogout}/bin/wlogout
 # bind = $mainMod,x,exec, ~/.config/rofi/powermenu/powermenu.sh
 bind = $mainMod,l,exec, ${pkgs.hyprlock}/bin/hyprlock
@@ -237,6 +240,8 @@ exec = sleep 0.5 ; ${pkgs.eww}/bin/eww -c ~/.config/eww/bar close bar; ${pkgs.ew
   home.file."${config.xdg.configHome}/hypr/window_rules.conf".text = /* hyprlang */ ''
 # vim: filetype=hyprlang
 # Example windowrule v1
+windowrulev2 = float,class:^(.*waypaper.*)$
+windowrulev2 = size 889 629,class:^(.*waypaper.*)
 windowrulev2 = tile,class:^(.*Warp.*)$
 windowrulev2 = float,class:^(kitty.*)$,title:^(.*clipse.*)$
 windowrulev2 = size 546 552,class:^(kitty.*)$,title:^(.*clipse.*)$
@@ -259,12 +264,6 @@ windowrulev2 = size 842 465, class:Thunar
 windowrulev2 = opacity 0.83 0.83, class:Thunar
 windowrulev2 = float,class:^(Thunar)$
 windowrulev2 = opacity 1.0 1.0, class:^(mpv)$
-
-# Example windowrule v2
-# windowrulev2 = float,class:^(kitty)$,title:^(kitty)$
-# See https://wiki.hyprland.org/Configuring/Window-Rules/ for more
-# See https://wiki.hyprland.org/Configuring/Keywords/ for more
-# App Workspace Bindings
 windowrule = workspace 1, ^(.*firefox.*)$
 # windowrule = workspace 1, ^(.*brave.*)$
 windowrulev2 = workspace 3, class:^(.*steam_app.*)$

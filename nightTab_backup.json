@@ -571,10 +571,192 @@
   "bookmark": [
     {
       "name": {
-        "text": "GitHub",
+        "text": "Web and Light Novels",
         "show": true
       },
       "collapse": false,
+      "toolbar": {
+        "size": 100,
+        "openAll": {
+          "show": true
+        },
+        "collapse": {
+          "show": true
+        }
+      },
+      "items": [
+        {
+          "url": "https://witchculttranslation.com/",
+          "display": {
+            "alignment": "center-center",
+            "direction": "vertical",
+            "order": "visual-name",
+            "rotate": 0,
+            "translate": {
+              "x": 0,
+              "y": 0
+            },
+            "gutter": 25,
+            "name": {
+              "show": true,
+              "text": "Witch Cult Translation Home",
+              "size": 7
+            },
+            "visual": {
+              "show": true,
+              "type": "icon",
+              "size": 25,
+              "letter": {
+                "text": ""
+              },
+              "icon": {
+                "name": "book-open",
+                "prefix": "fas",
+                "label": "Book Open"
+              },
+              "image": {
+                "url": ""
+              },
+              "shadow": {
+                "size": 0
+              }
+            }
+          },
+          "accent": {
+            "by": "theme",
+            "hsl": {
+              "h": 0,
+              "s": 0,
+              "l": 0
+            },
+            "rgb": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "color": {
+            "by": "theme",
+            "hsl": {
+              "h": 0,
+              "s": 0,
+              "l": 0
+            },
+            "rgb": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            },
+            "opacity": 100
+          },
+          "background": {
+            "show": false,
+            "type": "image",
+            "opacity": 100,
+            "image": {
+              "url": ""
+            },
+            "video": {
+              "url": ""
+            }
+          },
+          "border": 0,
+          "shape": {
+            "wide": false,
+            "tall": false
+          },
+          "timestamp": 1719162009428
+        },
+        {
+          "url": "https://drive.google.com/drive/folders/1_lng5zOJDHILU3yMhU3X_MEFcC2Wusuc",
+          "display": {
+            "alignment": "center-center",
+            "direction": "vertical",
+            "order": "visual-name",
+            "rotate": 0,
+            "translate": {
+              "x": 0,
+              "y": 0
+            },
+            "gutter": 25,
+            "name": {
+              "show": true,
+              "text": "Witch Cult TN Re:Zero",
+              "size": 7
+            },
+            "visual": {
+              "show": true,
+              "type": "icon",
+              "size": 25,
+              "letter": {
+                "text": ""
+              },
+              "icon": {
+                "name": "hat-wizard",
+                "prefix": "fas",
+                "label": "Wizard's Hat"
+              },
+              "image": {
+                "url": ""
+              },
+              "shadow": {
+                "size": 0
+              }
+            }
+          },
+          "accent": {
+            "by": "theme",
+            "hsl": {
+              "h": 0,
+              "s": 0,
+              "l": 0
+            },
+            "rgb": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "color": {
+            "by": "theme",
+            "hsl": {
+              "h": 0,
+              "s": 0,
+              "l": 0
+            },
+            "rgb": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            },
+            "opacity": 100
+          },
+          "background": {
+            "show": false,
+            "type": "image",
+            "opacity": 100,
+            "image": {
+              "url": ""
+            },
+            "video": {
+              "url": ""
+            }
+          },
+          "border": 0,
+          "shape": {
+            "wide": false,
+            "tall": false
+          },
+          "timestamp": 1719160899494
+        }
+      ]
+    },
+    {
+      "name": {
+        "text": "GitHub",
+        "show": true
+      },
+      "collapse": true,
       "toolbar": {
         "size": 100,
         "openAll": {
@@ -1260,7 +1442,7 @@
           "timestamp": 1703646304001
         },
         {
-          "url": "https://allanime.to/search-anime?tr=sub&cty=ALL",
+          "url": "https://allanime.to/search-anime?tr=sub&cty=JP",
           "display": {
             "alignment": "center-center",
             "direction": "vertical",
@@ -2260,6 +2442,88 @@
             "tall": false
           },
           "timestamp": 1716072552888
+        },
+        {
+          "url": "redacted.com
+          "display": {
+            "alignment": "center-center",
+            "direction": "vertical",
+            "order": "visual-name",
+            "rotate": 0,
+            "translate": {
+              "x": 0,
+              "y": 0
+            },
+            "gutter": 25,
+            "name": {
+              "show": true,
+              "text": "",
+              "size": 7
+            },
+            "visual": {
+              "show": true,
+              "type": "letter",
+              "size": 25,
+              "letter": {
+                "text": "Traefik"
+              },
+              "icon": {
+                "name": "",
+                "prefix": "",
+                "label": ""
+              },
+              "image": {
+                "url": ""
+              },
+              "shadow": {
+                "size": 0
+              }
+            }
+          },
+          "accent": {
+            "by": "theme",
+            "hsl": {
+              "h": 0,
+              "s": 0,
+              "l": 0
+            },
+            "rgb": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "color": {
+            "by": "theme",
+            "hsl": {
+              "h": 0,
+              "s": 0,
+              "l": 0
+            },
+            "rgb": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            },
+            "opacity": 100
+          },
+          "background": {
+            "show": false,
+            "type": "image",
+            "opacity": 100,
+            "image": {
+              "url": ""
+            },
+            "video": {
+              "url": ""
+            }
+          },
+          "border": 0,
+          "shape": {
+            "wide": false,
+            "tall": false
+          },
+          "timestamp": 1716086734999
         }
       ]
     },
@@ -2268,7 +2532,7 @@
         "text": "Pathfinder",
         "show": true
       },
-      "collapse": false,
+      "collapse": true,
       "toolbar": {
         "openAll": {
           "show": true

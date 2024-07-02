@@ -58,8 +58,10 @@ fileSystems."/mnt/NAS" = {
       # Mesa
       enable = true;
       # Vulkan
-      driSupport = true;
-      driSupport32Bit = true;
+    # NOTE: driSupport has been removed.
+    # TODO: Remove in future 
+    # driSupport = true;
+    # driSupport32Bit = true;
       extraPackages32 = with pkgs; [
         driversi686Linux.amdvlk
       ];

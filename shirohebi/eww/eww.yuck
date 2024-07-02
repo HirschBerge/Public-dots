@@ -81,7 +81,8 @@
 (defwidget pr_tracker []
   ( box :orientation "h" :space-evenly "false" :hexpand "false" :vexpand "false" :halign "center"
     (button
-      :onclick "firefox ${PR_TRACKER.url}"
+      :onclick "sleep 0.1 ; firefox ${PR_TRACKER.url}"
+      :onrightclick "notify-send ${PR_TRACKER.url}"
       ;; :tooltip "Open Dashboard."
     (label
       :class "weatha"
@@ -210,7 +211,8 @@
                 :tooltip "Screenshot"
             (label :text "󰹑 " :class "tooltip"))
             (button :class "wallpaper"
-                :onclick "bash $HOME/.config/hypr/scripts/wayground.sh 2> /dev/null"
+                :onclick " waypaper&"
+                :onrightclick "bash $HOME/.config/hypr/scripts/wayground.sh 2> /dev/null"
                 :tooltip "Wallpaper"
             (label :text " " :class "tooltip"))
             (button :class "keybind"
