@@ -11,7 +11,7 @@ swww_init (){
   sleep 1
   swww-daemon
   sleep 1
-  ~/.scripts/background/cron.sh ~/Pictures/Monogatari & #Issues with this, kinda hacking, but oh well
+  # ~/.scripts/background/cron.sh ~/Pictures/Monogatari & #Issues with this, kinda hacking, but oh well
 }
 dunst_init (){
   dunst

@@ -14,6 +14,7 @@
   hostname,
   username,
   discord,
+  inputs,
   stateVersion,
   ... 
 }:
@@ -25,6 +26,7 @@ in
   imports =
     [ # Include the results of the hardware scan.
         ../common/common_pkgs.nix
+        ../common/configs/syncthing.nix
         ./hardware-configuration.nix
         ./8bitdo.nix
         ../common/wayland.nix
@@ -73,14 +75,6 @@ in
       trusted-users = [ "root" "@wheel" ];
     };
   };
-    # Writes current *system* packagesto /etc/current-system/packages
-  environment.etc."current-system-packages".text =
-  let
-    packages = builtins.map (p: "${p.name}") config.environment.systemPackages;
-    sortedUnique = builtins.sort builtins.lessThan (pkgs.lib.lists.unique packages);
-    formatted = builtins.concatStringsSep "\n" sortedUnique;
-  in
-    formatted;
   environment = {
     sessionVariables = {
       HOME_MANAGER_BACKUP_EXT = "backup";
@@ -175,11 +169,6 @@ in
     xkb.layout = "us";
     xkb.variant = "";
   };
-
-  # Enable CUPS to print documents.
-
-  # Enable sound with pipewire.
-  sound.enable = true;
   hardware = {
     pulseaudio.enable = false;
     bluetooth = {
@@ -227,11 +216,13 @@ in
     description = "${username}";
     extraGroups = [ "networkmanager" "wheel" "keyd" ];
     packages = with pkgs; [
-      rocmPackages.rocm-smi
-      heroic-unwrapped
-      godot_4
-      piper
-      firefox
+    starship
+    rocmPackages.rocm-smi
+    streamcontroller
+    heroic-unwrapped
+    godot_4
+    piper
+    firefox
     #  thunderbird
     ];
   };
@@ -249,8 +240,9 @@ in
   #   })
   # ];
   environment.systemPackages =  [
-      # see ../common/common_pkgs.nix
-      themes.abstractguts-themes
+    inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
+    pkgs.catppuccin-cursors.mochaMauve
+    themes.abstractguts-themes
   ];
 
   # XDG portal

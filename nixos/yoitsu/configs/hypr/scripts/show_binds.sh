@@ -29,7 +29,7 @@ while read -r i; do
 done < <(jq -c '.[]' "$json_path")
 
 # Pass the list to rofi and set the delimiter
-bind=$(rofi -dmenu -replace -p "Keybinds" -sep "<" -format "s" -config ~/.config/rofi/launchers/type-1/style-3.rasi <<< "$list")
+bind=$(rofi -dmenu -replace -p "Keybinds" -sep "<" -format "s" <<< "$list")
 command=$(echo $bind | awk -F":" '{ print $2 }')
 combo=$(echo $bind | awk -F":" '{ print $1 }')
 echo -en "comb:$combo\ncmd:$command\n"

@@ -12,7 +12,7 @@
     "$HOME/.config/eww/scripts/cpu")
 (defpoll temp :initial 30 :interval "10s" `sensors | rg temp1 | rg -o "\\d+.\\d+" | head -1`)
 (defpoll oxidized_weather :initial "..." :interval "1m" `$HOME/.local/bin/weather_app --bar`)
-(defpoll PR_TRACKER :initial "..." :interval "20m" `./scripts/pr_tracker.sh`)
+(defpoll PR_TRACKER :initial "..." :interval "20m" `pr_tracker`)
 (defpoll quote :interval "24h" "$HOME/.config/eww/scripts/quotes --quote-and-quotee")
 (defpoll IP_ADDR :interval "1m" "ip -br a |rg UP | awk '/enp7/ {print $3 }'")
 (defpoll window :interval "0.5s" "$HOME/.config/eww/scripts/window-title.sh")

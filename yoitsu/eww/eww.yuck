@@ -17,6 +17,7 @@
 
 ;; MUSIC VARS
 (defpoll music_json :interval "1s" "./scripts/mediacontrol --json")
+(defpoll COVER :interval "1s" "./scripts/mediacontrol coverloc")
 (defvar music-rev false)
 
 (deflisten volume `bash ./scripts/audio --get-vol`)
@@ -138,7 +139,7 @@
 
 (defwidget player []
     (box :class "player-art" :orientation "h" :space-evenly true 
-        (box :class "player-info" :orientation "v" :space-evenly false :style "background-image: url('${music_json.cover}')"
+        (box :class "player-info" :orientation "v" :space-evenly false :style "background-image: url('${COVER}')"
             (box :class "player-tint" :space-evenly false :orientation "v" 
                 (box :class "player-controls" :space-evenly false :spacing 6
                     (button 

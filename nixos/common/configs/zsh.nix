@@ -56,18 +56,8 @@
             gapt="git apply --3way";
             gau="git add --update";
             gav="git add --verbose";
-            gb="git branch";
-            gbD="git branch --delete --force";
-            gba="git branch --all";
-            gbd="git branch --delete";
-            gbda="git branch --no-color --merged | command grep -vE \"^([+*]|\s*($(git_main_branch)|$(git_develop_branch))\s*$)\" | command xargs git branch --delete 2>/dev/null";
             man = "${pkgs.bat-extras.batman}/bin/batman";
-            gbg="git branch -vv | grep \": gone\]\"";
-            gbgD="git branch --no-color -vv | grep \": gone\]\" | awk \"\"\"{print $1}\"\"\" | xargs git branch -D";
-            gbgd="git branch --no-color -vv | grep \": gone\]\" | awk \"\"\"{print $1}\"\"\" | xargs git branch -d";
             gbl="git blame -b -w";
-            gbnm="git branch --no-merged";
-            gbr="git branch --remote";
             gbs="git bisect";
             gbsb="git bisect bad";
             gbsg="git bisect good";
@@ -113,11 +103,7 @@
             gfa="git fetch --all --prune --jobs=10";
             gfg="git ls-files | grep";
             gfo="git fetch origin";
-            gg="git gui citool";
-            gga="git gui citool --amend";
             ggsup="git branch --set-upstream-to=origin/$(git_current_branch)";
-            ghh="git help";
-            gi="git init";
             gignore="git update-index --assume-unchanged";
             git-svn-dcommit-push="git svn dcommit && git push github $(git_main_branch):svntrunk";
             gl="git pull";
@@ -184,42 +170,121 @@
 {
     programs.nushell = { 
         enable = true;
-        shellAliases = aliases;
-        extraConfig = ''
-            let carapace_completer = {|spans|
-                carapace $spans.0 nushell $spans | from json
-            }
-        $env.config = {
-show_banner: false,
-             completions: {
-case_sensitive: false # case-sensitive completions
-                    quick: true    # set to false to prevent auto-selecting completions
-                    partial: true    # set to false to prevent partial filling of the prompt
-                    algorithm: "fuzzy"    # prefix or fuzzy
-                    external: {
-# set to false to prevent nushell looking into $env.PATH to find more suggestions
-enable: true 
-# set to lower can improve completion performance at the cost of omitting some options
-            max_results: 100 
-            completer: $carapace_completer # check 'carapace_completer' 
-                    }
-             }
-        } 
-        $env.PATH = ($env.PATH | 
-                split row (char esep) |
-                prepend /home/myuser/.apps |
-                append /usr/bin/env
-                )
-            '';
-# shellAliases = {
-# vi = "hx";
-# vim = "hx";
-# nano = "hx";
-# };
-    };  
-    programs.carapace = {
+        extraConfig = /*bash*/''
+        $env.config = { edit_mode: vi, show_banner: false,}
+        $env.PROMPT_INDICATOR_VI_INSERT = " "
+        $env.PROMPT_INDICATOR_VI_NORMAL = "❮ "
+        source ~/.zoxide.nu
+def traefik_log [] {
+  rsync -rah  bind9:/root/traefik/data/access.log ~/.cache/access.log
+  echo $"[(sed ':a;N;$!ba;s/\n/ /g' ~/.cache/access.log)]" |from json | select ClientHost ClientPort RequestAddr RequestMethod RouterName StartLocal entryPointName RequestPath |
+    each {|row|
+        let time = ($row.StartLocal  | into datetime); $row | update StartLocal $time
+    } |where ClientHost != "10.10.10.51" 
+}
+def inhibitors [] {
+hyprctl clients -j | from json |
+     each { |row|
+         let monitor_map = {
+             "0": "Top",
+             "1": "Bottom"
+         }
+         let row = $row | update monitor ($monitor_map | get ($row.monitor | to text))
+         if (("title" in $row) and ($row.title =~ "YouTube" or ($row.title =~ "steam_app" and $row.title =~ "yuzu") or $row.title =~ "S[0-9].*E[0-9]")) or (("class" in $row) and ($row.class =~ "YouTube" or ($row.class =~ "steam_app" or $row.class =~ "yuzu") or $row.class =~ "S[0-9].*E[0-9]")) {
+             $row |select monitor title xwayland fullscreen fullscreenClient pid
+         }
+     }
+}
+ def animeAiring [] {
+     anilist_cli | from json | each {|row|
+         let updated = if $row.data.Media.nextAiringEpisode == null {
+             "never"
+         } else if $row.data.Media.nextAiringEpisode.airingAt == null {
+             "null"
+         } else {
+             $row.data.Media.nextAiringEpisode.airingAt | into datetime
+         };
+         if $row.data.Media.nextAiringEpisode != null {
+             $row | update data.Media.nextAiringEpisode.airingAt $updated
+         } else {
+             $row
+         }
+     }| get data.media
+ }
+def --env yy [...args] {
+	let tmp = (mktemp -t "yazi-cwd.XXXXXX")
+	yazi ...$args --cwd-file $tmp
+	let cwd = (open $tmp)
+	if $cwd != "" and $cwd != $env.PWD {
+		cd $cwd
+	}
+	rm -fp $tmp
+}
+def wc_table [file] {
+    let line_count = (open $file | lines | length)
+    let word_count = (open $file | split words | length)
+    let char_count = (open $file | str length)
+    [
+        { "Lines": $line_count "Words": $word_count "Chars": $char_count }
+    ] | table
+}
+def ips [] {
+        $"Interface,IP,MAC\n(ip a | rg -A3 'enp|wlo'|rg -v altname | rg -B1 'inet ' | sed 's,/24.*noprefixroute,,' | awk ' /link\/ether/ {mac=$2} /inet/ {ip=$2; iface=$NF; print iface "," ip "," mac} ')"|from csv
+}
+def anime_today [] {
+     open ~/.cache/animes.csv |where Day == (date now | format date "%A")
+ }
+def choose_anime [] {
+        let choice = anime_today | try {input list "Pick an anime"} catch {echo "Could not find any anime releasing today. Please try again tomorrow" |print ; return 69 }
+        let anime_title = $"($choice |get Anime)"
+        let season = $'($choice |get Season |split row " " | get 1)'
+        let path = $"(fd -1 $"($anime_title)" /mnt/NAS/Anime -i)"
+        let full_path = $"(fd -1 -td $"($season)" -i ($path))"
+        if ($"($full_path)" | path exists ) {
+            cd $"(fd -1 -td $"($season)" -i ($path))"
+        } else {
+            let full_path = $"($path)/($choice |get Season)"
+            mkdir $"($path)/($choice |get Season)"
+            cd $"($path)/($choice |get Season)"
+        }
+        let episodes = $"((try {ls |last |get name |split row "E" |get 1 |split row '.' |get 0 | into int} catch {0}) + 1)"
+        echo $"Title,Season,Episode,Path\n($anime_title),($season),($episodes),($full_path)"|from csv
+}
+def --env download_anime [] {
+        let anime_data = choose_anime
+        if $anime_data == 69 {
+            return
+        }
+        cd ...$anime_data.Path
+        ani-cli -d ...$anime_data.Title -e ...$anime_data.Episode
+        clear
+        autorenamer -s ...$anime_data.Season
+        ls -lm  |reject target readonly num_links inode group created
+}
+        '';
+        shellAliases = {
+            "time" = "${pkgs.hyperfine}/bin/hyperfine --runs 1";
+            "benchmark" = "${pkgs.hyperfine}/bin/hyperfine";
+            x = "exit";
+            ll = "ls -lmd";
+            ls = "ls -m";
+            lll = "eza -l";
+            ping = "grc ping";
+            nmap = "grc nmap --open -v";
+            traceroute = "grc traceroute";
+            netstat = "grc netstat";
+            gpl = "git pull";
+            gcam = "git commit --all --message";
+            gp = "git push";
+            gd = "git diff";
+            gs = "git status";
+            dots = "cd $env.FLAKE";
+            cp = "rsync -rah --info=progress2";
+        };
+    };
+    programs.bash = {
         enable = true;
-        enableNushellIntegration = true;
+        shellAliases = aliases;
     };
     programs.zsh = {
         enable = true;

@@ -126,8 +126,7 @@ If you run into issues doing this, please make an issue and I will try and get i
       <h3>
          NH Nix Helper
       </h3>
- 
-
+   </summary>
 These are my workflows with `nh` to rebuild/update Home-Manager and NixOS
 
 ### Full rebuild
@@ -142,6 +141,8 @@ nh home switch
 # These files tend to rewrite themselves from being links, so i remove them.
 rm ~/.mozilla/firefox/<profile>/search.json.mozlz4 -f
 nh home switch
+# Alternatively
+nhhome
 ```
 ### System Upgrade
 ```bash
@@ -149,6 +150,8 @@ nh os boot --update
 # These files tend to rewrite themselves from being links, so i remove them.
 rm ~/.mozilla/firefox/<profile>/search.json.mozlz4
 nh home switch
+# Alternatively
+nhupdate
 ```
 </details>
 

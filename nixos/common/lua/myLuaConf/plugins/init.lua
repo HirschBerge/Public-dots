@@ -25,9 +25,6 @@ vim.keymap.set('n', '<leader>U', vim.cmd.UndotreeToggle, { desc = "Undo Tree" })
 vim.g.undotree_WindowLayout = 1
 vim.g.undotree_SplitWidth = 40
 
-require('hlargs').setup {
-  color = '#32a88f',
-}
 vim.cmd([[hi clear @lsp.type.parameter]])
 vim.cmd([[hi link @lsp.type.parameter Hlargs]])
 require('Comment').setup()

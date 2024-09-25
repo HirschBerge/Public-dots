@@ -33,7 +33,7 @@ network.port_random.set = no
 
 ## Scripting
 # First and only argument to 'rtorrent_mail.sh' is completed file's name ('d.name')
-method.set_key = event.download.finished,notify_me,"execute=~/.local/bin/tordone.sh,$d.name="
+method.set_key = event.download.finished,notify_me,"execute=tordone,$d.name="
 
 ##   Groups = connection_* dht_* peer_* rpc_* storage_* thread_* tracker_* torrent_*
 print = (cat, "Logging to ", (cfg.logfile))

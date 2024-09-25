@@ -11,6 +11,7 @@
 { 
   config,
   pkgs,
+  inputs,
   hostname,
   username,
   discord,
@@ -23,6 +24,7 @@ in
   imports =
     [
         ./hardware-configuration.nix
+        ../common/configs/syncthing.nix
         ../common/common_pkgs.nix
         ../common/wayland.nix
         ../common/configs/fonts.nix
@@ -142,10 +144,6 @@ in
     xkb.variant = "";
   };
 
-  # Enable CUPS to print documents.
-
-  # Enable sound with pipewire.
-  sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -181,7 +179,8 @@ in
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages =  [
-      # see ../common/common_pkgs.nix
+    inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
+    pkgs.catppuccin-cursors.mochaMauve
       themes.abstractguts-themes
   ];
   xdg.portal.enable = true;

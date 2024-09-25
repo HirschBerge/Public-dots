@@ -25,7 +25,7 @@ in {
 
       # packageDef is your settings and categories for this package.
       # categoryDefinitions.replace will replace the whole categoryDefinitions with a new one
-      categoryDefinitions.replace = ({ pkgs, settings, categories, name, ... }@packageDef: {
+      categoryDefinitions.replace = ({ pkgs, ... }@packageDef: {
         propagatedBuildInputs = {
           # add to general or create a new list called whatever
           general = [];
@@ -69,7 +69,6 @@ in {
         ];
         general = {
           gitPlugins = with pkgs.neovimPlugins; [
-            hlargs
           ];
           vimPlugins = {
             # you can make a subcategory
@@ -103,14 +102,6 @@ in {
               nvim-treesitter-textobjects
               nvim-treesitter-parsers.rasi
               nvim-treesitter.withAllGrammars
-              # This is for if you only want some of the grammars
-              # (nvim-treesitter.withPlugins (
-              #   plugins: with plugins; [
-              #     nix
-              #     lua
-              #   ]
-              # ))
-              # other
               nvim-lspconfig
               fidget-nvim
               lualine-nvim
@@ -135,54 +126,17 @@ in {
               tokyonight-nvim
               nvim-autopairs
               nvim-highlight-colors
-              rust-tools-nvim
+              # rust-tools-nvim
+              rustaceanvim
               renamer-nvim
               rainbow-delimiters-nvim
               zellij-nvim
+              twilight-nvim
+              markview-nvim
             ];
           };
         };
-        # You can retreive information from the
-        # packageDefinitions of the package this was packaged with.
-        # :help nixCats.flake.outputs.categoryDefinitions.scheme
-        # themer = with pkgs.vimPlugins;
-          # (builtins.getAttr categories.colorscheme {
-              # Theme switcher without creating a new category
-              # "onedark" = onedark-nvim;
-              # "catppuccin" = catppuccin-nvim;
-              # "catppuccin-mocha" = catppuccin-nvim;
-              # "tokyonight" = tokyonight-nvim;
-              # "tokyonight-day" = tokyonight-nvim;
-            # }
-          # );
-          # This is obviously a fairly basic usecase for this, but still nice.
-          # Checking packageDefinitions also has the bonus
-          # of being able to be easily set by importing flakes.
       };
-      optionalPlugins = {
-        custom = with pkgs.nixCatsBuilds; [ ];
-        gitPlugins = with pkgs.neovimPlugins; [ ];
-        general = with pkgs.vimPlugins; [ ];
-      };
-        environmentVariables = {
-          test = {
-            CATTESTVAR = "It worked!";
-          };
-        };
-        extraWrapperArgs = {
-          test = [
-            '' --set CATTESTVAR2 "It worked again!"''
-          ];
-        };
-        extraPythonPackages = {
-          test = [ (_:[]) ];
-        };
-        extraPython3Packages = {
-          test = [ (_:[]) ];
-        };
-        extraLuaPackages = {
-          test = [ (_:[]) ];
-        };
       });
 
       # see :help nixCats.flake.outputs.packageDefinitions
@@ -203,20 +157,12 @@ in {
           # and a set of categories that you want
           # (and other information to pass to lua)
           categories = {
-            # test = true;
             general = true;
             markdown = true;
-            lspsAndRuntimeDeps.general = true;
-            lspsAndRuntimeDeps.neonixdev  = true;
             startupPlugins = true;
-            example = {
-              youCan = "add more than just booleans";
-              toThisSet = [
-                "and the contents of this categories set"
-                "will be accessible to your lua with"
-                "nixCats('path.to.value')"
-                "see :help nixCats"
-              ];
+            lspsAndRuntimeDeps = {
+              general = true;
+              neonixdev  = true;
             };
           };
         };

@@ -90,7 +90,6 @@ require('nixCatsUtils.catPacker').setup({
     },
   },
 
-  { 'm-demare/hlargs.nvim', },
   { "stevearc/oil.nvim" },
   { 'mbbill/undotree', },
   { 'tpope/vim-fugitive', },

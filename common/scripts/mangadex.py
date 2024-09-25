@@ -214,7 +214,6 @@ def main():
         elif argument == "updates":
             print("Finding and deleting empty chapters and images....")
             clean_up_parents("/mnt/NAS/Manga/")
-            os.system("""find /mnt/NAS/Manga -empty -delete -print""")
             md_list = get_mdlist()
             d = DiscordWebHook("Spam Incoming!")
             d.send_message("Starting mass updates...", Ping=True)

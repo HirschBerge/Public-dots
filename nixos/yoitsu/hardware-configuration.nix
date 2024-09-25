@@ -54,7 +54,7 @@ fileSystems."/mnt/NAS" = {
     [ { device = "/dev/disk/by-uuid/998b6134-3eda-4530-bfdd-20aadf0009ef"; }
     ];
   hardware = {
-    opengl = {
+    graphics = {
       # Mesa
       enable = true;
       # Vulkan

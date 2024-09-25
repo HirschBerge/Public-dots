@@ -3,10 +3,12 @@ import os
 import shutil
 from datetime import datetime, timedelta, timezone
 from MangaDexPy import downloader
+import subprocess
 import re
 import contextlib
 from alive_progress import alive_bar
 import base64
+
 
 def download_chapters(sorted_chapters: list, manga, overwrite=False):
     # name_manga = f"{manga.title['en']}"
@@ -25,7 +27,7 @@ def download_chapters(sorted_chapters: list, manga, overwrite=False):
                 volume = f"Volume {chapter.volume}"
             else:
                 volume = "No Volume"
-            pattern = "[\!\?\,\[\]\+\@\#\$\%\^\&\*\.\(\)'\"]"
+            pattern = r"[\!\?\,\[\]\+\@\#\$\%\^\&\*\.\(\)'\"]"
             title = re.sub(pattern, "", title)
             m_title = re.sub(pattern, "", name_manga)
             bar.text(f" Chapter {chapter.chapter}: {title}")
@@ -48,21 +50,15 @@ def download_chapters(sorted_chapters: list, manga, overwrite=False):
                         downloader.threaded_dl_chapter(chapter, path_loc, light=False)
                         new_chapters += 1
                         already_done.append(str(chapter.chapter))
-                    except MangaDexPy.APIError as e:
-                        if e.status == 400:
-                            print(
-                                "Bad Request: There was an issue with the API request."
-                            )
-                            # Additional error handling or actions can be taken here
-                        else:
-                            print("An API error occurred with status code:", e.status)
-                            # Additional error handling or actions can be taken here
+                    except Exception as e:
+                        print("An API error occurred with status code:", e)
             bar()
     print(
         colored(255, 165, 0, "New Chapters Downloaded:"),
         colored(0, 255, 0, f"{new_chapters}"),
     )
     return new_chapters, name_manga
+
 
 def check_recent(timestamp, offset: int = 5):
     input_time = datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S%z")
@@ -98,22 +94,18 @@ def colored(r: int, g: int, b: int, text: str):
 
 
 def clean_up_parents(directory):
-    for root, _, files in os.walk(directory, topdown=False):
-        for file in files:
-            file_path = os.path.join(root, file)
-            # Check if the file is empty
-            try:
-                if os.path.getsize(file_path) == 0:
-                    # Delete the parent folder
-                    parent_dir = os.path.dirname(file_path)
-                    if not any(
-                        os.path.isdir(os.path.join(parent_dir, d))
-                        for d in os.listdir(parent_dir)
-                    ):
-                        shutil.rmtree(parent_dir)
-                        print(f"Deleting: {colored(255,0,0,parent_dir)}")
-            except:
-                pass
+    delete_empty_parents = ['fd', '-tf', '-te', '-a', '.', f'{directory}', '-X', 'rm', '-rf', '{//}']
+    delete_empty_dirs = ['fd', '-td', '-te', '-a', '.', f'{directory}', '-X', 'rm', '-rf']
+    try:
+        subprocess.run(delete_empty_parents, check=True)
+        print("Deleted empties successfully.")
+    except subprocess.CalledProcessError as e:
+        print(f"An error occurred: {e}")
+    try:
+        subprocess.run(delete_empty_parents, check=True)
+        print("Extra check completed successfully")
+    except subprocess.CalledProcessError as e:
+        print(f"An error occurred: {e}")
 
 
 def get_manga_title(result):
@@ -132,7 +124,9 @@ class DiscordWebHook:
         self.bot_name = bot_name
         # NOTE: had to encode webhook URL because rookies like @CipherDeveloper on Discord think that all Public Webhooks are evil. Fucking idiot
         # If you see this. Mind your own damn business, you half-rate wannabe hero.
-        self.webhook_url = base64.b64decode(str(os.getenv("TACO_BELL"))).decode('utf-8').strip()# base64.b64decode("aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI1NDEyMDE3ODA3NDEyODQ5Ni9jdklWWVlfZURGMXRLcmR1aHJRWGNVZjd5Yi1tWWNSYmFHMmREX09XUkFEVFJ4amtwMW1qamhlTTB4RklkWVV6VWlYRgo=").decode('utf-8').strip()
+        self.webhook_url = (
+            base64.b64decode(str(os.getenv("TACO_BELL"))).decode("utf-8").strip()
+        )  # base64.b64decode("aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI1NDEyMDE3ODA3NDEyODQ5Ni9jdklWWVlfZURGMXRLcmR1aHJRWGNVZjd5Yi1tWWNSYmFHMmREX09XUkFEVFJ4amtwMW1qamhlTTB4RklkWVV6VWlYRgo=").decode('utf-8').strip()
 
     def send_message(self, content, image_url=None, Ping=False):
         to_ping = "215327353423921159"

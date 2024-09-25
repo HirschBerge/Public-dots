@@ -1,7 +1,0 @@
-include oldworld
-set selection-clipboard clipboard
-
-set synctex true
-set synctex-editor-command "code -g %{input}:%{line}"
-set recolor true
-set recolor-keephue true

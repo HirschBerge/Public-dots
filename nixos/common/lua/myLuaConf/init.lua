@@ -61,3 +61,6 @@ vim.api.nvim_set_hl(0, "LineNr", { fg = "#cba6f7" })
 -- Doesn't work???
 -- -- Change the color of the current line number (CursorLineNr)
 vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#D2F7A6" })
+-- Enables inlay hints
+vim.lsp.inlay_hint.enable()
+vim.api.nvim_set_hl(0, 'LspInlayHint', { fg = '#cba6f7', bg = '#11111b', italic = true })

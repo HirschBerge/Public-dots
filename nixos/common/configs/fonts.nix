@@ -9,6 +9,7 @@ in
     noto-fonts-color-emoji
     noto-fonts-cjk
     noto-fonts-emoji
+    font-awesome_6
     fira-code
     fira-code-symbols
     custom-font.dank-mono

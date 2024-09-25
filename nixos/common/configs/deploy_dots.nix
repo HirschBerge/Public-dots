@@ -20,10 +20,10 @@
     recursive = true;
   };
 
-  # home.file."${config.xdg.configHome}/zellij/config.kdl" = {
-  #   source = ../../.. + "/common" + /zellij/config.kdl;
-  #   recursive = false;
-  # };
+  home.file."${config.home.homeDirectory}/.rtorrent.rc" = {
+    source = ../../.. + "/yoitsu/rtorrent/.rtorrent.rc" ;
+    recursive = false;
+  };
 
   home.file."${config.xdg.configHome}/eww" = {
     source = ../../.. + "/${hostname}" + /eww;
@@ -37,6 +37,12 @@
   home.file."${config.xdg.configHome}/bat/config".text = ''
 --style=header-filename,header-filesize
 --paging=never
+      '';
+  home.file."${config.home.homeDirectory}/.icons/default/index.theme".text = /*toml*/ ''
+[Icon Theme]
+Name=catppuccin-mocha-mauve
+Comment=Default Cursor Theme
+Inherits=catppuccin-mocha-mauve-cursors
       '';
   home.file."${config.xdg.configHome}/pipewire/pipewire.conf.d/99-input-denoising.conf".text = ''
 context.modules = [

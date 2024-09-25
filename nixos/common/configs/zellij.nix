@@ -93,7 +93,7 @@ plugins {
     "session-manager"
     autolock location="https://github.com/fresh2dev/zellij-autolock/releases/latest/download/zellij-autolock.wasm" {
         triggers "nvim|vim|v"  // Lock when any open these programs open. They are expected to unlock themselves when closed (e.g., using zellij.vim plugin).
-        watch_triggers "fzf|zoxide|atuin"  // Lock when any of these open and monitor until closed.
+        watch_triggers "fzf|zoxide|atuin|atac"  // Lock when any of these open and monitor until closed.
         watch_interval "1.0"  // When monitoring, check every X seconds.
     }
     //...
@@ -107,8 +107,8 @@ layout {
             pane command="v" size="60%" {
             }
             pane size="40%" {
-                pane focus=true size="50%" 
-                pane command="lf" size="50%" cwd="/home/USER_NAME/.dotfiles/" {
+                pane command="nu" focus=true size="50%" 
+                pane command="yazi" size="50%" cwd="/home/USER_NAME/.dotfiles/" {
                 }
             }
         }
@@ -132,15 +132,13 @@ layout {
 layout {
     tab name="Rust Dev" focus=true hide_floating_panes=true {
         pane split_direction="vertical" focus=true {
-            pane command="nix" size="60%" {
-                args "develop" "-c" "/run/current-system/sw/bin/v" "src/main.rs"
-            }
+            pane command="rust4zellij" size="60%"
             pane size="40%" {
                 pane command="nix" size="50%" {
                     args "develop" "-c" "bacon" "run"
                 }
                 pane command="nix" size="50%" {
-                    args "develop" "-c" "bacon" "clippy"
+                    args "develop" "-c" "bacon" "clippy-all"
                 }
             }
         }

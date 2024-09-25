@@ -19,6 +19,7 @@
     ripgrep
     du-dust
     cmake
+    foot
     lm_sensors
     ffmpeg
     pciutils
@@ -35,20 +36,31 @@
     hyprlock
     hypridle
     # bat-extras.batgrep
-    # bat-extras.batman
+    bat-extras.batman
     bat-extras.batpipe
     bat-extras.batwatch
+    signal-desktop
     # bat-extras.prettybat
+    sshs
+    atac
+    termshark
+    portal
+    yazi
+    anki
   ];
+ i18n.inputMethod = {
+   type = "fcitx5";
+   enable = true;
+   fcitx5.addons = with pkgs; [
+      fcitx5-anthy
+      fcitx5-gtk
+   ];
+ };
   programs.nh = {
     enable = true;
     clean.enable = true;
     clean.extraArgs = "--keep-since 7d --keep 5";
     flake = "/home/${username}/.dotfiles";
-  };
-  programs.thefuck = {
-    enable = true;
-    alias = "tf";
   };
 }
 

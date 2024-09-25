@@ -5,12 +5,15 @@
   {
   programs.starship = {
       enable = true;
+      enableNushellIntegration = true;
+      enableZshIntegration = true;
       settings = {
         scan_timeout = 120;
         command_timeout = 1000;
         # Other config here
         # format = "$all"; # Remove this line to disable the default prompt format
-        format = "[╭](0x9A348E)$username$hostname$localip$shlvl$singularity$kubernetes[](fg:0x9A348E bg:0xDA627D)$directory$vcsh(fg:0xDA627D bg:0xFCA17D)$git_branch$git_commit$git_state$git_metrics$git_status$hg_branch[](fg:0x86BBD8 bg:0x06969A)$docker_context$package$buf(fg:0xFCA17D bg:0x86BBD8)$c$cmake$cobol$container$daml$dart$deno$dotnet$elixir$elm$erlang$golang$haskell$helm$java$julia$kotlin$lua$nim$nodejs$ocaml$perl$php$pulumi$purescript$python$rlang$red$ruby$rust$scala$swift$terraform$vlang$vagrant$zig$nix_shell$conda$spack$memory_usage$aws$gcloud$openstack$azure$env_var$crystal$custom$sudo$cmd_duration$line_break[╰](fg:0x06969A bg:0x33658A)$time$status$shell$character";
+        format = "[╭](0x9A348E)$username$hostname$localip$shlvl$singularity$kubernetes(fg:0x9A348E bg:0xDA627D)$directory$vcsh(fg:0xDA627D bg:0xFCA17D)$git_branch$git_commit$git_state$git_metrics$git_status$hg_branch(fg:0x86BBD8 bg:0x06969A)$docker_context$package$buf(fg:0xFCA17D bg:0x86BBD8)$c$cmake$cobol$container$daml$dart$deno$dotnet$elixir$elm$erlang$golang$haskell$helm$java$julia$kotlin$lua$nim$nodejs$ocaml$perl$php$pulumi$purescript$python$rlang$red$ruby$rust$scala$swift$terraform$vlang$vagrant$zig$nix_shell$conda$spack$fill$cmd_duration$memory_usage$aws$gcloud$openstack$azure$crystal$custom$sudo$time$status$line_break[╰](fg:0x06969A bg:0x33658A) $env_var$shell$character";
+        continuation_prompt = "▶▶ ";
         aws = {
           format = "[$symbol($profile )(($region) )([$duration] )]($style)";
           symbol = "🅰 ";
@@ -122,7 +125,7 @@
           disabled = false;
         };
         container = {
-          format = "[$symbol [$name]]($style) ";
+          format = "[$symbol $name]($style) ";
           symbol = "⬢";
           style = "red bold dimmed";
           disabled = false;
@@ -265,6 +268,12 @@
           variable = "SHELL";
           default = "unknown shell";
         };
+        env_var.ZELLIJ_SESSION_NAME = {
+          format = "[$symbol($env_value )]($style)";
+          style = "mauve bold italic dimmed";
+          default = "";
+          
+        };
         env_var.USER = {
           format = "[$symbol($env_value )]($style)";
           style = "grey bold italic dimmed";
@@ -287,7 +296,7 @@
         };
         fill = {
           style = "bold black";
-          symbol = ".";
+          symbol = " ";
           disabled = false;
         };
         gcloud = {
@@ -506,9 +515,9 @@
         };
         memory_usage = {
           disabled = false;
-          format = "$symbol[$ram]($style) ";
+          format = "[$ram]($style)$symbol";
           style = "white bold dimmed";
-          symbol = " ";
+          symbol = " ";
           # threshold = 75;
           threshold = -1;
         };
@@ -723,7 +732,7 @@
         rust = {
           format = "[$symbol($version )]($style)";
           version_format = "v$raw";
-          symbol = "🦀 ";
+          symbol = " ";
           style = "bold red bg:0x86BBD8";
           disabled = false;
           detect_extensions = ["rs"];
@@ -754,7 +763,7 @@
           elvish_indicator = "esh";
           fish_indicator = "";
           ion_indicator = "ion";
-          nu_indicator = "nu";
+          nu_indicator = " ";
           powershell_indicator = "_";
           style = "white bold";
           tcsh_indicator = "tsh";

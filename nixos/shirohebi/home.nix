@@ -64,7 +64,6 @@ in
       nmap
       grc
       satty
-      xwaylandvideobridge
 # libsForQt5.qtstyleplugin-kvantum
       aria
       ani-cli

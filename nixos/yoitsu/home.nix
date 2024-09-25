@@ -103,7 +103,7 @@ in
     };
     cursorTheme = {
       package = pkgs.catppuccin-cursors.mochaMauve;
-      name = "Catppuccin-Mocha-Mauve-Cursors";
+      name = "catppuccin-mocha-mauve";
       size = 40;
     };
     font = {
@@ -122,6 +122,7 @@ in
 # QT_STYLE_OVERRIDE = "kvantum";
     GTK_USE_PORTAL = 1;
     eEDITOR = "v";    
+    ATAC_KEY_BINDINGS = "~/.config/keybindings.toml";
   };
 
   programs.git = {
@@ -152,6 +153,11 @@ in
     enable = true;
     enableZshIntegration = true;
   };
+  programs.thefuck = {
+    enable = true;
+    enableNushellIntegration = true;
+    enableZshIntegration = true;
+  };
   programs.eza = {
     enable = true;
     git = true;
@@ -172,15 +178,46 @@ in
 <?xml version="1.0"?>
 <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
 <fontconfig>
-<match target="scan">
-    <test name="family">
-        <string>Dank Mono</string>
-        <!-- <string>Dank Mono Italic</string> -->
-    </test>
-    <edit name="spacing">
-        <int>100</int>
-    </edit>
-</match>
+    <!-- Dank Mono configuration -->
+    <match target="scan">
+        <test name="family">
+            <string>Dank Mono</string>
+            <!-- <string>Dank Mono Italic</string> -->
+        </test>
+        <edit name="spacing">
+            <int>100</int>
+        </edit>
+    </match>
+
+    <!-- Font Awesome 6 Free-Regular-400 configuration -->
+    <match target="scan">
+        <test name="family">
+            <string>Font Awesome 6 Free</string>
+        </test>
+        <edit name="spacing">
+            <int>100</int>
+        </edit>
+    </match>
+
+    <!-- Font Awesome 6 Brands-Regular-400 configuration -->
+    <match target="scan">
+        <test name="family">
+            <string>Font Awesome 6 Brands</string>
+        </test>
+        <edit name="spacing">
+            <int>100</int>
+        </edit>
+    </match>
+
+    <!-- Font Awesome 6 Free-Solid-900 configuration -->
+    <match target="scan">
+        <test name="family">
+            <string>Font Awesome 6 Free</string>
+        </test>
+        <edit name="spacing">
+            <int>100</int>
+        </edit>
+    </match>
 </fontconfig>
     '';
   };

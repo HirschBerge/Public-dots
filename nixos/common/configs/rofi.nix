@@ -9,9 +9,7 @@
     package = pkgs.rofi-wayland;
     plugins = with pkgs; [
       # HACK: temporary fix until ABI update
-      (rofi-emoji.override {
-        rofi-unwrapped = rofi-wayland-unwrapped;
-      })
+      rofi-emoji-wayland
       (rofi-calc.override {
         rofi-unwrapped = rofi-wayland-unwrapped;
       })

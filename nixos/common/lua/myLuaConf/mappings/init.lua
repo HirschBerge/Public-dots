@@ -78,6 +78,7 @@ function insert_shebang()
     lua = '#!/usr/bin/env lua',
     python = '#!/usr/bin/env python',
     sh = '#!/usr/bin/env bash',
+    nu = '#!/usr/bin/env nu',
     -- Add more filetypes and shebang lines as needed
   }
 

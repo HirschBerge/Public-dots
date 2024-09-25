@@ -63,7 +63,7 @@ if __name__ == "__main__":
 
     # Call rofi and show the list. take the selected sink name and set it as the default sink
     # print(output)
-    rofi_command = f'''rofi -dmenu -replace -sep "|" -p  "Audio Devices" -format "s" -config ~/.config/rofi/launchers/type-1/style-3.rasi <<< "{output}"'''
+    rofi_command = f'''rofi -dmenu -replace -sep "|" -p  "Audio Devices" -format "s" <<< "{output}"'''
     rofi_process = subprocess.run(
         rofi_command,
         shell=True,

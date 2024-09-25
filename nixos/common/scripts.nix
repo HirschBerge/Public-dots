@@ -10,7 +10,6 @@
      [ -n "$1" ] && notify-send -i "$1" "Wallpaper changed." && swww img "$1"
      '')
      (pkgs.writeScriptBin "gitstatus" /*bash*/ ''
-
 #!/usr/bin/env bash
 if [ ! -d .git ]; then
     cd ~/.dotfiles || { echo "Failed to change directory to ~/.dotfiles"; exit 1; }
@@ -21,11 +20,12 @@ case $1 in
     [ -z "$result" ] && echo 0 || echo $result
     ;;
   --add)
-    result=$(git diff --shortstat | awk -F',' '{ print $2 }' | awk '{ print $1 }')
+    result=$(git diff --shortstat | rg -oP '(?<=,\s)[^,]+?(?=\sinsert)')
     [ -z "$result" ] && echo 0 || echo $result
     ;;
   --sub)
-    result=$(git diff --shortstat | awk -F',' '{ print $3 }' | awk '{ print $1 }')
+    result=$(git diff --shortstat | rg -oP '(?<=,\s)[^,]+?(?=\sdeletions)')
+
     [ -z "$result" ] && echo 0 || echo $result
     ;;
   --name)
@@ -157,6 +157,113 @@ for dir in ~/projects/*; do
 done
 cd "$init"
      '')
+     ( pkgs.writeScriptBin "nhhome" /*bash*/ ''
+#!/usr/bin/env bash
+rm_path="$HOME/.mozilla/firefox/USER_NAME/search.json.mozlz4"
+rm -f "$rm_path"
+nh home switch
+     '')
+     ( pkgs.writeScriptBin "nhupdate" /*bash*/ ''
+#!/usr/bin/env bash
+
+rm_path="$HOME/.mozilla/firefox/USER_NAME/search.json.mozlz4"
+icon_path="$HOME/.config/swaync/nixos-logo.png"
+dotfiles_path="$HOME/.dotfiles"
+message="Update complete"
+
+update_flake() {
+  cd "$dotfiles_path" || { echo "Failed to change directory to $dotfiles_path"; exit 1; }
+  git add flake.lock
+  git commit -S -m "Updated flake."
+}
+
+revert_flake() {
+  cd "$dotfiles_path" || { echo "Failed to change directory to $dotfiles_path"; exit 1; }
+  git restore flake.lock
+  echo "Update failed, flake.lock has been reverted."
+}
+
+run_updates() {
+  nh os boot --update && rm -f "$rm_path" && nh home switch && update_flake || revert_flake
+}
+
+send_notification() {
+  response=$(timeout 10 notify-send -u normal -e -A "Reboot" -A "Nothing" "NH Update Helper" "$message" -i "$icon_path")
+  echo "$response"
+}
+
+handle_response() {
+  case "$response" in
+      0)
+          reboot
+          ;;
+      1)
+          # Do nothing
+          ;;
+      *)
+          echo "Invalid response: $response"
+          ;;
+  esac
+}
+
+# Run updates
+run_updates
+
+# Send notification and handle response
+response=$(send_notification)
+handle_response
+     '')
+     ( pkgs.writeScriptBin "nhfull" /*bash*/ ''
+#!/usr/bin/env bash
+rm_path="$HOME/.mozilla/firefox/USER_NAME/search.json.mozlz4"
+nh os switch
+rm -f "$rm_path"
+nh home switch
+     '')
+     ( pkgs.writeScriptBin "rust4zellij" /*bash*/ ''
+#!/usr/bin/env bash
+nix develop -c v src/main.rs
+     '')
+     ( pkgs.writeScriptBin "pr_tracker" /*bash*/ ''
+#!/usr/bin/env bash
+cache_path="$HOME/.cache/pr_tracker.log"
+PR=$(<"$HOME/.cache/PR_tracker.txt")
+data=$(timeout 45 curl -sLf "https://nixpk.gs/pr-tracker.html?pr=$PR")
+
+title=$(echo "$data" |
+    rg title |
+    rg -oP '(?<=\().+?(?=\))' |
+    sd "\-&gt;" "  " |
+    sd '"' "" |
+    tr '[:lower:]' '[:upper:]' |
+    sed 's/\([[:alpha:]]\)\([[:alpha:]]*\)/\u\1\L\2/g'
+)
+
+statuses=$(echo "$data" |
+    rg -v li |
+    rg "state" -A2 |
+    rg -oP '(?<=>).+?(?=<)' |
+    awk 'NR%2{emoji=$0; next} {print $0 ":" emoji}' |
+    sd "⚪" " " |
+    sd "✅" " "
+)
+
+master=$(echo "$statuses" | rg "master" | awk -F':' '{ print $2 }')
+small=$(echo "$statuses" | rg "small" | awk -F':' '{ print $2 }')
+nix_pkgs=$(echo "$statuses" | rg "nixpkgs" | awk -F':' '{ print $2 }')
+unstable=$(echo "$statuses" | rg -v "small" | rg "nixos" | awk -F':' '{ print $2 }')
+
+url="https://github.com/NixOS/nixpkgs/pull/$PR"
+
+json_output=$(printf '{"title": "%s", "master": "%s", "small": "%s", "nix_pkgs": "%s", "unstable": "%s", "url": "%s"}' \
+    "$title" "$master" "$small" "$nix_pkgs" "$unstable" "$url")
+if [ -z "$title" ]; then
+  cat "$cache_path" | jq
+else
+  echo "$json_output" | tee $cache_path | jq
+fi
+     ''
+     )
      ( pkgs.writeScriptBin "toradd" /*bash */ ''
 #!/usr/bin/env bash
 watch_folder=~/.rtorrent/watch/start/
@@ -172,6 +279,104 @@ notify-send -u normal "Torrent Added!" "meta-''${BASH_REMATCH[1]^^}.torrent" -i 
 # password prompt if needed.
 
 rofi -dmenu -config ~/.config/rofi/launchers/type-1/style-3.rasi -display "enter password" -p "$1" <&- && echo
+'')
+  (pkgs.writeScriptBin "toggle_desk" /*bash*/ ''
+#!/usr/bin/env bash
+token="$(echo 'ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnBjM01pT2lKaE9UZ3daRFkwTlRsak1qWTBNak01T1RN
+eE4yRXlNamxoWldKa09EQmtPQ0lzSW1saGRDSTZNVGN5TVRNME5UTXpNU3dpWlhod0lqb3lNRE0yTnpBMU16TXhmUS40dV9tVFM5RUVWcXZab3R
+QbC1vWEZmTnFMQjFWLWFCVWt4bnZLWEY2Wi1jCg=='|base64 -d)"
+desk_lite(){
+  curl -X POST -H "Authorization: Bearer $token" -H "Content-Type: application/json" -d '{"entity_id": "light.desk_rope_lite"}' http://10.10.10.19:8123/api/services/light/toggle
+}
+all_off(){
+  curl -X POST -H "Authorization: Bearer $token" -H "Content-Type: application/json" -d '{"entity_id": "scene.all_off"}' http://10.10.10.19:8123/api/services/scene/turn_on
+}
+dim_house(){
+  curl -X POST -H "Authorization: Bearer $token" -H "Content-Type: application/json" -d '{"entity_id": "scene.new_scene"}' http://10.10.10.19:8123/api/services/scene/turn_on
+}
+dryer(){
+      curl -X POST -H "Authorization: Bearer $token" -H "Content-Type: application/json" -d '{"entity_id": "script.1678671948073"}' http://10.10.10.19:8123/api/services/script/toggle
+}
+washing(){
+      curl -X POST -H "Authorization: Bearer $token" -H "Content-Type: application/json" -d '{"entity_id": "script.laundry_washing_machine"}' http://10.10.10.19:8123/api/services/script/toggle
+}
+pizza(){
+      curl -X POST -H "Authorization: Bearer $token" -H "Content-Type: application/json" -d '{"entity_id": "script.pizza_23_minutes"}' http://10.10.10.19:8123/api/services/script/toggle
+}
+usage() {
+  echo "Usage: $0 [-d | --desk_lite] [-a | --all_off] [-h | --dim_house] [-D | --dryer] [-w | --washing] [ -p | --pizza ]"
+  exit 1
+}
+
+# Check if no arguments were provided
+if [ $# -eq 0 ]; then
+  usage
+fi
+
+# Parse the command-line arguments
+while [[ "$#" -gt 0 ]]; do
+  case $1 in
+    -d|--desk_lite)
+      desk_lite |jq 
+      shift
+      ;;
+    -a|--all_off)
+      all_off |jq 
+      shift
+      ;;
+    -h|--dim_house)
+      dim_house |jq 
+      shift
+      ;;
+    -w|--washing)
+      washing |jq 
+      shift
+      ;;
+    -D|--dryer)
+      dryer |jq 
+      shift
+      ;;
+    -p|--pizza)
+      pizza |jq 
+      shift
+      ;;
+    *)
+      echo "Unknown option: $1"
+      usage
+      ;;
+  esac
+done
+'')
+  (pkgs.writeScriptBin "network-toggle" /*bash*/ ''
+#!/usr/bin/env bash
+interface="enp7s0"
+
+# Get the current status of the interface
+status=$(nmcli device status | grep "$interface" | awk '{print $3}')
+
+# Toggle the interface status and send a notification
+if [ "$status" = "connected" ]; then
+    echo "Disconnecting $interface..."
+    nmcli device disconnect "$interface"
+    notify-send -i $HOME/.dotfiles/streamdeck_icons/network.png "Network Status" "$interface disconnected"
+elif [ "$status" = "disconnected" ]; then
+    echo "Connecting $interface..."
+    nmcli device connect "$interface"
+    notify-send -i $HOME/.dotfiles/streamdeck_icons/network.png "Network Status" "$interface connected"
+else
+    echo "Unknown status for $interface: $status"
+    notify-send -i dialog-warning "Network Status" "Unknown status for $interface: $status"
+fi
+'')
+  (pkgs.writeScriptBin "locktoggle" /*bash*/ ''
+#!/usr/bin/env bash
+status=$(hyprctl monitors -j | jq 'any(.[]; .dpmsStatus == false)')
+if [ "false" = "$status" ]; then
+  hyprlock &
+  hyprctl dispatch dpms off
+else
+  hyprctl dispatch dpms on
+fi
 '')
   (pkgs.writeScriptBin "dmenuumount" /*bash*/ ''
 #!/usr/bin/env sh

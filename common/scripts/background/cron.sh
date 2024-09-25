@@ -7,7 +7,7 @@ if [[ $HOSTNM == "yoitsu" ]]; then
 else
     folder="$HOME/Pictures/Monogatari"
 fi
-sleep_time=300
+sleep_time=600
 
 if [ -n "$2" ]; then
   sleep_time="$2"
@@ -18,7 +18,7 @@ if [ -n "$1" ]; then
 fi
 
 randomize(){
-  echo $folder
+  echo "$folder"
   img1=$(find "$folder" -type f | shuf -n 1)
   img2=$(find "$folder" -type f | shuf -n 1)
   if [ -f "$img1" ] && [ -f "$img2" ]; 
@@ -31,9 +31,9 @@ randomize(){
 
 function stopprocess {
    local mypid=$$    # capture this run's pid
-   declare pids=($(pgrep -f ${0##*/}))   # get all the pids running this script
+   declare pids=($(pgrep -f "${0##*/}"))   # get all the pids running this script
    for pid in ${pids[@]/$mypid/}; do   # cycle through all pids except this one
-      kill $pid                        # kill the other pids
+      kill "$pid"                        # kill the other pids
       sleep 1                          # give time to complete
    done
 }
@@ -41,12 +41,10 @@ function stopprocess {
 sets_background_yoitsu() {
   randomize
   current_time=$(date +"%m-%d-%y %H:%M:%S")
-  echo -en "$current_time\n" >> $HOME/.cache/background.log
-  echo -en "One: $img1\n" >> $HOME/.cache/background.log
-  echo -en "Two: $img2\n" >> $HOME/.cache/background.log
+  echo -en "$current_time\nOne: $img1\nTwo: $img2\n" >> "$HOME"/.cache/background.log
   # cp "$imgwide" ~/.config/wallwide.png
   cp "$img2" ~/.config/wallwide2.png
-  export SWWW_TRANSITION_FPS=120
+  export SWWW_TRANSITION_FPS=60
   export SWWW_TRANSITION_STEP=2
   GAME_RUNNING="$(hyprctl clients -j | jq 'any(.[]; .class | type == "string" and contains("steam_app"))')"
   if "$GAME_RUNNING" -eq "true" ; then
@@ -62,11 +60,11 @@ sets_background_yoitsu() {
 sets_background_shiro() {
   randomize
   current_time=$(date +"%m-%d-%y %H:%M:%S")
-  echo -en "$current_time\n" >> $HOME/.cache/background.log
-  echo -en "One: $img1\n" >> $HOME/.cache/background.log
+  echo -en "$current_time\n" >> "$HOME"/.cache/background.log
+  echo -en "One: $img1\n" >> "$HOME"/.cache/background.log
   # cp "$imgwide" ~/.config/wallwide.png
   cp "$img1" ~/.config/wallwide2.png
-  export SWWW_TRANSITION_FPS=120
+  export SWWW_TRANSITION_FPS=60
   export SWWW_TRANSITION_STEP=2
   $(which swww) img -t random -o eDP-1 "$img1"
   # $(which notify-send) --icon "$imgwide" "Hyprland Started!" "Have a great day!"
@@ -80,7 +78,7 @@ main() {
       sets_background_shiro
     fi
     # chmod +x -R "$HOME/Backgrounds/*" "$HOME/.scripts/"
-    sleep $sleep_time
+    sleep "$sleep_time"
   done
 }
 

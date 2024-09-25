@@ -1,13 +1,6 @@
-(defvar home_dir "/home/$USER/.config/eww/Scripts")
-
-(defpoll clipboard_content :interval "1s"
-        `/home/$USER/.config/eww/Scripts/clipboard_manager.py`)
-
-
 (deflisten volume `bash $HOME/.config/eww/scripts/audio --get-vol`)
 (defpoll battery :interval "30s"
 	`/home/$USER/.config/eww/Scripts/battery.py`)
-
 (defpoll GPU :initial "..." :interval "3s" `bash ../scripts/GPU_mon.sh --json`)
 ;; System
 (defpoll used_per :interval "1m" `eww get EWW_DISK |jq .'["/"]'.used_perc`)
@@ -17,30 +10,17 @@
     "$HOME/.config/eww/scripts/cpu")
 (defpoll temp :initial 30 :interval "10s" `sensors | rg temp1 | rg -o "\\d+.\\d+" | head -1`)
 (defpoll oxidized_weather :initial "..." :interval "1m" `$HOME/.local/bin/weather_app --bar`)
-(defpoll PR_TRACKER :initial "..." :interval "20m" `../scripts/pr_tracker.sh`)
-(deflisten workspaces0 "hyprland-workspaces `hyprctl monitors -j | jq -r \".[0].name\"`")
-
-(defpoll quote :interval "24h" "$HOME/.config/eww/scripts/quotes --quote-and-quotee")
-
+(defpoll PR_TRACKER :initial "..." :interval "20m" `pr_tracker`)
 (defpoll IP_ADDR :interval "1m" "ip -br a |rg UP | awk '/enp7/ {print $3 }'|sd '\/.*' ''")
-
 (defpoll window :interval "0.5s" "$HOME/.config/eww/scripts/window-title.sh")
 (defpoll wifi :interval "3s"
         `/home/$USER/.config/eww/Scripts/wifi.py`)
 (deflisten vol_icon `bash $HOME/.config/eww/scripts/audio --get-volicon`)
 (defvar idle_state "󱄅")
-(deflisten workspaces :initial "(box (label :text \"󰄯  󰄰  󰄰  󰄰  󰄰\" ))"
-	`/home/$USER/.config/eww/Scripts/workspaces.py`)
-
-(deflisten song_status :initial "Select playlist to begin"
-        `/home/$USER/.config/eww/Scripts/song_status.py`)
-
-
 (defpoll wm :interval "12h" "echo $XDG_CURRENT_DESKTOP")
 (defpoll shell :interval "1h" "echo $SHELL | awk -F'/' '{print $NF}'")
 (defpoll term :interval "1h" "notify-send $(echo $TERM | awk -F'-' '{print $NF}')")
 (defpoll uptime :interval "1m" "../scripts/better_uptime.sh $(cut -f1 -d. /proc/uptime)")
-;; (defpoll packages :interval "15m" "nix-store --query --requisites /run/current-system/sw |wc -l")
 (defpoll pkgs_uniq :initial "..." :interval "10m" "bash $HOME/.config/eww/scripts/packages.sh") 
 
 (defpoll time :interval "5s" "date '+%H:%M'")

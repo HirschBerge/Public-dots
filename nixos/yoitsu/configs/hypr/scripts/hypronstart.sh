@@ -29,7 +29,7 @@ player (){
 }
 main (){
   # waybar_init
-  swww_init
+  # swww_init
   # dunst_init
   player
   # launch-eww

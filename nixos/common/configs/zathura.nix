@@ -13,8 +13,8 @@
       completion-highlight-fg = "#c9c7cd";
       completion-group-bg = "#1b1b1c";
       completion-group-fg = "#92a2d5";
-      statusbar-fg = "#c9c7cd";
-      statusbar-bg = "#1b1b1c";
+      statusbar-fg = "#000000";
+      statusbar-bg = "#cba6f7";
       notification-bg = "#1b1b1c";
       notification-fg = "#c9c7cd";
       notification-error-bg = "#1b1b1c";

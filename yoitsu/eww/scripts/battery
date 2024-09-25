@@ -10,8 +10,8 @@ BGreen='\033[1;32m'       # Green
 get_percentage() {
   while true; do
     # BAT=$(ls /sys/class/power_supply | grep BAT | head -n 1) #For laptop
-    BAT="hidpp_battery_0"
-    echo "$(cat /sys/class/power_supply/${BAT}/capacity)"
+    BAT="hidpp_battery_*"
+    cat /sys/class/power_supply/${BAT}/capacity
     sleep 3
   done
 }

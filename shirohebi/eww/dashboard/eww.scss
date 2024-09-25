@@ -134,21 +134,26 @@
   background-size: 100%;
 }
 
-.song {
-	color: rgb(210, 247, 166);
-	font-size : 20px;
-	font-weight : bold;
-	margin : 30px 0px 0px 0px;
+.artist {
+    color: #Eed49f;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.9); /* Adds a soft shadow for better readability */
+    font-size: 16px;
+    font-weight: normal;
+    padding: 2px 4px; /* Slight padding to improve spacing */
+    margin: 0px 0px 15px 0px;
 }
 
-.artist {
-	color: #Eed49f;
-	font-size : 16px;
-	font-weight : normal;
-	margin : 0px 0px 15px 0px;
+.song {
+    color: #ffffff;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.9); /* Similar effect for consistency */
+    font-size: 18px;
+    font-weight: bold;
+    padding: 2px 4px;
+    margin-bottom: 5px;
 }
 
 .btn_prev, .btn_play, .btn_next {
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.9); /* Similar effect for consistency */
 }
 .btn_prev {
 	font-size : 32px;

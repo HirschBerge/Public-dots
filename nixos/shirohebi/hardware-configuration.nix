@@ -25,7 +25,7 @@ boot = {
 
 
 # Make sure opengl is enabled
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
     # NOTE: driSupport has been removed.
     # TODO: Remove in future 

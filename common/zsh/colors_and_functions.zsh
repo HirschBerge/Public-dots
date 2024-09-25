@@ -295,3 +295,11 @@
             function ssh(){
               ps -o comm= -p $PPID |rg kitty >/dev/null && kitten "ssh" $@ || /run/current-system/sw/bin/ssh $@
             }
+            function yy() {
+              local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+              yazi "$@" --cwd-file="$tmp"
+              if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+                builtin cd -- "$cwd"
+              fi
+              rm -f -- "$tmp"
+            }

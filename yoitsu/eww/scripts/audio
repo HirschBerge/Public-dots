@@ -17,12 +17,12 @@ get_vol() {
 
 ## Set Volume
 set_vol() {
-	wpctl set-volume $output_dev $1"%"
+	wpctl set-volume "$output_dev" "$1%$2"
 }
 
 ## Toggle Volume
 toggle_vol() {
-	wpctl set-mute $output_dev toggle
+	wpctl set-mute "$output_dev" toggle
 }
 
 ## Get Volume Icon
@@ -85,7 +85,7 @@ set_mic() {
 
 
 if [[ "$1" == "--set-vol" ]]; then
-	set_vol "$2"
+	set_vol "$2" "$3"
 elif [[ "$1" == "--get-vol" ]]; then
 	get_vol
 elif [[ "$1" == "--toggle-vol" ]]; then
@@ -101,6 +101,6 @@ elif [[ "$1" == "--get-mic" ]]; then
 elif [[ "$1" == "--set-mic" ]]; then
 	set_mic "$2"
 else
-	printf "${BRed}[ERROR]${BPurple} Please use one of the following flags ${BGreen}\n--set-vol, --get-vol, --toggle-vol,\n--get-volicon, --get-micicon, --toggle-mic,\n--get-mic, --set-mic${BPurple}. Thank you.${NoColor}"
+	printf "${BRed}[ERROR]${BPurple} Please use one of the following flags ${BGreen}\n--set-vol, --get-vol, --toggle-vol,\n--get-volicon, --get-micicon, --toggle-mic,\n--get-mic, --set-mic${BPurple}.\nThank you.${NoColor}"
 fi
 

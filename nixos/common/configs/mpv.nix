@@ -32,6 +32,7 @@ in
       image-display-duration = "inf";
       osd-font = "${custom-font.dank-mono}";
       cache = "yes";
+      volume = 80;
       demuxer-max-bytes = "650MiB";
       demuxer-max-back-bytes = "50MiB";
       demuxer-readahead-secs = "60";
@@ -42,6 +43,8 @@ in
       "l" = "seek 5";
       "h" = "seek -5";
       "a" = "add chapter -1";
+      "Alt+n" = "playlist-next";
+      "Alt+p" = "playlist-prev";
       "d" = "add chapter 1";
       "k" = "seek 60";
       "j" = "seek -60";

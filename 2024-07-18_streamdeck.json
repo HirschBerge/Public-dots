@@ -1,0 +1,1590 @@
+{
+    "Home Assistant.json": {
+        "screensaver": {},
+        "background": {
+            "overwrite": true,
+            "show": true,
+            "path": "/home/USER_NAME/.var/app/com.core447.StreamController/data/wallpapers/com_core447_PixabayFavorites/images/new-moon-2265485_640.jpg"
+        },
+        "keys": {
+            "0x0": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {
+                            "path": "/home/USER_NAME/.var/app/com.core447.StreamController/data/Assets/AssetManager/Assets/desk.png"
+                        },
+                        "actions": [
+                            {
+                                "id": "de_gensyn_HomeAssistantPlugin::HomeAssistantAction",
+                                "settings": {
+                                    "text.attribute": "state",
+                                    "service.call_service": true,
+                                    "entity.domain": "light",
+                                    "entity.entity": "light.desk_rope_lite",
+                                    "service.service": "toggle",
+                                    "icon.show_icon": false,
+                                    "text.show_text": false,
+                                    "service.service_parameters": {}
+                                }
+                            }
+                        ],
+                        "image-control-action": null
+                    }
+                }
+            },
+            "1x0": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {
+                            "path": "/home/USER_NAME/.var/app/com.core447.StreamController/data/Assets/AssetManager/Assets/dim.png"
+                        },
+                        "actions": [
+                            {
+                                "id": "de_gensyn_HomeAssistantPlugin::HomeAssistantAction",
+                                "settings": {
+                                    "text.attribute": "state",
+                                    "service.call_service": true,
+                                    "entity.domain": "scene",
+                                    "entity.entity": "scene.new_scene",
+                                    "service.service": "turn_on",
+                                    "icon.show_icon": false,
+                                    "text.show_text": false,
+                                    "service.service_parameters": {}
+                                }
+                            }
+                        ],
+                        "image-control-action": 0,
+                        "label-control-actions": [
+                            0,
+                            0,
+                            0
+                        ]
+                    }
+                }
+            },
+            "2x0": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {
+                            "path": "/home/USER_NAME/.var/app/com.core447.StreamController/data/Assets/AssetManager/Assets/light_off.png"
+                        },
+                        "actions": [
+                            {
+                                "id": "de_gensyn_HomeAssistantPlugin::HomeAssistantAction",
+                                "settings": {
+                                    "text.attribute": "state",
+                                    "service.call_service": true,
+                                    "entity.domain": "scene",
+                                    "entity.entity": "scene.all_off",
+                                    "service.service": "turn_on",
+                                    "icon.show_icon": false,
+                                    "text.show_text": false,
+                                    "service.service_parameters": {}
+                                }
+                            }
+                        ],
+                        "image-control-action": 0,
+                        "label-control-actions": [
+                            0,
+                            0,
+                            0
+                        ]
+                    }
+                }
+            },
+            "3x0": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {},
+                        "actions": []
+                    }
+                }
+            },
+            "4x0": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {},
+                        "actions": []
+                    }
+                }
+            },
+            "0x1": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {
+                            "path": "/home/USER_NAME/.var/app/com.core447.StreamController/data/Assets/AssetManager/Assets/washing.png"
+                        },
+                        "actions": [
+                            {
+                                "id": "de_gensyn_HomeAssistantPlugin::HomeAssistantAction",
+                                "settings": {
+                                    "text.attribute": "state",
+                                    "service.call_service": true,
+                                    "entity.domain": "script",
+                                    "entity.entity": "script.laundry_washing_machine",
+                                    "service.service": "toggle",
+                                    "icon.show_icon": false,
+                                    "text.show_text": false,
+                                    "service.service_parameters": {}
+                                }
+                            }
+                        ],
+                        "image-control-action": 0,
+                        "label-control-actions": [
+                            0,
+                            0,
+                            0
+                        ]
+                    }
+                }
+            },
+            "1x1": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {
+                            "path": "/home/USER_NAME/.var/app/com.core447.StreamController/data/Assets/AssetManager/Assets/dryer.png"
+                        },
+                        "actions": [
+                            {
+                                "id": "de_gensyn_HomeAssistantPlugin::HomeAssistantAction",
+                                "settings": {
+                                    "text.attribute": "state",
+                                    "service.call_service": true,
+                                    "entity.domain": "script",
+                                    "entity.entity": "script.1678671948073",
+                                    "service.service": "toggle",
+                                    "icon.show_icon": false,
+                                    "text.show_text": false,
+                                    "service.service_parameters": {}
+                                }
+                            }
+                        ],
+                        "image-control-action": 0,
+                        "label-control-actions": [
+                            0,
+                            0,
+                            0
+                        ]
+                    }
+                }
+            },
+            "2x1": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {
+                            "path": "/home/USER_NAME/.var/app/com.core447.StreamController/data/Assets/AssetManager/Assets/pizza.png"
+                        },
+                        "actions": [
+                            {
+                                "id": "de_gensyn_HomeAssistantPlugin::HomeAssistantAction",
+                                "settings": {
+                                    "text.attribute": "state",
+                                    "service.call_service": true,
+                                    "entity.domain": "script",
+                                    "entity.entity": "script.pizza_23_minutes",
+                                    "service.service": "toggle",
+                                    "icon.show_icon": false,
+                                    "text.show_text": false,
+                                    "service.service_parameters": {}
+                                }
+                            }
+                        ],
+                        "image-control-action": 0,
+                        "label-control-actions": [
+                            0,
+                            0,
+                            0
+                        ]
+                    }
+                }
+            },
+            "3x1": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {},
+                        "actions": []
+                    }
+                }
+            },
+            "4x1": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {},
+                        "actions": []
+                    }
+                }
+            },
+            "0x2": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {},
+                        "actions": []
+                    }
+                }
+            },
+            "1x2": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "Home",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {
+                            "path": "/home/USER_NAME/.var/app/com.core447.StreamController/data/Assets/AssetManager/Assets/nix.png"
+                        },
+                        "actions": [
+                            {
+                                "id": "com_core447_DeckPlugin::ChangePage",
+                                "settings": {
+                                    "selected_page": "/home/USER_NAME/.var/app/com.core447.StreamController/data/pages/Main.json",
+                                    "deck_number": null
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "2x2": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {},
+                        "actions": []
+                    }
+                }
+            },
+            "3x2": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {},
+                        "actions": []
+                    }
+                }
+            },
+            "4x2": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {},
+                        "actions": []
+                    }
+                }
+            }
+        }
+    },
+    "Main.json": {
+        "background": {
+            "overwrite": true,
+            "path": "/home/USER_NAME/.var/app/com.core447.StreamController/data/wallpapers/com_core447_PixabayFavorites/images/wolf-4561204_640.png",
+            "show": true
+        },
+        "auto-change": {
+            "enable": false,
+            "wm_class": "",
+            "title": "",
+            "stay_on_page": true,
+            "decks": [
+                "A8RKA4212L174U"
+            ]
+        },
+        "screensaver": {
+            "overwrite": false
+        },
+        "keys": {
+            "0x0": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "My NixOS",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {
+                            "path": "/home/USER_NAME/.var/app/com.core447.StreamController/data/Assets/AssetManager/Assets/nix.png"
+                        },
+                        "actions": [
+                            {
+                                "id": "com_core447_OSPlugin::RunCommand",
+                                "settings": {
+                                    "command": "xdg-open https://mynixos.com/options"
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "1x0": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {
+                            "path": "/home/USER_NAME/.var/app/com.core447.StreamController/data/Assets/AssetManager/Assets/network.png"
+                        },
+                        "actions": [
+                            {
+                                "id": "com_core447_OSPlugin::RunCommand",
+                                "settings": {
+                                    "command": "network-toggle"
+                                },
+                                "comment": "Toggles VPN'd internet connection"
+                            }
+                        ]
+                    }
+                }
+            },
+            "2x0": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {
+                            "path": "/home/USER_NAME/.var/app/com.core447.StreamController/data/Assets/AssetManager/Assets/up.png"
+                        },
+                        "actions": [
+                            {
+                                "id": "com_core447_OSPlugin::RunCommand",
+                                "settings": {
+                                    "command": " hyprctl dispatch focusmonitor DP-1"
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "3x0": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {
+                            "path": "/home/USER_NAME/.var/app/com.core447.StreamController/data/Assets/AssetManager/Assets/lock.png"
+                        },
+                        "actions": [
+                            {
+                                "id": "com_core447_OSPlugin::RunCommand",
+                                "settings": {
+                                    "command": "locktoggle"
+                                },
+                                "comment": "Locks and turns off screen"
+                            }
+                        ]
+                    }
+                }
+            },
+            "4x0": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {
+                            "path": "/home/USER_NAME/.var/app/com.core447.StreamController/data/Assets/AssetManager/Assets/playpause.png"
+                        },
+                        "actions": [
+                            {
+                                "id": "com_core447_MediaPlugin::PlayPause",
+                                "settings": {
+                                    "show_label": true,
+                                    "show_thumbnail": true
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "0x1": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {
+                            "path": "/home/USER_NAME/.var/app/com.core447.StreamController/data/Assets/AssetManager/Assets/youtube.svg"
+                        },
+                        "actions": [
+                            {
+                                "id": "com_core447_OSPlugin::RunCommand",
+                                "settings": {
+                                    "command": "yt"
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "1x1": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {
+                            "path": "/home/USER_NAME/.var/app/com.core447.StreamController/data/Assets/AssetManager/Assets/left.png"
+                        },
+                        "actions": [
+                            {
+                                "id": "com_core447_OSPlugin::RunCommand",
+                                "settings": {
+                                    "command": " hyprctl dispatch workspace -1"
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "2x1": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {
+                            "path": "/home/USER_NAME/.var/app/com.core447.StreamController/data/Assets/AssetManager/Assets/down.png"
+                        },
+                        "actions": [
+                            {
+                                "id": "com_core447_OSPlugin::RunCommand",
+                                "settings": {
+                                    "command": " hyprctl dispatch focusmonitor DP-3"
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "3x1": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {
+                            "path": "/home/USER_NAME/.var/app/com.core447.StreamController/data/Assets/AssetManager/Assets/right.png"
+                        },
+                        "actions": [
+                            {
+                                "id": "com_core447_OSPlugin::RunCommand",
+                                "settings": {
+                                    "command": " hyprctl dispatch workspace +1"
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "4x1": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {
+                            "path": "/home/USER_NAME/.var/app/com.core447.StreamController/data/Assets/AssetManager/Assets/vol up.png"
+                        },
+                        "actions": [
+                            {
+                                "id": "com_gapls_AudioControl::AdjustVolume",
+                                "settings": {
+                                    "volume-adjust": 5.0,
+                                    "volume-bounds": 141.0,
+                                    "pulse-name": "alsa_output.usb-Sony_INZONE_H9___INZONE_H7-00.HiFi__Headset__sink",
+                                    "show-device-name": false,
+                                    "show-info": true
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "0x2": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "Vim Tab",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {
+                            "path": "/home/USER_NAME/.var/app/com.core447.StreamController/data/Assets/AssetManager/Assets/nvim.png"
+                        },
+                        "actions": [
+                            {
+                                "id": "com_core447_DeckPlugin::ChangePage",
+                                "settings": {
+                                    "selected_page": "/home/USER_NAME/.var/app/com.core447.StreamController/data/pages/NeoVim.json",
+                                    "deck_number": null
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "1x2": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {
+                            "path": "/home/USER_NAME/.var/app/com.core447.StreamController/data/Assets/AssetManager/Assets/ha.png"
+                        },
+                        "actions": [
+                            {
+                                "id": "com_core447_DeckPlugin::ChangePage",
+                                "settings": {
+                                    "selected_page": "/home/USER_NAME/.var/app/com.core447.StreamController/data/pages/Home Assistant.json",
+                                    "deck_number": null
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "2x2": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {
+                            "path": "/home/USER_NAME/.var/app/com.core447.StreamController/data/Assets/AssetManager/Assets/mic mute.png"
+                        },
+                        "actions": [
+                            {
+                                "id": "com_gapls_AudioControl::Mute",
+                                "settings": {
+                                    "device-filter": "source",
+                                    "pulse-name": "alsa_input.usb-Kingston_HyperX_QuadCast_S_4100-00.analog-stereo",
+                                    "show-device-name": false,
+                                    "show-info": true
+                                }
+                            }
+                        ],
+                        "image-control-action": null,
+                        "label-control-actions": [
+                            0,
+                            0,
+                            0
+                        ]
+                    }
+                }
+            },
+            "3x2": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {
+                            "path": "/home/USER_NAME/.var/app/com.core447.StreamController/data/Assets/AssetManager/Assets/vol_mute.png"
+                        },
+                        "actions": [
+                            {
+                                "id": "com_gapls_AudioControl::Mute",
+                                "settings": {
+                                    "pulse-name": "alsa_output.usb-Sony_INZONE_H9___INZONE_H7-00.HiFi__Headset__sink"
+                                }
+                            }
+                        ],
+                        "image-control-action": 0,
+                        "label-control-actions": [
+                            0,
+                            0,
+                            0
+                        ]
+                    }
+                }
+            },
+            "4x2": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {
+                            "path": "/home/USER_NAME/.var/app/com.core447.StreamController/data/Assets/AssetManager/Assets/vol down.png"
+                        },
+                        "actions": [
+                            {
+                                "id": "com_gapls_AudioControl::AdjustVolume",
+                                "settings": {
+                                    "volume-adjust": -5.0,
+                                    "volume-bounds": 150.0,
+                                    "pulse-name": "alsa_output.usb-Sony_INZONE_H9___INZONE_H7-00.HiFi__Headset__sink"
+                                }
+                            }
+                        ],
+                        "image-control-action": null
+                    },
+                    "1": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {},
+                        "actions": []
+                    }
+                }
+            }
+        }
+    },
+    "NeoVim.json": {
+        "background": {
+            "overwrite": true,
+            "show": true,
+            "path": "/home/USER_NAME/.var/app/com.core447.StreamController/data/wallpapers/com_core447_PixabayFavorites/images/tree-5480239_640.jpg"
+        },
+        "keys": {
+            "0x0": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {},
+                        "actions": []
+                    }
+                }
+            },
+            "1x0": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {
+                            "path": "/home/USER_NAME/.var/app/com.core447.StreamController/data/Assets/AssetManager/Assets/up.png"
+                        },
+                        "actions": [
+                            {
+                                "id": "com_core447_OSPlugin::Hotkey",
+                                "settings": {
+                                    "keys": [
+                                        [
+                                            56,
+                                            1
+                                        ],
+                                        [
+                                            37,
+                                            1
+                                        ],
+                                        [
+                                            56,
+                                            0
+                                        ],
+                                        [
+                                            37,
+                                            0
+                                        ]
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "2x0": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {},
+                        "actions": []
+                    }
+                }
+            },
+            "3x0": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {},
+                        "actions": []
+                    }
+                }
+            },
+            "4x0": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {},
+                        "actions": []
+                    }
+                }
+            },
+            "0x1": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {
+                            "path": "/home/USER_NAME/.var/app/com.core447.StreamController/data/Assets/AssetManager/Assets/left.png"
+                        },
+                        "actions": [
+                            {
+                                "id": "com_core447_OSPlugin::Hotkey",
+                                "settings": {
+                                    "keys": [
+                                        [
+                                            56,
+                                            1
+                                        ],
+                                        [
+                                            35,
+                                            1
+                                        ],
+                                        [
+                                            56,
+                                            0
+                                        ],
+                                        [
+                                            35,
+                                            0
+                                        ]
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "1x1": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {
+                            "path": "/home/USER_NAME/.var/app/com.core447.StreamController/data/Assets/AssetManager/Assets/down.png"
+                        },
+                        "actions": [
+                            {
+                                "id": "com_core447_OSPlugin::Hotkey",
+                                "settings": {
+                                    "keys": [
+                                        [
+                                            56,
+                                            1
+                                        ],
+                                        [
+                                            36,
+                                            1
+                                        ],
+                                        [
+                                            56,
+                                            0
+                                        ],
+                                        [
+                                            36,
+                                            0
+                                        ]
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "2x1": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {
+                            "path": "/home/USER_NAME/.var/app/com.core447.StreamController/data/Assets/AssetManager/Assets/right.png"
+                        },
+                        "actions": [
+                            {
+                                "id": "com_core447_OSPlugin::Hotkey",
+                                "settings": {
+                                    "keys": [
+                                        [
+                                            56,
+                                            1
+                                        ],
+                                        [
+                                            38,
+                                            1
+                                        ],
+                                        [
+                                            56,
+                                            0
+                                        ],
+                                        [
+                                            38,
+                                            0
+                                        ]
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "3x1": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "Save\nQuit",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {},
+                        "actions": [
+                            {
+                                "id": "com_core447_OSPlugin::Hotkey",
+                                "settings": {
+                                    "keys": [
+                                        [
+                                            1,
+                                            1
+                                        ],
+                                        [
+                                            1,
+                                            0
+                                        ]
+                                    ]
+                                }
+                            },
+                            {
+                                "id": "com_core447_OSPlugin::WriteText",
+                                "settings": {
+                                    "text": ":wqa\n"
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "4x1": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "Quit!",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {},
+                        "actions": [
+                            {
+                                "id": "com_core447_OSPlugin::Hotkey",
+                                "settings": {
+                                    "keys": [
+                                        [
+                                            1,
+                                            1
+                                        ],
+                                        [
+                                            1,
+                                            0
+                                        ]
+                                    ]
+                                }
+                            },
+                            {
+                                "id": "com_core447_OSPlugin::WriteText",
+                                "settings": {
+                                    "text": ":q!\n"
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "0x2": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "Home",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {
+                            "path": "/home/USER_NAME/.var/app/com.core447.StreamController/data/Assets/AssetManager/Assets/nix.png"
+                        },
+                        "actions": [
+                            {
+                                "id": "com_core447_DeckPlugin::ChangePage",
+                                "settings": {
+                                    "selected_page": "/home/USER_NAME/.var/app/com.core447.StreamController/data/pages/ui_A8RKA4212L174U_1.json",
+                                    "deck_number": null
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "1x2": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "Grep Text",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {
+                            "path": "/home/USER_NAME/.var/app/com.core447.StreamController/data/Assets/AssetManager/Assets/grep.png"
+                        },
+                        "actions": [
+                            {
+                                "id": "com_core447_OSPlugin::Hotkey",
+                                "settings": {
+                                    "keys": [
+                                        [
+                                            57,
+                                            1
+                                        ],
+                                        [
+                                            57,
+                                            0
+                                        ]
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "2x2": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "Find File",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {
+                            "path": "/home/USER_NAME/.var/app/com.core447.StreamController/data/Assets/AssetManager/Assets/search.png"
+                        },
+                        "actions": [
+                            {
+                                "id": "com_core447_OSPlugin::Hotkey",
+                                "settings": {
+                                    "keys": [
+                                        [
+                                            57,
+                                            1
+                                        ],
+                                        [
+                                            57,
+                                            0
+                                        ]
+                                    ]
+                                }
+                            },
+                            {
+                                "id": "de_gensyn_HomeAssistantPlugin::HomeAssistantAction",
+                                "settings": {
+                                    "text.attribute": "state",
+                                    "service.call_service": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "3x2": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "Last Search",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {
+                            "path": "/home/USER_NAME/.var/app/com.core447.StreamController/data/Assets/AssetManager/Assets/search.png"
+                        },
+                        "actions": [
+                            {
+                                "id": "com_core447_OSPlugin::Hotkey",
+                                "settings": {
+                                    "keys": [
+                                        [
+                                            57,
+                                            1
+                                        ],
+                                        [
+                                            57,
+                                            0
+                                        ]
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "4x2": {
+                "states": {
+                    "0": {
+                        "labels": {
+                            "bottom": {
+                                "text": "Save",
+                                "color": [
+                                    255,
+                                    255,
+                                    255,
+                                    255
+                                ],
+                                "font_size": null,
+                                "font_family": ""
+                            }
+                        },
+                        "background": {},
+                        "media": {},
+                        "actions": [
+                            {
+                                "id": "com_core447_OSPlugin::Hotkey",
+                                "settings": {
+                                    "keys": [
+                                        [
+                                            1,
+                                            1
+                                        ],
+                                        [
+                                            1,
+                                            0
+                                        ]
+                                    ]
+                                }
+                            },
+                            {
+                                "id": "com_core447_OSPlugin::WriteText",
+                                "settings": {
+                                    "text": ":wa\n"
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,16 +1,18 @@
 {
-  description = "My Favorite NixOS flake!";
+  description = "My custom multi-machine system flake.";
   inputs = {
     nixos-boot.url = "github:HirschBerge/nixos-boot";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-# hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+    # hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    rose-pine-hyprcursor.url = "github:ndom91/rose-pine-hyprcursor";
     nur.url = "github:nix-community/nur";
     nixCats = {
       url = "github:BirdeeHub/nixCats-nvim";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
   outputs = {

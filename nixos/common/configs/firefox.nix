@@ -18,6 +18,7 @@
       isDefault = true;
       extensions = with pkgs.nur.repos.rycee.firefox-addons; [
         darkreader
+        honey
         lastpass-password-manager
         ublock-origin
         sponsorblock
