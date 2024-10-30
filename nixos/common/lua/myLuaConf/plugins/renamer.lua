@@ -3,12 +3,7 @@ require('renamer').setup {
     -- The popup title, shown if `border` is true
     title = 'Rename',
     -- The padding around the popup content
-    padding = {
-        top = 0,
-        left = 0,
-        bottom = 0,
-        right = 0,
-    },
+    padding = {top = 0, left = 0, bottom = 0, right = 0},
     -- The minimum width of the popup
     min_width = 15,
     -- The maximum width of the popup
@@ -16,7 +11,7 @@ require('renamer').setup {
     -- Whether or not to shown a border around the popup
     border = true,
     -- The characters which make up the border
-    border_chars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
+    border_chars = {'─', '│', '─', '│', '╭', '╮', '╯', '╰'},
     -- Whether or not to highlight the current word references through LSP
     show_refs = true,
     -- Whether or not to add resulting changes to the quickfix list
@@ -33,13 +28,28 @@ require('renamer').setup {
         ['<c-b>'] = mappings_utils.set_cursor_to_word_start,
         ['<c-c>'] = mappings_utils.clear_line,
         ['<c-u>'] = mappings_utils.undo,
-        ['<c-r>'] = mappings_utils.redo,
+        ['<c-r>'] = mappings_utils.redo
     },
     -- Custom handler to be run after successfully renaming the word. Receives
     -- the LSP 'textDocument/rename' raw response as its parameter.
-    handler = nil,
+    handler = nil
 }
 
-vim.api.nvim_set_keymap('i', '<F2>', '<cmd>lua require("renamer").rename()<cr>', { noremap = true, silent = true, desc = "[C]ode [R]ename" })
-vim.api.nvim_set_keymap('n', '<leader>cr', '<cmd>lua require("renamer").rename()<cr>', { noremap = true, silent = true, desc = "[C]ode [R]ename" })
-vim.api.nvim_set_keymap('v', '<leader>cr', '<cmd>lua require("renamer").rename()<cr>', { noremap = true, silent = true, desc = "[C]ode [R]ename" })
+vim.api.nvim_set_keymap('i', '<F2>', '<cmd>lua require("renamer").rename()<cr>',
+                        {
+    noremap = true,
+    silent = true,
+    desc = "[C]ode [R]ename"
+})
+vim.api.nvim_set_keymap('n', '<leader>cr',
+                        '<cmd>lua require("renamer").rename()<cr>', {
+    noremap = true,
+    silent = true,
+    desc = "[C]ode [R]ename"
+})
+vim.api.nvim_set_keymap('v', '<leader>cr',
+                        '<cmd>lua require("renamer").rename()<cr>', {
+    noremap = true,
+    silent = true,
+    desc = "[C]ode [R]ename"
+})

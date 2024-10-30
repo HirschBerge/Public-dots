@@ -3,29 +3,30 @@ local dashboard = require("alpha.themes.dashboard")
 
 -- Set header
 dashboard.section.header.val = {
-   "             ███╗   ██╗██╗██╗  ██╗               ",
-   "             ████╗  ██║██║╚██╗██╔╝               ",
-   "             ██╔██╗ ██║██║ ╚███╔╝               ",
-   "             ██║╚██╗██║██║ ██╔██╗               ",
-   "             ██║ ╚████║██║██╔╝ ██╗               ",
-   "             ╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝               ",
-   "        ██████╗ █████╗ ████████╗███████╗       ",
-   "        ██╔════╝██╔══██╗╚══██╔══╝██╔════╝       ",
-   "        ██║     ███████║   ██║   ███████╗       ",
-   "        ██║     ██╔══██║   ██║   ╚════██║       ",
-   "        ╚██████╗██║  ██║   ██║   ███████║       ",
-   "         ╚═════╝╚═╝  ╚═╝   ╚═╝   ╚══════╝       ",
-   "                                                ",
+    "             ███╗   ██╗██╗██╗  ██╗               ",
+    "             ████╗  ██║██║╚██╗██╔╝               ",
+    "             ██╔██╗ ██║██║ ╚███╔╝               ",
+    "             ██║╚██╗██║██║ ██╔██╗               ",
+    "             ██║ ╚████║██║██╔╝ ██╗               ",
+    "             ╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝               ",
+    "        ██████╗ █████╗ ████████╗███████╗       ",
+    "        ██╔════╝██╔══██╗╚══██╔══╝██╔════╝       ",
+    "        ██║     ███████║   ██║   ███████╗       ",
+    "        ██║     ██╔══██║   ██║   ╚════██║       ",
+    "        ╚██████╗██║  ██║   ██║   ███████║       ",
+    "         ╚═════╝╚═╝  ╚═╝   ╚═╝   ╚══════╝       ",
+    "                                                "
 }
 
 -- Set menu
 dashboard.section.buttons.val = {
-    dashboard.button( "e", "  > New file" , ":ene <BAR> startinsert <CR>"),
-    dashboard.button( "f", "  > Find file", ":Telescope find_files<CR>"),
-    dashboard.button( "r", "  > Recent"   , ":Telescope oldfiles<CR>"),
-    dashboard.button( "g", "  > Live Grep", ":Telescope live_grep<CR>"),
-    dashboard.button( "s", "  > Settings" , ":e ~/.dotfiles/flake.nix | :cd %:p:h | pwd<CR>"),
-    dashboard.button( "q", "  > Quit nixCats", ":qa<CR>"),
+    dashboard.button("e", "  > New file", ":ene <BAR> startinsert <CR>"),
+    dashboard.button("f", "  > Find file", ":Telescope find_files<CR>"),
+    dashboard.button("r", "  > Recent", ":Telescope oldfiles<CR>"),
+    dashboard.button("g", "  > Live Grep", ":Telescope live_grep<CR>"),
+    dashboard.button("s", "  > Settings",
+                     ":e ~/.dotfiles/flake.nix | :cd %:p:h | pwd<CR>"),
+    dashboard.button("q", "  > Quit nixCats", ":qa<CR>")
 }
 
 -- Set footer
