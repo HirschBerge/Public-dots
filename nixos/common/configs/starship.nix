@@ -1,13 +1,12 @@
-  { pkgs, ...}:
-    let
-      flavour = "mocha"; # One of `latte`, `frappe`, `macchiato`, or `mocha`
-    in
-  {
+{pkgs, ...}: let
+  flavour = "mocha"; # One of `latte`, `frappe`, `macchiato`, or `mocha`
+in {
   programs.starship = {
-      enable = true;
-      enableNushellIntegration = true;
-      enableZshIntegration = true;
-      settings = {
+    enable = true;
+    enableNushellIntegration = true;
+    enableZshIntegration = true;
+    settings =
+      {
         scan_timeout = 120;
         command_timeout = 1000;
         # Other config here
@@ -272,7 +271,6 @@
           format = "[$symbol($env_value )]($style)";
           style = "mauve bold italic dimmed";
           default = "";
-          
         };
         env_var.USER = {
           format = "[$symbol($env_value )]($style)";
@@ -897,13 +895,15 @@
           detect_folders = [];
         };
         palette = "catppuccin_${flavour}";
-      } // builtins.fromTOML (builtins.readFile
+      }
+      // builtins.fromTOML (builtins.readFile
         (pkgs.fetchFromGitHub
           {
             owner = "catppuccin";
             repo = "starship";
             rev = "5629d2356f62a9f2f8efad3ff37476c19969bd4f"; # Replace with the latest commit hash
             sha256 = "1bdm1vzapbpnwjby51dys5ayijldq05mw4wf20r0jvaa072nxi4y";
-          } + /palettes/${flavour}.toml));
-    };
+          }
+          + /palettes/${flavour}.toml));
+  };
 }

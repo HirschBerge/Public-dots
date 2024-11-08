@@ -7,8 +7,8 @@
 #  ██║╚██╗██║██║ ██╔██╗ ██║   ██║╚════██║
 #  ██║ ╚████║██║██╔╝ ██╗╚██████╔╝███████║
 #  ╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝
-#                                        
-{ 
+#
+{
   config,
   pkgs,
   hostname,
@@ -16,37 +16,34 @@
   discord,
   inputs,
   stateVersion,
-  ... 
-}:
-let
-  themes = pkgs.callPackage  ../common/configs/themes.nix {};
-in
-
-{
-  imports =
-    [ # Include the results of the hardware scan.
-        ../common/common_pkgs.nix
-        ../common/configs/syncthing.nix
-        ./hardware-configuration.nix
-        ./8bitdo.nix
-        ../common/wayland.nix
-        ./configs/gaming.nix
-        ../common/configs/fonts.nix
-        ../common/systemCat.nix
-    ];
+  ...
+}: let
+  themes = pkgs.callPackage ../common/configs/themes.nix {};
+in {
+  imports = [
+    # Include the results of the hardware scan.
+    ../common/common_pkgs.nix
+    ../common/configs/syncthing.nix
+    ./hardware-configuration.nix
+    ./8bitdo.nix
+    ../common/wayland.nix
+    ./configs/gaming.nix
+    ../common/configs/fonts.nix
+    ../common/systemCat.nix
+  ];
   systemd = {
     user.services.polkit-gnome-authentication-agent-1 = {
       description = "polkit-gnome-authentication-agent-1";
-      wantedBy = [ "graphical-session.target" ];
-      wants = [ "graphical-session.target" ];
-      after = [ "graphical-session.target" ];
+      wantedBy = ["graphical-session.target"];
+      wants = ["graphical-session.target"];
+      after = ["graphical-session.target"];
       serviceConfig = {
-          Type = "simple";
-          ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-          Restart = "on-failure";
-          RestartSec = 1;
-          TimeoutStopSec = 10;
-        };
+        Type = "simple";
+        ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+        Restart = "on-failure";
+        RestartSec = 1;
+        TimeoutStopSec = 10;
+      };
     };
   };
   # Bootloader.
@@ -56,7 +53,7 @@ in
     timeout = 1;
   };
   nixos-boot = {
-    enable  = true;
+    enable = true;
 
     # Different colors
     # bgColor.red   = 100; # 0 - 255
@@ -71,8 +68,8 @@ in
   nix = {
     settings = {
       auto-optimise-store = true;
-      experimental-features = [ "nix-command" "flakes" ];
-      trusted-users = [ "root" "@wheel" ];
+      experimental-features = ["nix-command" "flakes"];
+      trusted-users = ["root" "@wheel"];
     };
   };
   environment = {
@@ -80,6 +77,7 @@ in
       HOME_MANAGER_BACKUP_EXT = "backup";
       FLAKE = "/home/${username}/.dotfiles";
       TACO_BELL = "${discord}GNVZjd5Yi1tWWNSYmFHMmREX09XUkFEVFJ4amtwMW1qamhlTTB4RklkWVV6VWlYRgo=";
+      ZELLIJ_AUTO_EXIT = "TRUE";
     };
     variables = {
       EDITOR = "v";
@@ -90,47 +88,49 @@ in
   };
   security.sudo = {
     enable = true;
-    extraRules = [{
-      commands = [
-        {
-          command = "/run/current-system/sw/bin/ln";
-          options = [ "NOPASSWD" ];
-        }
-        {
-          command = "${pkgs.systemd}/bin/systemctl suspend";
-          options = [ "NOPASSWD" ];
-        }
-        {
-          command = "${pkgs.systemd}/bin/reboot";
-          options = [ "NOPASSWD" ];
-        }
-        {
-          command = "${pkgs.systemd}/bin/poweroff";
-          options = [ "NOPASSWD" ];
-        }
-        {
-          command = "/run/current-system/sw/bin/nixos-rebuild";
-          options = [ "NOPASSWD" ];
-        }
-        {
-          command = "${pkgs.neovim}/bin/nvim";
-          options = [ "NOPASSWD" ];
-        }
-        {
-          command = "${pkgs.systemd}/bin/systemctl";
-          options = [ "NOPASSWD" ];
-        }
-        {
-          command = "/run/current-system/sw/bin/nix-channel";
-          options = [ "NOPASSWD" ];
-        }
-      #   {
-      #     command = "/home/${username}/.local/bin/xremap";
-      #     options = [ "NOPASSWD" ];
-      #   }
-      ];
-      groups = [ "wheel" ];
-    }];
+    extraRules = [
+      {
+        commands = [
+          {
+            command = "/run/current-system/sw/bin/ln";
+            options = ["NOPASSWD"];
+          }
+          {
+            command = "${pkgs.systemd}/bin/systemctl suspend";
+            options = ["NOPASSWD"];
+          }
+          {
+            command = "${pkgs.systemd}/bin/reboot";
+            options = ["NOPASSWD"];
+          }
+          {
+            command = "${pkgs.systemd}/bin/poweroff";
+            options = ["NOPASSWD"];
+          }
+          {
+            command = "/run/current-system/sw/bin/nixos-rebuild";
+            options = ["NOPASSWD"];
+          }
+          {
+            command = "${pkgs.neovim}/bin/nvim";
+            options = ["NOPASSWD"];
+          }
+          {
+            command = "${pkgs.systemd}/bin/systemctl";
+            options = ["NOPASSWD"];
+          }
+          {
+            command = "/run/current-system/sw/bin/nix-channel";
+            options = ["NOPASSWD"];
+          }
+          #   {
+          #     command = "/home/${username}/.local/bin/xremap";
+          #     options = [ "NOPASSWD" ];
+          #   }
+        ];
+        groups = ["wheel"];
+      }
+    ];
   };
   networking.hostName = "${hostname}"; # Define your hostname.
   # Enable networking
@@ -155,15 +155,15 @@ in
   };
 
   # Enable the X11 windowing system.
-   services.xserver.enable = true;
+  services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-   services.displayManager.sddm = {
-      enable = true;
-      enableHidpi = true;
-      wayland.enable = true;
-      theme = "abstractguts-themes";
-    };
+  services.displayManager.sddm = {
+    enable = true;
+    enableHidpi = true;
+    wayland.enable = true;
+    theme = "abstractguts-themes";
+  };
   # Configure keymap in X11
   services.xserver = {
     xkb.layout = "us";
@@ -175,12 +175,12 @@ in
       enable = true;
       powerOnBoot = true;
       package = pkgs.bluez;
-      settings = { 
-      General = {
-        Experimental = true;
-        Enable = "Source,Sink,Media,Socket";
+      settings = {
+        General = {
+          Experimental = true;
+          Enable = "Source,Sink,Media,Socket";
         };
-      };  
+      };
     };
   };
   services.blueman.enable = true;
@@ -195,10 +195,10 @@ in
         "bluez5.enable-sbc-xq" = true;
         "bluez5.enable-msbc" = true;
         "bluez5.enable-hw-volume" = true;
-        "bluez5.roles" = [ "hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag" ];
+        "bluez5.roles" = ["hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag"];
       };
     };
-# If you want to use JACK applications, uncomment this
+    # If you want to use JACK applications, uncomment this
     # jack.enable = true;
 
     # use the example session manager (no others are packaged yet so this is enabled by default,
@@ -214,16 +214,15 @@ in
     shell = pkgs.zsh;
     isNormalUser = true;
     description = "${username}";
-    extraGroups = [ "networkmanager" "wheel" "keyd" ];
+    extraGroups = ["networkmanager" "wheel" "keyd"];
     packages = with pkgs; [
-    starship
-    rocmPackages.rocm-smi
-    streamcontroller
-    heroic-unwrapped
-    godot_4
-    piper
-    firefox
-    #  thunderbird
+      starship
+      rocmPackages.rocm-smi
+      streamcontroller
+      heroic-unwrapped
+      piper
+      firefox
+      #  thunderbird
     ];
   };
   services.ratbagd.enable = true;
@@ -239,7 +238,7 @@ in
   #     });
   #   })
   # ];
-  environment.systemPackages =  [
+  environment.systemPackages = [
     inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
     pkgs.catppuccin-cursors.mochaMauve
     themes.abstractguts-themes
@@ -248,7 +247,7 @@ in
   # XDG portal
   xdg.portal = {
     enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk];
+    extraPortals = [pkgs.xdg-desktop-portal-gtk];
     config.common.default = "*";
     # configPackages = [ pkgs.xdg-desktop-portal-gtk pkgs.xdg-desktop-portal-hyprland ];
   };
@@ -269,16 +268,16 @@ in
     };
   };
   # Allows hyprlock to use pam
-environment.etc = {
+  environment.etc = {
     "pam.d/hyprlock" = {
-        text = ''
+      text = ''
         auth include login
-        '';
-        # Optionally, specify the permissions you want for the file
-        # by setting the `mode` attribute:
-        mode = "0777";
+      '';
+      # Optionally, specify the permissions you want for the file
+      # by setting the `mode` attribute:
+      mode = "0777";
     };
-};
+  };
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   services.keyd = {
@@ -294,13 +293,13 @@ environment.etc = {
         };
       };
     };
-  }; 
+  };
   services.openssh = {
     enable = true;
     settings = {
       PasswordAuthentication = false;
       KbdInteractiveAuthentication = false;
-      PermitRootLogin = "no";    
+      PermitRootLogin = "no";
     };
   };
   services.pcscd.enable = true;

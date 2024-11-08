@@ -1,7 +1,8 @@
-{ pkgs,
-  username,
- ...}:
 {
+  pkgs,
+  username,
+  ...
+}: {
   environment.systemPackages = with pkgs; [
     tlrc
     clipse
@@ -28,11 +29,8 @@
     mpv
     sd
     file
-    pistol
-    poppler_utils
     zellij
     zoxide
-    pika-backup
     hyprlock
     hypridle
     # bat-extras.batgrep
@@ -47,15 +45,18 @@
     portal
     yazi
     anki
+    protonmail-desktop
+    rqbit
+    mangal
   ];
- i18n.inputMethod = {
-   type = "fcitx5";
-   enable = true;
-   fcitx5.addons = with pkgs; [
+  i18n.inputMethod = {
+    type = "fcitx5";
+    enable = true;
+    fcitx5.addons = with pkgs; [
       fcitx5-anthy
       fcitx5-gtk
-   ];
- };
+    ];
+  };
   programs.nh = {
     enable = true;
     clean.enable = true;
@@ -63,5 +64,3 @@
     flake = "/home/${username}/.dotfiles";
   };
 }
-
-

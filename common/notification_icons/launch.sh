@@ -15,9 +15,9 @@ done
 
 # Check flag combinations and execute corresponding commands
 if [ "$toggle_flag" = true ]; then
-  swaync-client -t -sw
+  notification_icons-client -t -sw
 elif [ "$dnd_flag" = true ]; then
-  swaync-client -d -sw
+  notification_icons-client -d -sw
 else
   echo "Please specify a valid flag: --toggle or --dnd"
 fi

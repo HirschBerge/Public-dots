@@ -1,22 +1,21 @@
-{ pkgs, ...}:
-
-{
+{pkgs, ...}: {
   #enable Steam: https://linuxhint.com/how-to-instal-steam-on-nixos/
   programs.steam.enable = true;
   nixpkgs.config.packageOverrides = pkgs: {
     steam = pkgs.steam.override {
-      extraPkgs = pkgs: with pkgs; [
-        pango
-        libthai
-        harfbuzz
-      ];
+      extraPkgs = pkgs:
+        with pkgs; [
+          pango
+          libthai
+          harfbuzz
+        ];
     };
   };
   environment.systemPackages = with pkgs; [
-    # Steam 
+    # Steam
     mangohud
     gamemode
-    # WINE 
+    # WINE
     wine
     winetricks
     protontricks
@@ -25,7 +24,7 @@
     # https://github.com/lutris/docs/
     gnutls
     openldap
-    libgpgerror
+    libgpg-error
     freetype
     sqlite
     libxml2

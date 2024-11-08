@@ -1,7 +1,0 @@
-Up/Down, Home, End - as expected
-Return: Execute default action or close notification if none
-Del/BackSpace: Close notification
-C: Close all
-Buttons 1-9: Execute alternative actions
-Left click button / actions: Activate notification action
-Right click notification: Close notification

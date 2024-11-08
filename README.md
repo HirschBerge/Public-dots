@@ -1,5 +1,5 @@
 <h1 align="center">
-   <img src="https://github.com/Frost-Phoenix/nixos-config/blob/main/.github/assets/logo/nixos-logo.png" width="100px" /> 
+   <img src="./common/notification_icons/nixos-logo.svg" width="100px" /> 
    <br>
       HirschBerge's NixOS .dotfiles 
    <br>
@@ -53,13 +53,13 @@ Please review the official [NixOS Installation Guide](https://nixos.wiki/wiki/Ni
 |---------------------------|-------------------------------------------------------------------------------------------------------------------|
 | OS                        | [NixOS](https://nixos.org/)                                                                                       |
 | Window Manager            | [Hyprland](https://hyprland.org/)                                                                                 |
-| Discord Modifications     | [BetterDiscord](https://betterdiscord.app/)                                                                       |
-| Notification Manager      | [Swaync](https://github.com/ErikReider/SwayNotificationCenter)                                                    |
+| Discord Modifications     | [Vesktop](https://github.com/Vencord/Vesktop)                                                                       |
+| Notification Manager      | [Custom EWW Widget](https://github.com/elkowar/eww)                                                    |
 | Web Browser               | [Firefox](https://www.mozilla.org/en-US/firefox/new/)                                                             |
 | Video Player              | [MPV](https://mpv.io/)                                                                                            |
 | Text Editor               | [Neovim](https://neovim.io/)                                                                                      |
 | Neovim "Distro"           | [nixCats-nvim](https://github.com/BirdeeHub/nixCats-nvim)                                                         |
-| CLI File Manager          | [lf](https://github.com/gokcehan/lf)                                                                              |
+| CLI File Manager          | [Yazi](https://github.com/sxyazi/yazi)                                                                             |
 | Wallpaper Engine          | [SWWW](https://github.com/LGFae/swww)                                                                             |
 | GUI File Manager          | [Thunar](https://docs.xfce.org/xfce/thunar/start)                                                                 |
 | Launcher                  | [Rofi](https://github.com/davatorium/rofi)                                                                        |
@@ -67,7 +67,7 @@ Please review the official [NixOS Installation Guide](https://nixos.wiki/wiki/Ni
 | Terminal                  | [Kitty](https://sw.kovidgoyal.net/kitty/)                                                                         |
 | MultiPlexer               | [Zellij](https://zellij.dev/)                                                                                     |
 | Zellij Bar                | [zjstatus](https://github.com/dj95/zjstatus/)                                                                     |
-| Shell                     | [Zsh](https://www.zsh.org/)                                                                                       |
+| Shell                     | [NuShell](https://www.nushell.sh/)                                                                                       |
 | Fonts                     | [Termina Test](https://www.cufonfonts.com/font/termina-test), [Jetbrains Nerdfonts Mono](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/JetBrainsMono.zip), [Fira Code](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/FiraCode.zip), [Iosevka Nerd Font](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Iosevka.zip) |
 | Linux ISO Torrents        | [rtorrent](https://github.com/rakshasa/rtorrent)                                                                  |
 | CLI tool rewrites         | `find` ➡ [fd](https://github.com/sharkdp/fd)  `grep` ➡ [rg](https://github.com/BurntSushi/ripgrep) `sed` ➡ [sd](https://github.com/chmln/sd) `du` ➡ [dust](https://github.com/bootandy/dust)|

@@ -1,5 +1,5 @@
 {
-	"$schema": "/nix/store/2fixjd1ay7b19x4f8g5qbyhqk2lmr04k-SwayNotificationCenter-0.9.0/etc/xdg/swaync/configSchema.json",
+	"$schema": "/nix/store/2fixjd1ay7b19x4f8g5qbyhqk2lmr04k-SwayNotificationCenter-0.9.0/etc/xdg/notification_icons/configSchema.json",
 
 	"positionX": "right",
 	"positionY": "top",

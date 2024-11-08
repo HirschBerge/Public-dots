@@ -2,18 +2,16 @@
   pkgs,
   config,
   ...
-}:
-let
+}: let
   custom-font = pkgs.callPackage ./fonts-deriviation.nix {};
-in
-{
+in {
   programs.mpv = {
     enable = true;
     config = {
       osc = "no";
       pause = "no";
       # Terminal
-      msg-color= "yes";
+      msg-color = "yes";
       msg-module = "yes";
       osd-bar = "no";
       profile = "gpu-hq";

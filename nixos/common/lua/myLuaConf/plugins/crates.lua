@@ -58,17 +58,22 @@ vim.g.rustaceanvim = {
                     silent = true,
                     desc = "[C]ode [R]ename"
                 })
-            vim.keymap.set("n", "<Leader>cv",
-                function() vim.cmd.RustLsp('openCargo') end,
-                { buffer = bufnr, desc = "[C]argo [V]iew" })
+            vim.keymap.set("n", "<Leader>cv", function()
+                vim.cmd("vsplit")            -- Open a vertical split
+                vim.cmd("wincmd h")          -- Move to the left split
+                vim.cmd.RustLsp('openCargo') -- Execute the RustLsp command in the left split
+            end, { buffer = bufnr, desc = "[C]argo [V]iew" })
         end
     },
     settings = {
         ["rust-analyzer"] = {
+            rustdoc = {
+                enable = true,
+            },
             cargo = {
                 allFeatures = true,
                 loadOutDirsFromCheck = true,
-                runBuildScripts = true
+                runBuildScripts = true,
             },
             checkOnSave = {
                 allFeatures = true,
@@ -76,18 +81,18 @@ vim.g.rustaceanvim = {
                 extraArgs = {
                     "--", "--no-deps", "-Dclippy::correctness",
                     "-Dclippy::complexity", "-Wclippy::perf",
-                    "-Wclippy::pedantic"
-                }
+                    "-Wclippy::pedantic",
+                },
             },
             procMacro = {
                 enable = true,
                 ignored = {
                     ["async-trait"] = { "async_trait" },
                     ["napi-derive"] = { "napi" },
-                    ["async-recursion"] = { "async_recursion" }
-                }
-            }
-        }
+                    ["async-recursion"] = { "async_recursion" },
+                },
+            },
+        },
     },
     tools = { hover_actions = { auto_focus = true } }
 }

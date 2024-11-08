@@ -34,13 +34,13 @@ get_volicon() {
 			echo " "
 		else
 			if [[ "$VOL" -le 30 ]]; then
-				echo "󱄡 "
+				echo "󱄡"
 			elif [[ "$VOL" -le 75 ]]; then
-				echo " "
+				echo ""
 			elif [[ "$VOL" -le 100 ]]; then
-				echo "  "
+				echo ""
 			else
-				echo " "
+				echo ""
 			fi
 				
 		fi

@@ -1,5 +1,9 @@
-{ config, pkgs,inputs, ... }:
 {
+  config,
+  pkgs,
+  inputs,
+  ...
+}: {
   programs.hyprland = {
     enable = true;
     # package = inputs.hyprland.packages.${pkgs.system}.hyprland;
@@ -17,6 +21,6 @@
     # "XDG_SESSION_TYPE" = "wayland";
     # "GBM_BACKEND" = "nvidia-drm";
     # "__GLX_VENDOR_LIBRARY_NAME" = "nvidia";
-    # "WLR_EGL_NO_MODIFIRES" = "1"; 
+    # "WLR_EGL_NO_MODIFIRES" = "1";
   };
 }

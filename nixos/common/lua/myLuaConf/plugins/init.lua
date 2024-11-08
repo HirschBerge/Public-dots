@@ -185,4 +185,4 @@ vim.keymap.set("n", "<leader>-", "<cmd>Oil .<CR>",
 
 -- NOTE: Default state on
 require('gitsigns').toggle_deleted()
-package.loaded.gitsigns.blame_line()
+package.loaded.gitsigns.toggle_current_line_blame()

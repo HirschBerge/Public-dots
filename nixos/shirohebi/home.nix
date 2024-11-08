@@ -1,23 +1,21 @@
-#  ██╗  ██╗ ██████╗ ███╗   ███╗███████╗    ███╗   ███╗ █████╗ ███╗   ██╗ █████╗  ██████╗ ███████╗██████╗ 
+#  ██╗  ██╗ ██████╗ ███╗   ███╗███████╗    ███╗   ███╗ █████╗ ███╗   ██╗ █████╗  ██████╗ ███████╗██████╗
 #  ██║  ██║██╔═══██╗████╗ ████║██╔════╝    ████╗ ████║██╔══██╗████╗  ██║██╔══██╗██╔════╝ ██╔════╝██╔══██╗
 #  ███████║██║   ██║██╔████╔██║█████╗      ██╔████╔██║███████║██╔██╗ ██║███████║██║  ███╗█████╗  ██████╔╝
 #  ██╔══██║██║   ██║██║╚██╔╝██║██╔══╝      ██║╚██╔╝██║██╔══██║██║╚██╗██║██╔══██║██║   ██║██╔══╝  ██╔══██╗
 #  ██║  ██║╚██████╔╝██║ ╚═╝ ██║███████╗    ██║ ╚═╝ ██║██║  ██║██║ ╚████║██║  ██║╚██████╔╝███████╗██║  ██║
 #  ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝    ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝
-#                                                                                                              
+#
 {
   email,
-    pkgs,
-    username,
-    stateVersion,
-    ...
-}: 
-let 
-themes = pkgs.callPackage ../common/configs/themes.nix {};
-in
-{
-# You can import other home-manager modules here
-  imports = [ 
+  pkgs,
+  username,
+  stateVersion,
+  ...
+}: let
+  themes = pkgs.callPackage ../common/configs/themes.nix {};
+in {
+  # You can import other home-manager modules here
+  imports = [
     ../common/configs/firefox.nix
     ../common/configs/mpv.nix
     ../common/configs/zellij.nix
@@ -25,21 +23,21 @@ in
     ../common/configs/rofi.nix
     ../common/scripts.nix
     ../common/configs/deploy_dots.nix
-    ../common/configs/zsh.nix 
-    ./configs/hypr/default.nix 
-    ../common/configs/kitty.nix 
-    ../common/configs/starship.nix 
+    ../common/configs/zsh.nix
+    ./configs/hypr/default.nix
+    ../common/configs/kitty.nix
+    ../common/configs/starship.nix
     ../common/configs/wlogout.nix
-# ../common/configs/nixvim.nix
+    # ../common/configs/nixvim.nix
   ];
   nixpkgs = {
-# You can add overlays here
-#   overlays = [
-#
-#   ];
-# Configure your nixpkgs instance
+    # You can add overlays here
+    #   overlays = [
+    #
+    #   ];
+    # Configure your nixpkgs instance
     config = {
-# Disable if you don't want unfree packages
+      # Disable if you don't want unfree packages
       allowUnfree = true;
     };
   };
@@ -48,35 +46,35 @@ in
   home.stateVersion = stateVersion;
   programs.home-manager.enable = true;
   home.packages = with pkgs; [
-      btop
-      brightnessctl
-      fzf
-      bat
-      axel
-      jq
-      fd
-      lazygit
-      xfce.thunar
-      xfce.tumbler
-      eww
-      swaynotificationcenter # dunst# mako
-      wlogout
-      nmap
-      grc
-      satty
-# libsForQt5.qtstyleplugin-kvantum
-      aria
-      ani-cli
-      rtorrent
-      libnotify
-      yt-dlp
-      gimp
-      pavucontrol
-      autojump
-      steam
-      playerctl
-      wf-recorder
-      ];
+    btop
+    brightnessctl
+    fzf
+    bat
+    axel
+    jq
+    fd
+    lazygit
+    xfce.thunar
+    xfce.tumbler
+    eww
+    # swaynotificationcenter # dunst# mako
+    wlogout
+    nmap
+    grc
+    satty
+    # libsForQt5.qtstyleplugin-kvantum
+    aria
+    ani-cli
+    rtorrent
+    libnotify
+    yt-dlp
+    gimp
+    pavucontrol
+    autojump
+    steam
+    playerctl
+    wf-recorder
+  ];
   programs.lf = {
     enable = true;
   };
@@ -104,13 +102,13 @@ in
   xdg.configFile."Kvantum/kvantum.kvconfig".text = ''
     [General]
     theme=Sweet-Dark
-      '';
+  '';
   nixpkgs.config.permittedInsecurePackages = [
     "electron-25.9.0"
   ];
   home.sessionVariables = {
     GTK_USE_PORTAL = 1;
-    eEDITOR = "nvim";    
+    eEDITOR = "nvim";
   };
 
   programs.git = {
@@ -126,14 +124,14 @@ in
     };
     delta = {
       enable = true;
-      options = {  
-	decorations = {
-	  commit-decoration-style = "bold yellow box ul";
-	  file-decoration-style = "none";
-	  file-style = "bold yellow ul";
-	};
-	features = "decorations";
-	whitespace-error-style = "22 reverse";
+      options = {
+        decorations = {
+          commit-decoration-style = "bold yellow box ul";
+          file-decoration-style = "none";
+          file-style = "bold yellow ul";
+        };
+        features = "decorations";
+        whitespace-error-style = "22 reverse";
       };
     };
   };
@@ -144,21 +142,21 @@ in
   };
   programs.eza = {
     enable = true;
-# enableAliases = false;
+    # enableAliases = false;
     git = true;
-    icons = true;
+    icons = "always";
     extraOptions = [
       "--group-directories-first"
-	"--header"
-	"-o"
-	"--no-permissions"
-	"--hyperlink"
+      "--header"
+      "-o"
+      "--no-permissions"
+      "--hyperlink"
     ];
   };
-  fonts.fontconfig.enable = true; 
+  fonts.fontconfig.enable = true;
 
   xdg.configFile = {
-# HACK: Patches the Dank Mono font to be usable with Kitty
+    # HACK: Patches the Dank Mono font to be usable with Kitty
     "fontconfig/conf.d/75-disable-fantasque-calt.conf".text = ''
       <?xml version="1.0"?>
       <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
@@ -173,6 +171,6 @@ in
       </edit>
       </match>
       </fontconfig>
-      '';
+    '';
   };
 }

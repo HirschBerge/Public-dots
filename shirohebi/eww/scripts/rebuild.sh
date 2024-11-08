@@ -10,7 +10,7 @@ upgrade () {
 }
 
 home_manager_only(){
-  notify-send "Started Home Manager" "We'll let ya know" -i ~/.config/swaync/nixos-logo.png
+  notify-send "Started Home Manager" "We'll let ya know" -a 'nixos-logo'
   rm -rf ~/.scripts/.venv
   rm ~/.mozilla/firefox/USER_NAME/search.json.mozlz4
   nh home switch
@@ -28,8 +28,8 @@ rebuild (){
 }
 
 send_notification(){
-  aplay $HOME/.config/swaync/notification.wav &
-  response=$(timeout 10 notify-send -A "Okay!" "Rebuild Complete!" "$1" -A "Reboot" -i ~/.config/swaync/nixos-logo.png)
+  pw-play $HOME/.config/notification_icons/notification.wav &
+  response=$(timeout 10 notify-send -A "Okay!" "Rebuild Complete!" "$1" -A "Reboot" -a 'nixos-logo')
   case "$response" in
     0) exit 0 ;;
     1) reboot ;;

@@ -257,7 +257,7 @@
                 :tooltip "Wallpaper"
             (label :text " " :class "tooltip"))
             (button :class "keybind"
-                :onclick "bash $HOME/.config/hypr/scripts/show_binds.sh 2> /dev/null"
+                :onclick "hyprland_bindings 2> /dev/null"
                 :timeout "1000ms"
                 :tooltip "Keybindings"
             (label :text " " :class "tooltip"))

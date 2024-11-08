@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=https://carapace.sh/schemas/command.json
+name: refs
+flags:
+  -t, --tags: include tags # ${C_FLAG_TAGS}
+  --localbranches: include local branches # ${C_FLAG_LOCALBRANCHES}
+  --c=: amount of commits # ${C_FLAG_C}
+completion:
+  positional:
+    - ["$carapace.tools.git.Refs({tags: ${C_FLAG_TAGS:-false}, localbranches: ${C_FLAG_LOCALBRANCHES:-false}, commits: ${C_FLAG_C:-0}})"]
+    - ["$carapace.tools.git.Refs"] # default

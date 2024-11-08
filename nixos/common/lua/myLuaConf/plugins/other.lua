@@ -17,7 +17,24 @@ autopairs.setup()
 require('nvim-highlight-colors').setup { enable_named_colors = true }
 
 -- Todo Comments
-require('todo-comments').setup()
+local tdc = require('todo-comments')
+tdc.setup()
+vim.keymap.set("n", "]t", function()
+    tdc.jump_next()
+end, { desc = "Next todo comment" })
+
+vim.keymap.set("n", "[t", function()
+    tdc.jump_prev()
+end, { desc = "Previous todo comment" })
+-- PERF: perf
+-- HACK: hack
+-- TODO: todo
+-- XXX: nope
+-- NOTE: note
+-- FIX: fix
+-- TEST: test
+-- PASSED: nice
+
 
 -- Zellij
 require('zellij').setup()
@@ -54,8 +71,22 @@ map('v', '<A-l>', '<ESC>:ZellijNavigateRight<CR>', opts)
 
 -- This module contains a number of default definitions
 local rainbow_delimiters = require 'rainbow-delimiters'
+vim.cmd("filetype plugin indent on")
 
+-- Enable syntax highlighting
+vim.cmd("syntax enable")
+
+-- Viewer options for VimTeX
+vim.g.vimtex_view_method = 'zathura'
+
+-- Generic viewer interface example
+vim.g.vimtex_view_general_viewer = 'zathura'
+vim.g.vimtex_view_general_options = '--unique file:@pdf\\#src:@line@tex'
+
+-- Set compiler method to latexrun
+vim.g.vimtex_compiler_method = 'pdflatex'
 -- @type rainbow_delimiters.config
+
 vim.g.rainbow_delimiters = {
     strategy = {
         [''] = rainbow_delimiters.strategy['global'],

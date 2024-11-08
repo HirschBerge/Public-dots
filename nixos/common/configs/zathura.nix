@@ -1,7 +1,4 @@
-{
-  ...
-}: 
-{
+{...}: {
   programs.zathura = {
     enable = true;
     options = {
@@ -34,7 +31,7 @@
       highlight-color = "#313134";
       highlight-fg = "#e29eca";
       highlight-active-color = "#e29eca";
-      selection-clipboard= "clipboard";
+      selection-clipboard = "clipboard";
       synctex = "true";
       synctex-editor-command = "code -g %{input}:%{line}";
       recolor = "true";

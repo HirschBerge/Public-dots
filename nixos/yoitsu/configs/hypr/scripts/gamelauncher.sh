@@ -1,9 +1,5 @@
 #!/usr/bin/env sh
 
-# set variables
-ScrDir=$(dirname $(realpath "$0"))
-source $ScrDir/globalcontrol.sh
-ThemeSet="$HOME/.config/hypr/themes/theme.conf"
 RofiConf="$HOME/.config/rofi/steam/gamelauncher_${1}.rasi"
 
 
@@ -12,26 +8,19 @@ SteamLib="$HOME/.local/share/Steam/config/libraryfolders.vdf"
 SteamThumb="$HOME/.local/share/Steam/appcache/librarycache"
 
 if [ ! -f "$SteamLib" ] || [ ! -d "$SteamThumb" ] || [ ! -f "$RofiConf" ] ; then
-    notify-send "Steam library not found!" -r 91190 -t 2200
+    notify-send "Steam library not found!" -r 91190 -t 2200 -a steam
     exit 1
 fi
 # check steam mount paths
 SteamPaths=$(grep '"path"' "$SteamLib" | awk -F '"' '{print $4}')
 
-# Do NOT double quote below
-ManifestList=$(find $SteamPaths/steamapps/ -type f -name "appmanifest_*.acf" 2>/dev/null)
-
-# set rofi override
-elem_border=$(( hypr_border * 2 ))
-icon_border=$(( elem_border - 3 ))
-r_override="element{border-radius:${elem_border}px;} element-icon{border-radius:${icon_border}px;}"
-
+ManifestList=$(fd "appmanifest_" $(printf "%s" "$SteamPaths") -e acf)
 
 # read intalled games
 GameList=$(echo "$ManifestList" | while read -r acf
 do
     appid=$(grep '"appid"' "$acf" | cut -d '"' -f 4)
-    if [ -f "${SteamThumb}"/"${appid}"_library_600x900.jpg ] ; then
+   if [ -f "${SteamThumb}"/"${appid}"_library_600x900.jpg ] ; then
         gam=$(grep '"name"' "$acf" | cut -d '"' -f 4)
         echo "$gam|$appid"
     else
@@ -44,8 +33,8 @@ RofiSel=$( echo "$GameList" | while read -r acf
 do
     appid=$(echo "$acf" | cut -d '|' -f 2)
     game=$(echo "$acf" | cut -d '|' -f 1)
-    echo -en "$game\x00icon\x1f${SteamThumb}/${appid}_library_600x900.jpg\n"
-done | rofi -dmenu -i -theme-str "${r_override}" -config "$RofiConf")
+    printf "%s\x00icon\x1f%s/%s_library_600x900.jpg\n" "$game" "$SteamThumb" "$appid"
+done | rofi -dmenu -i -config "$RofiConf")
 
 
 declare -A game_opts
@@ -64,32 +53,30 @@ if [ -n "$RofiSel" ] ; then
     launchid=$(echo "$GameList" | grep "$RofiSel" | cut -d '|' -f 2)
     case "$RofiSel" in
         "Apex Legends")
-            steam -applaunch "${launchid}" ${game_opts["$RofiSel"]} &
+            steam -applaunch "${launchid}" "${game_opts["$RofiSel"]}" &
             ;;
         "Cyberpunk 2077" | "Baldur's Gate 3")
             reversed_command="steam -applaunch ${launchid} gamemoderun %command% ${game_opts["$RofiSel"]}"
-            echo -en "$reversed_command\n" &
+            printf "%s" "$reversed_command" 
             eval "$reversed_command" &
             ;;
         *)
-            if [[ -v game_opts["$RofiSel"] ]]; then
-                steam steam://rungameid/${launchid}
-                # steam -applaunch "${launchid}" "${game_opts["$RofiSel"]} gamemoderun %command%" &
-                # printf "Launching with: ${launchid} ${game_opts["$RofiSel"]} gamemoderun command\n"
-            else
-                steam -applaunch "${launchid}" "gamemoderun %command%" &
-            fi
+            steam steam://rungameid/"${launchid}" # NOTE: Just uses the launch options you set in steam.
             ;;
     esac
 
 
 
     sleep 5
-    notify-send "Launching a game!" "${RofiSel}..." -i "${SteamThumb}"/"${launchid}"_header.jpg -r 91190 -t 2200
-    sleep 15
+    if [ -e "${SteamThumb}/${launchid}_header.jpg" ]; then
+        icon=${SteamThumb}/${launchid}_header.jpg
+    elif [ -e "${SteamThumb}/${launchid}_library_600x900.jpg" ]; then
+        icon="${SteamThumb}/${launchid}_library_600x900.jpg" 
+    else
+        icon="${SteamThumb}/${launchid}_library_hero.jpg" 
+    fi
+    notify-send "Launching a game!" "${RofiSel}..." -i "$icon" -r 91190 -t 2200
 
-    # Assuming you're killing some processes after launching the game
-    ps aux | grep '[D]XSETUP\|[D]XSetup' | awk '{ print $2 }' | xargs kill
     wait
 fi
 

@@ -10,6 +10,7 @@ $white: #F8FBFC;
 $lightgray: #DFE2E3;
 $gray: #C5C8C9;
 $medgray: #797C7D;
+$mantle: #181825;
 $darkgray: #46494A;
 $black: #1a1b26;
 
@@ -490,20 +491,27 @@ calendar.highlight {
 .keybind {
 	color: $color5;
 }
+
 .notifications {
-	min-height: 0px;
-	background-color: transparent;
+    min-height: 0px;
+    background-color: transparent;
 }
 
 .notif {
-	background-color: #282828;
-	margin-bottom: 10px;
-	padding: 10px;
-	border-radius: 10px;
-	border-width: 2;
-	border-color: #fabd2f;
+    background-color: $mantle;
+    margin-bottom: 10px;
+    padding: 10px;
+    color: $mauve;
+    border-radius: 10px;
+    border: 2px solid $color11; // Shorthand for width, style, and color
 }
 
 .notif image {
-	padding-right: 10px;
+    padding-right: 10px;
+}
+
+.invisible-close {
+    background-color: transparent; // Make background transparent
+    border: none;                  // Remove border
+    color: transparent;            // Make text transparent
 }

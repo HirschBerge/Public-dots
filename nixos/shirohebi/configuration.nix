@@ -7,30 +7,27 @@
 #  ██║╚██╗██║██║ ██╔██╗ ██║   ██║╚════██║
 #  ██║ ╚████║██║██╔╝ ██╗╚██████╔╝███████║
 #  ╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝
-#                                        
-{ 
+#
+{
   config,
   pkgs,
   inputs,
   hostname,
   username,
   discord,
-  ... }:
-let
-  themes = pkgs.callPackage  ../common/configs/themes.nix {};
-in
-
-{
-  imports =
-    [
-        ./hardware-configuration.nix
-        ../common/configs/syncthing.nix
-        ../common/common_pkgs.nix
-        ../common/wayland.nix
-        ../common/configs/fonts.nix
-        ./configs/battery.nix
-        ../common/systemCat.nix
-    ];
+  ...
+}: let
+  themes = pkgs.callPackage ../common/configs/themes.nix {};
+in {
+  imports = [
+    ./hardware-configuration.nix
+    ../common/configs/syncthing.nix
+    ../common/common_pkgs.nix
+    ../common/wayland.nix
+    ../common/configs/fonts.nix
+    ./configs/battery.nix
+    ../common/systemCat.nix
+  ];
   # Bootloader.
   boot.loader = {
     systemd-boot.enable = true;
@@ -38,7 +35,7 @@ in
     timeout = 1;
   };
   nixos-boot = {
-    enable  = true;
+    enable = true;
     # Different colors
     # bgColor.red   = 100; # 0 - 255
     # bgColor.green = 100; # 0 - 255
@@ -66,43 +63,45 @@ in
   };
   security.sudo = {
     enable = true;
-    extraRules = [{
-      commands = [
-        {
-          command = "${pkgs.systemd}/bin/systemctl suspend";
-          options = [ "NOPASSWD" ];
-        }
-        {
-          command = "${pkgs.systemd}/bin/reboot";
-          options = [ "NOPASSWD" ];
-        }
-        {
-          command = "${pkgs.systemd}/bin/poweroff";
-          options = [ "NOPASSWD" ];
-        }
-        {
-          command = "/run/current-system/sw/bin/nixos-rebuild";
-          options = [ "NOPASSWD" ];
-        }
-        {
-          command = "${pkgs.neovim}/bin/nvim";
-          options = [ "NOPASSWD" ];
-        }
-        {
-          command = "${pkgs.systemd}/bin/systemctl";
-          options = [ "NOPASSWD" ];
-        }
-        {
-          command = "/run/current-system/sw/bin/ln";
-          options = [ "NOPASSWD" ];
-        }
-        {
-          command = "/run/current-system/sw/bin/nix-channel";
-          options = [ "NOPASSWD" ];
-        }
-      ];
-      groups = [ "wheel" ];
-    }];
+    extraRules = [
+      {
+        commands = [
+          {
+            command = "${pkgs.systemd}/bin/systemctl suspend";
+            options = ["NOPASSWD"];
+          }
+          {
+            command = "${pkgs.systemd}/bin/reboot";
+            options = ["NOPASSWD"];
+          }
+          {
+            command = "${pkgs.systemd}/bin/poweroff";
+            options = ["NOPASSWD"];
+          }
+          {
+            command = "/run/current-system/sw/bin/nixos-rebuild";
+            options = ["NOPASSWD"];
+          }
+          {
+            command = "${pkgs.neovim}/bin/nvim";
+            options = ["NOPASSWD"];
+          }
+          {
+            command = "${pkgs.systemd}/bin/systemctl";
+            options = ["NOPASSWD"];
+          }
+          {
+            command = "/run/current-system/sw/bin/ln";
+            options = ["NOPASSWD"];
+          }
+          {
+            command = "/run/current-system/sw/bin/nix-channel";
+            options = ["NOPASSWD"];
+          }
+        ];
+        groups = ["wheel"];
+      }
+    ];
   };
   networking.hostName = "${hostname}"; # Define your hostname.
 
@@ -128,15 +127,15 @@ in
   };
 
   # Enable the X11 windowing system.
-   services.xserver.enable = true;
+  services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-   services.displayManager.sddm = {
+  services.displayManager.sddm = {
     enable = true;
     enableHidpi = true;
     wayland.enable = true;
     theme = "abstractguts-themes";
-   };
+  };
 
   # Configure keymap in X11
   services.xserver = {
@@ -168,28 +167,28 @@ in
     shell = pkgs.zsh;
     isNormalUser = true;
     description = "${username}";
-    extraGroups = [ "networkmanager" "wheel" "keyd" ];
+    extraGroups = ["networkmanager" "wheel" "keyd"];
     packages = with pkgs; [
       acpi
       firefox
-    #  thunderbird
+      #  thunderbird
     ];
   };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-  environment.systemPackages =  [
+  environment.systemPackages = [
     inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
     pkgs.catppuccin-cursors.mochaMauve
-      themes.abstractguts-themes
+    themes.abstractguts-themes
   ];
   xdg.portal.enable = true;
-  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-gtk];
   nix = {
     settings = {
       auto-optimise-store = true;
-      experimental-features = [ "nix-command" "flakes" ];
-      trusted-users = [ "root" "@wheel" ];
+      experimental-features = ["nix-command" "flakes"];
+      trusted-users = ["root" "@wheel"];
     };
   };
   services.keyd = {
@@ -205,7 +204,7 @@ in
       };
     };
   };
-  services.udev.packages = [ pkgs.yubikey-personalization ];
+  services.udev.packages = [pkgs.yubikey-personalization];
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
@@ -223,9 +222,9 @@ in
     "pam.d/hyprlock" = {
       text = ''
         auth include login
-        '';
-# Optionally, specify the permissions you want for the file
-# by setting the `mode` attribute:
+      '';
+      # Optionally, specify the permissions you want for the file
+      # by setting the `mode` attribute:
       mode = "077m";
     };
   };
@@ -235,7 +234,7 @@ in
     settings = {
       PasswordAuthentication = true;
       KbdInteractiveAuthentication = false;
-      PermitRootLogin = "no";    
+      PermitRootLogin = "no";
     };
   };
   # List services that you want to enable:
@@ -246,12 +245,36 @@ in
   services.cron = {
     enable = true;
     systemCronJobs = [
-      "* * * * *         ${username}    date >> /home/${username}/.cache/test.log"
       # "*/30 * * * *      ${username}    /home/${username}/.scripts/.venv/bin/python3 /home/${username}/.scripts/manga_update.py"
       "*/5 * * * *      ${username}     /home/${username}/.scripts/bat_notify.sh"
       "* * * * *        ${username}    if [ -d ~/Desktop ]; then rm -rf ~/Desktop; fi"
     ];
   };
   system.stateVersion = "23.05"; # Did you read the comment?
-
+  powerManagement = {
+    enable = true;
+    powertop.enable = true;
+    cpuFreqGovernor = "powersave";
+  };
+  services = {
+    thermald.enable = true;
+    power-profiles-daemon.enable = false;
+    auto-cpufreq = {
+      enable = true;
+      settings = {
+        battery = {
+          governor = "powersave";
+          turbo = "never";
+        };
+        charger = {
+          governor = "powersave";
+          turbo = "auto";
+        };
+      };
+    };
+    system76-scheduler = {
+      enable = true;
+      useStockConfig = true;
+    };
+  };
 }

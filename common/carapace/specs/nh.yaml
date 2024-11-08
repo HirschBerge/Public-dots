@@ -1,0 +1,127 @@
+# yaml-language-server: $schema=https://carapace.sh/schemas/command.json
+name: nh
+persistentflags:
+  -v, --verbose: Show debug logs
+  -h, --help: Print help
+flags:
+  -V, --version: Print version
+commands:
+  - name: os
+    description: NixOS functionality
+    commands:
+      - name: switch
+        description: Build and activate the new configuration, and make it the boot default
+        flags:
+          -n, --dry: "Only print actions, without performing them"
+          -a, --ask: "Ask for confirmation"
+          -u, --update: "Update flake inputs before building specified configuration"
+          --no-nom: "Don't use nix-output-monitor for the build process"
+          -D, --diff-provider=: "Closure diff provider (default: 'nvd diff')"
+          -o, --out-link=: "Path to save the result link. Defaults to using a temporary directory"
+          -c, --configuration=: "Name of the flake homeConfigurations attribute, like username@hostname"
+          -b, --backup-extension=: "Move existing files by backing up with the extension"
+        completion:
+          flag:
+            diff-provider: ["$list(,)", nvd diff, nix store diff-closures ]
+      - name: boot
+        description: Build the new configuration and make it the boot default
+        flags:
+          -n, --dry: "Only print actions, without performing them"
+          -a, --ask: "Ask for confirmation"
+          -u, --update: "Update flake inputs before building specified configuration"
+          --no-nom: "Don't use nix-output-monitor for the build process"
+          -D, --diff-provider=: "Closure diff provider (default: 'nvd diff')"
+          -o, --out-link=: "Path to save the result link. Defaults to using a temporary directory"
+          -c, --configuration=: "Name of the flake homeConfigurations attribute, like username@hostname"
+          -b, --backup-extension=: "Move existing files by backing up with the extension"
+        completion:
+          flag:
+            diff-provider: ["$list(,)", nvd diff, nix store diff-closures ]
+      - name: test
+        description: Build and activate the new configuration
+        flags:
+          -n, --dry: "Only print actions, without performing them"
+          -a, --ask: "Ask for confirmation"
+          -u, --update: "Update flake inputs before building specified configuration"
+          --no-nom: "Don't use nix-output-monitor for the build process"
+          -D, --diff-provider=: "Closure diff provider (default: 'nvd diff')"
+          -o, --out-link=: "Path to save the result link. Defaults to using a temporary directory"
+          -c, --configuration=: "Name of the flake homeConfigurations attribute, like username@hostname"
+          -b, --backup-extension=: "Move existing files by backing up with the extension"
+        completion:
+          flag:
+            diff-provider: ["$list(,)", nvd diff, nix store diff-closures ]
+      - name: build
+        description: Build the new configuration
+        flags:
+          -n, --dry: "Only print actions, without performing them"
+          -a, --ask: "Ask for confirmation"
+          -u, --update: "Update flake inputs before building specified configuration"
+          --no-nom: "Don't use nix-output-monitor for the build process"
+          -D, --diff-provider=: "Closure diff provider (default: 'nvd diff')"
+          -o, --out-link=: "Path to save the result link. Defaults to using a temporary directory"
+          -c, --configuration=: "Name of the flake homeConfigurations attribute, like username@hostname"
+          -b, --backup-extension=: "Move existing files by backing up with the extension"
+        completion:
+          flag:
+            diff-provider: ["$list(,)", nvd diff, nix store diff-closures ]
+  - name: home
+    description: Home-manager functionality
+    commands:
+      - name: switch
+        description: Build and activate a home-manager configuration
+        flags:
+          -n, --dry: "Only print actions, without performing them"
+          -a, --ask: "Ask for confirmation"
+          -u, --update: "Update flake inputs before building specified configuration"
+          --no-nom: "Don't use nix-output-monitor for the build process"
+          -D, --diff-provider=: "Closure diff provider (default: 'nvd diff')"
+          -o, --out-link=: "Path to save the result link. Defaults to using a temporary directory"
+          -c, --configuration=: "Name of the flake homeConfigurations attribute, like username@hostname"
+          -b, --backup-extension=: "Move existing files by backing up with the extension"
+        completion:
+          flag:
+            diff-provider: ["$list(,)", nvd diff, nix store diff-closures ]
+      - name: build
+        description: Build a home-manager configuration
+        flags:
+          -n, --dry: "Only print actions, without performing them"
+          -a, --ask: "Ask for confirmation"
+          -u, --update: "Update flake inputs before building specified configuration"
+          --no-nom: "Don't use nix-output-monitor for the build process"
+          -D, --diff-provider=: "Closure diff provider (default: 'nvd diff')"
+          -o, --out-link=: "Path to save the result link. Defaults to using a temporary directory"
+          -c, --configuration=: "Name of the flake homeConfigurations attribute, like username@hostname"
+          -b, --backup-extension=: "Move existing files by backing up with the extension"
+        completion:
+          flag:
+            diff-provider: ["$list(,)", nvd diff, nix store diff-closures ]
+  - name: clean
+    persistentflags:
+      -k, --keep=: "At least keep this number of generations [default: 1]"
+      -K, --keep-since=: "At least keep gcroots and generations in this time range since now [default: 0h]"
+      -n, --dry: "Only print actions, without performing them"
+      -a, --ask: "Ask for confirmation"
+      --nogc: "Don't run nix store --gc"
+      --nogcroots: "Don't clean gcroots"
+    description: Enhanced nix cleanup
+    commands:
+      - name: all
+        description: Cleans root profiles and calls a store gc
+      - name: user
+        description: Cleans the current user's profiles and calls a store gc
+      - name: profile
+        description: Cleans a specific profile
+  - name: search
+    description: Searches packages by querying search.nixos.org
+    flags:
+      -l, --limit=: 'Number of search results to display [default: 30]'
+      -c, --channel=: 'Name of the channel to query (e.g nixos-23.11, nixos-unstable)'
+      -f, --flake=: 'Flake to read what nixpkgs channels to search for'
+  - name: completions
+    description: 'Generate completions'
+    flags:
+      -s, --shell=: 'Name of the shell [possible values: bash, elvish, fish, powershell, zsh]'
+    completion:
+      flag:
+        shell: ["$list(,)", bash, elvish, fish, powershell, zsh]

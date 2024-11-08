@@ -16,7 +16,7 @@ while true; do
                 -u critical \
                 -A "I'll plug in" \
                 -A "Hibernate" \
-                -i ~/.config/swaync/critical.png)
+                -i ~/.config/notification_icons/critical.png)
 
             if [ "$response" = '0' ]; then
                 echo ""

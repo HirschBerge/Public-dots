@@ -148,7 +148,7 @@
               home-manager --flake $HOME/.dotfiles#$USER@yoitsu switch -b backup
               sleep 1
               sudo nixos-rebuild switch --flake $HOME/.dotfiles#yoitsu
-              aplay $HOME/.config/swaync/notification.wav &
+              aplay $HOME/.config/notification_icons/notification.wav &
               response=$(timeout 10 notify-send -A "Okay!" "Rebuild Complete!" "All built uppppp!" -A "Reboot")
               case "$response" in
                 0) exit 0 ;;
@@ -164,7 +164,7 @@
               home-manager --flake $HOME/.dotfiles#$USER@yoitsu switch -b backup
               sleep 1
               sudo nixos-rebuild switch --flake $HOME/.dotfiles#yoitsu
-              aplay $HOME/.config/swaync/notification.wav &
+              aplay $HOME/.config/notification_icons/notification.wav &
               response=$(timeout 10 notify-send -A "Okay!" "Rebuild Complete!" "All built uppppp!" -A "Reboot")
               case "$response" in
                 0) exit 0 ;;
@@ -240,7 +240,7 @@
               do
                 if $(ping -c 1 "$1");
                 then
-                  notify-send - $HOME/.config/swaync/low.png "Sever Back up\!" "$1 is online."
+                  notify-send - $HOME/.config/notification_icons/low.svg "Sever Back up\!" "$1 is online."
                   exit 0
                 else
                   sleep 30
