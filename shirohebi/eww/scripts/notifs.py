@@ -18,7 +18,7 @@ def get_app_icon(app_name):
     if icon_path.exists():
         return str(icon_path)
     print(f"No icon for {app_name}")
-    return "~/.config/notification_icons/normal.svg"
+    return Path.home() / ".config" / "notification_icons" / "normal.svg"
 
 class Notification:
     def __init__(self, summary, body, icon, actions):
@@ -57,13 +57,15 @@ def add_object(notif):
 def print_state():
     string = ""
     for item in notifications:
+        summary = item.summary.replace("'", "\\'").replace('"', '\\"').replace("\n", " ")
+        body = item.body.replace("'", "\\'").replace('"', '\\"').replace("\n", " ")
         string += f"""
                   (button :class 'notif'
                    (box :orientation 'horizontal' :space-evenly false
                       (image :image-width 100 :image-height 100 :path '{item.icon or ''}')
                       (box :orientation 'vertical'
-                        (label :width 300 :wrap true :text '{item.summary or ''}')
-                        (label :width 300 :wrap true :text '{item.body or ''}')
+                        (label :width 300 :wrap true :text '{summary or ''}')
+                        (label :width 300 :wrap true :text '{body or ''}')
                   )))
                   """
     string = string.replace("\n", " ")
@@ -84,17 +86,20 @@ class NotificationServer(dbus.service.Object):
         self, app_name, replaces_id, app_icon, summary, body, actions, hints, timeout
     ):
         try:
+            if len(body) >= 45:
+                body = body[:42] + "..."
             # Check for the icon in the specified directory
             if not app_icon:
                 icon_path = get_app_icon(app_name)
+                print(icon_path)
             else:
                 icon_path = app_icon
             # Use the provided app_icon as a fallback if no custom icon exists
             if not icon_path:
                 icon_path = app_icon
             # Add the notification with the resolved icon path
-            add_object(Notification(summary, body, icon_path, actions))
             play_notification_sound(app_name)
+            add_object(Notification(summary, body, icon_path, actions))
         except Exception as e:
             print(f"Error handling notification: {e}")
         return 0

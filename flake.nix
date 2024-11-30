@@ -1,9 +1,10 @@
 {
   description = "My custom multi-machine system flake.";
   inputs = {
+    wezterm.url = "github:wez/wezterm?dir=nix";
     nixos-boot.url = "github:HirschBerge/nixos-boot";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    # hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -67,6 +68,7 @@
       ${laptop} = nixpkgs.lib.nixosSystem {
         specialArgs = let
           hostname = "${laptop}";
+          stateVersion = "23.05";
         in {
           inherit
             inputs
@@ -108,6 +110,7 @@
         modules = [./nixos/${laptop}/home.nix];
         extraSpecialArgs = let
           hostname = laptop;
+          stateVersion = "23.05";
         in {
           inherit
             self

@@ -10,25 +10,16 @@
   pkgs,
   username,
   stateVersion,
+  inputs,
   ...
 }: let
   themes = pkgs.callPackage ../common/configs/themes.nix {};
 in {
   # You can import other home-manager modules here
   imports = [
-    ../common/configs/firefox.nix
-    ../common/configs/mpv.nix
-    ../common/configs/zellij.nix
-    ../common/configs/zathura.nix
-    ../common/configs/rofi.nix
+    ../common/configs/default.nix
     ../common/scripts.nix
-    ../common/configs/deploy_dots.nix
-    ../common/configs/zsh.nix
     ./configs/hypr/default.nix
-    ../common/configs/kitty.nix
-    ../common/configs/starship.nix
-    ../common/configs/wlogout.nix
-    # ../common/configs/nixvim.nix
   ];
   nixpkgs = {
     # You can add overlays here
@@ -64,13 +55,12 @@ in {
     satty
     # libsForQt5.qtstyleplugin-kvantum
     aria
-    ani-cli
+    # ani-cli NOTE: uncomment when new version is released
     rtorrent
     libnotify
     yt-dlp
     gimp
     pavucontrol
-    autojump
     steam
     playerctl
     wf-recorder
@@ -134,6 +124,36 @@ in {
         whitespace-error-style = "22 reverse";
       };
     };
+  };
+
+  programs.wezterm = {
+    enable = true;
+    package = inputs.wezterm.packages.${pkgs.system}.default;
+    extraConfig =
+      /*
+      lua
+      */
+      ''
+        local Config = require('config')
+
+        require('utils.backdrops')
+           :set_files()
+           -- :set_focus('#000000')
+           :random()
+
+        require('events.right-status').setup()
+        require('events.left-status').setup()
+        require('events.tab-title').setup()
+        require('events.new-tab-button').setup()
+
+        return Config:init()
+           :append(require('config.appearance'))
+           :append(require('config.bindings'))
+           :append(require('config.domains'))
+           :append(require('config.fonts'))
+           :append(require('config.general'))
+           :append(require('config.launch')).options
+      '';
   };
 
   programs.fzf = {

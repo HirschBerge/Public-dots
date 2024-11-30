@@ -2,6 +2,7 @@
 (defpoll clipboard_content :interval "1s"
         `/home/$USER/.config/eww/Scripts/clipboard_manager.py`)
 (deflisten volume `bash $HOME/.config/eww/scripts/audio --get-vol`)
+(deflisten vol_icon `bash $HOME/.config/eww/scripts/audio --get-volicon`)
 (defpoll battery :interval "30s"
 	`/home/$USER/.config/eww/Scripts/battery.py`)
 ;; System
@@ -23,7 +24,7 @@
 	`/home/$USER/.config/eww/Scripts/workspaces.py`)
 (deflisten song_status :initial "Select playlist to begin"
         `/home/$USER/.config/eww/Scripts/song_status.py`)
-(defpoll wm :interval "12h" "echo $XDG_CURRENT_DESKTOP")
+(defvar wm   "Hypr")
 (defpoll shell :interval "1h" "echo $SHELL | awk -F'/' '{print $NF}'")
 (defpoll term :interval "1h" "notify-send $(echo $TERM | awk -F'-' '{print $NF}')")
 (defpoll uptime :interval "1m" "bash ./scripts/better_uptime.sh $(cut -f1 -d. /proc/uptime)")
@@ -41,7 +42,7 @@
 	:exclusive true	
 	(box :class "main-container"
     (functions)
-    (volume)
+    (sliders)
     (network-down)
     (network-up)
     ;; (network)
@@ -105,7 +106,7 @@
     )
 )
 (defwidget system []
-    (box :class "sys_win" :orientation "h" :space-evenly "false" :hexpand "false" :vexpand "false" 
+    (box :class "sys_win" :orientation "h" :space-evenly "true" :hexpand "false" :vexpand "false" 
         (box :class "sys_cpu_box" :orientation "v" :space-evenly "false" :hexpand "false" :vexpand "false"
             (box :orientation "h" :space-evenly "false" :hexpand "false" :vexpand "false"
                 (circular-progress 
@@ -188,19 +189,90 @@
 	    )
     )
 )
+
+(defvar vol_reveal false)
+;; (defvar eww "eww -c $HOME/.dotfiles/shirohebi/eww") ;; NOTE: for testing
+(defvar eww "eww -c $HOME/.config/eww")
+
 (defwidget volume []
-    (box :class "metric" :orientation "h" :space-evenly "false" :halign "center"
-        (label :class "vol-label" :orientation "h" :space-evenly "false" :text "")
-        (scale :min 0
-            :max 150
-            :value volume
-            :orientation "h"
-            :tooltip "Volume: ${volume}%"
-            :onclick "$HOME/.config/eww/scripts/volume --toggle-vol"
-            :onchange "bash $HOME/.config/eww/scripts/audio --set-vol {}")
-        (label :class "vol-text" :text "${volume}%")
+    (eventbox 
+        :onhover "${eww} update vol_reveal=true"
+        :onhoverlost "${eww} update vol_reveal=false"
+        (box :space-evenly "false" :class "vol-label" :orientation "h" :spacing 5
+            (label :class "vol-label" :orientation "h" :space-evenly "false" :text "${vol_icon}")
+            (revealer 
+                :reveal vol_reveal
+                :transition "slideleft"
+                :duration "700ms"
+                (box :class "vol-control" :orientation "h" :spacing 3
+                    ;; Volume Scale Bar
+                    (scale 
+                        :class "volbar"
+                        :value volume
+                        :orientation "h"
+                        :tooltip "${volume}%"
+                        :max 150
+                        :min 10
+                        :onchange "bash $HOME/.config/eww/scripts/audio --set-vol {}%")
+                ))
+            (button 
+                :class "info-icon" 
+                :onclick "$HOME/.config/eww/scripts/audio --toggle-vol"
+                :onrightclick "python3 $HOME/.config/eww/scripts/change_dev.py"
+                :timeout "999999999"
+                :tooltip "Click to toggle volume. Right-click to change device."
+                (label :text  "${volume}%"))
+
+            ;; Revealer with Slide Animation
+        )))
+
+(defpoll cbrightness :interval "1s" `brightnessctl g`)
+(defvar bright_reveal false)
+(defwidget brightness []
+    (eventbox 
+        :onhover "${eww} update bright_reveal=true"
+        :onhoverlost "${eww} update bright_reveal=false"
+        (box :space-evenly "false" :class "bright-label" :orientation "h" :spacing 5
+            (label :class "bright-label" :orientation "h" :space-evenly "false" :text "")
+            (revealer 
+                :reveal bright_reveal
+                :transition "slideleft"
+                :duration "700ms"
+                (box :class "bright-control" :orientation "h" :spacing 3
+                    ;; Brightness Scale Bar
+                    (scale 
+                        :class "brightbar"
+                        :value "${round((cbrightness / 1200), 1)}"
+                        :orientation "h"
+                        :tooltip "${round((cbrightness / 1200), 1)}%"
+                        :max 100
+                        :min 0
+                        :onchange "brightnessctl s {}%")
+                ))
+            (button 
+                :class "info-icon" 
+                (label :text "${(cbrightness / 1200)}%"))
+        )))
+
+(defwidget sliders []
+    (box :space-evenly "false"
+        (volume)
+        (brightness)
     )
 )
+;; (defwidget volume []
+;;     (box :class "metric" :orientation "h" :space-evenly "false" :halign "center"
+;;         (label :class "vol-label" :orientation "h" :space-evenly "false" :text "")
+;;         (scale :min 0
+;;             :max 150
+;;             :value volume
+;;             :orientation "h"
+;;             :tooltip "Volume: ${volume}%"
+;;             :onclick "$HOME/.config/eww/scripts/volume --toggle-vol"
+;;             :onchange "bash $HOME/.config/eww/scripts/audio --set-vol {}%")
+;;         (label :class "vol-text" :text "${volume}%")
+;;     )
+;; )
 (defwidget functions []
     (box :class "function-container" :orientation "v" :space-evenly "true" :halign "center"
       (box :class "function-box" :orientation "h" :space-evenly "true" :hexpand "true" :vexpand "false" :spacing 10

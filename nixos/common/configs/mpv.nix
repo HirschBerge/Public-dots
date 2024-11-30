@@ -12,6 +12,7 @@ in {
       pause = "no";
       # Terminal
       msg-color = "yes";
+      ytdl-raw-options="cookies-from-browser=firefox";
       msg-module = "yes";
       osd-bar = "no";
       profile = "gpu-hq";

@@ -518,6 +518,18 @@ calendar.highlight {
 	color: $gray;
 	padding-left: 10px;
 }
+.bright-text {
+	color: $color5;
+	padding-left: 10px;
+}
+.bright-label {
+	color: $gray;
+	padding-right: 10px;
+}
+.bright-text {
+	color: $gray;
+	padding-left: 10px;
+}
 // scale & Metric  ;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 .scale trough {
@@ -607,3 +619,43 @@ calendar.highlight {
     border: none;                  // Remove border
     color: transparent;            // Make text transparent
 }
+
+.volbar trough highlight {
+	background: linear-gradient(45deg, $color9 0%, #4e68be  50%, $mauve 100%);
+	border-radius: 10px;
+}
+
+.brightbar trough highlight {
+	background: linear-gradient(45deg, $color9 0%, #4e68be  50%, $mauve 100%);
+	border-radius: 10px;
+}
+
+.bright_icon {
+    font-size: 22;
+    color: #e4c9af;
+  margin: 0px 10px 0px 10px;
+}
+scale trough {
+	all: unset;
+	background-color: #22242b;
+	box-shadow: 0px 2px 3px 2px #06060b;
+	border-radius: 16px;
+	min-height: 10px;
+	min-width: 70px;
+	margin: 0px 10px 0px 0px;
+}
+
+
+
+/** tooltip!! **/
+tooltip.background {
+	background-color: #0f0f17;
+	font-size: 18;
+	border-radius: 10px;
+	color: #bfc9db;
+}
+
+tooltip label {
+	margin: 6px;
+}
+

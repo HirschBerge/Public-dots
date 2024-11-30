@@ -54,7 +54,7 @@ Please review the official [NixOS Installation Guide](https://nixos.wiki/wiki/Ni
 | OS                        | [NixOS](https://nixos.org/)                                                                                       |
 | Window Manager            | [Hyprland](https://hyprland.org/)                                                                                 |
 | Discord Modifications     | [Vesktop](https://github.com/Vencord/Vesktop)                                                                       |
-| Notification Manager      | [Custom EWW Widget](https://github.com/elkowar/eww)                                                    |
+| Notification Manager      | [Custom EWW Widget](https://github.com/elkowar/eww)                                                               |
 | Web Browser               | [Firefox](https://www.mozilla.org/en-US/firefox/new/)                                                             |
 | Video Player              | [MPV](https://mpv.io/)                                                                                            |
 | Text Editor               | [Neovim](https://neovim.io/)                                                                                      |
@@ -64,7 +64,7 @@ Please review the official [NixOS Installation Guide](https://nixos.wiki/wiki/Ni
 | GUI File Manager          | [Thunar](https://docs.xfce.org/xfce/thunar/start)                                                                 |
 | Launcher                  | [Rofi](https://github.com/davatorium/rofi)                                                                        |
 | Bar/Widgets               | [EWW](https://github.com/elkowar/eww)                                                                             |
-| Terminal                  | [Kitty](https://sw.kovidgoyal.net/kitty/)                                                                         |
+| Terminal                  | [Wezterm](https://wezfurlong.org/wezterm/)                                                                         |
 | MultiPlexer               | [Zellij](https://zellij.dev/)                                                                                     |
 | Zellij Bar                | [zjstatus](https://github.com/dj95/zjstatus/)                                                                     |
 | Shell                     | [NuShell](https://www.nushell.sh/)                                                                                       |

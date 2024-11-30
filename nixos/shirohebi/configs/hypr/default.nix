@@ -3,7 +3,9 @@
   config,
   ...
 }: let
-  term = "${pkgs.kitty}/bin/kitty";
+  term = "wezterm";
+  term_open = "${term} start -- ";
+  term_open_class = "${term} -n --config enable_tab_bar=false start --class clipse -- ";
 in {
   home.packages = with pkgs; [
     wl-clipboard
@@ -54,7 +56,12 @@ in {
             # See https://wiki.hyprland.org/Configuring/Variables/ for more
             # blur_ignore_opacity = true
             rounding = 10
-            # fullscreen_opacity =  0.69
+            shadow {
+            enabled=true
+            range = 4
+            render_power = 3
+            # col.shadow = rgba(1a1a1aee)
+        }
             blur {
               enabled = true
               size = 12
@@ -63,10 +70,7 @@ in {
               noise = 0.05
               ignore_opacity = true
             }
-            drop_shadow = yes
-            shadow_range = 25
-            shadow_render_power = 30
-            col.shadow = rgb(711c91)
+            # fullscreen_opacity = 0.7
         }
         animations { #Thank you to HyprDots
             enabled = yes
@@ -128,7 +132,7 @@ in {
       bindd = $mainMod, R, Reloads Hyprland configuration, exec, hyprctl reload
       bindd = $mainMod, E, Opens dmenuunicode, exec, ~/.nix-profile/bin/dmenuunicode
       bindd = $mainMod, S, Searches Nix packages, exec, ~/.config/eww/scripts/search_nixpkgs.sh
-      bindd = $mainMod, V, Opens Clipse in Kitty for clipboard, exec, ${pkgs.kitty}/bin/kitty --title clipse -e zsh -c '${pkgs.clipse}/bin/clipse $PPID'
+      bindd = $mainMod, V, Opens Clipse in ${term} for clipboard, exec, ${term_open_class} zsh -c '${pkgs.clipse}/bin/clipse $PPID'
       bindd = $mainMod, G, Runs game launcher script, exec, ~/.config/hypr/scripts/gamelauncher.sh 2
       bindd = $mainMod, P, Toggles pseudo mode (dwindle), pseudo,
       bindd = $mainMod, J, Toggles split mode (dwindle), togglesplit,
@@ -191,8 +195,8 @@ in {
 
       # Other
       bindd = $mainMod, T, Opens Thunar file manager, exec, thunar
-      bindd = $mainMod, B, Opens Btop in Kitty, exec, kitty btop
-      bindd = $mainMod, C, Opens Helix editor in Kitty, exec, ${pkgs.kitty}/bin/kitty ${pkgs.helix}/bin/hx ~/.dotfiles
+      bindd = $mainMod, B, Opens Btop in ${term}, exec, ${term_open} btop
+      bindd = $mainMod, C, Opens Helix editor in ${term}, exec, ${term_open} ${pkgs.helix}/bin/hx ~/.dotfiles
       bindd = $mainMod, U, Launches Firefox, exec, firefox
       bindd = $mainMod, D, Opens Rofi launcher, exec, rofi -show drun window calc emoji
       bindd = ALT, space, Opens Rofi launcher, exec, rofi -show drun window calc emoji
@@ -239,9 +243,9 @@ in {
       # Example windowrule v1
       windowrulev2 = float,class:^(.*waypaper.*)$
       windowrulev2 = size 889 629,class:^(.*waypaper.*)
-      windowrulev2 = float,class:^(kitty.*)$,title:^(.*clipse.*)$
-      windowrulev2 = size 546 552,class:^(kitty.*)$,title:^(.*clipse.*)$
-      windowrulev2 = opacity 0.5 0.5,class:^(kitty.*)$,title:^(.*clipse.*)$
+      windowrulev2 = float,class:^(clipse.*)
+      windowrulev2 = size 546 552,class:^(clipse.*)$
+      windowrulev2 = opacity 0.5 0.5,class:^(clipse.*)$
       windowrulev2 = float, class:^(.*pavucontrol)$
       windowrulev2 = size 1059 552,class:^(.*pavucontrol)$
       windowrule   = opacity 0.8 0.7, obsidian
@@ -255,7 +259,7 @@ in {
       windowrulev2 = opacity 1.0 1.0, title:^(.*YouTube.*)$
       windowrulev2 = fullscreen,class:^(.*steam_app.*)$
       windowrulev2 = float,class:^(.*steam_app.*)$
-      windowrulev2 = opacity 0.8 0.7, class:^.*kitty.*$
+      windowrulev2 = opacity 0.8 0.7, class:^.*${term}.*$
       windowrulev2 = opacity 1.0 1.0, class:firefox,title:^(.*S[0-9].*E[0-9].*)$
 
       # Idle Inhibit
@@ -263,7 +267,6 @@ in {
       windowrulev2 = idleinhibit focus, class:.*(steam_app).*
       windowrulev2 = idleinhibit focus, class:firefox,title:^(.*S[0-9].*E[0-9].*)$
       windowrulev2 = idleinhibit focus, class:firefox,title:^(.*YouTube.*)$
-      # windowrulev2 = float,class:^(kitty)$,title:^(kitty)$
       # See https://wiki.hyprland.org/Configuring/Window-Rules/ for more
 
       # App Workspace Bindings

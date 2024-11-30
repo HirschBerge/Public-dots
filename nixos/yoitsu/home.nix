@@ -10,24 +10,16 @@
   email,
   username,
   stateVersion,
+  inputs,
   ...
 }: let
   themes = pkgs.callPackage ../common/configs/themes.nix {};
 in {
   # You can import other home-manager modules here
   imports = [
+    ../common/configs/default.nix
     ../common/scripts.nix
-    ../common/configs/firefox.nix
-    ../common/configs/zathura.nix
-    ../common/configs/zellij.nix
-    ../common/configs/rofi.nix
-    ../common/configs/mpv.nix
-    ../common/configs/deploy_dots.nix
-    ../common/configs/zsh.nix
     ./configs/hypr/default.nix
-    ../common/configs/kitty.nix
-    ../common/configs/starship.nix
-    ../common/configs/wlogout.nix
   ];
   nixpkgs = {
     # NOTE: You can add overlays here
@@ -54,7 +46,6 @@ in {
     grc
     lazygit
     ydotool
-    autojump
     fd
     bat
     rtorrent
@@ -67,7 +58,7 @@ in {
     satty
     yt-dlp
     gimp
-    ani-cli
+    # ani-cli NOTE: uncomment when new version is released
     aria
     wf-recorder
     eww
@@ -121,6 +112,7 @@ in {
     GTK_USE_PORTAL = 1;
     eEDITOR = "v";
     ATAC_KEY_BINDINGS = "~/.config/keybindings.toml";
+    ZELLIJ_AUTO_EXIT = "TRUE";
   };
 
   programs.git = {
@@ -143,9 +135,40 @@ in {
           file-style = "bold yellow ul";
         };
         features = "decorations";
+        line-numbers = true;
+        side-by-side = true;
         whitespace-error-style = "22 reverse";
       };
     };
+  };
+  programs.wezterm = {
+    enable = true;
+    package = inputs.wezterm.packages.${pkgs.system}.default;
+    extraConfig =
+      /*
+      lua
+      */
+      ''
+        local Config = require('config')
+
+        require('utils.backdrops')
+           :set_files()
+           -- :set_focus('#000000')
+           :random()
+
+        require('events.right-status').setup()
+        require('events.left-status').setup()
+        require('events.tab-title').setup()
+        require('events.new-tab-button').setup()
+
+        return Config:init()
+           :append(require('config.appearance'))
+           :append(require('config.bindings'))
+           :append(require('config.domains'))
+           :append(require('config.fonts'))
+           :append(require('config.general'))
+           :append(require('config.launch')).options
+      '';
   };
   programs.fzf = {
     enable = true;

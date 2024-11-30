@@ -24,8 +24,10 @@ dashboard.section.buttons.val = {
     dashboard.button("f", "  > Find file", ":Telescope find_files<CR>"),
     dashboard.button("r", "  > Recent", ":Telescope oldfiles<CR>"),
     dashboard.button("g", "  > Live Grep", ":Telescope live_grep<CR>"),
+    dashboard.button("w", "  > Wezterm",
+        ":e ~/.config/wezterm/wezterm.lua | :cd %:p:h | pwd<CR>"),
     dashboard.button("s", "  > Settings",
-                     ":e ~/.dotfiles/flake.nix | :cd %:p:h | pwd<CR>"),
+        ":e ~/.dotfiles/flake.nix | :cd %:p:h | pwd<CR>"),
     dashboard.button("q", "  > Quit nixCats", ":qa<CR>")
 }
 
@@ -42,7 +44,7 @@ dashboard.section.buttons.val = {
 --       }
 --   end)
 --   ```
--- local fortune = require("alpha.fortune") 
+-- local fortune = require("alpha.fortune")
 -- dashboard.section.footer.val = fortune()
 
 -- Send config to alpha

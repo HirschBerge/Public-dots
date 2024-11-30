@@ -33,11 +33,11 @@
       (box :class "volume_bar" :orientation "h" :spacing 20 :space-evenly "false" :vexpand "false" :hexpand "false"
 	(button :width 30 :onclick "bash ../scripts/audio --toggle-vol" 
 	  (label :class "iconvolume" :text VOLUMEICON))
-	(scale :min 10 :max 150 :value VOLUME :active "true" :onchange "bash ../scripts/audio --set-vol {}"))
+	(scale :min 10 :max 150 :value VOLUME :active "true" :onchange "bash ../scripts/audio --set-vol {}%"))
       (box :class "mic_bar" :orientation "h" :spacing 20 :space-evenly "false" :vexpand "false" :hexpand "false"
 	(button :width 30 :onclick "bash ../scripts/audio --toggle-mic" 
 	  (label :class "iconmic" :text MICICON))
-	(scale :min 10 :max 150 :value MIC :active "true" :onchange "bash ../scripts/audio --set-mic {}"))
+	(scale :min 10 :max 150 :value MIC :active "true" :onchange "bash ../scripts/audio --set-mic {}%"))
       (box :class "bright_bar" :orientation "h" :spacing 20 :space-evenly "false" :vexpand "false" :hexpand "false"
 	(button :width 30 :onclick "" 
 	  (label :width 30 :class "iconbright" :text "🖱"))

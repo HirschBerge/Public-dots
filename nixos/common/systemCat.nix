@@ -138,13 +138,13 @@ in {
                 better-escape-nvim
                 comment-nvim
                 todo-comments-nvim
+                zellij-nav-nvim
               ];
               general = with pkgs.vimPlugins; [
                 plenary-nvim
                 which-key-nvim
                 oil-nvim
                 ChatGPT-nvim
-                zellij-nvim
                 twilight-nvim
               ];
             };
@@ -153,36 +153,38 @@ in {
       };
 
       # see :help nixCats.flake.outputs.packageDefinitions
-      packages = {
-        # These are the names of your packages you can include as many as you wish.
-        myNixModuleNvim = {...}: {
-          # they contain a settings set defined above see :help nixCats.flake.outputs.settings
-          settings = {
-            wrapRc = true;
-            # NOTE: IMPORTANT: you may not alias to nvim your alias may not conflict with your other packages.
-            aliases = ["nv" "v"];
-            # nvimSRC = inputs.neovim;
-          };
-          # and a set of categories that you want (and other information to pass to lua)
-          categories = {
-            general.vimPlugins = {
-              tree-sitterPlugins = true;
-              debugging = true;
-              git = true;
-              ui = true;
-              beautify = true;
-              cmp = true;
-              otherlsp = true;
-              core = true;
-              general = true;
+      packageDefinitions = {
+        replace = {
+          # These are the names of your packages you can include as many as you wish.
+          myNixModuleNvim = {...}: {
+            # they contain a settings set defined above see :help nixCats.flake.outputs.settings
+            settings = {
+              wrapRc = true;
+              # NOTE: IMPORTANT: you may not alias to nvim your alias may not conflict with your other packages.
+              aliases = ["nv" "v"];
+              # nvimSRC = inputs.neovim;
             };
-            markdown = true;
-            # NOTE: true for vimtex
-            texlive = false;
-            startupPlugins = true;
-            lspsAndRuntimeDeps = {
-              general = true;
-              neonixdev = true;
+            # and a set of categories that you want (and other information to pass to lua)
+            categories = {
+              general.vimPlugins = {
+                tree-sitterPlugins = true;
+                debugging = true;
+                git = true;
+                ui = true;
+                beautify = true;
+                cmp = true;
+                otherlsp = true;
+                core = true;
+                general = true;
+              };
+              markdown = true;
+              # NOTE: true for vimtex
+              texlive = false;
+              startupPlugins = true;
+              lspsAndRuntimeDeps = {
+                general = true;
+                neonixdev = true;
+              };
             };
           };
         };

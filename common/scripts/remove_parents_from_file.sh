@@ -5,7 +5,8 @@ remove_parent_directories() {
     local dry_run=$2
 
     # Extract the parent directory
-    local parent_dir=$(dirname "$file_path")
+    local parent_dir
+    parent_dir=$(dirname "$file_path")
 
     # Check if the parent directory exists
     if [ -d "$parent_dir" ]; then

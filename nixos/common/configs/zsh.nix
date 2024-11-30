@@ -177,7 +177,7 @@ in {
     enable = true;
     extraConfig =
       /*
-      bash
+      nu
       */
       ''
         $env.config = { edit_mode: vi, show_banner: false,}
@@ -185,6 +185,9 @@ in {
         $env.PROMPT_INDICATOR_VI_NORMAL = "❮ "
         source ~/.zoxide.nu
         source ~/.config/nushell/satty.nu
+        def bat_remain [] {
+            acpi -b | split column ", " |select column2 column3 |rename percent remaining
+        }
 
         def offset_rename [pattern:string, amount:int, subtract:bool] {
             ls |find $"($pattern)" | where type == "video/mp4" | each {|file|
@@ -281,6 +284,7 @@ in {
         }
         def choose_anime [] {
             let choice = anime_today | try {input list "Pick an anime"} catch {echo "Could not find any anime releasing today. Please try again tomorrow" |print ; return 69 }
+            try {
             let anime_title = $"($choice |get Anime)"
                 let season = $'($choice |get Season |split row " " | get 1)'
                 let path = $"(fd -1 $"($anime_title)" /mnt/NAS/Anime -i)"
@@ -291,10 +295,14 @@ in {
                     let full_path = $"($path)/($choice |get Season)"
                         mkdir $"($path)/($choice |get Season)"
                 }
-            let episodes = $"((ls -m $full_path |where type =~ video |sort-by name |last |get name |split row "E" |last |split row '.' |get 0 | into int) + 1)"
-                echo $"Title,Season,Episode,Path\n($anime_title),($season),($episodes),($full_path)"|from csv
+            let episodes = $"(try {(ls -m $full_path |where type =~ video |sort-by name |last |get name |split row "E" |last |split row '.' |get 0 | into int) + 1 } catch {1})"
+            echo $"Title,Season,Episode,Path\n($anime_title),($season),($episodes),($full_path)"|from csv
+            } catch {
+                print "Nothing chosen"
+                exit 0
+            }
         }
-        def --env download_anime [] {
+        def download_anime [] {
             let anime_data = choose_anime
                 if $anime_data == 69 {
                     return
@@ -307,31 +315,46 @@ in {
                 ls -lm  |reject target readonly num_links inode group created
                 notify-send -a anime "Download complete" $"(($anime_data|first).Title) Episode (($anime_data |first).Episode)"
         }
+        def games_by_platform [platform] {
+            open /mnt/NAS/Files/game_backlog.json | each {|game|
+                if ( $game.Platform | any {|plat| $plat =~ $platform }) {
+                    $game
+                }
+            }
+         }
+         def games_by_genre [genre] {
+                    open /mnt/NAS/Files/game_backlog.json | each {|game|
+                        if ( $game.Genre | any {|genres| $genres =~ $genre }) {
+                            $game
+                        }
+                    }
+              }
       '';
 
     shellAliases = {
       "time" = "${pkgs.hyperfine}/bin/hyperfine --runs 1";
+      "dig" = "${pkgs.grc}/bin/grc ${pkgs.dnsutils}/bin/dig";
       "benchmark" = "${pkgs.hyperfine}/bin/hyperfine";
-      x = "exit";
-      ll = "ls -lmd";
-      ls = "ls -m";
-      lll = "eza -l";
-      ping = "grc ping";
-      nmap = "grc nmap --open";
-      traceroute = "grc traceroute";
-      netstat = "grc netstat";
-      gpl = "git pull";
-      gcam = "git commit --all --verbose --message";
-      gcm = "git commit --verbose --message";
-      gc = "git commit --verbose";
-      ga = "git add";
-      gp = "git push";
-      gd = "git diff";
-      gr = "git restore";
-      gs = "git status";
-      cat = "bat";
-      dots = "cd $env.FLAKE";
-      cp = "rsync -rah --info=progress2";
+      "x" = "exit";
+      "ll" = "ls -lmd";
+      "ls" = "ls -m";
+      "lll" = "eza -l";
+      "ping" = "grc ping";
+      "nmap" = "grc nmap --open";
+      "traceroute" = "grc traceroute";
+      "netstat" = "grc netstat";
+      "gpl" = "git pull";
+      "gcam" = "git commit --all --verbose --message";
+      "gcm" = "git commit --verbose --message";
+      "gc" = "git commit --verbose";
+      "ga" = "git add";
+      "gp" = "git push";
+      "gd" = "git diff";
+      "gr" = "git restore";
+      "gs" = "git status";
+      "cat" = "bat";
+      "dots" = "cd $env.FLAKE";
+      "cp" = "rsync -rah --info=progress2";
     };
   };
   programs.bash = {

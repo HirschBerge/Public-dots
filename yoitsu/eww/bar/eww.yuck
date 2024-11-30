@@ -1,6 +1,7 @@
 (deflisten volume `bash $HOME/.config/eww/scripts/audio --get-vol`)
+(deflisten mic_vol `bash $HOME/.config/eww/scripts/audio --get-mic`)
 (defpoll battery :interval "30s"
-	`/home/$USER/.config/eww/Scripts/battery.py`)
+    `/home/$USER/.config/eww/Scripts/battery.py`)
 (defpoll GPU :initial "..." :interval "3s" `bash ../scripts/GPU_mon.sh --json`)
 ;; System
 (defpoll used_per :interval "1m" `eww get EWW_DISK |jq .'["/"]'.used_perc`)
@@ -14,8 +15,9 @@
 (defpoll IP_ADDR :interval "1m" "ip -br a |rg UP | awk '/enp7/ {print $3 }'|sd '\/.*' ''")
 (defpoll window :interval "0.5s" "$HOME/.config/eww/scripts/window-title.sh")
 (defpoll wifi :interval "3s"
-        `/home/$USER/.config/eww/Scripts/wifi.py`)
+    `/home/$USER/.config/eww/Scripts/wifi.py`)
 (deflisten vol_icon `bash $HOME/.config/eww/scripts/audio --get-volicon`)
+(deflisten mic_icon `bash $HOME/.config/eww/scripts/audio --get-micicon`)
 (defvar idle_state "󱄅")
 (defpoll wm :interval "12h" "echo $XDG_CURRENT_DESKTOP")
 (defpoll shell :interval "1h" "echo $SHELL | awk -F'/' '{print $NF}'")
@@ -26,90 +28,90 @@
 (defpoll time :interval "5s" "date '+%H:%M'")
 (defpoll date :interval "1m" "date '+%D'")
 (defwindow bar
-	:monitor 1
-	:windowtype "dock"
-	:geometry (geometry 
-			:width "95%"
-			:height "2%"
-			:anchor "bottom center"
-			)
-	:exclusive true	
+    :monitor 1
+    :windowtype "dock"
+    :geometry (geometry 
+        :width "95%"
+        :height "2%"
+        :anchor "bottom center"
+    )
+    :exclusive true	
 
-	(box :class "main-container"
-    (functions)
-    (volume)
-    (network-down)
-    (network-up)
-    ; (network)
-    ;; (weather)
-    (pr_tracker)
-    (GPU)
-    (system)
-    (info)
-    (clock)
-	)
+    (box :class "main-container"
+        (functions)
+        (sliders)
+        (network-down)
+        (network-up)
+        ; (network)
+        ;; (weather)
+        (pr_tracker)
+        (GPU)
+        (system)
+        (info)
+        (clock)
+    )
 )
 
 (defwidget info []
-  (box :class "info-box-outer" :orientation "h" :space-evenly true :halign "center"
-    (box :class "info-box-top" :orientation "v" :space-evenly false :valign "center"
-      (box :class "info-box-inner" :orientation "h" :space-evenly false
-        (box :class "info-box-left" :orientation "v" :space-evenly false
-          (label :class "info-icon" :text " :")
-          (label :class "info-text" :halign "start" :text "${wm} ")
+    (box :class "info-box-outer" :orientation "h" :space-evenly true :halign "center"
+        (box :class "info-box-top" :orientation "v" :space-evenly false :valign "center"
+            (box :class "info-box-inner" :orientation "h" :space-evenly false
+                (box :class "info-box-left" :orientation "v" :space-evenly false
+                    (label :class "info-icon" :text " :")
+                    (label :class "info-text" :halign "start" :text "${wm} ")
+                )
+                (box :class "info-box-right" :orientation "v" :space-evenly false
+                    (button :class "info-icon"
+                        :onclick "kitty ../scripts/rebuild.sh --rebuild"
+                        :onrightclick "kitty ../scripts/rebuild.sh --upgrade"
+                        :onmiddleclick "../scripts/rebuild.sh --home"
+                        :timeout "999999999"
+                        :tooltip "Click to Rebuild middle click to update home manager, right click to upgrade."
+                        (label :text " :"))
+                    (label :class "info-text" :halign "start" :text "${pkgs_uniq}")
+                )
+                (box :class "info-box-right" :orientation "v" :space-evenly false
+                    (label :class "info-icon" :text "󰅐 :")
+                    (label :class "info-text" :halign "start" :text "${uptime}")
+                )
+            )
         )
-        (box :class "info-box-right" :orientation "v" :space-evenly false
-          (button :class "info-icon"
-                  :onclick "kitty ../scripts/rebuild.sh --rebuild"
-                  :onrightclick "kitty ../scripts/rebuild.sh --upgrade"
-                  :onmiddleclick "../scripts/rebuild.sh --home"
-                  :timeout "999999999"
-                  :tooltip "Click to Rebuild middle click to update home manager, right click to upgrade."
-                  (label :text " :"))
-          (label :class "info-text" :halign "start" :text "${pkgs_uniq}")
-        )
-        (box :class "info-box-right" :orientation "v" :space-evenly false
-          (label :class "info-icon" :text "󰅐 :")
-          (label :class "info-text" :halign "start" :text "${uptime}")
-        )
-      )
     )
-  )
 )
 
 
 (defwidget GPU []
     (box :class "cal-container" :orientation "v" :space-evenly "false" :halign "center"
-          ;; (label :halign "center" :valign "center" :class "GPU_model" :text "RX 7900GRE")
-          (label :halign "center" :valign "center" :class "GPU_one" :text "󰔏 ${GPU.Temp} 󰍛 ${GPU.VRAMPercent}")
-          (label :halign "center" :valign "center" :class "GPU_two" :text "  ${GPU.GPUPercent} 󱑴 ${GPU.Fan}")
-          ;; (label :halign "center" :valign "center" :class "GPU_three" :text "󰐧 ${GPU.AvgPwr} 󰓅  ${GPU.SerialClock}")
+        ;; (label :halign "center" :valign "center" :class "GPU_model" :text "RX 7900GRE")
+        (label :halign "center" :valign "center" :class "GPU_one" :text "󰔏 ${GPU.Temp} 󰍛 ${GPU.VRAMPercent}")
+        (label :halign "center" :valign "center" :class "GPU_two" :text "  ${GPU.GPUPercent} 󱑴 ${GPU.Fan}")
+        ;; (label :halign "center" :valign "center" :class "GPU_three" :text "󰐧 ${GPU.AvgPwr} 󰓅  ${GPU.SerialClock}")
     )
 )
 
 
 (defwidget pr_tracker []
-  ( box :orientation "h" :space-evenly "false" :hexpand "false" :vexpand "false" :halign "center"
-    (button
-      :onclick "firefox ${PR_TRACKER.url}"
-      ;; :tooltip "Open Dashboard."
-    (label
-      :class "weatha"
-      :text "${PR_TRACKER.master}${PR_TRACKER.small}${PR_TRACKER.nix_pkgs}${PR_TRACKER.unstable}"
-      :tooltip "${PR_TRACKER.title}"
+    ( box :orientation "h" :space-evenly "false" :hexpand "false" :vexpand "false" :halign "center"
+        (button
+            :onclick "firefox ${PR_TRACKER.url}"
+            ;; :tooltip "Open Dashboard."
+            (label
+                :class "weatha"
+                :text "${PR_TRACKER.master}${PR_TRACKER.small}${PR_TRACKER.nix_pkgs}${PR_TRACKER.unstable}"
+                :tooltip "${PR_TRACKER.title}"
+            )
+        )
     )
-    )
-  )
 )
 
 (defwidget weather []
-  (label
-    :class "weatha"
-    :text "${oxidized_weather}"
+    (label
+        :class "weatha"
+        :text "${oxidized_weather}"
     )
 )
 (defwidget system []
-    (box :class "sys_win" :orientation "h" :space-evenly "false" :hexpand "false" :vexpand "false" 
+    (box :class "sys_win" :orientation "h" :space-evenly "true" :hexpand "false" :vexpand "false" 
         ;; CPU Box
         (box :class "sys_cpu_box" :orientation "v" :space-evenly "false" :hexpand "false" :vexpand "true"
             (box :orientation "h" :space-evenly "false" :hexpand "true" :vexpand "true"
@@ -121,7 +123,6 @@
                     (label :text "󰻠"
                         :class "sys_icon_cpu"
                         :limit-width 6
-                        :show_truncated false
                         :wrap false
                         :halign "start"
                     ))
@@ -138,11 +139,10 @@
                     (label :text ""
                         :class "sys_icon_mem"
                         :limit-width 4
-                        :show_truncated false
                         :wrap false
                         :angle 0.0
                         :halign "center"
-                    :tooltip "${round((EWW_RAM.used_mem / 1024 / 1024 / 1000), 1)}GB"
+                        :tooltip "${round((EWW_RAM.used_mem / 1024 / 1024 / 1000), 1)}GB"
                     ))
                 (label :class "mem_perc" :valign "center" :halign "start" :text " ${memory}%")
             )
@@ -163,108 +163,160 @@
         ;;                 :halign "center"
         ;;             ))
         ;;         (label :class "disk_perc" :valign "center" :halign "start" :text " ${round(used_per, 0)}%")
-            ;; )
+        ;; )
         ;; )
     )
 )
 
 
 (defwidget clock []
-  ( box :orientation "h" :space-evenly "false" :hexpand "false" :vexpand "false" :halign "center"
-    (label :class "time" :text time :valign "center" :halign "start" )
-    (button
-      :onclick "bash $HOME/.config/eww/scripts/launch_dashboard"
-      :tooltip "Open Dashboard."
-      (label :class "date" :text "${date} " :valign "center" :halign "start"))
+    ( box :orientation "h" :space-evenly "false" :hexpand "false" :vexpand "false" :halign "center"
+        (label :class "time" :text time :valign "center" :halign "start" )
+        (button
+            :onclick "bash $HOME/.config/eww/scripts/launch_dashboard"
+            :tooltip "Open Dashboard."
+            (label :class "date" :text "${date} " :valign "center" :halign "start"))
     )
 )
 
 
 (defwidget network-up [] 
-	(box :class "network" :orientation "h" :space-evenly "false" :halign "center"
+    (box :class "network" :orientation "h" :space-evenly "false" :halign "center"
         (box :orientation "h" :class "network-box" 
             (label :text "󰧇 " :class "network-up")
         )
         (box :orientation "h" :width 110 
             (graph  :class "network-graph-up"
-                    :thickness 2
-                    :value {round(EWW_NET.enp7s0.NET_UP / 1024 ,1)}
-                    :time-range "2m"
-                    :min 10
-                    :max 1010
-                    :dynamic "true"
-                    :line-style "round"
-                    :tooltip "${round((EWW_NET.enp7s0.NET_UP / 8), 1)}Mb/s"
+                :thickness 2
+                :value {round(EWW_NET.enp7s0.NET_UP / 1024 ,1)}
+                :time-range "2m"
+                :min 10
+                :max 1010
+                :dynamic "true"
+                :line-style "round"
+                :tooltip "${round((EWW_NET.enp7s0.NET_UP / 8), 1)}Mb/s"
             )
-	    )
+        )
     )
 )
 (defwidget network-down [] 
-	(box :class "network" :orientation "h" :space-evenly "false" :halign "center"
+    (box :class "network" :orientation "h" :space-evenly "false" :halign "center"
         (box :orientation "h" :class "network-box" 
             (label :text "󰦿 " :width 5 :class "network-down")
         )
         (box :orientation "h" :width 110
             (graph  :class "network-graph-down"
-                    :thickness 2
-                    :value {round(EWW_NET.enp7s0.NET_DOWN ,1)}
-                    :time-range "2m"
-                    :min 10
-                    :max 800
-                    :dynamic "true"
-                    :line-style "round"
-                    :tooltip "${round((EWW_NET.enp7s0.NET_DOWN / 8), 1)}Mb/s"
+                :thickness 2
+                :value {round(EWW_NET.enp7s0.NET_DOWN ,1)}
+                :time-range "2m"
+                :min 10
+                :max 800
+                :dynamic "true"
+                :line-style "round"
+                :tooltip "${round((EWW_NET.enp7s0.NET_DOWN / 8), 1)}Mb/s"
             )
-	    )
+        )
     )
 )
 
+
+(defvar mic_reveal false)
+(defwidget micvolume []
+    (eventbox 
+        :onhover "${eww} update mic_reveal=true"
+        :onhoverlost "${eww} update mic_reveal=false"
+        (box :space-evenly "false" :class "bright-label" :orientation "h" :spacing 5
+            (label :class "bright-label" :orientation "h" :space-evenly "false" :text "${mic_icon} ")
+            (revealer 
+                :reveal mic_reveal
+                :transition "slideleft"
+                :duration "700ms"
+                (box :class "vol-control" :orientation "h" :spacing 3
+                    ;; Brightness Scale Bar
+                    (scale 
+                        :class "volbar"
+                        :value "${mic_vol}"
+                        :orientation "h"
+                        :tooltip "${mic_vol}%"
+                        :max 150
+                        :min 10
+                        :onchange "bash $HOME/.config/eww/scripts/audio --set-mic {}%")
+                ))
+            (button 
+                :class "info-icon" 
+                :onclick "bash $HOME/.config/eww/scripts/audio --toggle-mic"
+                (label :text "${mic_vol}%"))
+        )))
+(defvar vol_reveal false)
+;; (defvar eww "eww -c $HOME/.dotfiles/yoitsu/eww/bar") ;; NOTE: for testing
+(defvar eww "eww -c $HOME/.config/eww/bar")
+
 (defwidget volume []
-    (box :class "metric" :orientation "h" :space-evenly "false" :halign "start"
-        (label :class "vol-label" :orientation "h" :space-evenly "false" :text "${vol_icon}")
-        (scale :min 0
-            :max 150
-            :value volume
-            :orientation "h"
-            :tooltip "Volume: ${volume}%"
-            :onchange "bash $HOME/.config/eww/scripts/audio --set-vol {}")
-        (button 
-            :class "info-icon" 
-            :onclick "$HOME/.config/eww/scripts/audio --toggle-vol"
-            :onrightclick "python3 $HOME/.config/eww/scripts/change_dev.py"
-            :timeout "999999999"
-            "${volume}%"
-        )
+    (eventbox 
+        :onhover "${eww} update vol_reveal=true"
+        :onhoverlost "${eww} update vol_reveal=false"
+        (box :space-evenly "false" :class "vol-label" :orientation "h" :spacing 5
+            (label :class "vol-label" :orientation "h" :space-evenly "false" :text "${vol_icon}")
+            (revealer 
+                :reveal vol_reveal
+                :transition "slideleft"
+                :duration "700ms"
+                (box :class "vol-control" :orientation "h" :spacing 3
+                    ;; Volume Scale Bar
+                    (scale 
+                        :class "volbar"
+                        :value volume
+                        :orientation "h"
+                        :tooltip "${volume}%"
+                        :max 150
+                        :min 10
+                        :onchange "bash $HOME/.config/eww/scripts/audio --set-vol {}%")
+                ))
+            (button 
+                :class "info-icon" 
+                :onclick "$HOME/.config/eww/scripts/audio --toggle-vol"
+                :onrightclick "python3 $HOME/.config/eww/scripts/change_dev.py"
+                :timeout "999999999"
+                :tooltip "Click to toggle volume. Right-click to change device."
+                (label :text  "${volume}%"))
+
+            ;; Revealer with Slide Animation
+        )))
+
+(defwidget sliders []
+    (box :space-evenly "false"
+        (volume)
+        (micvolume)
     )
 )
 (defwidget functions []
     (box :class "function-container" :orientation "v" :space-evenly "true" :halign "center"
-      (box :class "function-box" :orientation "h" :space-evenly "false" :hexpand "true" :vexpand "false" :spacing 10
+        (box :class "function-box" :orientation "h" :space-evenly "false" :hexpand "true" :vexpand "false" :spacing 10
             (button :class "idle"
                 :onclick "firefox https://search.nixos.org/packages"
                 :onmiddleclick "firefox https://mynixos.com/home-manager/options"
                 :onrightclick "firefox https://mynixos.com/home-manager/options"
-		    "${idle_state}")
+                "${idle_state}")
             (button :class "screenshot"
                 :onclick "sleep 0.1; bash $HOME/.config/hypr/scripts/screenshot --area 2> /dev/null"
                 :onrightclick "sleep 1; bash $HOME/.config/hypr/scripts/screenshot --win 2> /dev/null"
                 :timeout "500ms"
                 :tooltip "Screenshot"
-            (label :text "󰹑 " :class "tooltip"))
+                (label :text "󰹑 " :class "tooltip"))
             (button :class "wallpaper"
                 :onclick " waypaper&"
                 :onrightclick "bash $HOME/.config/hypr/scripts/wayground.sh 2> /dev/null"
                 :tooltip "Wallpaper"
-            (label :text " " :class "tooltip"))
+                (label :text " " :class "tooltip"))
             (button :class "keybind"
                 :onclick "hyprland_bindings 2> /dev/null"
                 :timeout "1000ms"
                 :tooltip "Keybindings"
-            (label :text " " :class "tooltip"))
+                (label :text " " :class "tooltip"))
             (button :class "logout"
                 :onclick "wlogout 2> /dev/null"
                 :tooltip "Logout"
-            (label :text "󰍃 " :class "logout")
+                (label :text "󰍃 " :class "logout")
             )
         )
     )
@@ -274,7 +326,7 @@
 )
 
 (defwidget network [] 
-	(box :class "network-label" :orientation "h" :limit-width 20 :space-evenly "false" :halign "start"
+    (box :class "network-label" :orientation "h" :limit-width 20 :space-evenly "false" :halign "start"
         (label :text "${IP_ADDR}" )
     )
 )

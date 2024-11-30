@@ -198,7 +198,7 @@
             :tooltip "Volume: ${volume}%"
             :onclick "$HOME/.config/eww/scripts/volume --toggle-vol"
             :onrightclick "pavucontrol &"
-            :onchange "bash ./scripts/audio --set-vol {}")
+            :onchange "bash ./scripts/audio --set-vol {}%")
         (label :class "vol-text" :text "${volume}%")
     )
 )

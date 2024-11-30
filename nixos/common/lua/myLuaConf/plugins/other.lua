@@ -37,7 +37,7 @@ end, { desc = "Previous todo comment" })
 
 
 -- Zellij
-require('zellij').setup()
+require('zellij-nav').setup()
 vim.api.nvim_create_autocmd({ 'DirChanged', 'WinEnter', 'BufEnter' }, {
     pattern = '*',
     callback = function()
@@ -50,9 +50,9 @@ local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 
 -- Alt+h to ZellijNavigateLeft
-map('n', '<A-h>', ':ZellijNavigateLeft<CR>', opts)
-map('i', '<A-h>', '<ESC>:ZellijNavigateLeft<CR>', opts)
-map('v', '<A-h>', '<ESC>:ZellijNavigateLeft<CR>', opts)
+map('n', '<A-h>', ':ZellijNavigateLeftTab<CR>', opts)
+map('i', '<A-h>', '<ESC>:ZellijNavigateLeftTab<CR>', opts)
+map('v', '<A-h>', '<ESC>:ZellijNavigateLeftTab<CR>', opts)
 
 -- Alt+j to ZellijNavigateDown
 map('n', '<A-j>', ':ZellijNavigateDown<CR>', opts)

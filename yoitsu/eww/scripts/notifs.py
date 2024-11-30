@@ -86,6 +86,8 @@ class NotificationServer(dbus.service.Object):
         self, app_name, replaces_id, app_icon, summary, body, actions, hints, timeout
     ):
         try:
+            if len(body) >= 45:
+                body = body[:42] + "..."
             # Check for the icon in the specified directory
             if not app_icon:
                 icon_path = get_app_icon(app_name)

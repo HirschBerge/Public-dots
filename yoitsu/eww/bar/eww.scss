@@ -1,7 +1,7 @@
 *{
 	all: unset;
 	// font-family: JetbrainsMono Nerd Font;
-    font-family: "Termina Test Demi";
+	font-family: "Termina Test Demi";
 	font-size: 14px;
 }
 
@@ -47,10 +47,10 @@ $border_col: rgba(#cccccc,0.18);
 $best_so_far: rgba(255,255,255,0.1); 
 
 .main-container {
-    background-color: $color23;
-    border-radius: 14px;
-    margin: 8px 8px 8px 0px;
-    // box-shadow: 0px 8px 2px rgba(13, 14, 25, 0.6); /* Adjusted box-shadow to make it go above */
+	background-color: $color23;
+	border-radius: 14px;
+	margin: 8px 8px 8px 0px;
+	// box-shadow: 0px 8px 2px rgba(13, 14, 25, 0.6); /* Adjusted box-shadow to make it go above */
 }
 
 
@@ -61,7 +61,7 @@ $best_so_far: rgba(255,255,255,0.1);
 	margin-bottom: 10px;
 	border: 1px solid $border_col;
 	padding: 6px 20px 4px 20px;
-       	font-size: 22px;
+	font-size: 22px;
 	box-shadow: 2px 2px 2px $shadow;
 	min-height: 25px;	
 }
@@ -79,29 +79,29 @@ $best_so_far: rgba(255,255,255,0.1);
 }
 
 .music_icon {
-    font-size:20px;
-    margin-top: 1px;
-    margin-left:2px;
+	font-size:20px;
+	margin-top: 1px;
+	margin-left:2px;
 }
 
 .music_icon_butt{
-    padding:0px;
-    background:transparent;
-    color: $fg;
-    border:none;
-    margin:0;
-    box-shadow:none;
-    font-style: normal;
-    text-shadow: none;
+	padding:0px;
+	background:transparent;
+	color: $fg;
+	border:none;
+	margin:0;
+	box-shadow:none;
+	font-style: normal;
+	text-shadow: none;
 }
 
 .music_icon_butt:hover{
-    background: rgba(#ffffff,0.1);
-    color:rgba(#000000,0.5);;
+	background: rgba(#ffffff,0.1);
+	color:rgba(#000000,0.5);;
 }
 
 .music_text{
-    margin-top:2px;
+	margin-top:2px;
 
 }
 .time_battery {
@@ -117,47 +117,47 @@ $best_so_far: rgba(255,255,255,0.1);
 }
 
 .time_battery:hover {
-    background: rgba(#ffffff,0.15);
+	background: rgba(#ffffff,0.15);
 }
 
 .clipboard_manager{
-    background: transparent;
+	background: transparent;
 }
 
 .clipboard_container{
-    margin-right:10px;
+	margin-right:10px;
 }
 
 .clipboard-item{
-    background: rgba(#cccccc,0.9);
-    color: black;
-    text-shadow: none;
-    border: 1px solid $border_col;
-    border-radius: 7px;
-    box-shadow: 2px 2px 2px $shadow;
+	background: rgba(#cccccc,0.9);
+	color: black;
+	text-shadow: none;
+	border: 1px solid $border_col;
+	border-radius: 7px;
+	box-shadow: 2px 2px 2px $shadow;
 }
 
 .clipboard-item:hover{
-    background:  rgba(#eeeeee,0.9);
+	background:  rgba(#eeeeee,0.9);
 }
 
 .playlist_selector{
-    background: rgba(#cccccc,0.9);
-    border-radius: 10px;
+	background: rgba(#cccccc,0.9);
+	border-radius: 10px;
 }
 
 .playlist_button{
-    background: transparent;
-    color: black;
-    text-shadow: none;
-    border: none;
-    border-bottom: 1px solid gray ;
-    box-shadow: none;
-    border-radius: 10px;
+	background: transparent;
+	color: black;
+	text-shadow: none;
+	border: none;
+	border-bottom: 1px solid gray ;
+	box-shadow: none;
+	border-radius: 10px;
 }
 
 .playlist_button:hover{
-    background: rgba(#eeeeee,0.8);
+	background: rgba(#eeeeee,0.8);
 }
 button:hover {
 	color: $color16;
@@ -166,7 +166,7 @@ tooltip {
 	color: $lightgray;
 	background-color: $color20;
 	font-weight: bolder;
-    border-radius: 6px;
+	border-radius: 6px;
 }
 
 .dash {
@@ -195,58 +195,58 @@ tooltip {
 }
 .info-box-left {
 	padding: 4px;
-    padding-top: 4px;
+	padding-top: 4px;
 }
 .info-box-right {
 	padding: 4px;
-    padding-top: 4px;
+	padding-top: 4px;
 }
 .info-icon {
 	color: $mauve;
 }
 .info-text {
 	color: $color19;
-    font-weight: bold;
+	font-weight: bold;
 }
 
 .sys_disk {
-  color: $color2;
-  background-color: $color22; // Adjust the background color as needed
-  border-radius: 5px; // Adjust the border-radius if necessary
+	color: $color2;
+	background-color: $color22; // Adjust the background color as needed
+	border-radius: 5px; // Adjust the border-radius if necessary
 }
 
 
 .sys_icon_disk {
-  font-size: 12; // Adjust the font size as needed
-  margin: 15px; // Adjust the margin as needed
-  color: $color2; // Assuming you want to use the same color as the disk widget
+	font-size: 12; // Adjust the font size as needed
+	margin: 15px; // Adjust the margin as needed
+	color: $color2; // Assuming you want to use the same color as the disk widget
 }
 
 .sys_disk_box {
-  border-radius: 16px; // Adjust the border-radius if necessary
-  margin: 10px 10px 10px 10px; // Adjust the margin as needed
-  // Adjust padding as needed
+	border-radius: 16px; // Adjust the border-radius if necessary
+	margin: 10px 10px 10px 10px; // Adjust the margin as needed
+	// Adjust padding as needed
 }
 
 .disk_perc {
-  color: $color2;
-  padding-left: 6px; // Adjust padding as needed
+	color: $color2;
+	padding-left: 6px; // Adjust padding as needed
 }
 .sys_win {
-    border-radius: 5px;
+	border-radius: 5px;
 }
 .sys_cpu {
-  color: $color5;
-  background-color: $color22;
-  border-radius: 5px;
+	color: $color5;
+	background-color: $color22;
+	border-radius: 5px;
 }
 .sys_mem {
-  color: $color2;
-  background-color: $color22;
-  border-radius: 5px;
+	color: $color2;
+	background-color: $color22;
+	border-radius: 5px;
 }
 .sys_icon_bat {
-  color: #afbea2;
+	color: #afbea2;
 }
 .sys_icon_cpu {
 	font-size: 12;
@@ -256,17 +256,17 @@ tooltip {
 .sys_icon_mem {
 	font-size: 12;
 	margin: 15px;
-    color: $blue;
+	color: $blue;
 }
 .sys_cpu_box {
-    border-radius: 16px;
-    margin: 10px 10px 10px 10px;
-    padding-left: 20px;
+	border-radius: 16px;
+	margin: 10px 10px 10px 10px;
+	padding-left: 20px;
 }
 .sys_mem_box {
-    border-radius: 16px;
-    margin: 10px 10px 10px 10px;
-    padding-right: 20px;
+	border-radius: 16px;
+	margin: 10px 10px 10px 10px;
+	padding-right: 20px;
 }
 .mem_perc {
 	color: $sapphire;
@@ -286,12 +286,12 @@ tooltip {
 	// padding: 10px 0px 4px 0px;
 }
 .network-up {
-  color: $mauve;
-  font-size: 22px;
+	color: $mauve;
+	font-size: 22px;
 }
 .network-down {
-  color: $blue;
-  font-size: 22px;
+	color: $blue;
+	font-size: 22px;
 }
 .network-graph-up {
 	color: $mauve;
@@ -316,17 +316,17 @@ tooltip {
 	padding-top: 10px;
 }
 .month-year {
-		font-size: 12px;
-		font-weight: bold;
-		margin: 10px;
-		padding: 1px;
-		color: $lightgray;
+	font-size: 12px;
+	font-weight: bold;
+	margin: 10px;
+	padding: 1px;
+	color: $lightgray;
 }
 .day-names {
-		margin: 10px;
-		font-size: 12px;
-		font-weight: bold;
-		color: $color10;
+	margin: 10px;
+	font-size: 12px;
+	font-weight: bold;
+	color: $color10;
 }
 
 .weatha {
@@ -383,7 +383,7 @@ calendar {
 	}
 	&:indeterminate {
 		color: rgba(205, 219, 249, 0.3);
-}}
+	}}
 calendar.button {
 	color: $gray;
 }
@@ -489,13 +489,13 @@ calendar.highlight {
 }
 .player-bar scale trough highlight {
 	all: unset;
-    background-image: linear-gradient(to right, $blue, $color12);
+	background-image: linear-gradient(to right, $blue, $color12);
 	border-radius: 24px;
 }
 .player-bar scale trough {
 	all: unset;
 	background-color: $darkgray;
-    box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.3);
+	box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.3);
 	border-radius: 24px;
 	min-height: 5px;
 	min-width: 150px;
@@ -545,18 +545,6 @@ calendar.highlight {
 .music-loop-color,
 .music-shuffle-color {
 	color: $color3;
-}
-.vol-text {
-	color: $color5;
-	padding-left: 10px;
-}
-.vol-label {
-	color: $gray;
-	padding-right: 10px;
-}
-.vol-text {
-	color: $gray;
-	padding-left: 10px;
 }
 // scale & Metric  ;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -624,17 +612,17 @@ calendar.highlight {
 	color: $color5;
 }
 .notifications {
-    min-height: 0px;
-    background-color: transparent;
+	min-height: 0px;
+	background-color: transparent;
 }
 
 .notif {
-    background-color: #282828;
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 10px;
-    border-width: 2;
-    border-color: #fabd2f;
+	background-color: #282828;
+	margin-bottom: 10px;
+	padding: 10px;
+	border-radius: 10px;
+	border-width: 2px;
+	border-color: #fabd2f;
 }
 
 .clock {
@@ -646,5 +634,48 @@ calendar.highlight {
 }
 
 .notif image {
-    padding-right: 10px;
+	padding-right: 10px;
 }
+
+.vol-text {
+	color: $color5;
+	padding-left: 10px;
+}
+.vol-label {
+	color: $gray;
+	padding-right: 10px;
+}
+.vol-text {
+	color: $gray;
+	padding-left: 10px;
+}
+.volbar trough highlight {
+	background: linear-gradient(45deg, $color9 0%, #4e68be  50%, $mauve 100%);
+	border-radius: 10px;
+}
+
+
+scale trough {
+	all: unset;
+	background-color: #22242b;
+	box-shadow: 0px 2px 3px 2px #06060b;
+	border-radius: 16px;
+	min-height: 10px;
+	min-width: 70px;
+	margin: 0px 10px 0px 0px;
+}
+
+
+
+/** tooltip!! **/
+tooltip.background {
+	background-color: #0f0f17;
+	font-size: 18;
+	border-radius: 10px;
+	color: #bfc9db;
+}
+
+tooltip label {
+	margin: 6px;
+}
+

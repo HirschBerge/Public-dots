@@ -1,7 +1,7 @@
 {config, ...}: let
   plug_bar =
     /*
-    bash
+    kdl
     */
     ''
       default_tab_template {
@@ -65,7 +65,7 @@ in {
   };
   home.file."${config.xdg.configHome}/zellij/config.kdl".text =
     /*
-    bash
+    kdl
     */
     ''
       default_shell "nu"
@@ -112,7 +112,7 @@ in {
     '';
   home.file."${config.xdg.configHome}/zellij/layouts/default.kdl".text =
     /*
-    bash
+    kdl
     */
     ''
       layout {
@@ -137,13 +137,21 @@ in {
           }
           tab name="Scratchpad" hide_floating_panes=true {
               pane command="zsh"
+            floating_panes {
+                pane command="castero"{
+                    height 35
+                    width 175
+                    x 19
+                    y 6
+                }
+            }
           }
           ${plug_bar}
       }
     '';
   home.file."${config.xdg.configHome}/zellij/layouts/rust.kdl".text =
     /*
-    bash
+    kdl
     */
     ''
 

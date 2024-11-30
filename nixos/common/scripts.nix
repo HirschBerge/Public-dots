@@ -62,7 +62,7 @@
           notify-send "No URL found" "your clipboard contained: $clip"
           exit
         fi
-        meta="$(yt-dlp --print "%(channel)s - %(duration>%H:%M:%S)s - %(title)s" "$clip")"
+        meta="$(yt-dlp --cookies-from-browser firefox --print "%(channel)s - %(duration>%H:%M:%S)s - %(title)s" "$clip")"
         channel="$(echo "$meta" |awk -F" - " '{ print $1 }')"
         length="$(echo "$meta" |awk -F" - " '{ print $2 }')"
         title="$(echo "$meta" |awk -F" - " '{ print $3 }')"
@@ -70,7 +70,7 @@
         no_vid() {
           echo "Watching a Video from *$channel.*" "$length - $title"
           mpv $url >/dev/null --input-ipc-server=/tmp/mpvsocket 2>&1 &
-          notify-send "Watching a Video from *$channel.*" "$length - $title" -a "YouTube" --icon ~/.cache/youtube.svg
+          notify-send "Watching a Video from *$channel.*" "$length - $title" -a "YouTube"
           host="$(hostname)"
           if [ "shirohebi" = "$host" ];
           then
@@ -83,7 +83,7 @@
         yes_vid() {
           echo '{ "command": [ "loadfile", "'$url'", "append-play" ] }' | ${pkgs.socat}/bin/socat - /tmp/mpvsocket > /dev/null 2>&1 &
           echo "Added a video from *$channel.* to the queue" "$length - $title"
-          notify-send "Added a video from $channel." "$length - $title" -a "YouTube" --icon ~/.cache/youtube.svg
+          notify-send "Added a video from $channel." "$length - $title" -a "YouTube"
         }
 
         if pgrep -x "mpv" > /dev/null; then
@@ -96,8 +96,9 @@
       '')
     (
       pkgs.writeScriptBin "hyprland_bindings"
+      #nushell
       /*
-      bash
+      nu
       */
       ''
         #!/usr/bin/env nu
@@ -116,7 +117,7 @@
     )
     (pkgs.writeScriptBin "find_window"
       /*
-      bash
+      nu
       */
       ''
         #!/usr/bin/env nu
@@ -507,11 +508,48 @@
             #NOTE: Only sends the notification ifthe computer is actively being used.
             if ! echo "$unstable" | grep -q '' && [ "$(hyprctl monitors -j | jq 'any(.[]; .dpmsStatus == true)')" = "true" ]; then
                 echo "$PR" > ~/.cache/pr_tracker_finished.txt
-                notify-send -a 'nixos-logo' "NixPKGs Update" "PR $PR has hit unstable."
-            # else
-           # Do nothing
+                notify-send -a 'nixos-logo' "$title" "PR $PR has hit unstable."
             fi
         fi
+      ''
+    )
+    (
+      pkgs.writeScriptBin "pings"
+      #nushell
+      /*
+      nu
+      */
+      ''
+        #!/usr/bin/env nu
+        let hosts = [
+            {name: "ProxNode0", ip: "10.10.10.3"},
+            {name: "ProxNode1", ip: "10.10.10.4"},
+            {name: "ProxNode2", ip: "10.10.10.5"},
+            {name: "TrueNas", ip: "10.10.10.10"},
+            {name: "Docker", ip: "10.10.10.53"},
+            {name: "KumaProd", ip: "10.10.10.51"},
+            {name: "KumaBack", ip: "10.10.10.83"},
+            {name: "PiHole", ip: "10.10.10.54"},
+            {name: "HACS", ip: "10.10.10.19"}
+        ]
+
+        let dns_output = (try { nix-shell -p dnsutils --run 'dig +short nas-prod-dir.home.USER_NAMEkiss.net' } catch { echo "Failed" })
+
+        let dns_result = if ($dns_output | lines | first | default "" | str length) > 0 {
+            let ip = ($dns_output | lines | first)
+            {name: "DNS Test", ip: $ip, status: (if $ip == "10.10.10.10" { "Resolved Correctly" } else { "Resolved Incorrectly" })}
+        } else {
+            {name: "DNS Test", ip: "none", status: "Unresolved"}
+        }
+
+
+        let results = ($hosts | each {|host|
+            let ping_output = (try { ping $host.ip -c 1 } catch { echo "Failed" })
+            let status = (if ($ping_output | str contains "1 received") { "Reachable" } else { "Unreachable" })
+            {name: $host.name, ip: $host.ip, status: $status}
+        })
+
+        ($results | append $dns_result) | table
       ''
     )
     (pkgs.writeScriptBin "toradd"
@@ -641,6 +679,32 @@
             notify-send -i dialog-warning "Network Status" "Unknown status for $interface: $status"
         fi
       '')
+    (pkgs.writeScriptBin "net_toggle"
+      #nushell
+      /*
+      nu
+      */
+      ''
+        #!/usr/bin/env nu
+
+         $"Interface,IP,MAC\n(ip a | rg -A3 'enp|wlo'|rg -v altname | rg -B1 'inet ' | sed 's,/24.*noprefixroute,,' | awk ' /link\/ether/ {mac=$2} /inet/ {ip=$2; iface=$NF; print iface "," ip "," mac} ')"|from csv |print
+        let interface = (ip a |awk "/[0-9]: / { print $2 }" |sd ":" "" |sd "lo" iface |from csv |input list ).iface
+        # Check the current status of the interface
+        let status = (nmcli device status | grep $"($interface)" | awk '{print $3}')
+        # Toggle the interface status and send a notification
+        if $status == "connected" {
+            echo $"Disconnecting ($interface)..."
+            nmcli device disconnect $interface
+            notify-send -a 'network' "Network Status" $"($interface) disconnected"
+        } else if $status == "disconnected" {
+            echo $"Connecting ($interface)..."
+            nmcli device connect $interface
+            notify-send -a 'network' "Network Status" $"($interface) connected"
+        } else {
+            echo $"Unknown status for ($interface): ($status)"
+            notify-send -a "error" "Network Status" $"Unknown status for ($interface): ($status)"
+        }
+      '')
     (pkgs.writeScriptBin "locktoggle"
       /*
       bash
@@ -727,8 +791,9 @@
         # notify-send "'$s' copied to primary." &
       '')
     (pkgs.writeScriptBin "eww_launch"
+      #nushell
       /*
-      bash
+      nu
       */
       ''
         #!/usr/bin/env nu

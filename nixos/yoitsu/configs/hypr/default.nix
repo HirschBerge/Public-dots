@@ -1,19 +1,24 @@
 {
   pkgs,
   config,
+  inputs,
   ...
-}: {
+}: let
+  term = "wezterm";
+  term_open = "${term} start -- ";
+  term_open_class = "${term} -n --config enable_tab_bar=false start --class clipse -- ";
+in {
   home.packages = with pkgs; [
     wl-clipboard
     waypaper
     grim
     slurp
     swww
-    hyprland # Comment out when back to using flake version
+    # hyprland # Comment out when back to using flake version
   ];
   wayland.windowManager.hyprland = {
     enable = true;
-    # package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     xwayland.enable = true;
     extraConfig =
       /*
@@ -34,8 +39,6 @@
         env = HYPRCURSOR_SIZE,24
         env = XDG_SESSION_TYPE,wayland
         env = WLR_NO_HARDWARE_CURSORS,1
-        env = SUDO_ASKPASS, $HOME/.local/bin/dmenupass
-        env = NIXPKGS_ALLOW_UNFREE,1
 
         # For all categories, see https://wiki.hyprland.org/Configuring/Variables/
 
@@ -71,7 +74,12 @@
             # See https://wiki.hyprland.org/Configuring/Variables/ for more
             # blur_ignore_opacity = true
             rounding = 10
-            drop_shadow = yes
+            shadow {
+            enabled=true
+            range = 4
+            render_power = 3
+            # col.shadow = rgba(1a1a1aee)
+        }
             blur {
               enabled = true
               size = 12
@@ -81,9 +89,6 @@
               ignore_opacity = true
             }
             # fullscreen_opacity = 0.7
-            shadow_range = 4
-            shadow_render_power = 3
-            col.shadow = rgba(1a1a1aee)
         }
 
         animations { #Thank you to HyprDots
@@ -142,7 +147,8 @@
       # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
 
       bind = ALT, escape, fullscreenstate, 0 2
-      bindd = $mainMod, Return,Opens Kitty, exec, ${pkgs.kitty}/bin/kitty
+      # bindd = $mainMod, Return,Opens Kitty, exec, ${pkgs.kitty}/bin/kitty
+      bindd = $mainMod, Return,Opens ${term}, exec, ${term}
       bindd = $mainMod, O, Kills the Active Window, killactive,
       bindd = $mainMod, M, Exits Hyprland, exit,
       bindd = $mainMod, N, Opens Dashboard, exec, ~/.config/eww/scripts/launch_dashboard
@@ -152,9 +158,9 @@
       # bindd = $mainMod, R, exec, wofi --show drun
       bindd = $mainMod, P, Toggles pseudo tiling, pseudo, # dwindle
       bindd = $mainMod SHIFT, J, Toggles split type, togglesplit, # dwindle
-      bindd = $mainMod, V, Opens the Clipse clipboard manager, exec, ${pkgs.kitty}/bin/kitty --title clipse -e zsh  -c '${pkgs.clipse}/bin/clipse $PPID' # bindd the open clipboard operation to a nice key.
+      bindd = $mainMod, V, Opens the Clipse clipboard manager, exec, ${term_open_class} zsh -c '${pkgs.clipse}/bin/clipse $PPID' # bindd the open clipboard operation to a nice key.
       bindd = $mainMod, I, Starts screen recording, exec, ~/.scripts/scrn_record.sh
-      bindd = $mainMod, C, Opens Helix in kitty, exec, ${pkgs.kitty}/bin/kitty ${pkgs.helix}/bin/hx ~/.dotfiles/nixos
+      bindd = $mainMod, C, Opens Helix in ${term}, exec, ${term_open} ${pkgs.helix}/bin/hx ~/.dotfiles/nixos
       # Move focus with mainMod + arrow keys
       bindd = $mainMod, H, Focuses left, movefocus, l
       bindd = $mainMod, L, Focuses right, movefocus, r
@@ -198,13 +204,13 @@
       # Discord PPT
 
       # FKey binds
-      bindd = $mainMod, F1, Shows Hyprland Keybindds, exec, ~/.config/hypr/scripts/show_bindds.sh
+      bindd = $mainMod, F1, Shows Hyprland Keybinds, exec, hyprland_bindings
       bindd = $mainMod, F2, Dmenu Mount, exec, ~/.local/bin/dmenumount
       bindd = $mainMod, F3, Dmenu Umount, exec, ~/.local/bin/dmenuumount
 
       # Other
       bindd = $mainMod, T, Launches Thunar, exec, ${pkgs.xfce.thunar}/bin/thunar
-      bindd = $mainMod, B, Launches Btop, exec, ${pkgs.kitty}/bin/kitty ${pkgs.btop}/bin/btop
+      bindd = $mainMod, B, Launches Btop, exec, ${term_open} ${pkgs.btop}/bin/btop
       bindd = $mainMod SHIFT, H, Launches Eww, exec, exec = eww open sidebar ; eww -c ~/.config/eww/bar/ open bar; eww open notifications
 
 
@@ -243,6 +249,7 @@
       exec-once = [workspace 1 silent ] ${pkgs.firefox}/bin/firefox &
       exec = ~/.config/hypr/scripts/sleep.sh & #Systemctl service works now for some reason
       exec-once = ${pkgs.protonmail-desktop}/bin/proton-mail
+      exec = wezterm
     '';
   home.file."${config.xdg.configHome}/hypr/window_rules.conf".text =
     /*
@@ -255,9 +262,11 @@
       windowrulev2 = float,class:^(.*waypaper.*)$
       windowrulev2 = size 889 629,class:^(.*waypaper.*)
       windowrulev2 = tile,class:^(.*Warp.*)$
-      windowrulev2 = float,class:^(kitty.*)$,title:^(.*clipse.*)$
-      windowrulev2 = size 546 552,class:^(kitty.*)$,title:^(.*clipse.*)$
-      windowrulev2 = opacity 0.5 0.5,class:^(kitty.*)$,title:^(.*clipse.*)$
+      windowrulev2 = float,class:^(clipse.*)
+      windowrulev2 = size 546 552,class:^(clipse.*)
+      windowrulev2 = opacity 0.5 0.5,class:^(clipse.*)
+      # windowrulev2 = size 546 552,class:^(kitty.*)$,title:^(.*clipse.*)$
+      # windowrulev2 = opacity 0.5 0.5,class:^(kitty.*)$,title:^(.*clipse.*)$
       windowrulev2 = float, class:^(.*pavucontrol)$
       windowrulev2 = size 1059 552,class:^(.*pavucontrol)$
       windowrulev2 = float, class:^(.*desktop-portal-gtk.*)$
@@ -288,7 +297,7 @@
       windowrulev2 = size 983 993,title:^(.*GPT.*)
 
       # XWaylandBridge
-      windowrulev2 = opacity 0.75 0.6, class:^.*kitty.*$
+      windowrulev2 = opacity 0.75 0.6, class:^.*${term}.*$
       windowrulev2 = opacity 0.0 override 0.0 override,class:^(xwaylandvideobridge)$
       windowrulev2 = noanim,class:^(xwaylandvideobridge)$
       windowrulev2 = nofocus,class:^(xwaylandvideobridge)$

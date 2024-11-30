@@ -39,10 +39,6 @@
     recursive = true;
   };
 
-  home.file."${config.xdg.configHome}/lf" = {
-    source = ../../.. + "/common" + /lf;
-    recursive = true;
-  };
   home.file."${config.xdg.configHome}/bat/config".text = ''
     --style=header-filename,header-filesize
     --paging=never
@@ -114,7 +110,7 @@
       # Increase or decrease the size of the annotations
       annotation-size-factor = 1
       # Filename to use for saving action. Omit to disable saving to file. Might contain format specifiers: https://docs.rs/chrono/latest/chrono/format/strftime/index.html
-      output-filename = "/home/${username}/Pictures/Screenshots/Screenshot_+%Y-%m-%d-%H-%M-%S.png"
+      output-filename = "/home/${username}/Pictures/Screenshots/Screenshot_%Y-%m-%d-%H-%M-%S.png"
       # After copying the screenshot, save it to a file as well
       save-after-copy = false
       # Hide toolbars by default
@@ -139,7 +135,7 @@
     '';
   home.file."${config.xdg.configHome}/nushell/satty.nu".text =
     /*
-    bash
+    nu
     */
     ''
       #!/usr/bin/env nu
