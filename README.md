@@ -25,11 +25,17 @@
     </a>
   </div>
 </h1>
+
+<h2>
+  Screenshot Showcase
+</h3>
 <p align="center">
-   <img src="https://i.imgur.com/efEWq4M.png" width="800px" /> <br>
+   <img src="./streamdeck_icons/github_images/top_discord.png" width="800px" /> <br>
+   <img src="./streamdeck_icons/github_images/bottom_browser.png" width="800px" /> <br>
+   <img src="./streamdeck_icons/github_images/bottom_term.png" width="800px" /> <br>
 </p>
 <p align="center">
-   Screeenshot last updated <b>01/14/24</b>
+   Screeenshots last updated <b>11/30/24</b>
 </p>
 
 
