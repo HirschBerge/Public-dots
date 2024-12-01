@@ -120,7 +120,7 @@
         "size": 100,
         "newLine": false,
         "newTab": false,
-        "string": "Error: [EINVAL] chart_release_create.release_name: Value does not match '^[a-z0-9]([-a-z0-9]*[a-z0-9])?$' pattern "
+        "string": "xingenue.ttv@gmail.com"
       },
       "order": [
         "clock",
@@ -748,6 +748,88 @@
             "tall": false
           },
           "timestamp": 1719160899494
+        },
+        {
+          "url": "https://thebeginning.mangaseen.com/",
+          "display": {
+            "alignment": "center-center",
+            "direction": "vertical",
+            "order": "visual-name",
+            "rotate": 0,
+            "translate": {
+              "x": 0,
+              "y": 0
+            },
+            "gutter": 25,
+            "name": {
+              "show": true,
+              "text": "TBATE",
+              "size": 7
+            },
+            "visual": {
+              "show": true,
+              "type": "icon",
+              "size": 25,
+              "letter": {
+                "text": ""
+              },
+              "icon": {
+                "name": "book-open",
+                "prefix": "fas",
+                "label": "Book Open"
+              },
+              "image": {
+                "url": ""
+              },
+              "shadow": {
+                "size": 0
+              }
+            }
+          },
+          "accent": {
+            "by": "theme",
+            "hsl": {
+              "h": 0,
+              "s": 0,
+              "l": 0
+            },
+            "rgb": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "color": {
+            "by": "theme",
+            "hsl": {
+              "h": 0,
+              "s": 0,
+              "l": 0
+            },
+            "rgb": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            },
+            "opacity": 100
+          },
+          "background": {
+            "show": false,
+            "type": "image",
+            "opacity": 100,
+            "image": {
+              "url": ""
+            },
+            "video": {
+              "url": ""
+            }
+          },
+          "border": 0,
+          "shape": {
+            "wide": false,
+            "tall": false
+          },
+          "timestamp": 1723411915983
         }
       ]
     },
@@ -1266,7 +1348,7 @@
         "text": "General Use",
         "show": true
       },
-      "collapse": false,
+      "collapse": true,
       "toolbar": {
         "size": 100,
         "openAll": {
@@ -2524,6 +2606,88 @@
             "tall": false
           },
           "timestamp": 1716086734999
+        },
+        {
+          "url": "redacted.com
+          "display": {
+            "alignment": "center-center",
+            "direction": "vertical",
+            "order": "visual-name",
+            "rotate": 0,
+            "translate": {
+              "x": 0,
+              "y": 0
+            },
+            "gutter": 25,
+            "name": {
+              "show": true,
+              "text": "",
+              "size": 7
+            },
+            "visual": {
+              "show": true,
+              "type": "letter",
+              "size": 25,
+              "letter": {
+                "text": "Kuma"
+              },
+              "icon": {
+                "name": "",
+                "prefix": "",
+                "label": ""
+              },
+              "image": {
+                "url": ""
+              },
+              "shadow": {
+                "size": 0
+              }
+            }
+          },
+          "accent": {
+            "by": "theme",
+            "hsl": {
+              "h": 0,
+              "s": 0,
+              "l": 0
+            },
+            "rgb": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "color": {
+            "by": "theme",
+            "hsl": {
+              "h": 0,
+              "s": 0,
+              "l": 0
+            },
+            "rgb": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            },
+            "opacity": 100
+          },
+          "background": {
+            "show": false,
+            "type": "image",
+            "opacity": 100,
+            "image": {
+              "url": ""
+            },
+            "video": {
+              "url": ""
+            }
+          },
+          "border": 0,
+          "shape": {
+            "wide": false,
+            "tall": false
+          },
+          "timestamp": 1731641586902
         }
       ]
     },
@@ -2532,7 +2696,7 @@
         "text": "Pathfinder",
         "show": true
       },
-      "collapse": true,
+      "collapse": false,
       "toolbar": {
         "openAll": {
           "show": true
