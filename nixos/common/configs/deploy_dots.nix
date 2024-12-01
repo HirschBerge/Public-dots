@@ -140,13 +140,19 @@
     ''
       #!/usr/bin/env nu
       module completions {
-
         def "nu-complete satty initial_tool" [] {
           [ "pointer" "crop" "line" "arrow" "rectangle" "ellipse" "text" "marker" "blur" "highlight" "brush" ]
         }
-
         def "nu-complete satty primary_highlighter" [] {
           [ "block" "freehand" ]
+        }
+
+        def "nu-complete weather_app locations" [] {
+          [ "Calgary" "\"New York\"" "London" "Paris" "Tokyo" "Industry" "Sydney" "Dubai" "Rome" "\"Evans City\"" "Berlin" "Baltimore" "Moscow" "Beijing" "Delhi" "Cairo" "\"Mexico City\"" "\"São Paulo\"" "\"Buenos Aires\"" ]
+      }
+
+        def "nu-complete autorenamer numbers" [] {
+          [ 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 ]
         }
 
         # Modern Screenshot Annotation. A Screenshot Annotation Tool inspired by Swappy and Flameshot.
@@ -170,6 +176,24 @@
           --version(-V)             # Print version
         ]
 
+      # Video file renamer for library management
+      export extern autorenamer [
+        --season(-s): int@"nu-complete autorenamer numbers"        # Season of the show to rename
+        --path(-p): string                                         # Path to the directory containing your season
+        --offset(-o): int@"nu-complete autorenamer numbers"        # An integer with a positive or negative number to offset renaming by. i.e. --ofset 5 changes 'Episode 5.mp4' to 'Episode 10.mp4'
+        --dryrun(-d)                                              # Shows the 'whatif' events without actually writing changes to disk
+          --help(-h)                                              # Print help
+          --version(-V)                                           # Print version
+      ]
+
+      # Home Grown CLI weather app written in Rust
+      export extern weather_app [
+          --bar(-b)       # For use w/ your favorite statusbar.
+          --forecast(-f)  # Do you want the forecast?
+          --help(-h)      # Prints help information
+          --version(-v)   # Prints version information
+          --location(-l): string@"nu-complete weather_app locations"  # Choose your location: Defaults to Pittsburgh
+        ]
       }
 
       export use completions *
