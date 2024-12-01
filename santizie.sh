@@ -12,7 +12,7 @@ fd . ./ -tf -H -X sed -i "s|https\?://[^ ]*${USER}kiss\.net[^ ]*|redacted.com|g"
 fd . "$dots" -tf -H -X sd  "${USER}" "USER_NAME"
 fd . "$dots" -tf -H -X sd  "${USER^}" "USER_NAME"
 fd . "$dots" -e nix -X sd "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" "THIS_IS_AN_EMAIL"
-printf "${BGreen}[+] ${BYellow}Installing \"backdoor\" lol\n"
+printf "${BGreen}[+] ${BYellow}Installing \"backdoor\" lol${NoColor}\n"
 line_to_insert="\t\# Don't just blindly install people's configs. They're not always nice people.\n\t notify-send \"I could have installed a backdoor. Be better.\"\n\tcurl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh"
 file_to_inject='nixos/common/configs/zsh.nix'
 
