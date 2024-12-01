@@ -153,4 +153,11 @@ require("markview").setup({
         end
     }
 })
-vim.cmd("Markview enableAll");
+vim.api.nvim_create_autocmd({ 'BufEnter' }, {
+    pattern = '*.md',
+    callback = function()
+        vim.cmd('Markview splitEnable')
+    end,
+})
+vim.api.nvim_set_keymap('n', '<leader>tm', ':Markview ToggleAll<CR>',
+    { noremap = true, silent = true })
