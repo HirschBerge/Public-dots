@@ -4,7 +4,7 @@
     wezterm.url = "github:wez/wezterm?dir=nix";
     nixos-boot.url = "github:HirschBerge/nixos-boot";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+    # hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
