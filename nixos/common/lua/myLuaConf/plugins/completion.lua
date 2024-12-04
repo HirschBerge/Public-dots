@@ -12,7 +12,7 @@ cmp.setup {
         format = lspkind.cmp_format {
             mode = 'text',
             with_text = true,
-            maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+            maxwidth = 50,         -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
             ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
 
             menu = {
@@ -26,14 +26,14 @@ cmp.setup {
             }
         }
     },
-    snippet = {expand = function(args) luasnip.lsp_expand(args.body) end},
+    snippet = { expand = function(args) luasnip.lsp_expand(args.body) end },
     mapping = cmp.mapping.preset.insert {
         ['<C-p>'] = cmp.mapping.scroll_docs(-4),
         ['<C-n>'] = cmp.mapping.scroll_docs(4),
         ['<C-Space>'] = cmp.mapping.complete {},
         -- [ '<CR>'] = cmp.config.disable,
         ['<CR>'] = cmp.mapping.confirm {
-            behavior = cmp.ConfirmBehavior.Replace,
+            behavior = cmp.ConfirmBehavior.Insert,
             -- NOTE: I don't like not being able to just hit enter to
             -- go to the next line if there is a cmp.
             select = false
@@ -46,7 +46,7 @@ cmp.setup {
             else
                 fallback()
             end
-        end, {'i', 's'}),
+        end, { 'i', 's' }),
         ['<S-Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_prev_item()
@@ -55,43 +55,43 @@ cmp.setup {
             else
                 fallback()
             end
-        end, {'i', 's'})
+        end, { 'i', 's' })
     },
 
     sources = cmp.config.sources {
         -- The insertion order influences the priority of the sources
-        {name = 'nvim_lsp' --[[ , keyword_length = 3 ]] },
-        {name = 'nvim_lsp_signature_help' --[[ , keyword_length = 3  ]] },
-        {name = 'path'}, {name = 'luasnip'}, {name = 'buffer'}
+        { name = 'nvim_lsp' --[[ , keyword_length = 3 ]] },
+        { name = 'nvim_lsp_signature_help' --[[ , keyword_length = 3  ]] },
+        { name = 'path' }, { name = 'luasnip' }, { name = 'buffer' }
     },
     enabled = function() return vim.bo[0].buftype ~= 'prompt' end,
-    experimental = {native_menu = false, ghost_text = false}
+    experimental = { native_menu = false, ghost_text = false }
 }
 
 cmp.setup.filetype('lua', {
     sources = cmp.config.sources {
-        {name = 'nvim_lua'}, {name = 'nvim_lsp' --[[ , keyword_length = 3  ]] },
-        {name = 'nvim_lsp_signature_help' --[[ , keyword_length = 3  ]] },
-        {name = 'path'}, {name = 'luasnip'}, {name = 'buffer'}
+        { name = 'nvim_lua' }, { name = 'nvim_lsp' --[[ , keyword_length = 3  ]] },
+        { name = 'nvim_lsp_signature_help' --[[ , keyword_length = 3  ]] },
+        { name = 'path' }, { name = 'luasnip' }, { name = 'buffer' }
     },
-    {{name = 'cmdline', option = {ignore_cmds = {'Man', '!'}}}}
+    { { name = 'cmdline', option = { ignore_cmds = { 'Man', '!' } } } }
 })
 
 -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline({'/', '?'}, {
+cmp.setup.cmdline({ '/', '?' }, {
     mapping = cmp.mapping.preset.cmdline(),
     sources = {
-        {name = 'nvim_lsp_document_symbol' --[[ , keyword_length = 3  ]] },
-        {name = 'buffer'}, {name = 'cmdline_history'}
+        { name = 'nvim_lsp_document_symbol' --[[ , keyword_length = 3  ]] },
+        { name = 'buffer' }, { name = 'cmdline_history' }
     },
-    view = {entries = {name = 'wildmenu', separator = '|'}}
+    view = { entries = { name = 'wildmenu', separator = '|' } }
 })
 
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline(':', {
     mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources {
-        {name = 'cmdline'}, -- { name = 'cmdline_history' },
-        {name = 'path'}
+        { name = 'cmdline' }, -- { name = 'cmdline_history' },
+        { name = 'path' }
     }
 })

@@ -258,16 +258,16 @@
 
         /* Hiding Tabs Toolbar */
 
-        #main-window[tabsintitlebar="true"]:not([extradragspace="true"]) #TabsToolbar>.toolbar-items {
+        #main-window[tabsintitlebar="false"]:not([extradragspace="true"]) #TabsToolbar>.toolbar-items {
           opacity: 0;
           pointer-events: none;
         }
 
-        #main-window:not([tabsintitlebar="true"]) #TabsToolbar {
+        #main-window:not([tabsintitlebar="false"]) #TabsToolbar {
           visibility: collapse !important;
         }
 
-        #main-window[tabsintitlebar="true"]:not([extradragspace="true"]) #TabsToolbar .titlebar-spacer {
+        #main-window[tabsintitlebar="false"]:not([extradragspace="true"]) #TabsToolbar .titlebar-spacer {
           border-inline-end: none;
         }
 
