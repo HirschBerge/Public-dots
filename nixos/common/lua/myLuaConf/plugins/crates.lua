@@ -84,6 +84,11 @@ vim.g.rustaceanvim = {
                     "-Wclippy::pedantic",
                 },
             },
+            workspace = {
+                didChangeWatchedFiles = {
+                    dynamicRegistration = false
+                }
+            },
             procMacro = {
                 enable = true,
                 ignored = {

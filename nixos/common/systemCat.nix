@@ -93,7 +93,6 @@ in {
                 cmp-cmdline-history
                 lspkind-nvim
                 crates-nvim
-                rust-vim
                 null-ls-nvim
               ];
               debugging = with pkgs.vimPlugins; [
