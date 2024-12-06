@@ -66,17 +66,39 @@ in {
           general = {
             vimPlugins = {
               # you can make a subcategory
+              tree-sitterALL = with pkgs.vimPlugins; [
+                nvim-treesitter.withAllGrammars
+              ];
               tree-sitterPlugins = with pkgs.vimPlugins; [
                 nvim-treesitter-textobjects
+                nvim-treesitter-parsers.awk
+                nvim-treesitter-parsers.bash
+                nvim-treesitter-parsers.bibtex
+                nvim-treesitter-parsers.css
+                nvim-treesitter-parsers.csv
+                nvim-treesitter-parsers.go
+                nvim-treesitter-parsers.html
+                nvim-treesitter-parsers.hyprlang
+                nvim-treesitter-parsers.json
+                nvim-treesitter-parsers.kdl
+                nvim-treesitter-parsers.lua
+                nvim-treesitter-parsers.markdown
+                nvim-treesitter-parsers.nix
+                nvim-treesitter-parsers.nu
+                nvim-treesitter-parsers.nu
+                nvim-treesitter-parsers.powershell
+                nvim-treesitter-parsers.python
                 nvim-treesitter-parsers.rasi
-                (nvim-treesitter.withPlugins (
-                  _:
-                    nvim-treesitter.allGrammars
-                  # TODO: IDk figure it out
-                  # ++ [
-                  #   pkgs.tree-sitter.builtGrammars.tree-sitter-nu
-                  # ]
-                ))
+                nvim-treesitter-parsers.regex
+                nvim-treesitter-parsers.rust
+                nvim-treesitter-parsers.scss
+                nvim-treesitter-parsers.slint
+                nvim-treesitter-parsers.ssh_config
+                nvim-treesitter-parsers.toml
+                nvim-treesitter-parsers.xml
+                nvim-treesitter-parsers.yaml
+                nvim-treesitter-parsers.yuck
+                nvim-treesitter-parsers.zig
               ];
               cmp = with pkgs.vimPlugins; [
                 # cmp stuff
@@ -166,7 +188,8 @@ in {
             # and a set of categories that you want (and other information to pass to lua)
             categories = {
               general.vimPlugins = {
-                tree-sitterPlugins = true;
+                tree-sitterPlugins = false;
+                tree-sitterALL = true;
                 debugging = true;
                 git = true;
                 ui = true;
