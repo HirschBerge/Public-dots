@@ -2,7 +2,9 @@
   custom-font = pkgs.callPackage ./fonts-deriviation.nix {};
 in {
   fonts.packages = with pkgs; [
-    (nerdfonts.override {fonts = ["FiraCode" "JetBrainsMono" "Iosevka"];})
+    nerd-fonts.fira-code
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.iosevka
     noto-fonts
     noto-fonts-color-emoji
     noto-fonts-cjk-sans
