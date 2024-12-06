@@ -313,7 +313,6 @@ in {
       windowrulev2 = idleinhibit focus, title:.*(yuzu).*
       windowrulev2 = idleinhibit focus, class:.*(steam_app).*
       windowrulev2 = idleinhibit always, class:firefox,title:^(.*S[0-9].*E[0-9].*)$
-      windowrulev2 = idleinhibit always, class:firefox,title:^(.*Google Meet.*)$
       windowrulev2 = idleinhibit always, class:firefox,title:^(.*YouTube.*)$
     '';
   home.file."${config.xdg.configHome}/hypr/workspaces.conf".text =

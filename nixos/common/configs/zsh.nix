@@ -238,7 +238,7 @@ in {
                         "1": "Bottom"
                     }
                     let row = $row | update monitor ($monitor_map | get ($row.monitor | to text))
-                        if (("title" in $row) and ($row.title =~ "YouTube" or ($row.title =~ "steam_app" and $row.title =~ "yuzu") or $row.title =~ "Google Meet" or $row.title =~ "S[0-9].*E[0-9]")) or (("class" in $row) and ($row.class =~ "YouTube" or ($row.class =~ "steam_app" or $row.class =~ "yuzu") or $row.class =~ "S[0-9].*E[0-9]")) {
+                        if (("title" in $row) and ($row.title =~ "YouTube" or ($row.title =~ "steam_app" and $row.title =~ "yuzu") or $row.title =~ "S[0-9].*E[0-9]")) or (("class" in $row) and ($row.class =~ "YouTube" or ($row.class =~ "steam_app" or $row.class =~ "yuzu") or $row.class =~ "S[0-9].*E[0-9]")) {
                             $row |select monitor title xwayland fullscreen fullscreenClient pid
                         }
                 }
