@@ -70,7 +70,6 @@ in {
                 nvim-treesitter.withAllGrammars
               ];
               tree-sitterPlugins = with pkgs.vimPlugins; [
-                nvim-treesitter-textobjects
                 nvim-treesitter-parsers.awk
                 nvim-treesitter-parsers.bash
                 nvim-treesitter-parsers.bibtex
@@ -85,7 +84,6 @@ in {
                 nvim-treesitter-parsers.markdown
                 nvim-treesitter-parsers.nix
                 nvim-treesitter-parsers.nu
-                nvim-treesitter-parsers.nu
                 nvim-treesitter-parsers.powershell
                 nvim-treesitter-parsers.python
                 nvim-treesitter-parsers.rasi
@@ -99,6 +97,7 @@ in {
                 nvim-treesitter-parsers.yaml
                 nvim-treesitter-parsers.yuck
                 nvim-treesitter-parsers.zig
+                nvim-treesitter-textobjects
               ];
               cmp = with pkgs.vimPlugins; [
                 # cmp stuff
@@ -188,8 +187,8 @@ in {
             # and a set of categories that you want (and other information to pass to lua)
             categories = {
               general.vimPlugins = {
-                tree-sitterPlugins = false;
-                tree-sitterALL = true;
+                tree-sitterPlugins = true;
+                tree-sitterALL = false;
                 debugging = true;
                 git = true;
                 ui = true;
