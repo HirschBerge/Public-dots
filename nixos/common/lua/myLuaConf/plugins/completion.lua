@@ -3,6 +3,7 @@
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 require('luasnip.loaders.from_vscode').lazy_load()
+require("luasnip.loaders.from_snipmate").lazy_load({ paths = "~/.dotfiles/nixos/common/lua/myLuaConf/snippets/" })
 luasnip.config.setup {}
 local lspkind = require('lspkind')
 
@@ -16,13 +17,13 @@ cmp.setup {
             ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
 
             menu = {
-                buffer = '[BUF]',
+                luasnip = '[SNIP]',
                 nvim_lsp = '[LSP]',
                 nvim_lsp_signature_help = '[LSP]',
                 nvim_lsp_document_symbol = '[LSP]',
+                buffer = '[BUF]',
                 nvim_lua = '[API]',
                 path = '[PATH]',
-                luasnip = '[SNIP]'
             }
         }
     },

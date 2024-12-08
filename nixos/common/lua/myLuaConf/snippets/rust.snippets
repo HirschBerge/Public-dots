@@ -1,0 +1,63 @@
+snippet mdl
+	mod ${1:`substitute(vim_snippets#Filename(), '\(_\|^\)\(.\)', '\u\2', 'g')`} {
+		${0}
+	} /* $1 */
+
+snippet prs "New nom parser"
+	fn ${1:parse}(${2:input}: &str)${3} -> IResult<&str, ${4:(i32, &str)}> {
+		let (${2:input}, _) = ${5:take_until}("Episode")(${2:input})?;
+	}
+
+snippet imp "Advent of Code Daily input inport"
+	let data = get_daily_input(${1:2024}, ${2:1});
+
+snippet inom "Import noms requirements"
+	use nom::{
+	    bytes::complete::{${1:tag, take_until}},
+	    character::complete::{${2:digit1, space1}},
+	    combinator::map_res,
+	    IResult,
+	};
+snippet pri "print!"
+	print!("${1}");
+snippet pri, "print! with format param"
+	print!("${1}{${2}}", ${3});
+snippet pln "println!"
+	println!("${1}");
+snippet pln, "println! with format param"
+	println!("${1}{${2}}", ${3});
+snippet fmt "format!"
+	format!("${1}{${2}}", ${3});
+snippet ase "assert_eq!"
+	assert_eq!(${1:expected}, ${2:actual});
+snippet test "Unit test function"
+	#[test]
+	fn ${1:function_name}_test() {
+		${0}
+	}
+snippet testmod "Test module" b
+	#[cfg(test)]
+	mod tests {
+		use super::${1:*};
+
+		test${0}
+	}
+snippet mat "match pattern"
+	match ${1:func_or_call} {
+		${2:Ok(_)} => ${3},
+		${4:_} => ${5},
+	}
+
+snippet letmat "match pattern"
+	let ${1:var_name} = match ${2:func_name}() {
+		Some(${3:inner_var}) => ${3:inner_var},
+		None => {
+		    eprintln!("${4:error_msg}");
+		    std::process::exit(1);
+		}
+	};
+# TODO commenting
+snippet todo "TODO comment"
+	// TODO: $0
+snippet fixme "FIXME comment"
+	// FIXME: $0
