@@ -183,12 +183,7 @@ in {
         $env.config = { edit_mode: vi, show_banner: false,}
         $env.PROMPT_INDICATOR_VI_INSERT = " "
         $env.PROMPT_INDICATOR_VI_NORMAL = "❮ "
-<<<<<<< HEAD
-        export-env { $env.FZF_DEFAULT_OPTS = " --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8  --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc  --color=marker:#b4befe,fg+:#cdd6f4,prompt:#cb
-          a6f7,hl+:#f38ba8  --color=selected-bg:#45475a  --multi --preview 'bat --theme=OneHalfDark --color=always {}' "}
-=======
-        export-env { $env.FZF_DEFAULT_OPTS = " --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8  --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc  --color=marker:#b4befe,fg+:#cdd6f4,prompt:#cb a6f7,hl+:#f38ba8  --color=selected-bg:#45475a  --multi --preview 'bat --theme=OneHalfDark --color=always {}' "}
->>>>>>> 617609435ce93ee0f94af31834e939914f208eea
+        export-env { $env.FZF_DEFAULT_OPTS = " --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8  --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc  --color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8  --color=selected-bg:#45475a  --multi --preview 'bat --theme=OneHalfDark --color=always {}' "}
         source ~/.zoxide.nu
         source ~/.config/nushell/satty.nu
         def fo [ ] {
@@ -196,8 +191,7 @@ in {
           | if ($in |path exists) { v $in } else {print "exiting early "}
         }
         def man [...args: string ] {
-            ^man -k . | fzf --reverse --preview="echo {1,2} | sed 's/ (/./' | sed -E 's/\\)\\s*$//' | xargs $MAN" | awk '{print $1 "." $2}' | tr -d '()' | bat --language=help
-            fi
+            ^man -k . | fzf --ansi --reverse --preview="echo {1,2}| sed 's/\\w+-//'|xargs man | bat --language=help --color=always" |sed 's/\\w+-//'|xargs man | bat --language=help --color=always
         }
         def bat_remain [] {
             acpi -b | split column ", " |select column2 column3 |rename percent remaining
