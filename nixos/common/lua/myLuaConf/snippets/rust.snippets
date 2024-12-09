@@ -22,8 +22,6 @@ snippet pri "print!"
 	print!("${1}");
 snippet pri, "print! with format param"
 	print!("${1}{${2}}", ${3});
-snippet pln "println!"
-	println!("${1}");
 snippet pln, "println! with format param"
 	println!("${1}{${2}}", ${3});
 snippet fmt "format!"
@@ -61,3 +59,5 @@ snippet todo "TODO comment"
 	// TODO: $0
 snippet fixme "FIXME comment"
 	// FIXME: $0
+snippet incl "Include filepath as str"
+	include_str!("${1:../input}");

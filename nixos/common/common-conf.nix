@@ -267,6 +267,10 @@ in {
     rqbit
   ];
 
+  documentation.man = {
+    enable = true;
+    generateCaches = true;
+  };
   # XDG portal
   xdg.portal = {
     enable = true;

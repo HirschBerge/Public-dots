@@ -183,65 +183,78 @@ in {
         $env.config = { edit_mode: vi, show_banner: false,}
         $env.PROMPT_INDICATOR_VI_INSERT = " "
         $env.PROMPT_INDICATOR_VI_NORMAL = "❮ "
+<<<<<<< HEAD
+        export-env { $env.FZF_DEFAULT_OPTS = " --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8  --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc  --color=marker:#b4befe,fg+:#cdd6f4,prompt:#cb
+          a6f7,hl+:#f38ba8  --color=selected-bg:#45475a  --multi --preview 'bat --theme=OneHalfDark --color=always {}' "}
+=======
+        export-env { $env.FZF_DEFAULT_OPTS = " --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8  --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc  --color=marker:#b4befe,fg+:#cdd6f4,prompt:#cb a6f7,hl+:#f38ba8  --color=selected-bg:#45475a  --multi --preview 'bat --theme=OneHalfDark --color=always {}' "}
+>>>>>>> 617609435ce93ee0f94af31834e939914f208eea
         source ~/.zoxide.nu
         source ~/.config/nushell/satty.nu
+        def fo [ ] {
+          fd -tf | fzf --exit-0 --height 100% --layout reverse --info inline --border  --preview-window right,1,border,50% --bind 'ctrl-g:change-preview-window(25%|hidden|)'
+          | if ($in |path exists) { v $in } else {print "exiting early "}
+        }
+        def man [...args: string ] {
+            ^man -k . | fzf --reverse --preview="echo {1,2} | sed 's/ (/./' | sed -E 's/\\)\\s*$//' | xargs $MAN" | awk '{print $1 "." $2}' | tr -d '()' | bat --language=help
+            fi
+        }
         def bat_remain [] {
             acpi -b | split column ", " |select column2 column3 |rename percent remaining
         }
-
         def offset_rename [pattern:string, amount:int, subtract:bool] {
             ls |find $"($pattern)" | where type == "video/mp4" | each {|file|
                 let old_name = $file.name
-                    let ep_num = ($old_name | split column "Episode " | select column2 |get 0.column2| split column '.' |get column1.0| into int)
-                    let new_ep_num = if $subtract == true {
-                        $ep_num - $amount
-                    } else {
-                        $ep_num + $amount
-                    }
+                let ep_num = ($old_name | split column "Episode " | select column2 |get 0.column2| split column '.' |get column1.0| into int)
+                let new_ep_num = if $subtract == true {
+                    $ep_num - $amount
+                } else {
+                    $ep_num + $amount
+                }
                 let new_name = ($old_name | str replace -r 'Episode.*' $"Episode ($new_ep_num).mp4")
-                    echo $"($old_name) moved to ($new_name)"
-                    mv $old_name $new_name
+                echo $"($old_name) moved to ($new_name)"
+                mv $old_name $new_name
             }
         }
 
         def offset_test [pattern:string, amount:int, subtract:bool] {
             ls |find $"($pattern)" | where type == "video/mp4" | each {|file|
                 let old_name = $file.name
-                    let ep_num = ($old_name | split column "Episode " | select column2 |get 0.column2| split column '.' |get column1.0| into int)
-                    let new_ep_num = if $subtract == true {
-                        $ep_num - $amount
-                    } else {
-                        $ep_num + $amount
-                    }
+                let ep_num = ($old_name | split column "Episode " | select column2 |get 0.column2| split column '.' |get column1.0| into int)
+                let new_ep_num = if $subtract == true {
+                    $ep_num - $amount
+                } else {
+                    $ep_num + $amount
+                }
                 let new_name = ($old_name | str replace -r 'Episode.*' $"Episode ($new_ep_num).mp4")
-                    echo $"($old_name) simulated moved to ($new_name)"
+                echo $"($old_name) simulated moved to ($new_name)"
             }
         }
         def versions [] {
             let kernel = (uname).kernel-release
-                let driver_version = (rocm-smi --showdriverversion | rg Driver | awk '{print $3}')
-                let hyprland_version = $"((hyprctl version -j |from json).tag) on ((hyprctl version -j |from json).commit_date)"
-                echo $"Type,Version\nGPU,($driver_version)\nKernel,($kernel)\nHyprland,($hyprland_version)"|from csv
+            let driver_version = (rocm-smi --showdriverversion | rg Driver | awk '{print $3}')
+            let hyprland_version = $"((hyprctl version -j |from json).tag) on ((hyprctl version -j |from json).commit_date)"
+            echo $"Type,Version\nGPU,($driver_version)\nKernel,($kernel)\nHyprland,($hyprland_version)"|from csv
         }
         def traefik_log [] {
             rsync -rah  bind9:/root/traefik/data/access.log ~/.cache/access.log
-                echo $"[(sed ':a;N;$!ba;s/\n/ /g' ~/.cache/access.log)]" |from json | select ClientHost ClientPort RequestAddr RequestMethod RouterName StartLocal entryPointName RequestPath |
-                each {|row|
-                    let time = ($row.StartLocal  | into datetime); $row | update StartLocal $time
-                } |where ClientHost != "10.10.10.51"
+            echo $"[(sed ':a;N;$!ba;s/\n/ /g' ~/.cache/access.log)]" |from json | select ClientHost ClientPort RequestAddr RequestMethod RouterName StartLocal entryPointName RequestPath |
+            each {|row|
+                let time = ($row.StartLocal  | into datetime); $row | update StartLocal $time
+            } |where ClientHost != "10.10.10.51"
         }
         def inhibitors [] {
             hyprctl clients -j | from json |
-                each { |row|
-                    let monitor_map = {
-                        "0": "Top",
-                        "1": "Bottom"
-                    }
-                    let row = $row | update monitor ($monitor_map | get ($row.monitor | to text))
-                        if (("title" in $row) and ($row.title =~ "YouTube" or ($row.title =~ "steam_app" and $row.title =~ "yuzu") or $row.title =~ "Google Meet" or $row.title =~ "S[0-9].*E[0-9]")) or (("class" in $row) and ($row.class =~ "YouTube" or ($row.class =~ "steam_app" or $row.class =~ "yuzu") or $row.class =~ "S[0-9].*E[0-9]")) {
-                            $row |select monitor title xwayland fullscreen fullscreenClient pid
-                        }
+            each { |row|
+                let monitor_map = {
+                    "0": "Top",
+                    "1": "Bottom"
                 }
+                let row = $row | update monitor ($monitor_map | get ($row.monitor | to text))
+                if (("title" in $row) and ($row.title =~ "YouTube" or ($row.title =~ "steam_app" and $row.title =~ "yuzu") or $row.title =~ "Google Meet" or $row.title =~ "S[0-9].*E[0-9]")) or (("class" in $row) and ($row.class =~ "YouTube" or ($row.class =~ "steam_app" or $row.class =~ "yuzu") or $row.class =~ "S[0-9].*E[0-9]")) {
+                    $row |select monitor title xwayland fullscreen fullscreenClient pid
+                }
+            }
         }
         def animeAiring [] {
             anilist_cli | from json | each {|row|
@@ -261,20 +274,20 @@ in {
         }
         def --env yy [...args] {
             let tmp = (mktemp -t "yazi-cwd.XXXXXX")
-                yazi ...$args --cwd-file $tmp
-                let cwd = (open $tmp)
-                if $cwd != "" and $cwd != $env.PWD {
-                    cd $cwd
-                }
+            yazi ...$args --cwd-file $tmp
+            let cwd = (open $tmp)
+            if $cwd != "" and $cwd != $env.PWD {
+                cd $cwd
+            }
             rm -fp $tmp
         }
         def wc_table [file] {
             let line_count = (open $file | lines | length)
-                let word_count = (open $file | split words | length)
-                let char_count = (open $file | str length)
-                [
+            let word_count = (open $file | split words | length)
+            let char_count = (open $file | str length)
+            [
                 { "Lines": $line_count "Words": $word_count "Chars": $char_count }
-                ] | table
+            ] | table
         }
         def ips [] {
             $"Interface,IP,MAC\n(ip a | rg -A3 'enp|wlo'|rg -v altname | rg -B1 'inet ' | sed 's,/24.*noprefixroute,,' | awk ' /link\/ether/ {mac=$2} /inet/ {ip=$2; iface=$NF; print iface "," ip "," mac} ')"|from csv
@@ -285,7 +298,7 @@ in {
         def choose_anime [] {
             let choice = anime_today | try {input list "Pick an anime"} catch {echo "Could not find any anime releasing today. Please try again tomorrow" |print ; return 69 }
             try {
-            let anime_title = $"($choice |get Anime)"
+                let anime_title = $"($choice |get Anime)"
                 let season = $'($choice |get Season |split row " " | get 1)'
                 let path = $"(fd -1 $"($anime_title)" /mnt/NAS/Anime -i)"
                 let full_path = $"(fd -1 -td $"($season)" -i ($path))"
@@ -293,10 +306,10 @@ in {
                 } else {
                     echo $full_path does not exist
                     let full_path = $"($path)/($choice |get Season)"
-                        mkdir $"($path)/($choice |get Season)"
+                    mkdir $"($path)/($choice |get Season)"
                 }
-            let episodes = $"(try {(ls -m $full_path |where type =~ video |sort-by name |last |get name |split row "E" |last |split row '.' |get 0 | into int) + 1 } catch {1})"
-            echo $"Title,Season,Episode,Path\n($anime_title),($season),($episodes),($full_path)"|from csv
+                let episodes = $"(try {(ls -m $full_path |where type =~ video |sort-by name |last |get name |split row "E" |last |split row '.' |get 0 | into int) + 1 } catch {1})"
+                echo $"Title,Season,Episode,Path\n($anime_title),($season),($episodes),($full_path)"|from csv
             } catch {
                 print "Nothing chosen"
                 exit 0
@@ -304,16 +317,16 @@ in {
         }
         def download_anime [] {
             let anime_data = choose_anime
-                if $anime_data == 69 {
-                    return
-                }
-                $anime_data | print
-                cd ($anime_data |first).Path
-                ani-cli -d ($anime_data |first).Title -e ($anime_data |first).Episode
-                clear
-                autorenamer -s ($anime_data| first).Season
-                ls -lm  |reject target readonly num_links inode group created
-                notify-send -a anime "Download complete" $"(($anime_data|first).Title) Episode (($anime_data |first).Episode)"
+            if $anime_data == 69 {
+                return
+            }
+            $anime_data | print
+            cd ($anime_data |first).Path
+            ani-cli -d ($anime_data |first).Title -e ($anime_data |first).Episode
+            clear
+            autorenamer -s ($anime_data| first).Season
+            ls -lm  |reject target readonly num_links inode group created
+            notify-send -a anime "Download complete" $"(($anime_data|first).Title) Episode (($anime_data |first).Episode)"
         }
         def games_by_platform [platform] {
             open /mnt/NAS/Files/game_backlog.json | each {|game|
@@ -321,14 +334,14 @@ in {
                     $game
                 }
             }
-         }
-         def games_by_genre [genre] {
-                    open /mnt/NAS/Files/game_backlog.json | each {|game|
-                        if ( $game.Genre | any {|genres| $genres =~ $genre }) {
-                            $game
-                        }
-                    }
-              }
+        }
+        def games_by_genre [genre] {
+            open /mnt/NAS/Files/game_backlog.json | each {|game|
+                if ( $game.Genre | any {|genres| $genres =~ $genre }) {
+                    $game
+                }
+            }
+        }
       '';
 
     shellAliases = {
