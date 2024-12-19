@@ -9,6 +9,37 @@
          # Checks to make sure that an argument is passed and if it does, it sends a notification and changes the bg
         [ -n "$1" ] && notify-send -i "$1" "Wallpaper changed." && swww img "$1"
       '')
+    (pkgs.writeScriptBin "fzf_previewer"
+      /*
+      bash
+      */
+      ''
+        #!/usr/bin/env bash
+        function file_info() {
+          local path="$1"
+
+          # Check if the provided argument is a valid path
+          if [[ ! -e "$path" ]]; then
+            echo ""
+            return
+          fi
+
+          # Get file type using 'file' command
+          local file_type
+          file_type=$(file "$path")
+
+          if [[ "$file_type" == *"image"* ]] || [[ "$file_type" == *"Media"* ]] || [[ "$file_type" == *"JPEG"* ]] || [[ "$file_type" == *"Matroska"* ]] ; then
+            ${pkgs.mediainfo}/bin/mediainfo "$path"
+          elif [[ "$file_type" == *"directory"* ]]; then
+            eza --icons always --git --group-directories-first --header -o --no-permissions --hyperlink -l --color always "$path"
+          elif [[ "$file_type" == *"text"* ]]; then
+            bat --style=header-filename,header-filesize --theme=OneHalfDark --color=always --paging=never "$path"
+          else
+            echo ""
+          fi
+        }
+        file_info "$1"
+      '')
     (pkgs.writeScriptBin "gitstatus"
       /*
       bash

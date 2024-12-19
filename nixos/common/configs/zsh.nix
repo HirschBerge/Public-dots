@@ -183,11 +183,12 @@ in {
         $env.config = { edit_mode: vi, show_banner: false,}
         $env.PROMPT_INDICATOR_VI_INSERT = " "
         $env.PROMPT_INDICATOR_VI_NORMAL = "❮ "
-        export-env { $env.FZF_DEFAULT_OPTS = " --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8  --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc  --color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8  --color=selected-bg:#45475a  --multi "}
+        export-env { $env.FZF_DEFAULT_OPTS = " --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8  --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc  --color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8  --color=selected-bg:#45475a  --multi --preview 'fzf_previewer {}' --ansi"}
+        export-env { $env.FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude"}
         source ~/.zoxide.nu
         source ~/.config/nushell/satty.nu
         def fo [ ] {
-          fd -tf | fzf --exit-0 --height 100% --layout reverse --info inline --border --preview 'bat --theme=OneHalfDark --color=always {}' --preview-window right,1,border,50% --bind 'ctrl-g:change-preview-window(25%|hidden|)'
+          fd -tf | fzf --exit-0 --height 100% --layout reverse --info inline --border --preview-window right,1,border,50% --bind 'ctrl-g:change-preview-window(25%|hidden|)'
           | if ($in != "" ) { xargs v $in } else {print "exiting early "}
         }
         def man [...args: string ] {
