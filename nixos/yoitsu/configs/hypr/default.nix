@@ -240,7 +240,7 @@ in {
       # exec-once = [float;workspace special silent] firefox -new-window https://chatgpt.com
       exec-once = fcitx5 -d
       exec-once = streamcontroller -b
-      exec = pgrep -x clipse|| ${pkgs.clipse}/bin/clipse -listen
+      exec = pgrep -x clipse || ${pkgs.clipse}/bin/clipse -listen
       exec-once = ${pkgs.swww}/bin/swww init
       exec-once = ${pkgs.openrgb}/bin/openrgb -p ~/.config/OpenRGB/Purple.orp
       # exec = $HOME/.scripts/background/cron.sh ~/Pictures/Space/
