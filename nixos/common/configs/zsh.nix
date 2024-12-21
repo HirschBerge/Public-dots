@@ -405,7 +405,6 @@ in {
                   [ -f "$HOME/.config/zsh/colors_and_functions.zsh" ] && source $HOME/.config/zsh/colors_and_functions.zsh
                   eval "$(zoxide init zsh)"
                   eval "$(batpipe)"
-                  source ${pkgs.autojump}/share/zsh/site-functions/autojump.zsh
                   alias -s {pdf,epub}='zathura'
                   alias -s {jpg,png,jpeg}='satty --filename'
                   alias -s {mp4,mkv,mp3,gif}='mpv'
