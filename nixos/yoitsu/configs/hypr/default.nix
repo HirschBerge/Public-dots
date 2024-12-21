@@ -236,20 +236,18 @@ in {
     */
     ''
       # vim: filetype=hyprlang
+      # exec = $HOME/.scripts/background/cron.sh ~/Pictures/Space/
       exec = bash $HOME/.config/hypr/scripts/hypronstart.sh
-      # exec-once = [float;workspace special silent] firefox -new-window https://chatgpt.com
+      exec = ~/.config/hypr/scripts/sleep.sh & #Systemctl service works now for some reason
+      exec-once = ${pkgs.openrgb}/bin/openrgb -p ~/.config/OpenRGB/Purple.orp
+      exec-once = ${pkgs.protonmail-desktop}/bin/proton-mail
+      exec-once = ${pkgs.swww}/bin/swww init
+      exec-once = ${pkgs.vesktop}/bin/vesktop &
       exec-once = fcitx5 -d
       exec-once = streamcontroller -b
-      exec = pgrep -x clipse || ${pkgs.clipse}/bin/clipse -listen
-      exec-once = ${pkgs.swww}/bin/swww init
-      exec-once = ${pkgs.openrgb}/bin/openrgb -p ~/.config/OpenRGB/Purple.orp
-      # exec = $HOME/.scripts/background/cron.sh ~/Pictures/Space/
-      exec-once = ${pkgs.vesktop}/bin/vesktop &
-      # exec-once = /etc/profiles/per-user/USER_NAME/bin/brave
       exec-once = [workspace 1 silent ] ${pkgs.firefox}/bin/firefox &
-      exec = ~/.config/hypr/scripts/sleep.sh & #Systemctl service works now for some reason
-      exec-once = ${pkgs.protonmail-desktop}/bin/proton-mail
-      exec-once = wezterm
+      exec-once = [workspace 2 silent ] ${term}
+      exec = pgrep -x clipse || ${pkgs.clipse}/bin/clipse -listen
     '';
   home.file."${config.xdg.configHome}/hypr/window_rules.conf".text =
     /*
