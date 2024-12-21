@@ -28,7 +28,7 @@
           local file_type
           file_type=$(file "$path")
 
-          if [[ "$file_type" == *"image"* ]] || [[ "$file_type" == *"Media"* ]] || [[ "$file_type" == *"JPEG"* ]] || [[ "$file_type" == *"Matroska"* ]] ; then
+          if [[ "$file_type" == *"image"* ]] || [[ "$file_type" == *"Media"* ]] || [[ "$file_type" == *"JPEG"* ]] || [[ "$file_type" == *"Matroska"* ]] || [[ "$file_type" == *"Audio"* ]] ; then
             ${pkgs.mediainfo}/bin/mediainfo "$path"
           elif [[ "$file_type" == *"directory"* ]]; then
             eza --icons always --git --group-directories-first --header -o --no-permissions --hyperlink -l --color always "$path"
