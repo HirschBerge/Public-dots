@@ -26,8 +26,8 @@ in {
       */
       ''
         # vim: filetype=hyprlang
-        monitor=DP-1,2560x1080@200,0x0,1,vrr,1
-        monitor=DP-3,2560x1080@200,0x1080,1,vrr,1
+        monitor = DP-1,2560x1080@200,0x0,1,vrr,1
+        monitor = DP-3,2560x1080@200,0x1080,1,vrr,1
         source = ~/.config/hypr/binds.conf
         source = ~/.config/hypr/window_rules.conf
         source = ~/.config/hypr/startup.conf
