@@ -25,112 +25,112 @@ in {
       hyprlang
       */
       ''
-        # vim: filetype=hyprlang
-        monitor = DP-1,2560x1080@200,0x0,1,vrr,1
-        monitor = DP-3,2560x1080@200,0x1080,1,vrr,1
-        source = ~/.config/hypr/binds.conf
-        source = ~/.config/hypr/window_rules.conf
-        source = ~/.config/hypr/startup.conf
-        source = ~/.config/hypr/workspaces.conf
+          # vim: filetype=hyprlang
+          monitor = DP-1,2560x1080@200,0x0,1,vrr,1
+          monitor = DP-3,2560x1080@200,0x1080,1,vrr,1
+          source = ~/.config/hypr/binds.conf
+          source = ~/.config/hypr/window_rules.conf
+          source = ~/.config/hypr/startup.conf
+          source = ~/.config/hypr/workspaces.conf
 
-        # Some default env vars.
-        env = WLR_DRM_NO_ATOMIC,1
-        env = HYPRCURSOR_THEME,catppuccin-mocha-mauve
-        env = HYPRCURSOR_SIZE,24
-        env = XDG_SESSION_TYPE,wayland
-        env = WLR_NO_HARDWARE_CURSORS,1
+          # Some default env vars.
+          env = WLR_DRM_NO_ATOMIC,1
+          env = HYPRCURSOR_THEME,catppuccin-mocha-mauve
+          env = HYPRCURSOR_SIZE,24
+          env = XDG_SESSION_TYPE,wayland
+          env = WLR_NO_HARDWARE_CURSORS,1
 
-        # For all categories, see https://wiki.hyprland.org/Configuring/Variables/
+          # For all categories, see https://wiki.hyprland.org/Configuring/Variables/
 
-        input {
-            kb_layout = us
-            kb_variant =
-            kb_model =
-            kb_rules =
-            # kb_options = caps:Super_L
-            follow_mouse = 1
-            accel_profile = flat
-            force_no_accel = true
-            touchpad {
-                natural_scroll = no
-            }
-            sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
-        }
-        misc {
-            mouse_move_enables_dpms = false
-            # key_press_enables_dpms = true
-        }
-        general {
-            # See https://wiki.hyprland.org/Configuring/Variables/ for more
-            # gaps_in = 5
-            # gaps_out = 15
-            border_size = 3
-            col.active_border = rgb(711C91) rgb(EA00D9) rgb(0abdc6) 45deg
-            col.inactive_border = rgb(133e7c) rgb(091833) 45deg
-            layout = dwindle
-            allow_tearing = false
-        }
+          input {
+              kb_layout = us
+              kb_variant =
+              kb_model =
+              kb_rules =
+              # kb_options = caps:Super_L
+              follow_mouse = 1
+              accel_profile = flat
+              force_no_accel = true
+              touchpad {
+                  natural_scroll = no
+              }
+              sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
+          }
+          misc {
+              mouse_move_enables_dpms = false
+              # key_press_enables_dpms = true
+          }
+          general {
+              # See https://wiki.hyprland.org/Configuring/Variables/ for more
+              # gaps_in = 5
+              # gaps_out = 15
+              border_size = 3
+              col.active_border = rgb(711C91) rgb(EA00D9) rgb(0abdc6) 45deg
+              col.inactive_border = rgb(133e7c) rgb(091833) 45deg
+              layout = dwindle
+              allow_tearing = false
+          }
         decoration {
-            # See https://wiki.hyprland.org/Configuring/Variables/ for more
-            # blur_ignore_opacity = true
-            rounding = 10
-            shadow {
-            enabled=true
+          # See https://wiki.hyprland.org/Configuring/Variables/ for more
+          # blur_ignore_opacity = true
+          rounding = 10
+          shadow {
+            enabled = true
             range = 4
             render_power = 3
             # col.shadow = rgba(1a1a1aee)
-        }
-            blur {
-              enabled = true
-              size = 12
-              passes = 3
-              new_optimizations = on
-              noise = 0.05
-              ignore_opacity = true
-            }
-            # fullscreen_opacity = 0.7
-        }
-
-        animations { #Thank you to HyprDots
-            enabled = yes
-            bezier = wind, 0.05, 0.9, 0.1, 1.05
-            bezier = winIn, 0.1, 1.1, 0.1, 1.1
-            bezier = winOut, 0.3, -0.3, 0, 1
-            bezier = liner, 1, 1, 1, 1
-            animation = windows, 1, 6, wind, slide
-            animation = windowsIn, 1, 6, winIn, slide
-            animation = windowsOut, 1, 5, winOut, slide
-            animation = windowsMove, 1, 5, wind, slide
-            animation = border, 1, 1, liner
-            animation = borderangle, 1, 30, liner, loop
-            animation = fade, 1, 10, default
-            animation = workspaces, 1, 5, wind
+          }
+          blur {
+            enabled = true
+            size = 12
+            passes = 3
+            new_optimizations = on
+            noise = 0.05
+            ignore_opacity = true
+          }
+          # fullscreen_opacity = 0.7
         }
 
-        dwindle {
-            # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
-            pseudotile = 0
-            preserve_split = 1
-            force_split = 2
-        }
+          animations { #Thank you to HyprDots
+              enabled = yes
+              bezier = wind, 0.05, 0.9, 0.1, 1.05
+              bezier = winIn, 0.1, 1.1, 0.1, 1.1
+              bezier = winOut, 0.3, -0.3, 0, 1
+              bezier = liner, 1, 1, 1, 1
+              animation = windows, 1, 6, wind, slide
+              animation = windowsIn, 1, 6, winIn, slide
+              animation = windowsOut, 1, 5, winOut, slide
+              animation = windowsMove, 1, 5, wind, slide
+              animation = border, 1, 1, liner
+              animation = borderangle, 1, 30, liner, loop
+              animation = fade, 1, 10, default
+              animation = workspaces, 1, 5, wind
+          }
 
-        master {
-            # See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
-            new_status = master
-        }
+          dwindle {
+              # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
+              pseudotile = 0
+              preserve_split = 1
+              force_split = 2
+          }
 
-        gestures {
-            workspace_swipe = true
-            workspace_swipe_fingers = 3
-        }
+          master {
+              # See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
+              new_status = master
+          }
 
-        binds {
-           allow_workspace_cycles = yes
-        }
+          gestures {
+              workspace_swipe = true
+              workspace_swipe_fingers = 3
+          }
 
-        # Example per-device config
-        # See https://wiki.hyprland.org/Configuring/Keywords/#executing for more
-        blurls = dashboard
+          binds {
+             allow_workspace_cycles = yes
+          }
+
+          # Example per-device config
+          # See https://wiki.hyprland.org/Configuring/Keywords/#executing for more
+          blurls = dashboard
       '';
   };
   home.file."${config.xdg.configHome}/hypr/scripts" = {
@@ -574,7 +574,7 @@ in {
       listener {
           timeout = 450                                 # 7.5 min
           on-timeout = hyprctl dispatch dpms off        # screen off when timeout has passed
-          on-resume = hyprctl dispatch dpms on          # screen on when activity is detected after timeout has fired.
+          on-resume=hyprctl dispatch dpms on          # screen on when activity is detected after timeout has fired.
       }
     '';
 }
