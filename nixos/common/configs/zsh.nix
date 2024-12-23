@@ -307,7 +307,6 @@ in {
                 echo $"Title,Season,Episode,Path\n($anime_title),($season),($episodes),($full_path)"|from csv
             } catch {
                 print "Nothing chosen"
-                exit 0
             }
         }
         def download_anime [] {
