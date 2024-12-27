@@ -362,6 +362,7 @@ in {
       "cat" = "bat";
       "dots" = "cd $env.FLAKE";
       "cp" = "rsync -rah --info=progress2";
+      "mkd" = "mkdir";
     };
   };
   programs.bash = {
