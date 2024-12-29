@@ -99,9 +99,9 @@
         (label :halign "center" :class "song" :wrap "true" :limit-width 20 :text SONG :style "color: white;")
         (label :halign "center" :class "artist" :wrap "true" :limit-width 15 :text ARTIST :style "color: white;")
         (box :orientation "h" :spacing 20 :halign "center" :space-evenly "true" :vexpand "false" :hexpand "false"
-          (button :class "btn_prev" :onclick "bash ../scripts/music --prev" "玲 ")
+          (button :class "btn_prev" :onclick "bash ../scripts/music --prev" " ")
           (button :class "btn_play" :onclick "bash ../scripts/music --toggle" STATUS)
-          (button :class "btn_next" :onclick "bash ../scripts/music --next" "怜"))))))
+          (button :class "btn_next" :onclick "bash ../scripts/music --next" " "))))))
 
 
 ;; Calendar

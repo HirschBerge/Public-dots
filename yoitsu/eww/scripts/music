@@ -11,9 +11,9 @@ BGreen='\033[1;32m'       # Green
 get_status() {
 	while true; do
 		if [ "$(playerctl status)" = "Playing" ]; then
-			echo ""
+			echo ""
 		else
-			echo "喇"
+			echo ""
 		fi
 		sleep 1
 	done

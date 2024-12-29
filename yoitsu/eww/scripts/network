@@ -12,10 +12,10 @@ toggle() {
 ## Get Icon
 get_icon() {
   while true; do
-    if [ -z "$(nmcli connection show --active)" ];then
-      echo "睊"
+    if [ -z "$(nmcli connection show --active |rg -v " lo |NAME")" ];then
+      echo " "
     else
-      echo "直"
+      echo " "
     fi
     sleep 5
   done
@@ -24,10 +24,10 @@ get_icon() {
 ## Get Status
 get_status() {  
   while true; do
-    if [ -z "$(nmcli connection show --active |grep -v "NAME\|loopback")" ];then
-      echo "睊  Offline"
+    if [ -z "$(nmcli connection show --active |rg -v "NAME\|loopback")" ];then
+      echo "  Offline"
     else 
-      echo "直  $(nmcli -t -f NAME connection show --active |grep -v "^lo$")"
+      echo "  $(nmcli -t -f NAME connection show --active |grep -v "^lo$")"
     fi
     sleep 5
   done
