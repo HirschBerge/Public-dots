@@ -2,7 +2,7 @@
 
 ## Toggle state
 toggle() {
-  if [ -z "$(nmcli connection show --active |grep -v 'loop\|TYPE')" ];then
+  if [ -z "$(nmcli connection show --active |rg -v 'loop\|TYPE')" ];then
     nmcli radio wifi on
   else
     nmcli radio wifi off
