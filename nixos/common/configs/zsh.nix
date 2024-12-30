@@ -363,6 +363,7 @@ in {
       "dots" = "cd $env.FLAKE";
       "cp" = "rsync -rah --info=progress2";
       "mkd" = "mkdir";
+      filesys = "${pkgs.duf}/bin/duf";
     };
   };
   programs.bash = {

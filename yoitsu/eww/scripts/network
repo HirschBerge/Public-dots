@@ -15,7 +15,7 @@ get_icon() {
     if [ -z "$(nmcli connection show --active |rg -v " lo |NAME")" ];then
       echo " "
     else
-      echo " "
+      echo " "
     fi
     sleep 5
   done
@@ -27,7 +27,7 @@ get_status() {
     if [ -z "$(nmcli connection show --active |rg -v "NAME\|loopback")" ];then
       echo "  Offline"
     else 
-      echo "  $(nmcli -t -f NAME connection show --active |grep -v "^lo$")"
+      echo "  $(nmcli -t -f NAME connection show --active |grep -v "^lo$")"
     fi
     sleep 5
   done
