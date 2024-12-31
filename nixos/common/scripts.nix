@@ -355,6 +355,39 @@
                echo "'$1' is not a valid file"
         fi
       '')
+    (pkgs.writeScriptBin "rustbuild"
+      /*
+      bash
+      */
+      ''
+        #!/usr/bin/env bash
+        init="$(pwd)"
+        option=build
+        # Loop through each directory in ~/projects
+        for dir in ~/projects/*; do
+            # Check if it is a directory
+            if [ -d "$dir" ]; then
+                # Check if Cargo.toml exists in the directory
+                if [ -f "$dir/Cargo.toml" ]; then
+                    dir_name=$(basename "$dir")
+                    # Change to the project directory
+                    cd "$dir" || return
+                    printf "\033[32m[+]\033[0m Building \033[34m%s\033[0m\n" "$dir_name"
+                    sleep 1
+                    # Develop and build the project, redirecting stdout to /dev/null but keeping stderr intact
+                    if [ "$option" = run ]; then
+                        nix develop -c cargo build --release
+                    elif [ "$option" = build ]; then
+                        nix develop -c cargo build --release >/dev/null 2>&1
+                    else
+                        printf "\033[31m[✗]\033[0m Bad option\n"
+                        break
+                    fi
+                fi
+            fi
+        done
+        cd "$init"
+      '')
     (pkgs.writeScriptBin "rustupdate"
       /*
       bash
