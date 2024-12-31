@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}: {
+{pkgs, ...}: {
   # Fix for using Xinput mode on 8bitdo Ultimate C controller
   # Inspired by https://aur.archlinux.org/packages/8bitdo-ultimate-controller-udev
 
