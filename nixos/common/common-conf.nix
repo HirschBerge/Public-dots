@@ -230,6 +230,7 @@ in {
     kitty
     vesktop
     neovim
+    inputs.ghostty.packages.x86_64-linux.default
     helix
     wget
     home-manager

@@ -515,7 +515,7 @@ in {
           disabled = false;
           format = "[$ram]($style)$symbol";
           style = "white bold dimmed";
-          symbol = " ";
+          symbol = "  ";
           # threshold = 75;
           threshold = -1;
         };

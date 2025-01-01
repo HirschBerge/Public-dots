@@ -2,6 +2,9 @@
   description = "My custom multi-machine system flake.";
   inputs = {
     wezterm.url = "github:wez/wezterm?dir=nix";
+    ghostty = {
+      url = "github:ghostty-org/ghostty";
+    };
     nixos-boot.url = "github:HirschBerge/nixos-boot";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     # hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
