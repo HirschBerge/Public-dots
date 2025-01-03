@@ -59,6 +59,7 @@ Please review the official [NixOS Installation Guide](https://nixos.wiki/wiki/Ni
 | Discord Modifications     | [Vesktop](https://github.com/Vencord/Vesktop)                                                                       |
 | Notification Manager      | [Custom EWW Widget](https://github.com/elkowar/eww)                                                               |
 | Web Browser               | [Firefox](https://www.mozilla.org/en-US/firefox/new/)                                                             |
+| Firefox Theme | [FF Ultima](https://github.com/soulhotel/FF-ULTIMA) |
 | Video Player              | [MPV](https://mpv.io/)                                                                                            |
 | Text Editor               | [Neovim](https://neovim.io/)                                                                                      |
 | Neovim "Distro"           | [nixCats-nvim](https://github.com/BirdeeHub/nixCats-nvim)                                                         |

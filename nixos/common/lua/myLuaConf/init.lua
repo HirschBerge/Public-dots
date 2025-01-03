@@ -7,6 +7,7 @@ require('myLuaConf.autocmds')
 require('myLuaConf.mappings')
 
 if nixCats('debug') then require('myLuaConf.debug') end
+vim.opt.wrap = false
 vim.cmd('set clipboard+=unnamedplus')
 vim.cmd([[colorscheme tokyonight]])
 -- NOTE: transparency. Is there a better way? Surely, but idk

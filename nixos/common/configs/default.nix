@@ -2,7 +2,7 @@
   imports = [
     ./deploy_dots.nix
     ./helix.nix
-    ./firefox.nix
+    ./firefox/default.nix
     ./kitty.nix
     ./mpv.nix
     ./rofi.nix
