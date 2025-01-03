@@ -72,11 +72,6 @@ in {
   programs.lf = {
     enable = true;
   };
-  dconf.settings = {
-    "org/gnome/desktop/interface" = {
-      cursor-theme = "catppuccin-mocha-mauve";
-    };
-  };
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
   gtk = {
@@ -117,7 +112,7 @@ in {
     GTK_USE_PORTAL = 1;
     eEDITOR = "v";
     ATAC_KEY_BINDINGS = "~/.config/keybindings.toml";
-    ZELLIJ_AUTO_EXIT = "TRUE";
+    # ZELLIJ_AUTO_EXIT = "TRUE";
   };
 
   programs.git = {
