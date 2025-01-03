@@ -24,7 +24,7 @@
     starship
     rocmPackages.rocm-smi
     streamcontroller
-    heroic-unwrapped
+    heroic
     piper
     firefox
     #  thunderbird
