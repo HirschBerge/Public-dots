@@ -72,6 +72,11 @@ in {
   programs.lf = {
     enable = true;
   };
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      cursor-theme = "catppuccin-mocha-mauve";
+    };
+  };
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
   gtk = {
