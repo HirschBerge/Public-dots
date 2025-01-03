@@ -18,7 +18,6 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ../common/common-conf.nix
-    # ./8bitdo.nix
     ./configs/gaming.nix
   ];
   users.users.${username}. packages = with pkgs; [
