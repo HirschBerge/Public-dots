@@ -345,8 +345,8 @@ in {
           path = /tmp/cover.png
           reload_cmd = ~/.config/eww/scripts/mediacontrol coverloc
           size = 64
-          border_size = 4
-          border_color = rgba(210, 247, 166, 1)
+          border_size = 3
+          border_color = rgba(210,247,166,1.0)
           reload_time = 5
           position = -169, -7
           halign = center
@@ -367,10 +367,10 @@ in {
       shape {
           monitor = DP-3
           size = 410, 72
-          color = rgba(17, 17, 27, 1)
+          color = rgba(17,17,27,1.0)
           rounding = -1
           border_size = 2
-          border_color = rgba(203, 166, 247, 1)
+          border_color = rgba(203,166,247,1.0)
           rotate = 0
           xray = false # if true, make a "hole" in the background (rectangle of specified size, no rotation)
           position = 0, -05
@@ -382,7 +382,7 @@ in {
           monitor = DP-3
           text = cmd[update:100] echo "<b>$(bash ~/.config/eww/scripts/mediacontrol title)</b>"
           text_align = left
-          color = rgba(203, 166, 247, 1)
+          color = rgba(203,166,247,1.0)
           font_size = 12
           font_family = Dank Mono 10
           position = 0, -55
@@ -394,7 +394,7 @@ in {
           monitor = DP-3
           text = cmd[update:100] echo "<b>$(bash ~/.config/eww/scripts/mediacontrol artist| sd "&" "&amp;")</b>"
           text_align = left
-          color = rgba(210, 247, 166, 1)
+          color = rgba(210,247,166,1.0)
           font_size = 12
           font_family = Dank Mono 10
           position = 0, -15
@@ -407,7 +407,7 @@ in {
           monitor = DP-3
           text = cmd[update:100] bash ~/.config/eww/scripts/mediacontrol position
           text_align = left
-          color = rgba(203, 166, 247, 1)
+          color = rgba(203,166,247,1.0)
           font_size = 8
           font_family = JetBrainsMono Nerd Font 10
           position = -90, -33
@@ -419,7 +419,7 @@ in {
           monitor = DP-3
           text = cmd[update:100] bash ~/.config/eww/scripts/mediacontrol length
           text_align = left
-          color = rgba(210, 247, 166, 1)
+          color = rgba(210,247,166,1.0)
           font_size = 8
           font_family = JetBrainsMono Nerd Font 10
 
@@ -432,7 +432,7 @@ in {
           monitor = DP-3
           text = cmd[update:100] bash ~/.config/eww/scripts/mediacontrol progress
           text_align = left
-          color = rgba(203, 166, 247, 1)
+          color = rgba(203,166,247,1.0)
           font_size = 5
           font_family = JetBrainsMono Nerd Font 10
 
@@ -470,7 +470,7 @@ in {
       label {
           monitor =
           text = cmd[update:100000] echo "<i>Flake last updated: $(stat -c %z ~/.dotfiles/flake.lock|awk '{ print $1 }')</i>"
-          color = rgba(203, 166, 247, 1)
+          color = rgba(203,166,247,1.0)
           font_size = 16
           font_family = Dank Mono
           position = 30, -30
@@ -485,9 +485,9 @@ in {
           dots_size = 0.2 # Scale of input-field height, 0.2 - 0.8
           dots_spacing = 0.64 # Scale of dots' absolute size, 0.0 - 1.0
           dots_center = true
-          outer_color = rgba(86, 52, 88, 1)
-          inner_color = rgba(203, 166, 247, 1)
-          font_color = rgba(0,0,0,1)
+          outer_color = rgba(86,52,88,1.0)
+          inner_color = rgba(203,166,247,1.0)
+          font_color = rgba(0,0,0,1.0)
           fade_on_empty = true
           placeholder_text = <i>Password...</i> # Text rendered in the input box when it's empty.
           # font_family = Dank Mono
@@ -502,7 +502,7 @@ in {
           border_size = 4
           path = ~/.face.png
           size = 250
-          border_color = rgba(210, 247, 166, 1)# rgba(203, 166, 247, 1)
+          border_color = rgba(210,247,166,1.0) # rgba(203,166,247,1.0)
           position = 0, 0
           valign = center
           halign = center
@@ -511,7 +511,7 @@ in {
       label {
           monitor = DP-3
           text = cmd[update:1000] echo "<b><big> $(date +"%H:%M:%S") </big></b>"
-          color = rgba(203, 166, 247, 1)
+          color = rgba(203,166,247,1.0)
           font_size = 64
           font_family = JetBrains Mono Nerd Font 10
           position = 0, 30
@@ -523,7 +523,7 @@ in {
       label {
           monitor = DP-3
           text = Welcome back, <span text_transform="capitalize" size="larger">$USER</span>
-          color = rgba(203, 166, 247, 1)
+          color = rgba(203,166,247,1.0)
           font_size = 20
           font_family = Dank Mono 10
           position = -80, 15
@@ -533,7 +533,7 @@ in {
       # label {
       #     monitor = DP-3
       #     text = cmd[update:10000]echo "<i>$(~/.dotfiles/common/scripts/hyprlock_player.sh)</i>"
-      #     color = rgba(210, 247, 166, 1)# rgba(203, 166, 247, 1)
+      #     color = rgba(210,247,166,1.0)# rgba(203,166,247,1.0)
       #     font_size = 16
       #     font_family = Dank Mono 10
       #     position = 0, -30
@@ -544,7 +544,7 @@ in {
       label {
           monitor = DP-3
           text = <i>Log in here</i>
-          color = rgba(203, 166, 247, 1)
+          color = rgba(203,166,247,1.0)
           font_size = 16
           font_family = Dank Mono 10
           position = 0, 30
