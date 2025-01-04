@@ -341,6 +341,12 @@ Custom Icons
     #ublock0_raymondhill_net-BAP image{
       list-style-image: url("icons/ublock.svg") !important;
     }
+    #support_lastpass_com-BAP image{
+      list-style-image: url("icons/lastpass.png") !important;
+    }
+    #addon_darkreader_org-BAP image{
+      list-style-image: url("icons/darkreader.png") !important;
+    }
     /* ublock off */
     #ublock0_raymondhill_net-BAP[tooltiptext="uBlock Origin (off)"] image{
       list-style-image: url("icons/ublock.svg") !important;
