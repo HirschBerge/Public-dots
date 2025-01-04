@@ -65,8 +65,8 @@ in {
               # gaps_in = 5
               # gaps_out = 15
               border_size = 3
-              col.active_border = rgb(CBA6F7) rgb(D2F7A6) 45deg
-              col.inactive_border = rgb(133e7c) rgb(091833) 45deg
+              col.active_border = rgba(203, 166, 247, 1) rgba(210, 247, 166, 1) 45deg
+              col.inactive_border = rgba(19, 62, 124, 1) rgba(9, 24, 51, 1) 45deg
               layout = dwindle
               allow_tearing = false
           }
