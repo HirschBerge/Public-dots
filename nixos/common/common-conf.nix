@@ -66,6 +66,70 @@ in {
     timeout = 1;
   };
   environment = {
+    systemPackages = with pkgs; [
+      inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
+      themes.abstractguts-themes
+      custom_pkgs.scooter
+      custom_pkgs.talecast
+      catppuccin-cursors.mochaMauve
+      tlrc
+      clipse
+      nmap-formatter
+      zig
+      castero
+      imagemagick
+      lua-language-server
+      kitty
+      vesktop
+      neovim
+      inputs.ghostty.packages.x86_64-linux.default
+      helix
+      wget
+      home-manager
+      traceroute
+      python312
+      obs-studio
+      ripgrep
+      du-dust
+      cmake
+      lm_sensors
+      ffmpeg
+      pciutils
+      tokei
+      kondo
+      mpv
+      sd
+      file
+      zellij
+      zoxide
+      hyprlock
+      hypridle
+      # bat-extras.batgrep
+      bat-extras.batman
+      bat-extras.batpipe
+      bat-extras.batwatch
+      signal-desktop
+      # bat-extras.prettybat
+      sshs
+      atac
+      termshark
+      portal
+      yazi
+      anki
+      protonmail-desktop
+      rqbit
+    ];
+    # Allows hyprlock to use pam
+    etc = {
+      "pam.d/hyprlock" = {
+        text = ''
+          auth include login
+        '';
+        # Optionally, specify the permissions you want for the file
+        # by setting the `mode` attribute:
+        mode = "0777";
+      };
+    };
     sessionVariables = {
       HOME_MANAGER_BACKUP_EXT = "backup";
       FLAKE = "/home/${username}/.dotfiles";
@@ -154,23 +218,42 @@ in {
     };
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the GNOME Desktop Environment.
-  services.displayManager.sddm = {
-    enable = true;
-    enableHidpi = true;
-    wayland.enable = true;
-    theme = "abstractguts-themes";
-  };
-
-  # Configure keymap in X11
-  services.xserver = {
-    xkb.layout = "us";
-    xkb.variant = "";
-  };
-  hardware = {
+  security.rtkit.enable = true;
+  services = {
+    dbus.packages = [
+      pkgs.dbus.out
+      config.system.path
+    ];
+    openssh = {
+      enable = true;
+      settings = {
+        PasswordAuthentication = false;
+        KbdInteractiveAuthentication = false;
+        PermitRootLogin = "no";
+      };
+    };
+    pcscd.enable = true;
+    keyd = {
+      enable = true;
+      keyboards = {
+        default = {
+          ids = ["*"];
+          settings = {
+            main = {
+              capslock = "overload(meta, esc)";
+              esc = "overload(esc, capslock)";
+            };
+          };
+        };
+      };
+    };
+    displayManager.sddm = {
+      enable = true;
+      enableHidpi = true;
+      wayland.enable = true;
+      theme = "abstractguts-themes";
+    };
+    blueman.enable = true;
     pulseaudio.enable = false;
     bluetooth = {
       enable = true;
@@ -183,33 +266,30 @@ in {
         };
       };
     };
-  };
-  services.blueman.enable = true;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    wireplumber.extraConfig = {
-      "monitor.bluez.properties" = {
-        "bluez5.enable-sbc-xq" = true;
-        "bluez5.enable-msbc" = true;
-        "bluez5.enable-hw-volume" = true;
-        "bluez5.roles" = ["hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag"];
+    xserver = {
+      enable = true;
+      xkb.layout = "us";
+      xkb.variant = "";
+    };
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      wireplumber.extraConfig = {
+        "monitor.bluez.properties" = {
+          "bluez5.enable-sbc-xq" = true;
+          "bluez5.enable-msbc" = true;
+          "bluez5.enable-hw-volume" = true;
+          "bluez5.roles" = ["hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag"];
+        };
       };
     };
-    # If you want to use JACK applications, uncomment this
-    # jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
-  programs.zsh.enable = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${username} = {
     shell = pkgs.zsh;
@@ -217,66 +297,7 @@ in {
     description = "${username}";
     extraGroups = ["networkmanager" "wheel" "keyd"];
   };
-  programs.nh = {
-    enable = true;
-    clean.enable = true;
-    clean.extraArgs = "--keep-since 7d --keep 5";
-    flake = "/home/${username}/.dotfiles";
-  };
   nixpkgs.config.allowUnfree = true;
-  environment.systemPackages = with pkgs; [
-    inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
-    themes.abstractguts-themes
-    custom_pkgs.scooter
-    custom_pkgs.talecast
-    catppuccin-cursors.mochaMauve
-    tlrc
-    clipse
-    nmap-formatter
-    zig
-    castero
-    imagemagick
-    lua-language-server
-    kitty
-    vesktop
-    neovim
-    inputs.ghostty.packages.x86_64-linux.default
-    helix
-    wget
-    home-manager
-    traceroute
-    python312
-    obs-studio
-    ripgrep
-    du-dust
-    cmake
-    lm_sensors
-    ffmpeg
-    pciutils
-    tokei
-    kondo
-    mpv
-    sd
-    file
-    zellij
-    zoxide
-    hyprlock
-    hypridle
-    # bat-extras.batgrep
-    bat-extras.batman
-    bat-extras.batpipe
-    bat-extras.batwatch
-    signal-desktop
-    # bat-extras.prettybat
-    sshs
-    atac
-    termshark
-    portal
-    yazi
-    anki
-    protonmail-desktop
-    rqbit
-  ];
 
   documentation.man = {
     enable = true;
@@ -291,11 +312,6 @@ in {
   };
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
-  programs.mtr.enable = true;
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-  };
   security.pam.services = {
     login.u2fAuth = true;
     sudo.u2fAuth = true;
@@ -305,46 +321,20 @@ in {
       '';
     };
   };
-  # Allows hyprlock to use pam
-  environment.etc = {
-    "pam.d/hyprlock" = {
-      text = ''
-        auth include login
-      '';
-      # Optionally, specify the permissions you want for the file
-      # by setting the `mode` attribute:
-      mode = "0777";
-    };
-  };
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  services.keyd = {
-    enable = true;
-    keyboards = {
-      default = {
-        ids = ["*"];
-        settings = {
-          main = {
-            capslock = "overload(meta, esc)";
-            esc = "overload(esc, capslock)";
-          };
-        };
-      };
-    };
-  };
-  services.openssh = {
-    enable = true;
-    settings = {
-      PasswordAuthentication = false;
-      KbdInteractiveAuthentication = false;
-      PermitRootLogin = "no";
-    };
-  };
-  services.pcscd.enable = true;
-  # List services that you want to enable:
-  services.dbus.packages = [
-    pkgs.dbus.out
-    config.system.path
-  ];
   system.stateVersion = stateVersion; # Did you read the comment?
+
+  programs = {
+    zsh.enable = true;
+    nh = {
+      enable = true;
+      clean.enable = true;
+      clean.extraArgs = "--keep-since 7d --keep 5";
+      flake = "/home/${username}/.dotfiles";
+    };
+    mtr.enable = true;
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+    };
+  };
 }
