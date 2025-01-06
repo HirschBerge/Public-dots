@@ -144,47 +144,59 @@ in {
       TERM = "kitty";
     };
   };
-  security.sudo = {
-    enable = true;
-    extraRules = [
-      {
-        commands = [
-          {
-            command = "${pkgs.systemd}/bin/systemctl suspend";
-            options = ["NOPASSWD"];
-          }
-          {
-            command = "${pkgs.systemd}/bin/reboot";
-            options = ["NOPASSWD"];
-          }
-          {
-            command = "${pkgs.systemd}/bin/poweroff";
-            options = ["NOPASSWD"];
-          }
-          {
-            command = "/run/current-system/sw/bin/nixos-rebuild";
-            options = ["NOPASSWD"];
-          }
-          {
-            command = "${pkgs.neovim}/bin/nvim";
-            options = ["NOPASSWD"];
-          }
-          {
-            command = "${pkgs.systemd}/bin/systemctl";
-            options = ["NOPASSWD"];
-          }
-          {
-            command = "/run/current-system/sw/bin/ln";
-            options = ["NOPASSWD"];
-          }
-          {
-            command = "/run/current-system/sw/bin/nix-channel";
-            options = ["NOPASSWD"];
-          }
-        ];
-        groups = ["wheel"];
-      }
-    ];
+  security = {
+    rtkit.enable = true;
+    pam.services = {
+      login.u2fAuth = true;
+      sudo.u2fAuth = true;
+      swaylock = {
+        text = ''
+          auth include login
+        '';
+      };
+    };
+    sudo = {
+      enable = true;
+      extraRules = [
+        {
+          commands = [
+            {
+              command = "${pkgs.systemd}/bin/systemctl suspend";
+              options = ["NOPASSWD"];
+            }
+            {
+              command = "${pkgs.systemd}/bin/reboot";
+              options = ["NOPASSWD"];
+            }
+            {
+              command = "${pkgs.systemd}/bin/poweroff";
+              options = ["NOPASSWD"];
+            }
+            {
+              command = "/run/current-system/sw/bin/nixos-rebuild";
+              options = ["NOPASSWD"];
+            }
+            {
+              command = "${pkgs.neovim}/bin/nvim";
+              options = ["NOPASSWD"];
+            }
+            {
+              command = "${pkgs.systemd}/bin/systemctl";
+              options = ["NOPASSWD"];
+            }
+            {
+              command = "/run/current-system/sw/bin/ln";
+              options = ["NOPASSWD"];
+            }
+            {
+              command = "/run/current-system/sw/bin/nix-channel";
+              options = ["NOPASSWD"];
+            }
+          ];
+          groups = ["wheel"];
+        }
+      ];
+    };
   };
   networking.hostName = "${hostname}"; # Define your hostname.
 
@@ -218,7 +230,6 @@ in {
     };
   };
 
-  security.rtkit.enable = true;
   services = {
     dbus.packages = [
       pkgs.dbus.out
@@ -255,17 +266,6 @@ in {
     };
     blueman.enable = true;
     pulseaudio.enable = false;
-    bluetooth = {
-      enable = true;
-      powerOnBoot = true;
-      package = pkgs.bluez;
-      settings = {
-        General = {
-          Experimental = true;
-          Enable = "Source,Sink,Media,Socket";
-        };
-      };
-    };
     xserver = {
       enable = true;
       xkb.layout = "us";
@@ -312,15 +312,6 @@ in {
   };
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
-  security.pam.services = {
-    login.u2fAuth = true;
-    sudo.u2fAuth = true;
-    swaylock = {
-      text = ''
-        auth include login
-      '';
-    };
-  };
   system.stateVersion = stateVersion; # Did you read the comment?
 
   programs = {
@@ -335,6 +326,17 @@ in {
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
+    };
+  };
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+    package = pkgs.bluez;
+    settings = {
+      General = {
+        Experimental = true;
+        Enable = "Source,Sink,Media,Socket";
+      };
     };
   };
 }
