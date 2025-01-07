@@ -49,7 +49,7 @@
     gam = "git am";
     gama = "git am --abort";
     gamc = "git am --continue";
-    gams = "git am --skip";
+    gasm = "git am --skip";
     gamscp = "git am --show-current-patch";
     gap = "git apply";
     gapa = "git add --patch";

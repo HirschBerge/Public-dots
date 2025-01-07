@@ -45,7 +45,7 @@
     laptop = "shirohebi"; # TODO: change Laptop name
     system = "x86_64-linux"; # TODO: Rarely, change system architecture
     email = "THIS_IS_AN_EMAIL"; # TODO: Change your email for Git and such
-    discord = "aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI1NDEyMDE3ODA3NDEyODQ5Ni9jdklWWVlfZURGMXRLcmR1aHJRW"; # TODO: Change/ remove
+    discord = "not this time"; # TODO: Change/ remove
   in {
     #  NixOS configuration entrypoint
     #  Available through 'nixos-rebuild --flake .# your-hostname'
