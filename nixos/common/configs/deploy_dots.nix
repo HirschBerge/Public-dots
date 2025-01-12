@@ -126,12 +126,14 @@
 
       # custom colours for the colour palette
       [color-palette]
-      first = "#5cb37f"
-      second = "#d20f39"
-      third = "#74c7ec"
-      fourth = "#cba6f7"
-      fifth = "#f9e2af"
-      custom = "#D2F7A6"
+      palette = [
+        "#5cb37f",
+        "#d20f39",
+        "#74c7ec",
+        "#cba6f7",
+        "#f9e2af",
+        "#D2F7A6",
+      ]
     '';
   home.file."${config.xdg.configHome}/nushell/satty.nu".text =
     /*
