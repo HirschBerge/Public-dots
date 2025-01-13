@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  inputs,
-  ...
-}: {
+{...}: {
   programs.hyprland = {
     withUWSM = false;
     enable = true;
