@@ -86,27 +86,27 @@
               bookmarks = [
                 {
                   name = "Plex";
-                  url = "redacted.com
+                  url = "https://plex-prod.example.com/web/index.html#!/";
                 }
                 {
                   name = "Proxmox";
-                  url = "redacted.com
+                  url = "https://cluster-pve.example.com/#v1:0:18:4:::::::";
                 }
                 {
                   name = "Home Assistant";
-                  url = "redacted.com
+                  url = "http://hac-prod.example.com/lovelace/HPCA";
                 }
                 {
                   name = "Router";
-                  url = "redacted.com
+                  url = "https://router-infra.example.com/network/default/dashboard";
                 }
                 {
                   name = "Docker";
-                  url = "redacted.com
+                  url = "https://portainer-prod.example.com/#!/auth";
                 }
                 {
                   name = "NAS";
-                  url = "redacted.com
+                  url = "https://nas-prod.example.com/ui/dashboard";
                 }
                 {
                   name = "";
@@ -132,7 +132,7 @@
               bookmarks = [
                 {
                   name = "Home";
-                  url = "redacted.com
+                  example.com/";
                 }
                 {
                   name = "Advent of Code";

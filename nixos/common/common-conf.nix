@@ -32,12 +32,10 @@ in {
       substituters = [
         "https://hyprland.cachix.org"
         "https://wezterm.cachix.org"
-        "https://ghostty.cachix.org"
       ];
       trusted-public-keys = [
         "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
         "wezterm.cachix.org-1:kAbhjYUC9qvblTE+s7S+kl5XM1zVa4skO+E/1IDWdH0="
-        "ghostty.cachix.org-1:QB389yTa6gTyneehvqG58y0WnHjQOqgnA+wBnpWWxns="
       ];
       auto-optimise-store = true;
       experimental-features = ["nix-command" "flakes"];
@@ -82,7 +80,6 @@ in {
       kitty
       vesktop
       neovim
-      inputs.ghostty.packages.x86_64-linux.default
       helix
       wget
       home-manager
@@ -148,6 +145,10 @@ in {
     rtkit.enable = true;
     pam.services = {
       login.u2fAuth = true;
+      kwallet = {
+        name = "kwallet";
+        enableKwallet = true;
+      };
       sudo.u2fAuth = true;
       swaylock = {
         text = ''

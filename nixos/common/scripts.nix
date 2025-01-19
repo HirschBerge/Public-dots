@@ -597,16 +597,13 @@
             {name: "HACS", ip: "10.10.10.19"}
         ]
 
-        let dns_output = (try { nix-shell -p dnsutils --run 'dig +short nas-prod-dir.home.USER_NAMEkiss.net' } catch { echo "Failed" })
-
-        let dns_result = if ($dns_output | lines | first | default "" | str length) > 0 {
+        let dns_output = (try { ${pkgs.dnsutils}/bin/dig +short 'nas-prod-dir.example.com' } catch { echo "Failed" })
+        let dns_result = if ($dns_output |is-not-empty) {
             let ip = ($dns_output | lines | first)
             {name: "DNS Test", ip: $ip, status: (if $ip == "10.10.10.10" { "Resolved Correctly" } else { "Resolved Incorrectly" })}
         } else {
             {name: "DNS Test", ip: "none", status: "Unresolved"}
         }
-
-
         let results = ($hosts | each {|host|
             let ping_output = (try { ping $host.ip -c 1 } catch { echo "Failed" })
             let status = (if ($ping_output | str contains "1 received") { "Reachable" } else { "Unreachable" })
