@@ -6,7 +6,7 @@ dots="$(dirname "$(readlink -f "$0")")"
 
 # Sanitization.
 printf "${BGreen}[+] ${BYellow}Sanitizing PII...${NoColor}\n" 
-fd . ./ -tf -H -X sed -i -E "s/\b([^.]+\.)?${USER}kiss\.net\b/example.com/g"
+rg -l "\b([^.]+\.)?${USER}kiss\.net\b" "$dots" | while IFS= read -r file; do sed -i -E "s/\b([^.]+\.)?${USER}kiss\.net\b/example.com/g" "$file"; done
 fd . "$dots" -tf -H -X sd  "${USER}" "USER_NAME"
 fd . "$dots" -tf -H -X sd  "${USER^}" "USER_NAME"
 fd . "$dots" -e nix -X sd "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" "THIS_IS_AN_EMAIL"
