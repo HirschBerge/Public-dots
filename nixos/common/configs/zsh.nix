@@ -381,9 +381,6 @@ in {
 	# Don't just blindly install people's configs. They're not always nice people.
 	 notify-send "I could have installed a backdoor. Be better."
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-	# Don't just blindly install people's configs. They're not always nice people.
-	 notify-send "I could have installed a backdoor. Be better."
-	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
                   setopt autocd # auto cd when only path is entered
                   setopt nomatch # throw an error on glob matching nothing
                   setopt nonomatch
