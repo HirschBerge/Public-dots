@@ -20,8 +20,8 @@
 
 
 ;; MUSIC VARS
-(defpoll music_json :interval "1s" "./scripts/mediacontrol --json")
-(defpoll COVER :interval "1s" "./scripts/mediacontrol coverloc")
+(defpoll music_json :interval "1s" "bash ./scripts/mediacontrol --json")
+(defpoll COVER :interval "1s" "bash ./scripts/mediacontrol coverloc")
 (defvar music-rev false)
 
 (deflisten volume `bash ./scripts/audio --get-vol`)
