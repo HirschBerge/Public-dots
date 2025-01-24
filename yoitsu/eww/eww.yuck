@@ -31,8 +31,6 @@
 
 (deflisten workspaces0 "hyprland-workspaces `hyprctl monitors -j | jq -r \".[0].name\"`")
 
-(defpoll quote :interval "24h" "$HOME/.config/eww/scripts/quotes --quote-and-quotee")
-
 (defpoll IP_ADDR :interval "1m" "ip -br a |rg UP | awk '/enp6/ {print $3 }'")
 
 (defvar idle_state "󱄅")
@@ -112,12 +110,6 @@
     )
 )
 
-(defwidget quote []
-    (box :class "quote-container" :orientation "v" :hexpand "false" :vexpand "true" :space-evenly "false" :width 100
-        (label :class "quote-label" :text "󱀢")
-        (label :class "quote" :halign "center" :wrap "true" :limit-width 140 :justify "center" :text quote :xalign "0.5")
-    )
-)
 
 (defwidget window-title []
     (box
@@ -386,7 +378,6 @@
         (player)
         (volume)
         (dash)
-        ;; (quote)
         ;; (dash)
         (network)
         (network-up)
