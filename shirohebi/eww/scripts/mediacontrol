@@ -11,7 +11,7 @@ Control=""
 ########################## Title ##########################
 title() {
 	title=$(playerctl --player="$Control" metadata --format {{title}})
-	[ -z "$title" ] && title="Nothing Playing"
+	[ -z "$title" ] && title="Play Something"
 	max_length=30
 	if [ ${#title} -gt $max_length ]; then
 		truncated_title="${title:0:$((max_length-3))}..."
@@ -24,7 +24,7 @@ title() {
 ########################## Artist ##########################
 artist() {
 	artist=$(playerctl --player="$Control" metadata --format {{artist}})
-	[ -z "$artist" ] && artist="NaN"
+	[ -z "$artist" ] && artist="Artist"
 	max_length=30
 	if [ ${#artist} -gt $max_length ]; then
 		truncated_artist="${artist:0:$((max_length-3))}..."

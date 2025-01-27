@@ -1,8 +1,14 @@
 ;; CAL VARS
+(defpoll calendar_day :interval "10h" "date '+%d'")
+(defpoll calendar_year :interval "10h" "date '+%Y'")
+(defpoll calendar_date :interval "12h" "date '+%A, %d %B'")
+(defpoll today :interval "12h" "date '+%a, %d %B'")
 (defpoll time :interval "5s" "date '+%H:%M'")
 
 ;; ENV VARS
 (defpoll wm :interval "12h" "echo $XDG_CURRENT_DESKTOP")
+(defpoll shell :interval "1h" "echo $SHELL | awk -F'/' '{print $NF}'")
+(defpoll term :interval "1h" "notify-send $(echo $TERM | awk -F'-' '{print $NF}')")
 (defpoll uptime :interval "1m" "./scripts/better_uptime.sh $(cut -f1 -d. /proc/uptime)")
 (defpoll updates_poll :initial "..." :interval "10m" "bash $HOME/.config/eww/scripts/packages.sh") 
 ;; (deflisten GPU `./scripts/GPU_mon.sh --side`)
@@ -14,8 +20,8 @@
 
 
 ;; MUSIC VARS
-(defpoll music_json :interval "1s" "bash ./scripts/mediacontrol --json")
-(defpoll COVER :interval "1s" "bash ./scripts/mediacontrol coverloc")
+(defpoll music_json :interval "1s" "./scripts/mediacontrol --json")
+(defpoll COVER :interval "1s" "./scripts/mediacontrol coverloc")
 (defvar music-rev false)
 
 (deflisten volume `bash ./scripts/audio --get-vol`)
@@ -43,6 +49,12 @@
     (box :class "dash" :orientation "h")
 )
 
+(defwidget idle_inhib []
+    (button :class "idle"
+        :height 26
+        :onclick "$HOME/.config/eww/scripts/idle_inhib.sh"
+        "${idle_state}")
+)
 
 (defwidget workspaces0 []
     (box :class "workspaces-box" 
