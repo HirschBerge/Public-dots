@@ -74,7 +74,7 @@ in {
       clipse
       nmap-formatter
       zig
-      castero
+      # castero
       imagemagick
       lua-language-server
       kitty
