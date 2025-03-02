@@ -1,6 +1,10 @@
 {pkgs, ...}: {
   #enable Steam: https://linuxhint.com/how-to-instal-steam-on-nixos/
-  programs.steam.enable = true;
+  programs.steam = {
+    enable = true;
+    gamescopeSession.enable = true;
+    localNetworkGameTransfers.openFirewall = true;
+  };
   nixpkgs.config.packageOverrides = pkgs: {
     steam = pkgs.steam.override {
       extraPkgs = pkgs:
