@@ -15,7 +15,7 @@ in {
       ytdl-raw-options = "cookies-from-browser=firefox";
       msg-module = "yes";
       osd-bar = "no";
-      profile = "gpu-hq";
+      profile = "high-quality";
       vo = "gpu-next";
       # loop-file = "inf";
       hwdec = "vaapi";
